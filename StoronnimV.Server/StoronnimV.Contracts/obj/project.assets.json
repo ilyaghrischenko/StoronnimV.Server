@@ -549,38 +549,35 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\sannido\\.nuget\\packages\\": {}
+    "C:\\Users\\User\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\ForProgramming\\repos\\MyProjects\\CSharp\\StoronnimV\\StoronnimV.Server\\StoronnimV.Contracts\\StoronnimV.Contracts.csproj",
+      "projectUniqueName": "D:\\GitHub\\StoronnimV.Server\\StoronnimV.Server\\StoronnimV.Contracts\\StoronnimV.Contracts.csproj",
       "projectName": "StoronnimV.Contracts",
-      "projectPath": "D:\\ForProgramming\\repos\\MyProjects\\CSharp\\StoronnimV\\StoronnimV.Server\\StoronnimV.Contracts\\StoronnimV.Contracts.csproj",
-      "packagesPath": "C:\\Users\\sannido\\.nuget\\packages\\",
-      "outputPath": "D:\\ForProgramming\\repos\\MyProjects\\CSharp\\StoronnimV\\StoronnimV.Server\\StoronnimV.Contracts\\obj\\",
+      "projectPath": "D:\\GitHub\\StoronnimV.Server\\StoronnimV.Server\\StoronnimV.Contracts\\StoronnimV.Contracts.csproj",
+      "packagesPath": "C:\\Users\\User\\.nuget\\packages\\",
+      "outputPath": "D:\\GitHub\\StoronnimV.Server\\StoronnimV.Server\\StoronnimV.Contracts\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "C:\\Users\\sannido\\AppData\\Roaming\\NuGet\\NuGet.Config",
-        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        "C:\\Users\\User\\AppData\\Roaming\\NuGet\\NuGet.Config"
       ],
       "originalTargetFrameworks": [
         "net9.0"
       ],
       "sources": {
-        "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
-        "C:\\Program Files\\dotnet\\library-packs": {},
         "https://api.nuget.org/v3/index.json": {}
       },
       "frameworks": {
         "net9.0": {
           "targetAlias": "net9.0",
           "projectReferences": {
-            "D:\\ForProgramming\\repos\\MyProjects\\CSharp\\StoronnimV\\StoronnimV.Server\\StoronnimV.Domain\\StoronnimV.Domain.csproj": {
-              "projectPath": "D:\\ForProgramming\\repos\\MyProjects\\CSharp\\StoronnimV\\StoronnimV.Server\\StoronnimV.Domain\\StoronnimV.Domain.csproj"
+            "D:\\GitHub\\StoronnimV.Server\\StoronnimV.Server\\StoronnimV.Domain\\StoronnimV.Domain.csproj": {
+              "projectPath": "D:\\GitHub\\StoronnimV.Server\\StoronnimV.Server\\StoronnimV.Domain\\StoronnimV.Domain.csproj"
             },
-            "D:\\ForProgramming\\repos\\MyProjects\\CSharp\\StoronnimV\\StoronnimV.Server\\StoronnimV.DTO\\StoronnimV.DTO.csproj": {
-              "projectPath": "D:\\ForProgramming\\repos\\MyProjects\\CSharp\\StoronnimV\\StoronnimV.Server\\StoronnimV.DTO\\StoronnimV.DTO.csproj"
+            "D:\\GitHub\\StoronnimV.Server\\StoronnimV.Server\\StoronnimV.DTO\\StoronnimV.DTO.csproj": {
+              "projectPath": "D:\\GitHub\\StoronnimV.Server\\StoronnimV.Server\\StoronnimV.DTO\\StoronnimV.DTO.csproj"
             }
           }
         }
@@ -593,7 +590,7 @@
       "restoreAuditProperties": {
         "enableAudit": "true",
         "auditLevel": "low",
-        "auditMode": "all"
+        "auditMode": "direct"
       },
       "SdkAnalysisLevel": "9.0.100"
     },
@@ -622,20 +619,8 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.100/PortableRuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.101/PortableRuntimeIdentifierGraph.json"
       }
     }
-  },
-  "logs": [
-    {
-      "code": "NU1904",
-      "level": "Warning",
-      "warningLevel": 1,
-      "message": "Package 'System.Text.Encodings.Web' 4.5.0 has a known critical severity vulnerability, https://github.com/advisories/GHSA-ghhp-997w-qr28",
-      "libraryId": "System.Text.Encodings.Web",
-      "targetGraphs": [
-        "net9.0"
-      ]
-    }
-  ]
+  }
 }
