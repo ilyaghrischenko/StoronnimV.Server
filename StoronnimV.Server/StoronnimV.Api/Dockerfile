@@ -1,0 +1,28 @@
+﻿FROM mcr.microsoft.com/dotnet/aspnet:9.0 AS base
+USER $APP_UID
+WORKDIR /app
+EXPOSE 8080
+EXPOSE 8081
+
+FROM mcr.microsoft.com/dotnet/sdk:9.0 AS build
+ARG BUILD_CONFIGURATION=Release
+WORKDIR /src
+COPY ["StoronnimV.Api/StoronnimV.Api.csproj", "StoronnimV.Api/"]
+COPY ["StoronnimV.Domain/StoronnimV.Domain.csproj", "StoronnimV.Domain/"]
+COPY ["StoronnimV.Contracts/StoronnimV.Contracts.csproj", "StoronnimV.Contracts/"]
+COPY ["StoronnimV.DTO/StoronnimV.DTO.csproj", "StoronnimV.DTO/"]
+COPY ["StoronnimV.Application/StoronnimV.Application.csproj", "StoronnimV.Application/"]
+COPY ["StoronnimV.Data/StoronnimV.Data.csproj", "StoronnimV.Data/"]
+RUN dotnet restore "StoronnimV.Api/StoronnimV.Api.csproj"
+COPY . .
+WORKDIR "/src/StoronnimV.Api"
+RUN dotnet build "StoronnimV.Api.csproj" -c $BUILD_CONFIGURATION -o /app/build
+
+FROM build AS publish
+ARG BUILD_CONFIGURATION=Release
+RUN dotnet publish "StoronnimV.Api.csproj" -c $BUILD_CONFIGURATION -o /app/publish /p:UseAppHost=false
+
+FROM base AS final
+WORKDIR /app
+COPY --from=publish /app/publish .
+ENTRYPOINT ["dotnet", "StoronnimV.Api.dll"]

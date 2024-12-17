@@ -4,6 +4,7 @@
         <TargetFramework>net9.0</TargetFramework>
         <Nullable>enable</Nullable>
         <ImplicitUsings>enable</ImplicitUsings>
+        <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
     </PropertyGroup>
 
     <ItemGroup>
@@ -23,6 +24,12 @@
       <ProjectReference Include="..\StoronnimV.Application\StoronnimV.Application.csproj" />
       <ProjectReference Include="..\StoronnimV.Data\StoronnimV.Data.csproj" />
       <ProjectReference Include="..\StoronnimV.DTO\StoronnimV.DTO.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Content Include="..\.dockerignore">
+        <Link>.dockerignore</Link>
+      </Content>
     </ItemGroup>
 
 </Project>
