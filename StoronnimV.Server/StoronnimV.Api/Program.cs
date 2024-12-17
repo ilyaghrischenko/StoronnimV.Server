@@ -75,6 +75,19 @@ var mapperConfig = new MapperConfiguration(cfg =>
 mapperConfig.AssertConfigurationIsValid();
 #endregion
 
+#region CORS
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowReactApp",
+        policy =>
+        {
+            policy.WithOrigins("http://localhost:3000")
+                  .AllowAnyHeader()
+                  .AllowAnyMethod();
+        });
+});
+#endregion
+
 // Add services to the container.
 builder.Services.AddOpenApi();
 builder.Services.AddEndpointsApiExplorer();
@@ -137,6 +150,8 @@ if (app.Environment.IsDevelopment())
 app.MapControllers();
 app.UseHttpsRedirection();
 app.UseRouting();
+
+app.UseCors("AllowReactApp");
 
 app.UseMiddleware<ExceptionMiddleware>();
 
