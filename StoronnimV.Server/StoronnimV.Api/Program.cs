@@ -112,9 +112,7 @@ builder.Services.AddScoped<ScheduleStatusUpdaterService>();
 #endregion
 #endregion
 
-// var _connectionString = builder.Configuration.GetConnectionString("LocalConnectionDima");
-// var _connectionString = builder.Configuration.GetConnectionString("LocalConnectionZhenya");
-var connectionString = builder.Configuration.GetConnectionString("LocalConnectionIlya");
+var connectionString = builder.Configuration.GetConnectionString("CloudConnection");
 
 #region Hangfire
 builder.Services.AddHangfire(config => config

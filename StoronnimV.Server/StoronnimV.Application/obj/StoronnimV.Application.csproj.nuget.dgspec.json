@@ -1,33 +1,36 @@
 {
   "format": 1,
   "restore": {
-    "D:\\GitHub\\StoronnimV.Server\\StoronnimV.Server\\StoronnimV.Application\\StoronnimV.Application.csproj": {}
+    "D:\\ForProgramming\\repos\\MyProjects\\CSharp\\StoronnimV\\StoronnimV.Server\\StoronnimV.Application\\StoronnimV.Application.csproj": {}
   },
   "projects": {
-    "D:\\GitHub\\StoronnimV.Server\\StoronnimV.Server\\StoronnimV.Application\\StoronnimV.Application.csproj": {
+    "D:\\ForProgramming\\repos\\MyProjects\\CSharp\\StoronnimV\\StoronnimV.Server\\StoronnimV.Application\\StoronnimV.Application.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\GitHub\\StoronnimV.Server\\StoronnimV.Server\\StoronnimV.Application\\StoronnimV.Application.csproj",
+        "projectUniqueName": "D:\\ForProgramming\\repos\\MyProjects\\CSharp\\StoronnimV\\StoronnimV.Server\\StoronnimV.Application\\StoronnimV.Application.csproj",
         "projectName": "StoronnimV.Application",
-        "projectPath": "D:\\GitHub\\StoronnimV.Server\\StoronnimV.Server\\StoronnimV.Application\\StoronnimV.Application.csproj",
-        "packagesPath": "C:\\Users\\User\\.nuget\\packages\\",
-        "outputPath": "D:\\GitHub\\StoronnimV.Server\\StoronnimV.Server\\StoronnimV.Application\\obj\\",
+        "projectPath": "D:\\ForProgramming\\repos\\MyProjects\\CSharp\\StoronnimV\\StoronnimV.Server\\StoronnimV.Application\\StoronnimV.Application.csproj",
+        "packagesPath": "C:\\Users\\sannido\\.nuget\\packages\\",
+        "outputPath": "D:\\ForProgramming\\repos\\MyProjects\\CSharp\\StoronnimV\\StoronnimV.Server\\StoronnimV.Application\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\User\\AppData\\Roaming\\NuGet\\NuGet.Config"
+          "C:\\Users\\sannido\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
           "net9.0"
         ],
         "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "C:\\Program Files\\dotnet\\library-packs": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
           "net9.0": {
             "targetAlias": "net9.0",
             "projectReferences": {
-              "D:\\GitHub\\StoronnimV.Server\\StoronnimV.Server\\StoronnimV.Contracts\\StoronnimV.Contracts.csproj": {
-                "projectPath": "D:\\GitHub\\StoronnimV.Server\\StoronnimV.Server\\StoronnimV.Contracts\\StoronnimV.Contracts.csproj"
+              "D:\\ForProgramming\\repos\\MyProjects\\CSharp\\StoronnimV\\StoronnimV.Server\\StoronnimV.Contracts\\StoronnimV.Contracts.csproj": {
+                "projectPath": "D:\\ForProgramming\\repos\\MyProjects\\CSharp\\StoronnimV\\StoronnimV.Server\\StoronnimV.Contracts\\StoronnimV.Contracts.csproj"
               }
             }
           }
@@ -40,7 +43,7 @@
         "restoreAuditProperties": {
           "enableAudit": "true",
           "auditLevel": "low",
-          "auditMode": "direct"
+          "auditMode": "all"
         },
         "SdkAnalysisLevel": "9.0.100"
       },
@@ -77,37 +80,40 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.101/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.100/PortableRuntimeIdentifierGraph.json"
         }
       }
     },
-    "D:\\GitHub\\StoronnimV.Server\\StoronnimV.Server\\StoronnimV.Contracts\\StoronnimV.Contracts.csproj": {
+    "D:\\ForProgramming\\repos\\MyProjects\\CSharp\\StoronnimV\\StoronnimV.Server\\StoronnimV.Contracts\\StoronnimV.Contracts.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\GitHub\\StoronnimV.Server\\StoronnimV.Server\\StoronnimV.Contracts\\StoronnimV.Contracts.csproj",
+        "projectUniqueName": "D:\\ForProgramming\\repos\\MyProjects\\CSharp\\StoronnimV\\StoronnimV.Server\\StoronnimV.Contracts\\StoronnimV.Contracts.csproj",
         "projectName": "StoronnimV.Contracts",
-        "projectPath": "D:\\GitHub\\StoronnimV.Server\\StoronnimV.Server\\StoronnimV.Contracts\\StoronnimV.Contracts.csproj",
-        "packagesPath": "C:\\Users\\User\\.nuget\\packages\\",
-        "outputPath": "D:\\GitHub\\StoronnimV.Server\\StoronnimV.Server\\StoronnimV.Contracts\\obj\\",
+        "projectPath": "D:\\ForProgramming\\repos\\MyProjects\\CSharp\\StoronnimV\\StoronnimV.Server\\StoronnimV.Contracts\\StoronnimV.Contracts.csproj",
+        "packagesPath": "C:\\Users\\sannido\\.nuget\\packages\\",
+        "outputPath": "D:\\ForProgramming\\repos\\MyProjects\\CSharp\\StoronnimV\\StoronnimV.Server\\StoronnimV.Contracts\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\User\\AppData\\Roaming\\NuGet\\NuGet.Config"
+          "C:\\Users\\sannido\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
           "net9.0"
         ],
         "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "C:\\Program Files\\dotnet\\library-packs": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
           "net9.0": {
             "targetAlias": "net9.0",
             "projectReferences": {
-              "D:\\GitHub\\StoronnimV.Server\\StoronnimV.Server\\StoronnimV.Domain\\StoronnimV.Domain.csproj": {
-                "projectPath": "D:\\GitHub\\StoronnimV.Server\\StoronnimV.Server\\StoronnimV.Domain\\StoronnimV.Domain.csproj"
+              "D:\\ForProgramming\\repos\\MyProjects\\CSharp\\StoronnimV\\StoronnimV.Server\\StoronnimV.Domain\\StoronnimV.Domain.csproj": {
+                "projectPath": "D:\\ForProgramming\\repos\\MyProjects\\CSharp\\StoronnimV\\StoronnimV.Server\\StoronnimV.Domain\\StoronnimV.Domain.csproj"
               },
-              "D:\\GitHub\\StoronnimV.Server\\StoronnimV.Server\\StoronnimV.DTO\\StoronnimV.DTO.csproj": {
-                "projectPath": "D:\\GitHub\\StoronnimV.Server\\StoronnimV.Server\\StoronnimV.DTO\\StoronnimV.DTO.csproj"
+              "D:\\ForProgramming\\repos\\MyProjects\\CSharp\\StoronnimV\\StoronnimV.Server\\StoronnimV.DTO\\StoronnimV.DTO.csproj": {
+                "projectPath": "D:\\ForProgramming\\repos\\MyProjects\\CSharp\\StoronnimV\\StoronnimV.Server\\StoronnimV.DTO\\StoronnimV.DTO.csproj"
               }
             }
           }
@@ -120,7 +126,7 @@
         "restoreAuditProperties": {
           "enableAudit": "true",
           "auditLevel": "low",
-          "auditMode": "direct"
+          "auditMode": "all"
         },
         "SdkAnalysisLevel": "9.0.100"
       },
@@ -149,26 +155,29 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.101/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.100/PortableRuntimeIdentifierGraph.json"
         }
       }
     },
-    "D:\\GitHub\\StoronnimV.Server\\StoronnimV.Server\\StoronnimV.Domain\\StoronnimV.Domain.csproj": {
+    "D:\\ForProgramming\\repos\\MyProjects\\CSharp\\StoronnimV\\StoronnimV.Server\\StoronnimV.Domain\\StoronnimV.Domain.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\GitHub\\StoronnimV.Server\\StoronnimV.Server\\StoronnimV.Domain\\StoronnimV.Domain.csproj",
+        "projectUniqueName": "D:\\ForProgramming\\repos\\MyProjects\\CSharp\\StoronnimV\\StoronnimV.Server\\StoronnimV.Domain\\StoronnimV.Domain.csproj",
         "projectName": "StoronnimV.Domain",
-        "projectPath": "D:\\GitHub\\StoronnimV.Server\\StoronnimV.Server\\StoronnimV.Domain\\StoronnimV.Domain.csproj",
-        "packagesPath": "C:\\Users\\User\\.nuget\\packages\\",
-        "outputPath": "D:\\GitHub\\StoronnimV.Server\\StoronnimV.Server\\StoronnimV.Domain\\obj\\",
+        "projectPath": "D:\\ForProgramming\\repos\\MyProjects\\CSharp\\StoronnimV\\StoronnimV.Server\\StoronnimV.Domain\\StoronnimV.Domain.csproj",
+        "packagesPath": "C:\\Users\\sannido\\.nuget\\packages\\",
+        "outputPath": "D:\\ForProgramming\\repos\\MyProjects\\CSharp\\StoronnimV\\StoronnimV.Server\\StoronnimV.Domain\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\User\\AppData\\Roaming\\NuGet\\NuGet.Config"
+          "C:\\Users\\sannido\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
           "net9.0"
         ],
         "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "C:\\Program Files\\dotnet\\library-packs": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
@@ -185,7 +194,7 @@
         "restoreAuditProperties": {
           "enableAudit": "true",
           "auditLevel": "low",
-          "auditMode": "direct"
+          "auditMode": "all"
         },
         "SdkAnalysisLevel": "9.0.100"
       },
@@ -208,26 +217,29 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.101/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.100/PortableRuntimeIdentifierGraph.json"
         }
       }
     },
-    "D:\\GitHub\\StoronnimV.Server\\StoronnimV.Server\\StoronnimV.DTO\\StoronnimV.DTO.csproj": {
+    "D:\\ForProgramming\\repos\\MyProjects\\CSharp\\StoronnimV\\StoronnimV.Server\\StoronnimV.DTO\\StoronnimV.DTO.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\GitHub\\StoronnimV.Server\\StoronnimV.Server\\StoronnimV.DTO\\StoronnimV.DTO.csproj",
+        "projectUniqueName": "D:\\ForProgramming\\repos\\MyProjects\\CSharp\\StoronnimV\\StoronnimV.Server\\StoronnimV.DTO\\StoronnimV.DTO.csproj",
         "projectName": "StoronnimV.DTO",
-        "projectPath": "D:\\GitHub\\StoronnimV.Server\\StoronnimV.Server\\StoronnimV.DTO\\StoronnimV.DTO.csproj",
-        "packagesPath": "C:\\Users\\User\\.nuget\\packages\\",
-        "outputPath": "D:\\GitHub\\StoronnimV.Server\\StoronnimV.Server\\StoronnimV.DTO\\obj\\",
+        "projectPath": "D:\\ForProgramming\\repos\\MyProjects\\CSharp\\StoronnimV\\StoronnimV.Server\\StoronnimV.DTO\\StoronnimV.DTO.csproj",
+        "packagesPath": "C:\\Users\\sannido\\.nuget\\packages\\",
+        "outputPath": "D:\\ForProgramming\\repos\\MyProjects\\CSharp\\StoronnimV\\StoronnimV.Server\\StoronnimV.DTO\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\User\\AppData\\Roaming\\NuGet\\NuGet.Config"
+          "C:\\Users\\sannido\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
           "net9.0"
         ],
         "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "C:\\Program Files\\dotnet\\library-packs": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
@@ -244,7 +256,7 @@
         "restoreAuditProperties": {
           "enableAudit": "true",
           "auditLevel": "low",
-          "auditMode": "direct"
+          "auditMode": "all"
         },
         "SdkAnalysisLevel": "9.0.100"
       },
@@ -267,7 +279,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.101/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.100/PortableRuntimeIdentifierGraph.json"
         }
       }
     }
