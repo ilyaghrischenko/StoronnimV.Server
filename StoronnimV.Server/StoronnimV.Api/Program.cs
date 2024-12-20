@@ -1,7 +1,6 @@
 using AutoMapper;
 using Hangfire;
 using Hangfire.PostgreSql;
-using Microsoft.Build.Execution;
 using Microsoft.EntityFrameworkCore;
 using Serilog;
 using StoronnimV.Api.Middlewares;
@@ -24,7 +23,7 @@ var builder = WebApplication.CreateBuilder(args);
 #region Logger
 Log.Logger = new LoggerConfiguration()
     .WriteTo.Console()
-    .WriteTo.File("../logs/log.json",
+    .WriteTo.File("../logs/log.txt",
         rollingInterval: RollingInterval.Day,
         restrictedToMinimumLevel: Serilog.Events.LogEventLevel.Error)
     .CreateLogger();
