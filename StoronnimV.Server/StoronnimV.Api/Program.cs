@@ -149,6 +149,7 @@ if (app.Environment.IsDevelopment())
 app.MapControllers();
 app.UseHttpsRedirection();
 app.UseRouting();
+app.UseStaticFiles();
 
 app.UseCors("AllowReactApp");
 
