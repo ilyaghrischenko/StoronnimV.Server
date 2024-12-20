@@ -1298,3 +1298,4 @@ D:\GitHub\StoronnimV.Server\StoronnimV.Server\StoronnimV.Api\obj\Debug\net9.0\re
 D:\GitHub\StoronnimV.Server\StoronnimV.Server\StoronnimV.Api\obj\Debug\net9.0\StoronnimV.Api.pdb
 D:\GitHub\StoronnimV.Server\StoronnimV.Server\StoronnimV.Api\obj\Debug\net9.0\StoronnimV.Api.genruntimeconfig.cache
 D:\GitHub\StoronnimV.Server\StoronnimV.Server\StoronnimV.Api\obj\Debug\net9.0\ref\StoronnimV.Api.dll
+D:\GitHub\StoronnimV.Server\StoronnimV.Server\StoronnimV.Api\bin\Debug\net9.0\StoronnimV.Api.staticwebassets.runtime.json
