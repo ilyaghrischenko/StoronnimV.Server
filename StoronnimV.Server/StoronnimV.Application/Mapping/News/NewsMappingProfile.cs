@@ -1,6 +1,6 @@
 using AutoMapper;
+using StoronnimV.Application.DTO.Responses.NewsPage;
 using StoronnimV.Application.Extensions;
-using StoronnimV.DTO.Responses.NewsPage;
 
 namespace StoronnimV.Application.Mapping.News;
 

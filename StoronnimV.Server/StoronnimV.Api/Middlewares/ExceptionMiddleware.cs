@@ -1,6 +1,6 @@
 using System.Net;
+using StoronnimV.Api.Interfaces.Middlewares;
 using StoronnimV.Application.Exceptions;
-using StoronnimV.Contracts.Middlewares;
 
 namespace StoronnimV.Api.Middlewares;
 

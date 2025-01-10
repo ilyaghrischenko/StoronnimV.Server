@@ -1265,14 +1265,10 @@ D:\GitHub\StoronnimV.Server\StoronnimV.Server\StoronnimV.Api\bin\Debug\net9.0\tr
 D:\GitHub\StoronnimV.Server\StoronnimV.Server\StoronnimV.Api\bin\Debug\net9.0\zh-Hans\Microsoft.CodeAnalysis.Workspaces.resources.dll
 D:\GitHub\StoronnimV.Server\StoronnimV.Server\StoronnimV.Api\bin\Debug\net9.0\zh-Hant\Microsoft.CodeAnalysis.Workspaces.resources.dll
 D:\GitHub\StoronnimV.Server\StoronnimV.Server\StoronnimV.Api\bin\Debug\net9.0\StoronnimV.Application.dll
-D:\GitHub\StoronnimV.Server\StoronnimV.Server\StoronnimV.Api\bin\Debug\net9.0\StoronnimV.Contracts.dll
 D:\GitHub\StoronnimV.Server\StoronnimV.Server\StoronnimV.Api\bin\Debug\net9.0\StoronnimV.Data.dll
 D:\GitHub\StoronnimV.Server\StoronnimV.Server\StoronnimV.Api\bin\Debug\net9.0\StoronnimV.Domain.dll
-D:\GitHub\StoronnimV.Server\StoronnimV.Server\StoronnimV.Api\bin\Debug\net9.0\StoronnimV.DTO.dll
 D:\GitHub\StoronnimV.Server\StoronnimV.Server\StoronnimV.Api\bin\Debug\net9.0\StoronnimV.Application.pdb
 D:\GitHub\StoronnimV.Server\StoronnimV.Server\StoronnimV.Api\bin\Debug\net9.0\StoronnimV.Data.pdb
-D:\GitHub\StoronnimV.Server\StoronnimV.Server\StoronnimV.Api\bin\Debug\net9.0\StoronnimV.DTO.pdb
-D:\GitHub\StoronnimV.Server\StoronnimV.Server\StoronnimV.Api\bin\Debug\net9.0\StoronnimV.Contracts.pdb
 D:\GitHub\StoronnimV.Server\StoronnimV.Server\StoronnimV.Api\bin\Debug\net9.0\StoronnimV.Domain.pdb
 D:\GitHub\StoronnimV.Server\StoronnimV.Server\StoronnimV.Api\obj\Debug\net9.0\StoronnimV.Api.csproj.AssemblyReference.cache
 D:\GitHub\StoronnimV.Server\StoronnimV.Server\StoronnimV.Api\obj\Debug\net9.0\StoronnimV.Api.GeneratedMSBuildEditorConfig.editorconfig

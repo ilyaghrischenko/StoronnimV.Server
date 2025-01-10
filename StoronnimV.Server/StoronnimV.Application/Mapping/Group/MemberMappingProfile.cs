@@ -1,6 +1,6 @@
 using AutoMapper;
+using StoronnimV.Application.DTO.Responses.GroupPage.ShortMember;
 using StoronnimV.Application.Extensions;
-using StoronnimV.DTO.Responses.GroupPage.ShortMember;
 
 namespace StoronnimV.Application.Mapping.Group;
 

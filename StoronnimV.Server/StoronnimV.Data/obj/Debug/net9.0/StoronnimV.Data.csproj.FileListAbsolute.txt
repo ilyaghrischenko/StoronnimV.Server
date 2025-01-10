@@ -90,12 +90,8 @@ D:\GitHub\StoronnimV.Server\StoronnimV.Server\StoronnimV.Data\bin\Debug\net9.0\S
 D:\GitHub\StoronnimV.Server\StoronnimV.Server\StoronnimV.Data\bin\Debug\net9.0\StoronnimV.Data.runtimeconfig.json
 D:\GitHub\StoronnimV.Server\StoronnimV.Server\StoronnimV.Data\bin\Debug\net9.0\StoronnimV.Data.dll
 D:\GitHub\StoronnimV.Server\StoronnimV.Server\StoronnimV.Data\bin\Debug\net9.0\StoronnimV.Data.pdb
-D:\GitHub\StoronnimV.Server\StoronnimV.Server\StoronnimV.Data\bin\Debug\net9.0\StoronnimV.Contracts.dll
 D:\GitHub\StoronnimV.Server\StoronnimV.Server\StoronnimV.Data\bin\Debug\net9.0\StoronnimV.Domain.dll
-D:\GitHub\StoronnimV.Server\StoronnimV.Server\StoronnimV.Data\bin\Debug\net9.0\StoronnimV.DTO.dll
-D:\GitHub\StoronnimV.Server\StoronnimV.Server\StoronnimV.Data\bin\Debug\net9.0\StoronnimV.Contracts.pdb
 D:\GitHub\StoronnimV.Server\StoronnimV.Server\StoronnimV.Data\bin\Debug\net9.0\StoronnimV.Domain.pdb
-D:\GitHub\StoronnimV.Server\StoronnimV.Server\StoronnimV.Data\bin\Debug\net9.0\StoronnimV.DTO.pdb
 D:\GitHub\StoronnimV.Server\StoronnimV.Server\StoronnimV.Data\obj\Debug\net9.0\StoronnimV.Data.csproj.AssemblyReference.cache
 D:\GitHub\StoronnimV.Server\StoronnimV.Server\StoronnimV.Data\obj\Debug\net9.0\StoronnimV.Data.GeneratedMSBuildEditorConfig.editorconfig
 D:\GitHub\StoronnimV.Server\StoronnimV.Server\StoronnimV.Data\obj\Debug\net9.0\StoronnimV.Data.AssemblyInfoInputs.cache

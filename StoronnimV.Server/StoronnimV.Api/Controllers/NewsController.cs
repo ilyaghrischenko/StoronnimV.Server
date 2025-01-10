@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
-using StoronnimV.Contracts.Services.Controllers;
-using StoronnimV.DTO.Responses.NewsPage;
+using StoronnimV.Application.DTO.Responses.NewsPage;
+using StoronnimV.Application.Interfaces.Controllers;
 
 namespace StoronnimV.Api.Controllers
 {

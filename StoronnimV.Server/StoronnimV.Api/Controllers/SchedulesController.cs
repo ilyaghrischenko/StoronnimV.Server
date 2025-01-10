@@ -1,8 +1,8 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using StoronnimV.Contracts.Services.Controllers;
+using StoronnimV.Application.DTO.Responses.SchedulePage;
+using StoronnimV.Application.Interfaces.Controllers;
 using StoronnimV.Domain.Entities;
-using StoronnimV.DTO.Responses.SchedulePage;
 
 namespace StoronnimV.Api.Controllers
 {

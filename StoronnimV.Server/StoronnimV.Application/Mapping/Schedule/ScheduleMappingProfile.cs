@@ -1,6 +1,6 @@
 using AutoMapper;
+using StoronnimV.Application.DTO.Responses.SchedulePage;
 using StoronnimV.Application.Extensions;
-using StoronnimV.DTO.Responses.SchedulePage;
 
 namespace StoronnimV.Application.Mapping.Schedule;
 

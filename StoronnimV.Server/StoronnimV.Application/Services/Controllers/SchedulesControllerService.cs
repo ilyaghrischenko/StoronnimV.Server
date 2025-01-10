@@ -1,7 +1,7 @@
 using AutoMapper;
-using StoronnimV.Contracts.Services.Controllers;
-using StoronnimV.Contracts.Services.Entities;
-using StoronnimV.DTO.Responses.SchedulePage;
+using StoronnimV.Application.DTO.Responses.SchedulePage;
+using StoronnimV.Application.Interfaces.Controllers;
+using StoronnimV.Application.Interfaces.Entities;
 
 namespace StoronnimV.Application.Services.Controllers;
 

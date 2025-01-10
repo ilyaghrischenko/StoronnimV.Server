@@ -1,8 +1,8 @@
 using AutoMapper;
+using StoronnimV.Application.DTO.Responses.NewsPage;
 using StoronnimV.Application.Extensions;
-using StoronnimV.Contracts.Services.Controllers;
-using StoronnimV.Contracts.Services.Entities;
-using StoronnimV.DTO.Responses.NewsPage;
+using StoronnimV.Application.Interfaces.Controllers;
+using StoronnimV.Application.Interfaces.Entities;
 
 namespace StoronnimV.Application.Services.Controllers;
 

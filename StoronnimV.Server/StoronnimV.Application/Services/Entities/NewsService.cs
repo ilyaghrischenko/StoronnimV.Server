@@ -1,7 +1,7 @@
 using StoronnimV.Application.Exceptions;
 using StoronnimV.Application.Extensions;
-using StoronnimV.Contracts.Repositories;
-using StoronnimV.Contracts.Services.Entities;
+using StoronnimV.Application.Interfaces.Entities;
+using StoronnimV.Domain.Interfaces;
 
 namespace StoronnimV.Application.Services.Entities;
 

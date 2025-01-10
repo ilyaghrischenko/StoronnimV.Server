@@ -4,20 +4,20 @@ using Hangfire.PostgreSql;
 using Microsoft.EntityFrameworkCore;
 using Serilog;
 using StoronnimV.Api.Middlewares;
+using StoronnimV.Application.Interfaces.Controllers;
+using StoronnimV.Application.Interfaces.Entities;
 using StoronnimV.Application.Mapping.Group;
 using StoronnimV.Application.Mapping.News;
 using StoronnimV.Application.Mapping.Schedule;
 using StoronnimV.Application.Services.Controllers;
 using StoronnimV.Application.Services.Entities;
 using StoronnimV.Application.Services.Hangfire;
-using StoronnimV.Contracts.Repositories;
-using StoronnimV.Contracts.Repositories.Shared;
-using StoronnimV.Contracts.Services.Controllers;
-using StoronnimV.Contracts.Services.Entities;
 using StoronnimV.Data;
 using StoronnimV.Data.Repositories;
 using StoronnimV.Data.Repositories.Shared;
 using StoronnimV.Domain.Enums;
+using StoronnimV.Domain.Interfaces;
+using StoronnimV.Domain.Interfaces.Shared;
 
 var builder = WebApplication.CreateBuilder(args);
 

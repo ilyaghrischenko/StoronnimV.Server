@@ -81,12 +81,8 @@ D:\ForProgramming\repos\MyProjects\CSharp\StoronnimV\StoronnimV.Server\Storonnim
 D:\GitHub\StoronnimV.Server\StoronnimV.Server\StoronnimV.Application\bin\Debug\net9.0\StoronnimV.Application.deps.json
 D:\GitHub\StoronnimV.Server\StoronnimV.Server\StoronnimV.Application\bin\Debug\net9.0\StoronnimV.Application.dll
 D:\GitHub\StoronnimV.Server\StoronnimV.Server\StoronnimV.Application\bin\Debug\net9.0\StoronnimV.Application.pdb
-D:\GitHub\StoronnimV.Server\StoronnimV.Server\StoronnimV.Application\bin\Debug\net9.0\StoronnimV.Contracts.dll
 D:\GitHub\StoronnimV.Server\StoronnimV.Server\StoronnimV.Application\bin\Debug\net9.0\StoronnimV.Domain.dll
-D:\GitHub\StoronnimV.Server\StoronnimV.Server\StoronnimV.Application\bin\Debug\net9.0\StoronnimV.DTO.dll
-D:\GitHub\StoronnimV.Server\StoronnimV.Server\StoronnimV.Application\bin\Debug\net9.0\StoronnimV.Contracts.pdb
 D:\GitHub\StoronnimV.Server\StoronnimV.Server\StoronnimV.Application\bin\Debug\net9.0\StoronnimV.Domain.pdb
-D:\GitHub\StoronnimV.Server\StoronnimV.Server\StoronnimV.Application\bin\Debug\net9.0\StoronnimV.DTO.pdb
 D:\GitHub\StoronnimV.Server\StoronnimV.Server\StoronnimV.Application\obj\Debug\net9.0\StoronnimV.Application.csproj.AssemblyReference.cache
 D:\GitHub\StoronnimV.Server\StoronnimV.Server\StoronnimV.Application\obj\Debug\net9.0\StoronnimV.Application.GeneratedMSBuildEditorConfig.editorconfig
 D:\GitHub\StoronnimV.Server\StoronnimV.Server\StoronnimV.Application\obj\Debug\net9.0\StoronnimV.Application.AssemblyInfoInputs.cache

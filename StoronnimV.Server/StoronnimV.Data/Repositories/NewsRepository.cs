@@ -1,7 +1,7 @@
 using Microsoft.EntityFrameworkCore;
-using StoronnimV.Contracts.Repositories;
 using StoronnimV.Data.Repositories.Shared;
 using StoronnimV.Domain.Entities;
+using StoronnimV.Domain.Interfaces;
 
 namespace StoronnimV.Data.Repositories;
 
