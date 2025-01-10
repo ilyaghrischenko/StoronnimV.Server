@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using StoronnimV.Application.DTO.Responses.NewsPage;
+using StoronnimV.Application.DTO.Responses.Shared;
 using StoronnimV.Application.Interfaces.Controllers;
 
 namespace StoronnimV.Api.Controllers
@@ -29,7 +30,7 @@ namespace StoronnimV.Api.Controllers
         }
 
         [HttpGet("page/{page:int}")]
-        public async Task<ActionResult<IEnumerable<NewsShortResponse>>> GetNewsForPage([FromRoute] int page)
+        public async Task<ActionResult<PaginationResponse<NewsShortResponse>>> GetNewsForPage([FromRoute] int page)
         {
             var newsPaginationResponse = await _newsControllerService.GetForPageAsync(page);
             return Ok(newsPaginationResponse);

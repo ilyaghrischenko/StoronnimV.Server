@@ -9,8 +9,6 @@ ARG BUILD_CONFIGURATION=Debug
 WORKDIR /src
 COPY ["StoronnimV.Api/StoronnimV.Api.csproj", "StoronnimV.Api/"]
 COPY ["StoronnimV.Domain/StoronnimV.Domain.csproj", "StoronnimV.Domain/"]
-COPY ["StoronnimV.Contracts/StoronnimV.Contracts.csproj", "StoronnimV.Contracts/"]
-COPY ["StoronnimV.DTO/StoronnimV.DTO.csproj", "StoronnimV.DTO/"]
 COPY ["StoronnimV.Application/StoronnimV.Application.csproj", "StoronnimV.Application/"]
 COPY ["StoronnimV.Data/StoronnimV.Data.csproj", "StoronnimV.Data/"]
 RUN dotnet restore "StoronnimV.Api/StoronnimV.Api.csproj"
