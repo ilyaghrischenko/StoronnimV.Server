@@ -2,7 +2,7 @@ using StoronnimV.Application.DTO.Responses.Shared;
 
 namespace StoronnimV.Application.DTO.Responses.GroupPage.ShortMember;
 
-public class SocialResponse : BaseDto
+public class SocialResponse : BaseResponseDto
 {
     public string SocialNetwork { get; set; }
     public string Url { get; set; }

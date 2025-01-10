@@ -2,7 +2,7 @@ using StoronnimV.Application.DTO.Responses.Shared;
 
 namespace StoronnimV.Application.DTO.Responses.GroupPage.ShortMember;
 
-public class MemberResponse : BaseDto
+public class MemberResponse : BaseResponseDto
 {
     public string PhotoUrl { get; set; }
     public string FullName { get; set; }

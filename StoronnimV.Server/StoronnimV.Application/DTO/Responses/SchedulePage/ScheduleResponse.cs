@@ -2,7 +2,7 @@ using StoronnimV.Application.DTO.Responses.Shared;
 
 namespace StoronnimV.Application.DTO.Responses.SchedulePage;
 
-public class ScheduleResponse : BaseDto
+public class ScheduleResponse : BaseResponseDto
 {
     public string Photo  { get; set; }
     public string Title  { get; set; }

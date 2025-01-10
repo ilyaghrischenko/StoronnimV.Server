@@ -2,7 +2,7 @@ using StoronnimV.Application.DTO.Responses.Shared;
 
 namespace StoronnimV.Application.DTO.Responses.GroupPage.ShortGroupPage;
 
-public class GroupPageResponse : BaseDto
+public class GroupPageResponse : BaseResponseDto
 {
     public string PhotoUrl { get; set; }
     public string Description { get; set; }

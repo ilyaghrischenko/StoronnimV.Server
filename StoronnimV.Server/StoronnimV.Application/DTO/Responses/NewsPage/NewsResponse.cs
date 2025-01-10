@@ -2,9 +2,9 @@ using StoronnimV.Application.DTO.Responses.Shared;
 
 namespace StoronnimV.Application.DTO.Responses.NewsPage;
 
-public class NewsResponse : BaseDto
+public class NewsResponse : BaseResponseDto
 {
-    public string Photo { get; set; }
+    public string? Photo { get; set; }
     public string Title { get; set; }
     public string Description { get; set; }
     public string Priority { get; set; }
@@ -12,7 +12,7 @@ public class NewsResponse : BaseDto
     
     public NewsResponse() { }
     
-    public NewsResponse(long id, string photo, string title, string description, string priority, string date)
+    public NewsResponse(long id, string title, string description, string priority, string date, string? photo = null)
     {
         Id = id;
         Photo = photo;

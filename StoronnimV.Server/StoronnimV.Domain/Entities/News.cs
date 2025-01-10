@@ -8,14 +8,14 @@ namespace StoronnimV.Domain.Entities;
 /// </summary>
 public class News : BaseEntity
 {
-    public string Photo { get; set; }
+    public string? Photo { get; set; }
     public string Title { get; set; }
     public string Description { get; set; }
     public NewsPriority Priority { get; set; }
     public DateOnly Date { get; set; } = DateOnly.FromDateTime(DateTime.UtcNow);
     
     public News() {}
-    public News(string photo, string title, string description, NewsPriority priority)
+    public News(string title, string description, NewsPriority priority, string? photo = null)
     {
         Photo = photo;
         Title = title;
