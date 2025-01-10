@@ -1,6 +1,7 @@
 using StoronnimV.Application.Exceptions;
 using StoronnimV.Application.Extensions;
 using StoronnimV.Application.Interfaces.Entities;
+using StoronnimV.Application.Models;
 using StoronnimV.Domain.Interfaces;
 
 namespace StoronnimV.Application.Services.Entities;
@@ -35,16 +36,57 @@ public class NewsService(INewsRepository newsRepository) : INewsService
             .ToList();
     }
 
-    public async Task<IEnumerable<object>> GetForPageAsync(int page)
+    public async Task<PaginationResult> GetForPageAsync(int page, int pageSize)
     {
-        var allNews = await _newsRepository.GetForPageAsync(page);
-        if (allNews is null)
+        if (page <= 0)
         {
-            return new List<object>();
+            throw new PaginationException("invalid page number");
         }
         
-        return allNews
+        var totalCount = await _newsRepository.GetTotalCountAsync();
+
+        if (totalCount == 0)
+        {
+            return new PaginationResult(
+                    currentPage: page,
+                    totalPages: 0,
+                    totalItems: 0,
+                    items: Enumerable.Empty<object>()
+                );
+        }
+        
+        var totalPages = (int)Math.Ceiling((double)totalCount / page);
+        var items = await _newsRepository.GetForPageAsync(page, pageSize);
+
+        if (items is null || !items.Any())
+        {
+            return new PaginationResult(
+                currentPage: page,
+                totalPages: 0,
+                totalItems: 0,
+                items: Enumerable.Empty<object>()
+            );
+        }
+        
+        var sortedItems = items
             .OrderBy(news => (string)news.GetPropertyValue("Priority")!)
             .ToList();
+
+        return new PaginationResult(
+            currentPage: page,
+            totalPages: totalPages,
+            totalItems: totalCount,
+            items: sortedItems
+        );
+
+        // var allNews = await _newsRepository.GetForPageAsync(page);
+        // if (allNews is null)
+        // {
+        //     return new List<object>();
+        // }
+        //
+        // return allNews
+        //     .OrderBy(news => (string)news.GetPropertyValue("Priority")!)
+        //     .ToList();
     }
 }

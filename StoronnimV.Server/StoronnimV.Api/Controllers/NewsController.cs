@@ -31,8 +31,8 @@ namespace StoronnimV.Api.Controllers
         [HttpGet("page/{page:int}")]
         public async Task<ActionResult<IEnumerable<NewsShortResponse>>> GetNewsForPage([FromRoute] int page)
         {
-            var news = await _newsControllerService.GetForPageAsync(page);
-            return Ok(news);
+            var newsPaginationResponse = await _newsControllerService.GetForPageAsync(page);
+            return Ok(newsPaginationResponse);
         }
     }
 }

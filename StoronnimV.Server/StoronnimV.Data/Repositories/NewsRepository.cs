@@ -75,4 +75,10 @@ public class NewsRepository(IDbContextFactory<StoronnimVContext> contextFactory)
             })
             .ToListAsync();
     }
+
+    public async Task<int> GetTotalCountAsync()
+    {
+        using var context = await _contextFactory.CreateDbContextAsync();
+        return await context.NewsItems.CountAsync();
+    }
 }

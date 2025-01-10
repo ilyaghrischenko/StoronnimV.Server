@@ -34,11 +34,18 @@ public class NewsControllerService(
         return newsDto;
     }
 
-    public async Task<IEnumerable<NewsShortResponse>> GetForPageAsync(int page)
+    public async Task<NewsPaginationResponse> GetForPageAsync(int page)
     {
-        var sortedNews = await _newsService.GetForPageAsync(page);
+        const int pageSize = 10;
+        var paginationResult = await _newsService.GetForPageAsync(page, pageSize);
         
-        var newsDto = _mapper.Map<IEnumerable<NewsShortResponse>>(sortedNews);
-        return newsDto;
+        var newsDto = _mapper.Map<IEnumerable<NewsShortResponse>>(paginationResult.Items);
+        
+        return new NewsPaginationResponse(
+            currentPage: paginationResult.CurrentPage,
+            totalPages: paginationResult.TotalPages,
+            totalItems: paginationResult.TotalItems,
+            shortNews: newsDto
+        );
     }
 }

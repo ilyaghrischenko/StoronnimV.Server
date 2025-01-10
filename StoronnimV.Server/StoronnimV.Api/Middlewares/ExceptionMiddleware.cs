@@ -37,6 +37,12 @@ public class ExceptionMiddleware : IExceptionMiddleware
                 HttpStatusCode.InternalServerError,
                 ex.Message);
         }
+        catch (PaginationException ex)
+        {
+            await HandleExceptionAsync(context,
+                HttpStatusCode.BadRequest,
+                ex.Message);
+        }
         catch (Exception ex)
         {
             await HandleExceptionAsync(context,

@@ -4,5 +4,5 @@ namespace StoronnimV.Application.Interfaces.Controllers.Shared;
 
 public interface IPaginationControllerService<TDto> where TDto : BaseResponseDto
 {
-    Task<IEnumerable<TDto>> GetForPageAsync(int page);
+    Task<TDto> GetForPageAsync(int page);
 }
