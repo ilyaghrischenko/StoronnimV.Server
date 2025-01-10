@@ -55,7 +55,7 @@ public class NewsService(INewsRepository newsRepository) : INewsService
                 );
         }
         
-        var totalPages = (int)Math.Ceiling((double)totalCount / page);
+        var totalPages = (int)Math.Ceiling((double)totalCount / pageSize);
         var items = await _newsRepository.GetForPageAsync(page, pageSize);
 
         if (items is null || !items.Any())
