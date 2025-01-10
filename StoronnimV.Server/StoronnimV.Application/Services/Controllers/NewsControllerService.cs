@@ -1,5 +1,6 @@
 using AutoMapper;
 using StoronnimV.Application.DTO.Responses.NewsPage;
+using StoronnimV.Application.DTO.Responses.Shared;
 using StoronnimV.Application.Extensions;
 using StoronnimV.Application.Interfaces.Controllers;
 using StoronnimV.Application.Interfaces.Entities;
@@ -34,14 +35,14 @@ public class NewsControllerService(
         return newsDto;
     }
 
-    public async Task<NewsPaginationResponse> GetForPageAsync(int page)
+    public async Task<PaginationResponse<NewsShortResponse>> GetForPageAsync(int page)
     {
         const int pageSize = 10;
         var paginationResult = await _newsService.GetForPageAsync(page, pageSize);
         
         var newsDto = _mapper.Map<IEnumerable<NewsShortResponse>>(paginationResult.Items);
         
-        return new NewsPaginationResponse(
+        return new PaginationResponse<NewsShortResponse>(
             currentPage: paginationResult.CurrentPage,
             totalPages: paginationResult.TotalPages,
             totalItems: paginationResult.TotalItems,
