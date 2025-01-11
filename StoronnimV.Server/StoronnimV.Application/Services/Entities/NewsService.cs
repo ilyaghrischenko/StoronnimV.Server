@@ -78,15 +78,5 @@ public class NewsService(INewsRepository newsRepository) : INewsService
             totalItems: totalCount,
             items: sortedItems
         );
-
-        // var allNews = await _newsRepository.GetForPageAsync(page);
-        // if (allNews is null)
-        // {
-        //     return new List<object>();
-        // }
-        //
-        // return allNews
-        //     .OrderBy(news => (string)news.GetPropertyValue("Priority")!)
-        //     .ToList();
     }
 }

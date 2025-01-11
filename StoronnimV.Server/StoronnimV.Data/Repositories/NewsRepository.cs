@@ -54,7 +54,7 @@ public class NewsRepository(IDbContextFactory<StoronnimVContext> contextFactory)
             .ToListAsync();
     }
 
-    public async Task<IEnumerable<object>?> GetForPageAsync(int page, int pageSize = 10)
+    public async Task<IEnumerable<object>?> GetForPageAsync(int page, int pageSize = 9)
     {
         using var context = await _contextFactory.CreateDbContextAsync();
         var dbSet = context.NewsItems;

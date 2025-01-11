@@ -37,7 +37,7 @@ public class NewsControllerService(
 
     public async Task<PaginationResponse<NewsShortResponse>> GetForPageAsync(int page)
     {
-        const int pageSize = 10;
+        const int pageSize = 9;
         var paginationResult = await _newsService.GetForPageAsync(page, pageSize);
         
         var newsDto = _mapper.Map<IEnumerable<NewsShortResponse>>(paginationResult.Items);
