@@ -1,3 +1,4 @@
+using Microsoft.Extensions.Logging;
 using StoronnimV.Application.Exceptions;
 using StoronnimV.Application.Interfaces.Entities;
 using StoronnimV.Domain.Interfaces;
@@ -8,28 +9,44 @@ namespace StoronnimV.Application.Services.Entities;
 /// Сервис для проверки полученных данных, полученых с репозитория
 /// </summary>
 /// <param name="socialRepository"></param>
-public class SocialService(ISocialRepository socialRepository) : ISocialService
+public class SocialService(ISocialRepository socialRepository,
+    ILogger<SocialService> logger) : ISocialService
 {
+    private readonly ISocialRepository _socialRepository = socialRepository;
+    private readonly ILogger<SocialService> _logger = logger;
+    
     public async Task<object> GetItemByIdAsync(long id)
     {
-        var social = await socialRepository.GetByIdAsNoTrackingAsync(id)
+        _logger.LogInformation($"Service: SocialService Method: GetItemByIdAsync with id: {id} started at {DateTime.UtcNow}");
+        
+        var social = await _socialRepository.GetByIdAsNoTrackingAsync(id)
             ?? throw new EntityNotFoundException($"Social with id: {id} was not found");
         
+        _logger.LogInformation($"Service: SocialService Method: GetItemByIdAsync with id: {id} ended at {DateTime.UtcNow}");
+
         return social;
     }
 
     public async Task<IEnumerable<object>> GetAllAsync()
     {
-        var socials = await socialRepository.GetAllAsync();
+        _logger.LogInformation($"Service: SocialService Method: GetAllAsync started at {DateTime.UtcNow}");
         
+        var socials = await _socialRepository.GetAllAsync();
+        
+        _logger.LogInformation($"Service: SocialService Method: GetAllAsync ended at {DateTime.UtcNow}");
+
         return socials ?? new List<object>();
     }
     
     public async Task<IEnumerable<object>> GetAllForMemberAsync(long memberId)
     {
-        var socials = await socialRepository.GetAllForMemberAsync(memberId)
+        _logger.LogInformation($"Service: SocialService Method: GetAllForMemberAsync with memberId: {memberId} started at {DateTime.UtcNow}");
+        
+        var socials = await _socialRepository.GetAllForMemberAsync(memberId)
             ?? throw new EntityNotFoundException($"Socials with member id: {memberId} was not found");
         
+        _logger.LogInformation($"Service: SocialService Method: GetAllForMemberAsync with memberId: {memberId} ended at {DateTime.UtcNow}");
+
         return socials;
     }
 }

@@ -1,4 +1,5 @@
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using StoronnimV.Data.Repositories.Shared;
 using StoronnimV.Domain.Entities;
 using StoronnimV.Domain.Interfaces;
@@ -9,10 +10,12 @@ namespace StoronnimV.Data.Repositories;
 /// Репозиторий для получения данных напрямую с бд
 /// </summary>
 /// <param name="contextFactory"></param>
-public class MemberRepository(IDbContextFactory<StoronnimVContext> contextFactory) : 
+public class MemberRepository(IDbContextFactory<StoronnimVContext> contextFactory,
+    ILogger<MemberRepository> logger) : 
     Repository<Member>(contextFactory), IMemberRepository
 {
     private readonly IDbContextFactory<StoronnimVContext> _contextFactory = contextFactory;
+    private readonly ILogger<MemberRepository> _logger = logger;
 
     protected override IQueryable<Member> ApplyIncludes(IQueryable<Member> dbSet)
     {
@@ -21,9 +24,13 @@ public class MemberRepository(IDbContextFactory<StoronnimVContext> contextFactor
 
     public async Task<object?> GetByIdAsNoTrackingAsync(long id)
     {
+        _logger.LogInformation($"Repository: MemberRepository Method: GetByIdAsNoTrackingAsync with id: {id} started at {DateTime.UtcNow}");
+        
         using var context = await _contextFactory.CreateDbContextAsync();
         var dbSet = context.Members;
         var query = ApplyIncludes(dbSet);
+
+        _logger.LogInformation($"Repository: MemberRepository Method: GetByIdAsNoTrackingAsync with id: {id} ended at {DateTime.UtcNow}");
 
         return await query
             .AsNoTracking()
@@ -40,10 +47,14 @@ public class MemberRepository(IDbContextFactory<StoronnimVContext> contextFactor
 
     public async Task<IEnumerable<object>?> GetAllAsync()
     {
+        _logger.LogInformation($"Repository: MemberRepository Method: GetAllAsync started at {DateTime.UtcNow}");
+        
         using var context = await _contextFactory.CreateDbContextAsync();
         var dbSet = context.Members;
         var query = ApplyIncludes(dbSet);
         
+        _logger.LogInformation($"Repository: MemberRepository Method: GetAllAsync ended at {DateTime.UtcNow}");
+
         return await query
             .AsNoTracking()
             .Select(member => new

@@ -1,3 +1,4 @@
+using Microsoft.Extensions.Logging;
 using StoronnimV.Application.Exceptions;
 using StoronnimV.Application.Extensions;
 using StoronnimV.Application.Interfaces.Entities;
@@ -11,25 +12,35 @@ namespace StoronnimV.Application.Services.Entities;
 /// Сервис для проверки полученных данных, полученых с репозитория
 /// </summary>
 /// <param name="scheduleRepository"></param>
-public class ScheduleService(IScheduleRepository scheduleRepository) : IScheduleService
+public class ScheduleService(IScheduleRepository scheduleRepository,
+    ILogger<ScheduleService> logger) : IScheduleService
 {
     private readonly IScheduleRepository _scheduleRepository = scheduleRepository;
+    private readonly ILogger<ScheduleService> _logger = logger;
     
     public async Task<object> GetItemByIdAsync(long id)
     {
+        _logger.LogInformation($"Service: ScheduleService Method: GetItemByIdAsync with id: {id} started at {DateTime.UtcNow}");
+        
         var schedule = await _scheduleRepository.GetByIdAsNoTrackingAsync(id)
             ?? throw new EntityNotFoundException($"Schedule with id: {id} was not found");
         
+        _logger.LogInformation($"Service: ScheduleService Method: GetItemByIdAsync with id: {id} ended at {DateTime.UtcNow}");
+
         return schedule;
     }
 
     public async Task<IEnumerable<object>> GetAllAsync()
     {
+        _logger.LogInformation($"Service: ScheduleService Method: GetAllAsync started at {DateTime.UtcNow}");
+        
         var allSchedules = await _scheduleRepository.GetAllAsync();
         if (allSchedules is null)
         {
             return new List<object>();
         }
+
+        _logger.LogInformation($"Service: ScheduleService Method: GetAllAsync ended at {DateTime.UtcNow}");
 
         return allSchedules
             .Where(schedule => (string)schedule.GetPropertyValue("Status")! == "Active")
@@ -38,6 +49,8 @@ public class ScheduleService(IScheduleRepository scheduleRepository) : ISchedule
 
     public async Task UpdateStatusesAsync()
     {
+        _logger.LogInformation($"Service: ScheduleService Method: UpdateStatusesAsync started at {DateTime.UtcNow}");
+        
         var allSchedules = await _scheduleRepository
             .GetAllSchedulesAsync();
         
@@ -55,6 +68,8 @@ public class ScheduleService(IScheduleRepository scheduleRepository) : ISchedule
             })
         );
         
+        _logger.LogInformation($"Service: ScheduleService Method: UpdateStatusesAsync ended at {DateTime.UtcNow}");
+
         await Task.WhenAll(updateTasks);
     }
 }
