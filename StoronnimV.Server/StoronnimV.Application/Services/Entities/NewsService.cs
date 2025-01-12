@@ -82,7 +82,7 @@ public class NewsService(INewsRepository newsRepository,
         }
         
         var sortedItems = items
-            .OrderBy(news => (string)news.GetPropertyValue("Priority")!)
+            .OrderBy(news => (string)news.GetPropertyValue("Date")!)
             .ToList();
 
         _logger.LogInformation($"Service: NewsService Method: GetForPageAsync with [page: {page}, pageSize: {pageSize}] ended at {DateTime.UtcNow}");
