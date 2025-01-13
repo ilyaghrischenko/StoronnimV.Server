@@ -3,6 +3,7 @@ using Hangfire;
 using Hangfire.PostgreSql;
 using Microsoft.EntityFrameworkCore;
 using Serilog;
+using StoronnimV.Api.Extensions;
 using StoronnimV.Api.Middlewares;
 using StoronnimV.Application.Interfaces.Controllers;
 using StoronnimV.Application.Interfaces.Entities;
@@ -21,36 +22,17 @@ using StoronnimV.Domain.Interfaces.Shared;
 
 var builder = WebApplication.CreateBuilder(args);
 
-#region Logger
-Log.Logger = new LoggerConfiguration()
-    .WriteTo.Console()
-    .WriteTo.File("../logs/log.txt",
-        rollingInterval: RollingInterval.Day,
-        restrictedToMinimumLevel: Serilog.Events.LogEventLevel.Error)
-    .CreateLogger();
-
-builder.Host.UseSerilog();
-builder.Services.AddLogging();
-#endregion
-
+builder
+    .AddSerilogLogger()
+    .AddAutoMapper()
+    .AddCors()
+    .AddRepositories()
+    .AddApplicationServices()
+    .AddIntegrationServices()
+    .AddHangfire()
+    .AddPooledDbContextFactory();
+    
 #region AutoMapper
-#region News
-builder.Services.AddAutoMapper(typeof(NewsMappingProfile).Assembly);
-builder.Services.AddAutoMapper(typeof(NewsShortMappingProfile).Assembly);
-#endregion
-
-#region Schedule
-builder.Services.AddAutoMapper(typeof(ScheduleMappingProfile).Assembly);
-builder.Services.AddAutoMapper(typeof(ScheduleShortMappingProfile).Assembly);
-#endregion
-
-#region Group
-builder.Services.AddAutoMapper(typeof(GroupPageMappingProfile).Assembly);
-builder.Services.AddAutoMapper(typeof(MemberShortMappingProfile).Assembly);
-builder.Services.AddAutoMapper(typeof(MemberMappingProfile).Assembly);
-builder.Services.AddAutoMapper(typeof(SocialMappingProfile).Assembly);
-#endregion
-
 var mapperConfig = new MapperConfiguration(cfg =>
 {
     #region Group
@@ -75,67 +57,11 @@ var mapperConfig = new MapperConfiguration(cfg =>
 mapperConfig.AssertConfigurationIsValid();
 #endregion
 
-#region CORS
-builder.Services.AddCors(options =>
-{
-    options.AddPolicy("AllowReactApp",
-        policy =>
-        {
-            policy.WithOrigins("http://localhost:3000")
-                  .AllowAnyHeader()
-                  .AllowAnyMethod();
-        });
-});
-#endregion
-
 // Add services to the container.
 builder.Services.AddOpenApi();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddControllers();
-
-#region Dependency Injection
-#region Repositories
-builder.Services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
-builder.Services.AddScoped<INewsRepository, NewsRepository>();
-builder.Services.AddScoped<ISocialRepository, SocialRepository>();
-builder.Services.AddScoped<IMemberRepository, MemberRepository>();
-builder.Services.AddScoped<IGroupPageRepository, GroupPageRepository>();
-builder.Services.AddScoped<IScheduleRepository, ScheduleRepository>();
-#endregion
-
-#region Services
-#region Entities
-builder.Services.AddScoped<INewsService, NewsService>();
-builder.Services.AddScoped<IScheduleService, ScheduleService>();
-builder.Services.AddScoped<ISocialService, SocialService>();
-builder.Services.AddScoped<IMemberService, MemberService>();
-builder.Services.AddScoped<IGroupPageService, GroupPageService>();
-#endregion
-
-#region Controllers
-builder.Services.AddScoped<INewsControllerService, NewsControllerService>();
-builder.Services.AddScoped<ISchedulesControllerService, SchedulesControllerService>();
-builder.Services.AddScoped<IGroupPageControllerService, GroupPageControllerService>();
-#endregion
-
-#region Hangfire
-builder.Services.AddScoped<ScheduleStatusUpdaterService>();
-#endregion
-#endregion
-#endregion
-
-var connectionString = builder.Configuration.GetConnectionString("CloudConnection");
-
-#region Hangfire
-builder.Services.AddHangfire(config => config
-    .UsePostgreSqlStorage(connectionString));
-
-builder.Services.AddHangfireServer();
-#endregion
-
-builder.Services.AddPooledDbContextFactory<StoronnimVContext>(options =>
-    options.UseNpgsql(connectionString));
 
 var app = builder.Build();
 
