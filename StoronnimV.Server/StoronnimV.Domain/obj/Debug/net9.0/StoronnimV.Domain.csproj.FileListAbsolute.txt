@@ -58,3 +58,15 @@ D:\GitHub\StoronnimV.Server\StoronnimV.Server\StoronnimV.Domain\obj\Debug\net9.0
 D:\GitHub\StoronnimV.Server\StoronnimV.Server\StoronnimV.Domain\obj\Debug\net9.0\refint\StoronnimV.Domain.dll
 D:\GitHub\StoronnimV.Server\StoronnimV.Server\StoronnimV.Domain\obj\Debug\net9.0\StoronnimV.Domain.pdb
 D:\GitHub\StoronnimV.Server\StoronnimV.Server\StoronnimV.Domain\obj\Debug\net9.0\ref\StoronnimV.Domain.dll
+D:\ForProgramming\Projects\MyProjects\CSharp\StoronnimV.Server\StoronnimV.Server\StoronnimV.Domain\bin\Debug\net9.0\StoronnimV.Domain.deps.json
+D:\ForProgramming\Projects\MyProjects\CSharp\StoronnimV.Server\StoronnimV.Server\StoronnimV.Domain\bin\Debug\net9.0\StoronnimV.Domain.dll
+D:\ForProgramming\Projects\MyProjects\CSharp\StoronnimV.Server\StoronnimV.Server\StoronnimV.Domain\bin\Debug\net9.0\StoronnimV.Domain.pdb
+D:\ForProgramming\Projects\MyProjects\CSharp\StoronnimV.Server\StoronnimV.Server\StoronnimV.Domain\obj\Debug\net9.0\StoronnimV.Domain.GeneratedMSBuildEditorConfig.editorconfig
+D:\ForProgramming\Projects\MyProjects\CSharp\StoronnimV.Server\StoronnimV.Server\StoronnimV.Domain\obj\Debug\net9.0\StoronnimV.Domain.AssemblyInfoInputs.cache
+D:\ForProgramming\Projects\MyProjects\CSharp\StoronnimV.Server\StoronnimV.Server\StoronnimV.Domain\obj\Debug\net9.0\StoronnimV.Domain.AssemblyInfo.cs
+D:\ForProgramming\Projects\MyProjects\CSharp\StoronnimV.Server\StoronnimV.Server\StoronnimV.Domain\obj\Debug\net9.0\StoronnimV.Domain.csproj.CoreCompileInputs.cache
+D:\ForProgramming\Projects\MyProjects\CSharp\StoronnimV.Server\StoronnimV.Server\StoronnimV.Domain\obj\Debug\net9.0\StoronnimV.Domain.sourcelink.json
+D:\ForProgramming\Projects\MyProjects\CSharp\StoronnimV.Server\StoronnimV.Server\StoronnimV.Domain\obj\Debug\net9.0\StoronnimV.Domain.dll
+D:\ForProgramming\Projects\MyProjects\CSharp\StoronnimV.Server\StoronnimV.Server\StoronnimV.Domain\obj\Debug\net9.0\refint\StoronnimV.Domain.dll
+D:\ForProgramming\Projects\MyProjects\CSharp\StoronnimV.Server\StoronnimV.Server\StoronnimV.Domain\obj\Debug\net9.0\StoronnimV.Domain.pdb
+D:\ForProgramming\Projects\MyProjects\CSharp\StoronnimV.Server\StoronnimV.Server\StoronnimV.Domain\obj\Debug\net9.0\ref\StoronnimV.Domain.dll

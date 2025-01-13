@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "HlygxCBClqB+R6d5/M7QT0miV0JwqbPIsf14sOa1cEg=",
+  "Hash": "iwPfy4icWMVuerqHEbiDSeOj+eT9AnjuJXtYutpiQMI=",
   "Source": "StoronnimV.Api",
   "BasePath": "_content/StoronnimV.Api",
   "Mode": "Default",
@@ -10,17 +10,17 @@
     {
       "Name": "StoronnimV.Api\\wwwroot",
       "Source": "StoronnimV.Api",
-      "ContentRoot": "D:\\GitHub\\StoronnimV.Server\\StoronnimV.Server\\StoronnimV.Api\\wwwroot\\",
+      "ContentRoot": "D:\\ForProgramming\\Projects\\MyProjects\\CSharp\\StoronnimV.Server\\StoronnimV.Server\\StoronnimV.Api\\wwwroot\\",
       "BasePath": "_content/StoronnimV.Api",
       "Pattern": "**"
     }
   ],
   "Assets": [
     {
-      "Identity": "D:\\GitHub\\StoronnimV.Server\\StoronnimV.Server\\StoronnimV.Api\\wwwroot\\photo\\news.jpg",
+      "Identity": "D:\\ForProgramming\\Projects\\MyProjects\\CSharp\\StoronnimV.Server\\StoronnimV.Server\\StoronnimV.Api\\wwwroot\\photo\\news.jpg",
       "SourceId": "StoronnimV.Api",
       "SourceType": "Discovered",
-      "ContentRoot": "D:\\GitHub\\StoronnimV.Server\\StoronnimV.Server\\StoronnimV.Api\\wwwroot\\",
+      "ContentRoot": "D:\\ForProgramming\\Projects\\MyProjects\\CSharp\\StoronnimV.Server\\StoronnimV.Server\\StoronnimV.Api\\wwwroot\\",
       "BasePath": "_content/StoronnimV.Api",
       "RelativePath": "photo/news#[.{fingerprint}]?.jpg",
       "AssetKind": "All",
@@ -41,7 +41,7 @@
   "Endpoints": [
     {
       "Route": "photo/news.63mojrhr86.jpg",
-      "AssetFile": "D:\\GitHub\\StoronnimV.Server\\StoronnimV.Server\\StoronnimV.Api\\wwwroot\\photo\\news.jpg",
+      "AssetFile": "D:\\ForProgramming\\Projects\\MyProjects\\CSharp\\StoronnimV.Server\\StoronnimV.Server\\StoronnimV.Api\\wwwroot\\photo\\news.jpg",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -62,7 +62,7 @@
         },
         {
           "Name": "Last-Modified",
-          "Value": "Fri, 20 Dec 2024 21:41:13 GMT"
+          "Value": "Fri, 10 Jan 2025 17:05:49 GMT"
         },
         {
           "Name": "Cache-Control",
@@ -86,7 +86,7 @@
     },
     {
       "Route": "photo/news.jpg",
-      "AssetFile": "D:\\GitHub\\StoronnimV.Server\\StoronnimV.Server\\StoronnimV.Api\\wwwroot\\photo\\news.jpg",
+      "AssetFile": "D:\\ForProgramming\\Projects\\MyProjects\\CSharp\\StoronnimV.Server\\StoronnimV.Server\\StoronnimV.Api\\wwwroot\\photo\\news.jpg",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -107,7 +107,7 @@
         },
         {
           "Name": "Last-Modified",
-          "Value": "Fri, 20 Dec 2024 21:41:13 GMT"
+          "Value": "Fri, 10 Jan 2025 17:05:49 GMT"
         },
         {
           "Name": "Cache-Control",

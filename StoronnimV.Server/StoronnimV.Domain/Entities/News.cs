@@ -9,19 +9,19 @@ namespace StoronnimV.Domain.Entities;
 public class News : BaseEntity
 {
     public string? Photo { get; set; }
-    public string? Video { get; set; }
     public string Title { get; set; }
     public string Description { get; set; }
+    public Video? Video { get; set; }
     public NewsPriority Priority { get; set; }
     public DateOnly Date { get; set; } = DateOnly.FromDateTime(DateTime.UtcNow);
     
     public News() {}
-    public News(string title, string description, NewsPriority priority, string? photo = null, string? video = null)
+    public News(string title, string description, NewsPriority priority, string? photo = null, Video? video = null)
     {
         Photo = photo;
-        Video = video;
         Title = title;
         Description = description;
+        Video = video;
         Priority = priority;
     }
 }

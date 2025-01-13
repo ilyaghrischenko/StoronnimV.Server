@@ -17,6 +17,11 @@ public class NewsRepository(IDbContextFactory<StoronnimVContext> contextFactory,
     private readonly IDbContextFactory<StoronnimVContext> _contextFactory = contextFactory;
     private readonly ILogger<NewsRepository> _logger = logger;
 
+    protected override IQueryable<News> ApplyIncludes(IQueryable<News> dbSet)
+    {
+        return dbSet.Include(news => news.Video);
+    }
+
     public async Task<object?> GetByIdAsNoTrackingAsync(long id)
     {
         _logger.LogInformation($"Repository: NewsRepository Method: GetByIdAsNoTrackingAsync with id: {id} started at {DateTime.UtcNow}");
@@ -33,6 +38,7 @@ public class NewsRepository(IDbContextFactory<StoronnimVContext> contextFactory,
             {
                 Id = newsItem.Id,
                 Photo = newsItem.Photo,
+                Video = newsItem.Video.Url,
                 Title = newsItem.Title,
                 Description = newsItem.Description,
                 Priority = newsItem.Priority.ToString(),
