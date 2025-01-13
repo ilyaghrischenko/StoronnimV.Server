@@ -4,7 +4,7 @@ namespace StoronnimV.Application.DTO.Responses.SchedulePage;
 
 public class ScheduleResponse : BaseResponseDto
 {
-    public string Photo  { get; set; }
+    public string? Photo  { get; set; }
     public string Title  { get; set; }
     public string PerformanceDateTime  { get; set; }
     public string Description { get; set; }
@@ -13,8 +13,8 @@ public class ScheduleResponse : BaseResponseDto
     
     public ScheduleResponse() {}
 
-    public ScheduleResponse(long id, string photo, string title, string performanceDateTime,
-        string description, string location, string status)
+    public ScheduleResponse(long id, string title, string performanceDateTime,
+        string description, string location, string status, string? photo)
     {
         Id = id;
         Photo = photo;

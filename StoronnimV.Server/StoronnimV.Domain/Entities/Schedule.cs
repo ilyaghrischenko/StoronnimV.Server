@@ -8,7 +8,7 @@ namespace StoronnimV.Domain.Entities;
 /// </summary>
 public class Schedule : BaseEntity
 {
-    public string Photo { get; set; }
+    public string? Photo { get; set; }
     public string Title { get; set; }
     public DateTime PerformanceDateTime { get; set; }
     public string Description { get; set; }
@@ -17,8 +17,8 @@ public class Schedule : BaseEntity
     
     public Schedule() {}
 
-    public Schedule(string photo, string title, DateTime performanceDateTime, 
-        string description, string location, ScheduleStatus status = ScheduleStatus.Active)
+    public Schedule(string title, DateTime performanceDateTime, 
+        string description, string location, ScheduleStatus status = ScheduleStatus.Active, string? photo = null)
     {
         Photo = photo;
         Title = title;
