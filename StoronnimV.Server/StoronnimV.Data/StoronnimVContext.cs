@@ -19,4 +19,5 @@ public class StoronnimVContext : DbContext
     public virtual DbSet<Member> Members { get; set; }
     public virtual DbSet<Social> Socials { get; set; }
     public virtual DbSet<Schedule> Schedules { get; set; }
+    public virtual DbSet<MusicPlatform> MusicPlatforms { get; set; }
 }

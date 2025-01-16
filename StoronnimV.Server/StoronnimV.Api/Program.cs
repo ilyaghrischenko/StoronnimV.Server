@@ -8,6 +8,7 @@ using StoronnimV.Api.Middlewares;
 using StoronnimV.Application.Interfaces.Controllers;
 using StoronnimV.Application.Interfaces.Entities;
 using StoronnimV.Application.Mapping.Group;
+using StoronnimV.Application.Mapping.Music;
 using StoronnimV.Application.Mapping.News;
 using StoronnimV.Application.Mapping.Schedule;
 using StoronnimV.Application.Services.Controllers;
@@ -52,6 +53,9 @@ var mapperConfig = new MapperConfiguration(cfg =>
     cfg.AddProfile<ScheduleShortMappingProfile>();
     #endregion
     
+    #region Music
+    cfg.AddProfile<MusicPlatformMappingProfile>();
+    #endregion
 });
 
 mapperConfig.AssertConfigurationIsValid();

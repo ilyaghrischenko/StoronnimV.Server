@@ -84,6 +84,33 @@ namespace StoronnimV.Data.Migrations
                     b.ToTable("Members");
                 });
 
+            modelBuilder.Entity("StoronnimV.Domain.Entities.MusicPlatform", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<long>("Id"));
+
+                    b.Property<string>("BgImageUrl")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("PlatformUrl")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<DateTime>("UpdatedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("MusicPlatforms");
+                });
+
             modelBuilder.Entity("StoronnimV.Domain.Entities.News", b =>
                 {
                     b.Property<long>("Id")
