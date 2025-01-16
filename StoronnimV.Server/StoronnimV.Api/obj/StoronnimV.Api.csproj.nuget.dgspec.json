@@ -1,31 +1,29 @@
 {
   "format": 1,
   "restore": {
-    "D:\\ForProgramming\\Projects\\MyProjects\\CSharp\\StoronnimV.Server\\StoronnimV.Server\\StoronnimV.Api\\StoronnimV.Api.csproj": {}
+    "D:\\GitHub\\StoronnimV.Server\\StoronnimV.Server\\StoronnimV.Api\\StoronnimV.Api.csproj": {}
   },
   "projects": {
-    "D:\\ForProgramming\\Projects\\MyProjects\\CSharp\\StoronnimV.Server\\StoronnimV.Server\\StoronnimV.Api\\StoronnimV.Api.csproj": {
+    "D:\\GitHub\\StoronnimV.Server\\StoronnimV.Server\\StoronnimV.Api\\StoronnimV.Api.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\ForProgramming\\Projects\\MyProjects\\CSharp\\StoronnimV.Server\\StoronnimV.Server\\StoronnimV.Api\\StoronnimV.Api.csproj",
+        "projectUniqueName": "D:\\GitHub\\StoronnimV.Server\\StoronnimV.Server\\StoronnimV.Api\\StoronnimV.Api.csproj",
         "projectName": "StoronnimV.Api",
-        "projectPath": "D:\\ForProgramming\\Projects\\MyProjects\\CSharp\\StoronnimV.Server\\StoronnimV.Server\\StoronnimV.Api\\StoronnimV.Api.csproj",
-        "packagesPath": "C:\\Users\\dimab\\.nuget\\packages\\",
-        "outputPath": "D:\\ForProgramming\\Projects\\MyProjects\\CSharp\\StoronnimV.Server\\StoronnimV.Server\\StoronnimV.Api\\obj\\",
+        "projectPath": "D:\\GitHub\\StoronnimV.Server\\StoronnimV.Server\\StoronnimV.Api\\StoronnimV.Api.csproj",
+        "packagesPath": "C:\\Users\\User\\.nuget\\packages\\",
+        "outputPath": "D:\\GitHub\\StoronnimV.Server\\StoronnimV.Server\\StoronnimV.Api\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
         ],
         "configFilePaths": [
-          "C:\\Users\\dimab\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+          "C:\\Users\\User\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config"
         ],
         "originalTargetFrameworks": [
           "net9.0"
         ],
         "sources": {
-          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
           "C:\\Program Files\\dotnet\\library-packs": {},
           "https://api.nuget.org/v3/index.json": {}
         },
@@ -33,11 +31,11 @@
           "net9.0": {
             "targetAlias": "net9.0",
             "projectReferences": {
-              "D:\\ForProgramming\\Projects\\MyProjects\\CSharp\\StoronnimV.Server\\StoronnimV.Server\\StoronnimV.Application\\StoronnimV.Application.csproj": {
-                "projectPath": "D:\\ForProgramming\\Projects\\MyProjects\\CSharp\\StoronnimV.Server\\StoronnimV.Server\\StoronnimV.Application\\StoronnimV.Application.csproj"
+              "D:\\GitHub\\StoronnimV.Server\\StoronnimV.Server\\StoronnimV.Application\\StoronnimV.Application.csproj": {
+                "projectPath": "D:\\GitHub\\StoronnimV.Server\\StoronnimV.Server\\StoronnimV.Application\\StoronnimV.Application.csproj"
               },
-              "D:\\ForProgramming\\Projects\\MyProjects\\CSharp\\StoronnimV.Server\\StoronnimV.Server\\StoronnimV.Data\\StoronnimV.Data.csproj": {
-                "projectPath": "D:\\ForProgramming\\Projects\\MyProjects\\CSharp\\StoronnimV.Server\\StoronnimV.Server\\StoronnimV.Data\\StoronnimV.Data.csproj"
+              "D:\\GitHub\\StoronnimV.Server\\StoronnimV.Server\\StoronnimV.Data\\StoronnimV.Data.csproj": {
+                "projectPath": "D:\\GitHub\\StoronnimV.Server\\StoronnimV.Server\\StoronnimV.Data\\StoronnimV.Data.csproj"
               }
             }
           }
@@ -106,28 +104,26 @@
         }
       }
     },
-    "D:\\ForProgramming\\Projects\\MyProjects\\CSharp\\StoronnimV.Server\\StoronnimV.Server\\StoronnimV.Application\\StoronnimV.Application.csproj": {
+    "D:\\GitHub\\StoronnimV.Server\\StoronnimV.Server\\StoronnimV.Application\\StoronnimV.Application.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\ForProgramming\\Projects\\MyProjects\\CSharp\\StoronnimV.Server\\StoronnimV.Server\\StoronnimV.Application\\StoronnimV.Application.csproj",
+        "projectUniqueName": "D:\\GitHub\\StoronnimV.Server\\StoronnimV.Server\\StoronnimV.Application\\StoronnimV.Application.csproj",
         "projectName": "StoronnimV.Application",
-        "projectPath": "D:\\ForProgramming\\Projects\\MyProjects\\CSharp\\StoronnimV.Server\\StoronnimV.Server\\StoronnimV.Application\\StoronnimV.Application.csproj",
-        "packagesPath": "C:\\Users\\dimab\\.nuget\\packages\\",
-        "outputPath": "D:\\ForProgramming\\Projects\\MyProjects\\CSharp\\StoronnimV.Server\\StoronnimV.Server\\StoronnimV.Application\\obj\\",
+        "projectPath": "D:\\GitHub\\StoronnimV.Server\\StoronnimV.Server\\StoronnimV.Application\\StoronnimV.Application.csproj",
+        "packagesPath": "C:\\Users\\User\\.nuget\\packages\\",
+        "outputPath": "D:\\GitHub\\StoronnimV.Server\\StoronnimV.Server\\StoronnimV.Application\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
         ],
         "configFilePaths": [
-          "C:\\Users\\dimab\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+          "C:\\Users\\User\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config"
         ],
         "originalTargetFrameworks": [
           "net9.0"
         ],
         "sources": {
-          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
           "C:\\Program Files\\dotnet\\library-packs": {},
           "https://api.nuget.org/v3/index.json": {}
         },
@@ -135,8 +131,8 @@
           "net9.0": {
             "targetAlias": "net9.0",
             "projectReferences": {
-              "D:\\ForProgramming\\Projects\\MyProjects\\CSharp\\StoronnimV.Server\\StoronnimV.Server\\StoronnimV.Domain\\StoronnimV.Domain.csproj": {
-                "projectPath": "D:\\ForProgramming\\Projects\\MyProjects\\CSharp\\StoronnimV.Server\\StoronnimV.Server\\StoronnimV.Domain\\StoronnimV.Domain.csproj"
+              "D:\\GitHub\\StoronnimV.Server\\StoronnimV.Server\\StoronnimV.Domain\\StoronnimV.Domain.csproj": {
+                "projectPath": "D:\\GitHub\\StoronnimV.Server\\StoronnimV.Server\\StoronnimV.Domain\\StoronnimV.Domain.csproj"
               }
             }
           }
@@ -190,28 +186,26 @@
         }
       }
     },
-    "D:\\ForProgramming\\Projects\\MyProjects\\CSharp\\StoronnimV.Server\\StoronnimV.Server\\StoronnimV.Data\\StoronnimV.Data.csproj": {
+    "D:\\GitHub\\StoronnimV.Server\\StoronnimV.Server\\StoronnimV.Data\\StoronnimV.Data.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\ForProgramming\\Projects\\MyProjects\\CSharp\\StoronnimV.Server\\StoronnimV.Server\\StoronnimV.Data\\StoronnimV.Data.csproj",
+        "projectUniqueName": "D:\\GitHub\\StoronnimV.Server\\StoronnimV.Server\\StoronnimV.Data\\StoronnimV.Data.csproj",
         "projectName": "StoronnimV.Data",
-        "projectPath": "D:\\ForProgramming\\Projects\\MyProjects\\CSharp\\StoronnimV.Server\\StoronnimV.Server\\StoronnimV.Data\\StoronnimV.Data.csproj",
-        "packagesPath": "C:\\Users\\dimab\\.nuget\\packages\\",
-        "outputPath": "D:\\ForProgramming\\Projects\\MyProjects\\CSharp\\StoronnimV.Server\\StoronnimV.Server\\StoronnimV.Data\\obj\\",
+        "projectPath": "D:\\GitHub\\StoronnimV.Server\\StoronnimV.Server\\StoronnimV.Data\\StoronnimV.Data.csproj",
+        "packagesPath": "C:\\Users\\User\\.nuget\\packages\\",
+        "outputPath": "D:\\GitHub\\StoronnimV.Server\\StoronnimV.Server\\StoronnimV.Data\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
         ],
         "configFilePaths": [
-          "C:\\Users\\dimab\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+          "C:\\Users\\User\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config"
         ],
         "originalTargetFrameworks": [
           "net9.0"
         ],
         "sources": {
-          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
           "C:\\Program Files\\dotnet\\library-packs": {},
           "https://api.nuget.org/v3/index.json": {}
         },
@@ -219,8 +213,8 @@
           "net9.0": {
             "targetAlias": "net9.0",
             "projectReferences": {
-              "D:\\ForProgramming\\Projects\\MyProjects\\CSharp\\StoronnimV.Server\\StoronnimV.Server\\StoronnimV.Domain\\StoronnimV.Domain.csproj": {
-                "projectPath": "D:\\ForProgramming\\Projects\\MyProjects\\CSharp\\StoronnimV.Server\\StoronnimV.Server\\StoronnimV.Domain\\StoronnimV.Domain.csproj"
+              "D:\\GitHub\\StoronnimV.Server\\StoronnimV.Server\\StoronnimV.Domain\\StoronnimV.Domain.csproj": {
+                "projectPath": "D:\\GitHub\\StoronnimV.Server\\StoronnimV.Server\\StoronnimV.Domain\\StoronnimV.Domain.csproj"
               }
             }
           }
@@ -284,28 +278,26 @@
         }
       }
     },
-    "D:\\ForProgramming\\Projects\\MyProjects\\CSharp\\StoronnimV.Server\\StoronnimV.Server\\StoronnimV.Domain\\StoronnimV.Domain.csproj": {
+    "D:\\GitHub\\StoronnimV.Server\\StoronnimV.Server\\StoronnimV.Domain\\StoronnimV.Domain.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\ForProgramming\\Projects\\MyProjects\\CSharp\\StoronnimV.Server\\StoronnimV.Server\\StoronnimV.Domain\\StoronnimV.Domain.csproj",
+        "projectUniqueName": "D:\\GitHub\\StoronnimV.Server\\StoronnimV.Server\\StoronnimV.Domain\\StoronnimV.Domain.csproj",
         "projectName": "StoronnimV.Domain",
-        "projectPath": "D:\\ForProgramming\\Projects\\MyProjects\\CSharp\\StoronnimV.Server\\StoronnimV.Server\\StoronnimV.Domain\\StoronnimV.Domain.csproj",
-        "packagesPath": "C:\\Users\\dimab\\.nuget\\packages\\",
-        "outputPath": "D:\\ForProgramming\\Projects\\MyProjects\\CSharp\\StoronnimV.Server\\StoronnimV.Server\\StoronnimV.Domain\\obj\\",
+        "projectPath": "D:\\GitHub\\StoronnimV.Server\\StoronnimV.Server\\StoronnimV.Domain\\StoronnimV.Domain.csproj",
+        "packagesPath": "C:\\Users\\User\\.nuget\\packages\\",
+        "outputPath": "D:\\GitHub\\StoronnimV.Server\\StoronnimV.Server\\StoronnimV.Domain\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
         ],
         "configFilePaths": [
-          "C:\\Users\\dimab\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+          "C:\\Users\\User\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config"
         ],
         "originalTargetFrameworks": [
           "net9.0"
         ],
         "sources": {
-          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
           "C:\\Program Files\\dotnet\\library-packs": {},
           "https://api.nuget.org/v3/index.json": {}
         },
