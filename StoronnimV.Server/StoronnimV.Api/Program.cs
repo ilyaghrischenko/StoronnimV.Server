@@ -11,6 +11,7 @@ using StoronnimV.Application.Mapping.Group;
 using StoronnimV.Application.Mapping.Music;
 using StoronnimV.Application.Mapping.News;
 using StoronnimV.Application.Mapping.Schedule;
+using StoronnimV.Application.Mapping.Video;
 using StoronnimV.Application.Services.Controllers;
 using StoronnimV.Application.Services.Entities;
 using StoronnimV.Application.Services.Hangfire;
@@ -53,9 +54,6 @@ var mapperConfig = new MapperConfiguration(cfg =>
     cfg.AddProfile<ScheduleShortMappingProfile>();
     #endregion
     
-    #region Music
-    cfg.AddProfile<MusicPlatformMappingProfile>();
-    #endregion
 });
 
 mapperConfig.AssertConfigurationIsValid();

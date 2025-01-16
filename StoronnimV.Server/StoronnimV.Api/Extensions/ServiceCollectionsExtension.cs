@@ -8,6 +8,7 @@ using StoronnimV.Application.Mapping.Group;
 using StoronnimV.Application.Mapping.Music;
 using StoronnimV.Application.Mapping.News;
 using StoronnimV.Application.Mapping.Schedule;
+using StoronnimV.Application.Mapping.Video;
 using StoronnimV.Application.Services.Controllers;
 using StoronnimV.Application.Services.Entities;
 using StoronnimV.Application.Services.Hangfire;
@@ -28,12 +29,10 @@ public static class ServiceCollectionsExtension
         builder.Services.AddScoped<ISocialService, SocialService>();
         builder.Services.AddScoped<IMemberService, MemberService>();
         builder.Services.AddScoped<IGroupPageService, GroupPageService>();
-        builder.Services.AddScoped<IMusicPlatformService, MusicPlatformService>();
         
         builder.Services.AddScoped<INewsControllerService, NewsControllerService>();
         builder.Services.AddScoped<ISchedulesControllerService, SchedulesControllerService>();
         builder.Services.AddScoped<IGroupPageControllerService, GroupPageControllerService>();
-        builder.Services.AddScoped<IMusicControllerService, MusicControllerService>();
         
         return builder;
     }
@@ -53,7 +52,6 @@ public static class ServiceCollectionsExtension
         builder.Services.AddScoped<IMemberRepository, MemberRepository>();
         builder.Services.AddScoped<IGroupPageRepository, GroupPageRepository>();
         builder.Services.AddScoped<IScheduleRepository, ScheduleRepository>();
-        builder.Services.AddScoped<IMusicPlatformRepository, MusicPlatformRepository>();
         
         return builder;
     }
@@ -95,8 +93,6 @@ public static class ServiceCollectionsExtension
         builder.Services.AddAutoMapper(typeof(MemberShortMappingProfile).Assembly);
         builder.Services.AddAutoMapper(typeof(MemberMappingProfile).Assembly);
         builder.Services.AddAutoMapper(typeof(SocialMappingProfile).Assembly);
-        
-        builder.Services.AddAutoMapper(typeof(MusicPlatformMappingProfile).Assembly);
         
         return builder;
     }

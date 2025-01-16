@@ -142,10 +142,12 @@ namespace StoronnimV.Data.Migrations
                     b.Property<DateTime>("UpdatedAt")
                         .HasColumnType("timestamp with time zone");
 
-                    b.Property<string>("Video")
-                        .HasColumnType("text");
+                    b.Property<long?>("VideoId")
+                        .HasColumnType("bigint");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("VideoId");
 
                     b.ToTable("NewsItems");
                 });
@@ -219,6 +221,42 @@ namespace StoronnimV.Data.Migrations
                     b.HasIndex("MemberId");
 
                     b.ToTable("Socials");
+                });
+
+            modelBuilder.Entity("StoronnimV.Domain.Entities.Video", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<long>("Id"));
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<DateTime>("UpdatedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("Url")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Videos");
+                });
+
+            modelBuilder.Entity("StoronnimV.Domain.Entities.News", b =>
+                {
+                    b.HasOne("StoronnimV.Domain.Entities.Video", "Video")
+                        .WithMany()
+                        .HasForeignKey("VideoId");
+
+                    b.Navigation("Video");
                 });
 
             modelBuilder.Entity("StoronnimV.Domain.Entities.Social", b =>
