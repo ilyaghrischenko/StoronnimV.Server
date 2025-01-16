@@ -29,10 +29,14 @@ public static class ServiceCollectionsExtension
         builder.Services.AddScoped<ISocialService, SocialService>();
         builder.Services.AddScoped<IMemberService, MemberService>();
         builder.Services.AddScoped<IGroupPageService, GroupPageService>();
+        builder.Services.AddScoped<IMusicPlatformService, MusicPlatformService>();
+        builder.Services.AddScoped<IVideoService, VideoService>();
         
         builder.Services.AddScoped<INewsControllerService, NewsControllerService>();
         builder.Services.AddScoped<ISchedulesControllerService, SchedulesControllerService>();
         builder.Services.AddScoped<IGroupPageControllerService, GroupPageControllerService>();
+        builder.Services.AddScoped<IMusicControllerService, MusicControllerService>();
+        builder.Services.AddScoped<IVideoControllerService, VideoControllerService>();
         
         return builder;
     }
@@ -52,6 +56,8 @@ public static class ServiceCollectionsExtension
         builder.Services.AddScoped<IMemberRepository, MemberRepository>();
         builder.Services.AddScoped<IGroupPageRepository, GroupPageRepository>();
         builder.Services.AddScoped<IScheduleRepository, ScheduleRepository>();
+        builder.Services.AddScoped<IMusicPlatformRepository, MusicPlatformRepository>();
+        builder.Services.AddScoped<IVideoRepository, VideoRepository>();
         
         return builder;
     }

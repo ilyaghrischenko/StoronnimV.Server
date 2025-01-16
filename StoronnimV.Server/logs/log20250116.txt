@@ -1,1 +1,5 @@
 2025-01-16 15:34:50.208 +02:00 [ERR] NotFound: Music Platform with id: 1 was not found
+2025-01-16 16:00:38.826 +02:00 [ERR] InternalServerError: Unable to resolve service for type 'StoronnimV.Application.Interfaces.Controllers.IMusicControllerService' while attempting to activate 'StoronnimV.Api.Controllers.MusicController'.
+2025-01-16 16:03:33.130 +02:00 [ERR] NotFound: Music Platform with id: 6 was not found
+2025-01-16 16:04:01.209 +02:00 [ERR] NotFound: Video with id: 15 was not found
+2025-01-16 16:04:11.320 +02:00 [ERR] NotFound: Video with id: -1 was not found
