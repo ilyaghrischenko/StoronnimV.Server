@@ -4,7 +4,9 @@ using Microsoft.EntityFrameworkCore;
 using Serilog;
 using StoronnimV.Application.Interfaces.Controllers;
 using StoronnimV.Application.Interfaces.Entities;
+using StoronnimV.Application.Interfaces.Home;
 using StoronnimV.Application.Mapping.Group;
+using StoronnimV.Application.Mapping.Home;
 using StoronnimV.Application.Mapping.Music;
 using StoronnimV.Application.Mapping.News;
 using StoronnimV.Application.Mapping.Schedule;
@@ -12,6 +14,7 @@ using StoronnimV.Application.Mapping.Video;
 using StoronnimV.Application.Services.Controllers;
 using StoronnimV.Application.Services.Entities;
 using StoronnimV.Application.Services.Hangfire;
+using StoronnimV.Application.Services.Home;
 using StoronnimV.Data;
 using StoronnimV.Data.Repositories;
 using StoronnimV.Data.Repositories.Shared;
@@ -37,6 +40,9 @@ public static class ServiceCollectionsExtension
         builder.Services.AddScoped<IGroupPageControllerService, GroupPageControllerService>();
         builder.Services.AddScoped<IMusicControllerService, MusicControllerService>();
         builder.Services.AddScoped<IVideoControllerService, VideoControllerService>();
+        builder.Services.AddScoped<IHomeControllerService, HomeControllerService>();
+
+        builder.Services.AddScoped<IHomeService, HomeService>();
         
         return builder;
     }
@@ -99,6 +105,9 @@ public static class ServiceCollectionsExtension
         builder.Services.AddAutoMapper(typeof(MemberShortMappingProfile).Assembly);
         builder.Services.AddAutoMapper(typeof(MemberMappingProfile).Assembly);
         builder.Services.AddAutoMapper(typeof(SocialMappingProfile).Assembly);
+
+        builder.Services.AddAutoMapper(typeof(HomeNewsMappingProfile).Assembly);
+        builder.Services.AddAutoMapper(typeof(HomeScheduleMappingProfile).Assembly);
         
         return builder;
     }
