@@ -10,6 +10,7 @@ using StoronnimV.Application.Interfaces.Entities;
 using StoronnimV.Application.Mapping.Group;
 using StoronnimV.Application.Mapping.News;
 using StoronnimV.Application.Mapping.Schedule;
+using StoronnimV.Application.Mapping.Video;
 using StoronnimV.Application.Services.Controllers;
 using StoronnimV.Application.Services.Entities;
 using StoronnimV.Application.Services.Hangfire;
@@ -50,6 +51,10 @@ var mapperConfig = new MapperConfiguration(cfg =>
     #region Schedule
     cfg.AddProfile<ScheduleMappingProfile>();
     cfg.AddProfile<ScheduleShortMappingProfile>();
+    #endregion
+    
+    #region Video
+    cfg.AddProfile<VideoPageMappingProfile>();
     #endregion
     
 });
