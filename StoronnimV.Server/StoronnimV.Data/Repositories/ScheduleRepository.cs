@@ -2,6 +2,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using StoronnimV.Data.Repositories.Shared;
 using StoronnimV.Domain.Entities;
+using StoronnimV.Domain.Enums;
 using StoronnimV.Domain.Interfaces;
 
 namespace StoronnimV.Data.Repositories;
@@ -78,5 +79,31 @@ public class ScheduleRepository(IDbContextFactory<StoronnimVContext> contextFact
         _logger.LogInformation($"Repository: ScheduleRepository Method: GetAllSchedulesAsync ended at {DateTime.UtcNow}");
 
         return await dbSet.ToListAsync();
+    }
+
+    public async Task<object?> GetScheduleForHomePageAsync()
+    {
+        _logger.LogInformation($"Repository: ScheduleRepository Method: GetScheduleForHomePageAsync started at {DateTime.UtcNow}");
+        
+        using var context = await _contextFactory.CreateDbContextAsync();
+        var dbSet = context.Schedules;
+        var query = ApplyIncludes(dbSet);
+        
+        _logger.LogInformation($"Repository: ScheduleRepository Method: GetScheduleForHomePageAsync ended at {DateTime.UtcNow}");
+        
+        return await query
+            .AsNoTracking()
+            .Where(schedule => schedule.Status == ScheduleStatus.Active)
+            .OrderBy(schedule => schedule.PerformanceDateTime)
+            .Select(schedule => new
+            {
+                Id = schedule.Id,
+                Photo = schedule.Photo,
+                Title = schedule.Title,
+                Description = schedule.Description,
+                PerformanceDateTime = schedule.PerformanceDateTime.ToShortDateString(),
+                Location = schedule.Location
+            })
+            .FirstOrDefaultAsync();
     }
 }

@@ -4,5 +4,5 @@ namespace StoronnimV.Application.Interfaces.Controllers.Shared;
 
 public interface IPaginationControllerService<TDto>
 {
-    Task<TDto> GetForPageAsync(int page, params object[] args);
+    Task<TDto> GetForPageAsync(int page, int pageSize, params object[] args);
 }

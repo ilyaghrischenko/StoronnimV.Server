@@ -2,6 +2,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using StoronnimV.Data.Repositories.Shared;
 using StoronnimV.Domain.Entities;
+using StoronnimV.Domain.Enums;
 using StoronnimV.Domain.Interfaces;
 
 namespace StoronnimV.Data.Repositories;
@@ -71,7 +72,7 @@ public class NewsRepository(IDbContextFactory<StoronnimVContext> contextFactory,
             .ToListAsync();
     }
 
-    public async Task<IEnumerable<object>?> GetForPageAsync(int page, int pageSize = 9, params object[] args)
+    public async Task<IEnumerable<object>?> GetForPageAsync(int page, int pageSize, params object[] args)
     {
         _logger.LogInformation($"Repository: NewsRepository Method: GetForPageAsync with [page: {page}, pageSize: {pageSize}] started at {DateTime.UtcNow}");
         
@@ -106,5 +107,29 @@ public class NewsRepository(IDbContextFactory<StoronnimVContext> contextFactory,
         _logger.LogInformation($"Repository: NewsRepository Method: GetTotalCountAsync ended at {DateTime.UtcNow}");
 
         return await context.NewsItems.CountAsync();
+    }
+    
+    public async Task<IEnumerable<object>?> GetNewsForHomePageAsync(int count)
+    {
+        _logger.LogInformation($"Repository: NewsRepository Method: GetNewsForHomePageAsync with count: {count} started at {DateTime.UtcNow}");
+        
+        using var context = await _contextFactory.CreateDbContextAsync();
+        var dbSet = context.NewsItems;
+        var query = ApplyIncludes(dbSet);
+        
+        _logger.LogInformation($"Repository: NewsRepository Method: GetNewsForHomePageAsync with count: {count} ended at {DateTime.UtcNow}");
+        
+        return await query
+            .AsNoTracking()
+            .Where(newsItem => newsItem.Priority == NewsPriority.Main)
+            .OrderByDescending(newsItem => newsItem.Date)
+            .Take(count)
+            .Select(newsItem => new
+            {
+                Id = newsItem.Id,
+                Title = newsItem.Title,
+                Date = newsItem.Date.ToShortDateString()
+            })
+            .ToListAsync();
     }
 }

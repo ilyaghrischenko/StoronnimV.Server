@@ -7,4 +7,5 @@ public interface IScheduleRepository
     : IRepository<Schedule>, IReceivableRepository<Schedule>
 {
     Task<IEnumerable<Schedule>?> GetAllSchedulesAsync();
+    Task<object?> GetScheduleForHomePageAsync();
 }
