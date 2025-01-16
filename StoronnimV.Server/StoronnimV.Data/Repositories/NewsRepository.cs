@@ -72,7 +72,7 @@ public class NewsRepository(IDbContextFactory<StoronnimVContext> contextFactory,
             .ToListAsync();
     }
 
-    public async Task<IEnumerable<object>?> GetForPageAsync(int page, int pageSize = 9)
+    public async Task<IEnumerable<object>?> GetForPageAsync(int page, int pageSize)
     {
         _logger.LogInformation($"Repository: NewsRepository Method: GetForPageAsync with [page: {page}, pageSize: {pageSize}] started at {DateTime.UtcNow}");
         
