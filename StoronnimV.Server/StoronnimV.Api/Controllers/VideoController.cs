@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using StoronnimV.Application.DTO.Responses.SchedulePage;
+using StoronnimV.Application.DTO.Responses.Shared;
 using StoronnimV.Application.DTO.Responses.Video;
 using StoronnimV.Application.Interfaces.Controllers;
 using StoronnimV.Domain.Entities;
@@ -46,6 +47,18 @@ namespace StoronnimV.Api.Controllers
             _logger.LogInformation($"Controller: VideoController Method: GetVideos ended at {DateTime.UtcNow}");
 
             return Ok(videos);
+        }
+        
+        [HttpGet("page/{type}/{page:int}")]
+        public async Task<ActionResult<PaginationResponse<VideoPageResponse>>> GetVideosForPage([FromRoute] int page, [FromRoute] string type)
+        {
+            _logger.LogInformation($"Controller: NewsController Method: GetNewsForPage with page: {page} started at {DateTime.UtcNow}");
+            
+            var videosPaginationResponse = await _videoControllerService.GetForPageAsync(page, type);
+            
+            _logger.LogInformation($"Controller: NewsController Method: GetNewsForPage with page: {page} ended at {DateTime.UtcNow}");
+            
+            return Ok(videosPaginationResponse);
         }
     }
 }

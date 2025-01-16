@@ -1,5 +1,6 @@
 using AutoMapper;
 using Microsoft.Extensions.Logging;
+using StoronnimV.Application.DTO.Responses.Shared;
 using StoronnimV.Application.DTO.Responses.Video;
 using StoronnimV.Application.Interfaces.Controllers;
 using StoronnimV.Application.Interfaces.Entities;
@@ -40,5 +41,28 @@ public class VideoControllerService(
         _logger.LogInformation($"Service: VideoControllerService Method: GetAllAsync ended at {DateTime.UtcNow}");
 
         return videosDto;
+    }
+
+    public async Task<PaginationResponse<VideoPageResponse>> GetForPageAsync(int page, params object[] args)
+    {
+        _logger.LogInformation($"Service: VideoControllerService Method: GetForPageAsync with page: {page} started at {DateTime.UtcNow}");
+        
+        var type = (string)args[0];
+        
+        const int pageSize = 5;
+        var paginationResult = await _videoService.GetForPageAsync(page, pageSize, type);
+        
+        var newsDto = _mapper.Map<IEnumerable<VideoPageResponse>>(paginationResult.Items);
+        
+        var paginationResponse = new PaginationResponse<VideoPageResponse>(
+            currentPage: paginationResult.CurrentPage,
+            totalPages: paginationResult.TotalPages,
+            totalItems: paginationResult.TotalItems,
+            items: newsDto
+        );
+        
+        _logger.LogInformation($"Service: VideoControllerService Method: GetForPageAsync with page: {page} ended at {DateTime.UtcNow}");
+
+        return paginationResponse;
     }
 }

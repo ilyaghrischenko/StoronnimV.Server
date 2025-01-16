@@ -1,6 +1,8 @@
 using Microsoft.Extensions.Logging;
 using StoronnimV.Application.Exceptions;
 using StoronnimV.Application.Interfaces.Entities;
+using StoronnimV.Application.Models;
+using StoronnimV.Domain.Enums;
 using StoronnimV.Domain.Interfaces;
 
 namespace StoronnimV.Application.Services.Entities;
@@ -12,15 +14,17 @@ public class VideoService(
 {
     private readonly IVideoRepository _videoRepository = videoRepository;
     private readonly ILogger<VideoService> _logger = logger;
-    
+
     public async Task<object> GetItemByIdAsync(long id)
     {
-        _logger.LogInformation($"Service: VideoService Method: GetItemByIdAsync with id: {id} started at {DateTime.UtcNow}");
-        
+        _logger.LogInformation(
+            $"Service: VideoService Method: GetItemByIdAsync with id: {id} started at {DateTime.UtcNow}");
+
         var video = await _videoRepository.GetByIdAsNoTrackingAsync(id)
-            ?? throw new EntityNotFoundException($"Video with id: {id} was not found");
-        
-        _logger.LogInformation($"Service: VideoService Method: GetItemByIdAsync with id: {id} ended at {DateTime.UtcNow}");
+                    ?? throw new EntityNotFoundException($"Video with id: {id} was not found");
+
+        _logger.LogInformation(
+            $"Service: VideoService Method: GetItemByIdAsync with id: {id} ended at {DateTime.UtcNow}");
 
         return video;
     }
@@ -28,12 +32,64 @@ public class VideoService(
     public async Task<IEnumerable<object>> GetAllAsync()
     {
         _logger.LogInformation($"Service: VideoService Method: GetAllAsync started at {DateTime.UtcNow}");
-        
+
         var videos = await _videoRepository.GetAllAsync();
-        
+
         _logger.LogInformation($"Service: VideoService Method: GetAllAsync ended at {DateTime.UtcNow}");
 
         return videos ?? new List<object>();
+    }
+
+
+    public async Task<PaginationResult> GetForPageAsync(int page, int pageSize, params object[] args)
+    {
+        _logger.LogInformation(
+            $"Service: VideoService Method: GetForPageAsync with [page: {page}, pageSize: {pageSize}] started at {DateTime.UtcNow}");
+
+        var type = (string)args[0];
         
+        if (page <= 0)
+        {
+            throw new PaginationException("invalid page number");
+        }
+
+        var totalCount = await _videoRepository.GetTotalCountAsync(type);
+
+        if (totalCount == 0)
+        {
+            return new PaginationResult(
+                currentPage: page,
+                totalPages: 0,
+                totalItems: 0,
+                items: []
+            );
+        }
+
+        var totalPages = (int)Math.Ceiling((double)totalCount / pageSize);
+        var items = await _videoRepository.GetForPageAsync(page, pageSize, type);
+
+        if (items is null || !items.Any())
+        {
+            return new PaginationResult(
+                currentPage: page,
+                totalPages: 0,
+                totalItems: 0,
+                items: []
+            );
+        }
+
+        var sortedItems = items.ToList();
+
+        var paginationResult = new PaginationResult(
+            currentPage: page,
+            totalPages: totalPages,
+            totalItems: totalCount,
+            items: sortedItems
+        );
+
+        _logger.LogInformation(
+            $"Service: VideoService Method: GetForPageAsync with [page: {page}, pageSize: {pageSize}] ended at {DateTime.UtcNow}");
+
+        return paginationResult;
     }
 }

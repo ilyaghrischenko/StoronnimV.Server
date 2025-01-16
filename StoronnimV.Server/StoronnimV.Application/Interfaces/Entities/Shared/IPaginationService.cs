@@ -4,5 +4,5 @@ namespace StoronnimV.Application.Interfaces.Entities.Shared;
 
 public interface IPaginationService
 {
-    Task<PaginationResult> GetForPageAsync(int page, int pageSize);
+    Task<PaginationResult> GetForPageAsync(int page, int pageSize, params object[] args);
 }

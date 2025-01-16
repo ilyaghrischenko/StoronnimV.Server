@@ -47,7 +47,7 @@ public class NewsService(INewsRepository newsRepository,
             .ToList();
     }
 
-    public async Task<PaginationResult> GetForPageAsync(int page, int pageSize)
+    public async Task<PaginationResult> GetForPageAsync(int page, int pageSize, params object[] args)
     {
         _logger.LogInformation($"Service: NewsService Method: GetForPageAsync with [page: {page}, pageSize: {pageSize}] started at {DateTime.UtcNow}");
         

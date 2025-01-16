@@ -71,7 +71,7 @@ public class NewsRepository(IDbContextFactory<StoronnimVContext> contextFactory,
             .ToListAsync();
     }
 
-    public async Task<IEnumerable<object>?> GetForPageAsync(int page, int pageSize = 9)
+    public async Task<IEnumerable<object>?> GetForPageAsync(int page, int pageSize = 9, params object[] args)
     {
         _logger.LogInformation($"Repository: NewsRepository Method: GetForPageAsync with [page: {page}, pageSize: {pageSize}] started at {DateTime.UtcNow}");
         
@@ -97,7 +97,7 @@ public class NewsRepository(IDbContextFactory<StoronnimVContext> contextFactory,
             .ToListAsync();
     }
 
-    public async Task<int> GetTotalCountAsync()
+    public async Task<int> GetTotalCountAsync(params object[] args)
     {
         _logger.LogInformation($"Repository: NewsRepository Method: GetTotalCountAsync started at {DateTime.UtcNow}");
         

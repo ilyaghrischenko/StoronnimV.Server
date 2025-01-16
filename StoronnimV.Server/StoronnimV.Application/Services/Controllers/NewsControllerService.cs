@@ -48,7 +48,7 @@ public class NewsControllerService(
         return newsDto;
     }
 
-    public async Task<PaginationResponse<NewsShortResponse>> GetForPageAsync(int page)
+    public async Task<PaginationResponse<NewsShortResponse>> GetForPageAsync(int page, params object[] args)
     {
         _logger.LogInformation($"Service: NewsControllerService Method: GetForPageAsync with page: {page} started at {DateTime.UtcNow}");
         
@@ -63,7 +63,7 @@ public class NewsControllerService(
             currentPage: paginationResult.CurrentPage,
             totalPages: paginationResult.TotalPages,
             totalItems: paginationResult.TotalItems,
-            shortNews: newsDto
+            items: newsDto
         );
     }
 }
