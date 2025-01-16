@@ -50,11 +50,12 @@ namespace StoronnimV.Api.Controllers
         }
         
         [HttpGet("page/{type}/{page:int}")]
-        public async Task<ActionResult<PaginationResponse<VideoPageResponse>>> GetVideosForPage([FromRoute] int page, [FromRoute] string type)
+        public async Task<ActionResult<PaginationResponse<VideoPageResponse>>> GetVideosForPage
+            ([FromRoute] int page, [FromRoute] string type, [FromQuery] int pageSize = 5)
         {
             _logger.LogInformation($"Controller: NewsController Method: GetNewsForPage with page: {page} started at {DateTime.UtcNow}");
             
-            var videosPaginationResponse = await _videoControllerService.GetForPageAsync(page, type);
+            var videosPaginationResponse = await _videoControllerService.GetForPageAsync(page, pageSize,type);
             
             _logger.LogInformation($"Controller: NewsController Method: GetNewsForPage with page: {page} ended at {DateTime.UtcNow}");
             

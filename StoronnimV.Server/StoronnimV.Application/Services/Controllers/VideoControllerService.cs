@@ -43,13 +43,12 @@ public class VideoControllerService(
         return videosDto;
     }
 
-    public async Task<PaginationResponse<VideoPageResponse>> GetForPageAsync(int page, params object[] args)
+    public async Task<PaginationResponse<VideoPageResponse>> GetForPageAsync(int page, int pageSize, params object[] args)
     {
         _logger.LogInformation($"Service: VideoControllerService Method: GetForPageAsync with page: {page} started at {DateTime.UtcNow}");
         
         var type = (string)args[0];
         
-        const int pageSize = 5;
         var paginationResult = await _videoService.GetForPageAsync(page, pageSize, type);
         
         var newsDto = _mapper.Map<IEnumerable<VideoPageResponse>>(paginationResult.Items);
