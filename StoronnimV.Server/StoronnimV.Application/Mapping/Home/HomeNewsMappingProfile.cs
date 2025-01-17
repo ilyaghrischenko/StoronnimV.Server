@@ -11,6 +11,6 @@ public class HomeNewsMappingProfile : Profile
         CreateMap<object, NewsHomeResponse>()
             .ForMember(dest => dest.Id, opt => opt.MapFrom(src => (long)src.GetPropertyValue("Id")!))
             .ForMember(dest => dest.Title, opt => opt.MapFrom(src => (string)src.GetPropertyValue("Title")!))
-            .ForMember(dest => dest.Date, opt => opt.MapFrom(src => (string)src.GetPropertyValue("Date")!));
+            .ForMember(dest => dest.Photo, opt => opt.MapFrom(src => (string)src.GetPropertyValue("Photo")!));
     }
 }

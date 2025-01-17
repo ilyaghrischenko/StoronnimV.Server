@@ -4,15 +4,15 @@ namespace StoronnimV.Application.DTO.Responses.HomePage;
 
 public class NewsHomeResponse : BaseResponseDto
 {
+    public string Photo { get; set; }
     public string Title { get; set; }
-    public string Date { get; set; }
     
     public NewsHomeResponse() { }
 
-    public NewsHomeResponse(long id, string title, string date)
+    public NewsHomeResponse(long id, string title, string photo)
     {
         Id = id;
         Title = title;
-        Date = date;
+        Photo = photo;
     }
 }

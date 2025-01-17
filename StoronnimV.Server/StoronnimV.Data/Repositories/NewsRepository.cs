@@ -133,8 +133,8 @@ public class NewsRepository(IDbContextFactory<StoronnimVContext> contextFactory,
             .Select(newsItem => new
             {
                 Id = newsItem.Id,
-                Title = newsItem.Title,
-                Date = newsItem.Date.ToShortDateString()
+                Photo = newsItem.Photo,
+                Title = newsItem.Title
             })
             .ToListAsync();
         
