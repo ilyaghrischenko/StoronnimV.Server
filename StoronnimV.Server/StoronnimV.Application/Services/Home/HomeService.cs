@@ -42,4 +42,15 @@ public class HomeService(
 
         return schedule;
     }
+
+    public async Task<object?> GetPromotionVideoForHomePageAsync()
+    {
+        _logger.LogInformation($"Service: HomeService Method: GetScheduleForHomePageAsync started at {DateTime.UtcNow}");
+
+        var promotionVideo = await _videoRepository.GetPromotionVideoForHomePageAsync();
+        
+        _logger.LogInformation($"Service: HomeService Method: GetScheduleForHomePageAsync ended at {DateTime.UtcNow}");
+        
+        return promotionVideo;
+    }
 }

@@ -65,30 +65,28 @@ public class VideoRepository(
         return videos;
     }
 
-    #region Specific videos
-
-    public async Task<object?> GetPromotionVideo(long id)
+    public async Task<object?> GetPromotionVideoForHomePageAsync()
     {
-        _logger.LogInformation($"Repository: VideoRepository Method: GetPromotionVideo with id: {id} started at {DateTime.UtcNow}");
+        _logger.LogInformation($"Repository: VideoRepository Method: GetPromotionVideoForHomePageAsync started at {DateTime.UtcNow}");
         
         await using var context = await _contextFactory.CreateDbContextAsync();
 
-        var video = await context.Videos
+        var promotionVideo = await context.Videos
             .AsNoTracking()
             .Where(video => video.Type == VideoType.Promotion)
-            .Select(v => new
+            .Select(video => new
             {
-                Id = v.Id,
-                Title = v.Title,
-                Url = v.Url
+                Id = video.Id,
+                Title = video.Title,
+                Url = video.Url
             })
-            .FirstOrDefaultAsync(x => x.Id == id);
+            .FirstOrDefaultAsync();
         
-        _logger.LogInformation($"Repository: VideoRepository Method: GetPromotionVideo with id: {id} ended at {DateTime.UtcNow}");
+        _logger.LogInformation($"Repository: VideoRepository Method: GetPromotionVideoForHomePageAsync ended at {DateTime.UtcNow}");
 
-        return video;
+        return promotionVideo;
     }
-    #endregion
+
 
     public async Task<IEnumerable<object>?> GetForPageAsync(int page, int pageSize = 10, params object[] args)
     {

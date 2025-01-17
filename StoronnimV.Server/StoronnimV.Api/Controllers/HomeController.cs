@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using StoronnimV.Application.DTO.Responses.HomePage;
+using StoronnimV.Application.DTO.Responses.Video;
 using StoronnimV.Application.Interfaces.Controllers;
 
 namespace StoronnimV.Api.Controllers
@@ -36,6 +37,18 @@ namespace StoronnimV.Api.Controllers
             _logger.LogInformation($"Controller: HomeController Method: GetSchedule ended at {DateTime.UtcNow}");
 
             return Ok(scheduleDto);
+        }
+
+        [HttpGet("video")]
+        public async Task<ActionResult<VideoPageResponse>> GetPromotionVideo()
+        {
+            _logger.LogInformation($"Controller: HomeController Method: GetPromotionVideo started at {DateTime.UtcNow}");
+
+            var videoDto = await _homeControllerService.GetVideoAsync();
+            
+            _logger.LogInformation($"Controller: HomeController Method: GetPromotionVideo ended at {DateTime.UtcNow}");
+
+            return Ok(videoDto);
         }
     }
 }

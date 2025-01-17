@@ -7,5 +7,5 @@ namespace StoronnimV.Domain.Interfaces;
 public interface IVideoRepository 
     : IRepository<Video>, IReceivableRepository<Video>, IPaginationRepository
 {
-    public Task<object?> GetPromotionVideo(long id);
+    public Task<object?> GetPromotionVideoForHomePageAsync();
 }

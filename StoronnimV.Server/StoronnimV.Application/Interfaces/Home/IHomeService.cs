@@ -4,4 +4,5 @@ public interface IHomeService
 {
     Task<IEnumerable<object>> GetNewsForHomePageAsync(int count);
     Task<object?> GetScheduleForHomePageAsync();
+    Task<object?> GetPromotionVideoForHomePageAsync();
 }

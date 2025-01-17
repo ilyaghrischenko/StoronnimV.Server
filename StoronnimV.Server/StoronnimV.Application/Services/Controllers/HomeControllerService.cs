@@ -1,6 +1,7 @@
 using AutoMapper;
 using Microsoft.Extensions.Logging;
 using StoronnimV.Application.DTO.Responses.HomePage;
+using StoronnimV.Application.DTO.Responses.Video;
 using StoronnimV.Application.Interfaces.Controllers;
 using StoronnimV.Application.Interfaces.Home;
 
@@ -39,5 +40,18 @@ public class HomeControllerService(
         _logger.LogInformation($"Service: HomeControllerService Method: GetScheduleAsync ended at {DateTime.UtcNow}");
 
         return scheduleDto;
+    }
+
+    public async Task<VideoPageResponse> GetVideoAsync()
+    {
+        _logger.LogInformation($"Service: HomeControllerService Method: GetVideoAsync started at {DateTime.UtcNow}");
+
+        var promotionVideo = await _homeService.GetPromotionVideoForHomePageAsync();
+        
+        var promotionVideoDto = _mapper.Map<VideoPageResponse>(promotionVideo);
+        
+        _logger.LogInformation($"Service: HomeControllerService Method: GetVideoAsync ended at {DateTime.UtcNow}");
+        
+        return promotionVideoDto;
     }
 }
