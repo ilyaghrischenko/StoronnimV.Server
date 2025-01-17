@@ -30,9 +30,7 @@ public class MemberRepository(IDbContextFactory<StoronnimVContext> contextFactor
         var dbSet = context.Members;
         var query = ApplyIncludes(dbSet);
 
-        _logger.LogInformation($"Repository: MemberRepository Method: GetByIdAsNoTrackingAsync with id: {id} ended at {DateTime.UtcNow}");
-
-        return await query
+        var result = await query
             .AsNoTracking()
             .Select(member => new
             {
@@ -43,6 +41,10 @@ public class MemberRepository(IDbContextFactory<StoronnimVContext> contextFactor
                 Role = member.Role
             })
             .FirstOrDefaultAsync(x => x.Id == id);
+        
+        _logger.LogInformation($"Repository: MemberRepository Method: GetByIdAsNoTrackingAsync with id: {id} ended at {DateTime.UtcNow}");
+
+        return result;
     }
 
     public async Task<IEnumerable<object>?> GetAllAsync()
@@ -53,9 +55,7 @@ public class MemberRepository(IDbContextFactory<StoronnimVContext> contextFactor
         var dbSet = context.Members;
         var query = ApplyIncludes(dbSet);
         
-        _logger.LogInformation($"Repository: MemberRepository Method: GetAllAsync ended at {DateTime.UtcNow}");
-
-        return await query
+        var result = await query
             .AsNoTracking()
             .Select(member => new
             {
@@ -65,5 +65,9 @@ public class MemberRepository(IDbContextFactory<StoronnimVContext> contextFactor
                 Role = member.Role
             })
             .ToListAsync();
+        
+        _logger.LogInformation($"Repository: MemberRepository Method: GetAllAsync ended at {DateTime.UtcNow}");
+
+        return result;
     }
 }

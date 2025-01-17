@@ -39,12 +39,14 @@ public class NewsService(INewsRepository newsRepository,
             return new List<object>();
         }
         
-        _logger.LogInformation($"Service: NewsService Method: GetAllAsync ended at {DateTime.UtcNow}");
-
-        return allNews
+        var result = allNews
             .OrderBy(news => (string)news.GetPropertyValue("Priority")!)
             .ThenByDescending(news => (string)news.GetPropertyValue("Date")!)
             .ToList();
+        
+        _logger.LogInformation($"Service: NewsService Method: GetAllAsync ended at {DateTime.UtcNow}");
+
+        return result;
     }
 
     public async Task<PaginationResult> GetForPageAsync(int page, int pageSize, params object[] args)
@@ -82,14 +84,16 @@ public class NewsService(INewsRepository newsRepository,
         }
         
         var sortedItems = items.ToList();
-
-        _logger.LogInformation($"Service: NewsService Method: GetForPageAsync with [page: {page}, pageSize: {pageSize}] ended at {DateTime.UtcNow}");
-
-        return new PaginationResult(
+        
+        var response = new PaginationResult(
             currentPage: page,
             totalPages: totalPages,
             totalItems: totalCount,
             items: sortedItems
         );
+
+        _logger.LogInformation($"Service: NewsService Method: GetForPageAsync with [page: {page}, pageSize: {pageSize}] ended at {DateTime.UtcNow}");
+
+        return response;
     }
 }

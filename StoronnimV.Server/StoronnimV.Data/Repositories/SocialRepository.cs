@@ -31,9 +31,7 @@ public class SocialRepository(IDbContextFactory<StoronnimVContext> contextFactor
         var dbSet = context.Socials;
         var query = ApplyIncludes(dbSet);
 
-        _logger.LogInformation($"Repository: SocialRepository Method: GetByIdAsNoTrackingAsync with id: {id} ended at {DateTime.UtcNow}");
-
-        return await query
+        var result = await query
             .AsNoTracking()
             .Select(social => new
             {
@@ -42,6 +40,10 @@ public class SocialRepository(IDbContextFactory<StoronnimVContext> contextFactor
                 Url = social.Url
             })
             .FirstOrDefaultAsync(x => x.Id == id);
+        
+        _logger.LogInformation($"Repository: SocialRepository Method: GetByIdAsNoTrackingAsync with id: {id} ended at {DateTime.UtcNow}");
+
+        return result;
     }
 
     public async Task<IEnumerable<object>?> GetAllAsync()
@@ -52,9 +54,7 @@ public class SocialRepository(IDbContextFactory<StoronnimVContext> contextFactor
         var dbSet = context.Socials;
         var query = ApplyIncludes(dbSet);
         
-        _logger.LogInformation($"Repository: SocialRepository Method: GetAllAsync started at {DateTime.UtcNow}");
-
-        return await query
+        var result = await query
             .AsNoTracking()
             .Select(social => new
             {
@@ -64,6 +64,10 @@ public class SocialRepository(IDbContextFactory<StoronnimVContext> contextFactor
                 Url = social.Url
             })
             .ToListAsync();
+        
+        _logger.LogInformation($"Repository: SocialRepository Method: GetAllAsync started at {DateTime.UtcNow}");
+
+        return result;
     }
     
     public async Task<IEnumerable<object>?> GetAllForMemberAsync(long memberId)
@@ -74,9 +78,7 @@ public class SocialRepository(IDbContextFactory<StoronnimVContext> contextFactor
         var dbSet = context.Socials;
         var query = ApplyIncludes(dbSet);
         
-        _logger.LogInformation($"Repository: SocialRepository Method: GetAllForMemberAsync with memberId: {memberId} ended at {DateTime.UtcNow}");
-
-        return await query
+        var result = await query
             .AsNoTracking()
             .Where(social => social.Member.Id == memberId)
             .Select(social => new
@@ -86,6 +88,10 @@ public class SocialRepository(IDbContextFactory<StoronnimVContext> contextFactor
                 Url = social.Url
             })
             .ToListAsync();
+        
+        _logger.LogInformation($"Repository: SocialRepository Method: GetAllForMemberAsync with memberId: {memberId} ended at {DateTime.UtcNow}");
+
+        return result;
     }
 
 }

@@ -40,11 +40,13 @@ public class ScheduleService(IScheduleRepository scheduleRepository,
             return new List<object>();
         }
 
-        _logger.LogInformation($"Service: ScheduleService Method: GetAllAsync ended at {DateTime.UtcNow}");
-
-        return allSchedules
+        var result = allSchedules
             .Where(schedule => (string)schedule.GetPropertyValue("Status")! == "Active")
             .ToList();
+        
+        _logger.LogInformation($"Service: ScheduleService Method: GetAllAsync ended at {DateTime.UtcNow}");
+
+        return result;
     }
 
     public async Task UpdateStatusesAsync()
@@ -68,8 +70,8 @@ public class ScheduleService(IScheduleRepository scheduleRepository,
             })
         );
         
-        _logger.LogInformation($"Service: ScheduleService Method: UpdateStatusesAsync ended at {DateTime.UtcNow}");
-
         await Task.WhenAll(updateTasks);
+        
+        _logger.LogInformation($"Service: ScheduleService Method: UpdateStatusesAsync ended at {DateTime.UtcNow}");
     }
 }

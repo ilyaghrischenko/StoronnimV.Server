@@ -31,9 +31,7 @@ public class NewsRepository(IDbContextFactory<StoronnimVContext> contextFactory,
         var dbSet = context.NewsItems;
         var query = ApplyIncludes(dbSet);
 
-        _logger.LogInformation($"Repository: NewsRepository Method: GetByIdAsNoTrackingAsync with id: {id} ended at {DateTime.UtcNow}");
-
-        return await query
+        var result = await query
             .AsNoTracking()
             .Select(newsItem => new
             {
@@ -46,6 +44,10 @@ public class NewsRepository(IDbContextFactory<StoronnimVContext> contextFactory,
                 Date = newsItem.Date.ToShortDateString()
             })
             .FirstOrDefaultAsync(x => x.Id == id);
+        
+        _logger.LogInformation($"Repository: NewsRepository Method: GetByIdAsNoTrackingAsync with id: {id} ended at {DateTime.UtcNow}");
+
+        return result;
     }
 
     public async Task<IEnumerable<object>?> GetAllAsync()
@@ -56,9 +58,7 @@ public class NewsRepository(IDbContextFactory<StoronnimVContext> contextFactory,
         var dbSet = context.NewsItems;
         var query = ApplyIncludes(dbSet);
         
-        _logger.LogInformation($"Repository: NewsRepository Method: GetAllAsync ended at {DateTime.UtcNow}");
-
-        return await query
+        var result = await query
             .AsNoTracking()
             .Select(newsItem => new
             {
@@ -70,6 +70,10 @@ public class NewsRepository(IDbContextFactory<StoronnimVContext> contextFactory,
                 Date = newsItem.Date.ToShortDateString()
             })
             .ToListAsync();
+        
+        _logger.LogInformation($"Repository: NewsRepository Method: GetAllAsync ended at {DateTime.UtcNow}");
+
+        return result;
     }
 
     public async Task<IEnumerable<object>?> GetForPageAsync(int page, int pageSize, params object[] args)
@@ -80,9 +84,7 @@ public class NewsRepository(IDbContextFactory<StoronnimVContext> contextFactory,
         var dbSet = context.NewsItems;
         var query = ApplyIncludes(dbSet);
         
-        _logger.LogInformation($"Repository: NewsRepository Method: GetForPageAsync with [page: {page}, pageSize: {pageSize}] ended at {DateTime.UtcNow}");
-
-        return await query
+        var result = await query
             .AsNoTracking()
             .OrderByDescending(newsItem => newsItem.Date)
             .Skip((page - 1) * pageSize)
@@ -96,6 +98,10 @@ public class NewsRepository(IDbContextFactory<StoronnimVContext> contextFactory,
                 Date = newsItem.Date.ToShortDateString()
             })
             .ToListAsync();
+        
+        _logger.LogInformation($"Repository: NewsRepository Method: GetForPageAsync with [page: {page}, pageSize: {pageSize}] ended at {DateTime.UtcNow}");
+
+        return result;
     }
 
     public async Task<int> GetTotalCountAsync(params object[] args)
@@ -104,9 +110,11 @@ public class NewsRepository(IDbContextFactory<StoronnimVContext> contextFactory,
         
         using var context = await _contextFactory.CreateDbContextAsync();
         
+        var result = await context.NewsItems.CountAsync();
+        
         _logger.LogInformation($"Repository: NewsRepository Method: GetTotalCountAsync ended at {DateTime.UtcNow}");
 
-        return await context.NewsItems.CountAsync();
+        return result;
     }
     
     public async Task<IEnumerable<object>?> GetNewsForHomePageAsync(int count)
@@ -117,9 +125,7 @@ public class NewsRepository(IDbContextFactory<StoronnimVContext> contextFactory,
         var dbSet = context.NewsItems;
         var query = ApplyIncludes(dbSet);
         
-        _logger.LogInformation($"Repository: NewsRepository Method: GetNewsForHomePageAsync with count: {count} ended at {DateTime.UtcNow}");
-        
-        return await query
+        var result = await query
             .AsNoTracking()
             .Where(newsItem => newsItem.Priority == NewsPriority.Main)
             .OrderByDescending(newsItem => newsItem.Date)
@@ -131,5 +137,9 @@ public class NewsRepository(IDbContextFactory<StoronnimVContext> contextFactory,
                 Date = newsItem.Date.ToShortDateString()
             })
             .ToListAsync();
+        
+        _logger.LogInformation($"Repository: NewsRepository Method: GetNewsForHomePageAsync with count: {count} ended at {DateTime.UtcNow}");
+
+        return result;
     }
 }

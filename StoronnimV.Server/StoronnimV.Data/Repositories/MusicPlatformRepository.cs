@@ -21,9 +21,7 @@ public class MusicPlatformRepository(IDbContextFactory<StoronnimVContext> contex
         var dbSet = context.MusicPlatforms;
         var query = ApplyIncludes(dbSet);
         
-        _logger.LogInformation($"Repository: MusicPlatformRepository Method: GetByIdAsNoTrackingAsync with id: {id} ended at {DateTime.UtcNow}");
-        
-        return await query
+        var result = await query
             .AsNoTracking()
             .Select(musicPlatform => new
             {
@@ -32,6 +30,10 @@ public class MusicPlatformRepository(IDbContextFactory<StoronnimVContext> contex
                 PlatformUrl = musicPlatform.PlatformUrl
             })
             .FirstOrDefaultAsync(musicPlatform => musicPlatform.Id == id);
+        
+        _logger.LogInformation($"Repository: MusicPlatformRepository Method: GetByIdAsNoTrackingAsync with id: {id} ended at {DateTime.UtcNow}");
+
+        return result;
     }
 
     public async Task<IEnumerable<object>?> GetAllAsync()
@@ -42,9 +44,7 @@ public class MusicPlatformRepository(IDbContextFactory<StoronnimVContext> contex
         var dbSet = context.MusicPlatforms;
         var query = ApplyIncludes(dbSet);
         
-        _logger.LogInformation($"Repository: MusicPlatformRepository Method: GetAllAsync ended at {DateTime.UtcNow}");
-
-        return await query
+        var result = await query
             .AsNoTracking()
             .Select(musicPlatform => new
             {
@@ -53,5 +53,9 @@ public class MusicPlatformRepository(IDbContextFactory<StoronnimVContext> contex
                 PlatformUrl = musicPlatform.PlatformUrl
             })
             .ToListAsync();
+        
+        _logger.LogInformation($"Repository: MusicPlatformRepository Method: GetAllAsync ended at {DateTime.UtcNow}");
+
+        return result;
     }
 }
