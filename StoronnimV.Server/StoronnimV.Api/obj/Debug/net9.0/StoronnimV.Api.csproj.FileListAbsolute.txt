@@ -1560,3 +1560,11 @@ D:\ForProgramming\Projects\MyProjects\CSharp\StoronnimV.Server\StoronnimV.Server
 D:\ForProgramming\Projects\MyProjects\CSharp\StoronnimV.Server\StoronnimV.Server\StoronnimV.Api\obj\Debug\net9.0\StoronnimV.Api.pdb
 D:\ForProgramming\Projects\MyProjects\CSharp\StoronnimV.Server\StoronnimV.Server\StoronnimV.Api\obj\Debug\net9.0\StoronnimV.Api.genruntimeconfig.cache
 D:\ForProgramming\Projects\MyProjects\CSharp\StoronnimV.Server\StoronnimV.Server\StoronnimV.Api\obj\Debug\net9.0\ref\StoronnimV.Api.dll
+D:\GitHub\StoronnimV.Server\StoronnimV.Server\StoronnimV.Api\bin\Debug\net9.0\Microsoft.AspNetCore.Authentication.JwtBearer.dll
+D:\GitHub\StoronnimV.Server\StoronnimV.Server\StoronnimV.Api\bin\Debug\net9.0\Microsoft.IdentityModel.Abstractions.dll
+D:\GitHub\StoronnimV.Server\StoronnimV.Server\StoronnimV.Api\bin\Debug\net9.0\Microsoft.IdentityModel.JsonWebTokens.dll
+D:\GitHub\StoronnimV.Server\StoronnimV.Server\StoronnimV.Api\bin\Debug\net9.0\Microsoft.IdentityModel.Logging.dll
+D:\GitHub\StoronnimV.Server\StoronnimV.Server\StoronnimV.Api\bin\Debug\net9.0\Microsoft.IdentityModel.Protocols.dll
+D:\GitHub\StoronnimV.Server\StoronnimV.Server\StoronnimV.Api\bin\Debug\net9.0\Microsoft.IdentityModel.Protocols.OpenIdConnect.dll
+D:\GitHub\StoronnimV.Server\StoronnimV.Server\StoronnimV.Api\bin\Debug\net9.0\Microsoft.IdentityModel.Tokens.dll
+D:\GitHub\StoronnimV.Server\StoronnimV.Server\StoronnimV.Api\bin\Debug\net9.0\System.IdentityModel.Tokens.Jwt.dll
