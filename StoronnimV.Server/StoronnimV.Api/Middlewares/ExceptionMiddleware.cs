@@ -43,6 +43,12 @@ public class ExceptionMiddleware : IExceptionMiddleware
                 HttpStatusCode.BadRequest,
                 ex.Message);
         }
+        catch (LogInException ex)
+        {
+            await HandleExceptionAsync(context,
+                HttpStatusCode.Unauthorized,
+                ex.Message);
+        }
         catch (Exception ex)
         {
             await HandleExceptionAsync(context,

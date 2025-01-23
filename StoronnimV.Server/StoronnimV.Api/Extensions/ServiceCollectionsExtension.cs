@@ -1,5 +1,6 @@
 using Hangfire;
 using Hangfire.PostgreSql;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Serilog;
 using StoronnimV.Application.Interfaces.Controllers;
@@ -18,6 +19,7 @@ using StoronnimV.Application.Services.Home;
 using StoronnimV.Data;
 using StoronnimV.Data.Repositories;
 using StoronnimV.Data.Repositories.Shared;
+using StoronnimV.Domain.Entities;
 using StoronnimV.Domain.Interfaces;
 using StoronnimV.Domain.Interfaces.Shared;
 
@@ -34,6 +36,7 @@ public static class ServiceCollectionsExtension
         builder.Services.AddScoped<IGroupPageService, GroupPageService>();
         builder.Services.AddScoped<IMusicPlatformService, MusicPlatformService>();
         builder.Services.AddScoped<IVideoService, VideoService>();
+        builder.Services.AddScoped<IAdminService, AdminService>();
         
         builder.Services.AddScoped<INewsControllerService, NewsControllerService>();
         builder.Services.AddScoped<ISchedulesControllerService, SchedulesControllerService>();
@@ -50,6 +53,7 @@ public static class ServiceCollectionsExtension
     public static WebApplicationBuilder AddIntegrationServices(this WebApplicationBuilder builder)
     {
         builder.Services.AddScoped<ScheduleStatusUpdaterService>();
+        builder.Services.AddTransient<IPasswordHasher<Admin>, PasswordHasher<Admin>>();
         
         return builder;
     }
@@ -64,6 +68,7 @@ public static class ServiceCollectionsExtension
         builder.Services.AddScoped<IScheduleRepository, ScheduleRepository>();
         builder.Services.AddScoped<IMusicPlatformRepository, MusicPlatformRepository>();
         builder.Services.AddScoped<IVideoRepository, VideoRepository>();
+        builder.Services.AddScoped<IAdminRepository, AdminRepository>();
         
         return builder;
     }

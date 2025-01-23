@@ -21,4 +21,5 @@ public class StoronnimVContext : DbContext
     public virtual DbSet<Schedule> Schedules { get; set; }
     public virtual DbSet<MusicPlatform> MusicPlatforms { get; set; }
     public virtual DbSet<Video> Videos { get; set; }
+    public virtual DbSet<Admin> Admins { get; set; }
 }
