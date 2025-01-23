@@ -1,27 +1,14 @@
 using AutoMapper;
 using Hangfire;
-using Hangfire.PostgreSql;
 using Microsoft.EntityFrameworkCore;
-using Serilog;
 using StoronnimV.Api.Extensions;
 using StoronnimV.Api.Middlewares;
-using StoronnimV.Application.Interfaces.Controllers;
-using StoronnimV.Application.Interfaces.Entities;
 using StoronnimV.Application.Mapping.Group;
 using StoronnimV.Application.Mapping.Home;
-using StoronnimV.Application.Mapping.Music;
 using StoronnimV.Application.Mapping.News;
 using StoronnimV.Application.Mapping.Schedule;
-using StoronnimV.Application.Mapping.Video;
-using StoronnimV.Application.Services.Controllers;
-using StoronnimV.Application.Services.Entities;
 using StoronnimV.Application.Services.Hangfire;
 using StoronnimV.Data;
-using StoronnimV.Data.Repositories;
-using StoronnimV.Data.Repositories.Shared;
-using StoronnimV.Domain.Enums;
-using StoronnimV.Domain.Interfaces;
-using StoronnimV.Domain.Interfaces.Shared;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -33,7 +20,8 @@ builder
     .AddApplicationServices()
     .AddIntegrationServices()
     .AddHangfire()
-    .AddPooledDbContextFactory();
+    .AddPooledDbContextFactory()
+    .AddJwtBearer();
     
 #region AutoMapper
 var mapperConfig = new MapperConfiguration(cfg =>
@@ -81,6 +69,7 @@ if (app.Environment.IsDevelopment())
 }
 
 app.MapControllers();
+app.UseAuthorization();
 app.UseHttpsRedirection();
 app.UseRouting();
 app.UseStaticFiles();

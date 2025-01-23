@@ -1,10 +1,15 @@
 using Hangfire;
 using Hangfire.PostgreSql;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.OpenApi.Models;
 using Serilog;
+using StoronnimV.Application.AutentificationOptions;
 using StoronnimV.Application.Interfaces.Controllers;
 using StoronnimV.Application.Interfaces.Entities;
 using StoronnimV.Application.Interfaces.Home;
+using StoronnimV.Application.Interfaces.Jwt;
 using StoronnimV.Application.Mapping.Group;
 using StoronnimV.Application.Mapping.Home;
 using StoronnimV.Application.Mapping.Music;
@@ -15,9 +20,11 @@ using StoronnimV.Application.Services.Controllers;
 using StoronnimV.Application.Services.Entities;
 using StoronnimV.Application.Services.Hangfire;
 using StoronnimV.Application.Services.Home;
+using StoronnimV.Application.Services.Jwt;
 using StoronnimV.Data;
 using StoronnimV.Data.Repositories;
 using StoronnimV.Data.Repositories.Shared;
+using StoronnimV.Domain.Entities;
 using StoronnimV.Domain.Interfaces;
 using StoronnimV.Domain.Interfaces.Shared;
 
@@ -34,6 +41,7 @@ public static class ServiceCollectionsExtension
         builder.Services.AddScoped<IGroupPageService, GroupPageService>();
         builder.Services.AddScoped<IMusicPlatformService, MusicPlatformService>();
         builder.Services.AddScoped<IVideoService, VideoService>();
+        builder.Services.AddScoped<IAdminService, AdminService>();
         
         builder.Services.AddScoped<INewsControllerService, NewsControllerService>();
         builder.Services.AddScoped<ISchedulesControllerService, SchedulesControllerService>();
@@ -41,8 +49,10 @@ public static class ServiceCollectionsExtension
         builder.Services.AddScoped<IMusicControllerService, MusicControllerService>();
         builder.Services.AddScoped<IVideoControllerService, VideoControllerService>();
         builder.Services.AddScoped<IHomeControllerService, HomeControllerService>();
+        builder.Services.AddScoped<IAccountControllerService, AccountControllerService>();
 
         builder.Services.AddScoped<IHomeService, HomeService>();
+        builder.Services.AddScoped<IJwtBearerService, JwtBearerService>();
         
         return builder;
     }
@@ -50,6 +60,7 @@ public static class ServiceCollectionsExtension
     public static WebApplicationBuilder AddIntegrationServices(this WebApplicationBuilder builder)
     {
         builder.Services.AddScoped<ScheduleStatusUpdaterService>();
+        builder.Services.AddTransient<IPasswordHasher<Admin>, PasswordHasher<Admin>>();
         
         return builder;
     }
@@ -64,6 +75,7 @@ public static class ServiceCollectionsExtension
         builder.Services.AddScoped<IScheduleRepository, ScheduleRepository>();
         builder.Services.AddScoped<IMusicPlatformRepository, MusicPlatformRepository>();
         builder.Services.AddScoped<IVideoRepository, VideoRepository>();
+        builder.Services.AddScoped<IAdminRepository, AdminRepository>();
         
         return builder;
     }
@@ -137,6 +149,57 @@ public static class ServiceCollectionsExtension
 
         builder.Services.AddHangfireServer();
         
+        return builder;
+    }
+
+    public static WebApplicationBuilder AddJwtBearer(this WebApplicationBuilder builder)
+    {
+        builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+            .AddJwtBearer(options =>
+            {
+                options.RequireHttpsMetadata = false;
+                options.TokenValidationParameters = new()
+                {
+                    ValidateIssuer = true,
+                    ValidIssuer = JwtOptions.ISSUER,
+
+                    ValidateAudience = true,
+                    ValidAudience = JwtOptions.AUDIENCE,
+
+                    ValidateLifetime = true,
+
+                    ValidateIssuerSigningKey = true,
+                    IssuerSigningKey = JwtOptions.GetKey()
+                };
+            });
+        builder.Services.AddSwaggerGen(options =>
+        {
+            options.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme()
+            {
+                Name = "Authorization",
+                In = ParameterLocation.Header,
+                Type = SecuritySchemeType.Http,
+                Scheme = "Bearer",
+                BearerFormat = "JWT",
+                Description =
+                    "Input your JWT token in the 'Authorization' header like this: \"Authorization: Bearer {yourJWT}\""
+            });
+            options.AddSecurityRequirement(new OpenApiSecurityRequirement
+            {
+                {
+                    new OpenApiSecurityScheme
+                    {
+                        Reference = new OpenApiReference
+                        {
+                            Type = ReferenceType.SecurityScheme,
+                            Id = "Bearer"
+                        }
+                    },
+                    Array.Empty<string>()
+                }
+            });
+        });
+
         return builder;
     }
 }
