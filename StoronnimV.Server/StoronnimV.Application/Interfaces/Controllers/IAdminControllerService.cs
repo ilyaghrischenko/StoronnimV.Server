@@ -5,7 +5,6 @@ using StoronnimV.Application.Interfaces.Controllers.Shared;
 
 namespace StoronnimV.Application.Interfaces.Controllers;
 
-//TODO: PROBLEM
 public interface IAdminControllerService
 {
     Task<PaginationResponse<NewsResponse>> GetNewsForPageAsync(int page, int pageSize, params object[] args);
