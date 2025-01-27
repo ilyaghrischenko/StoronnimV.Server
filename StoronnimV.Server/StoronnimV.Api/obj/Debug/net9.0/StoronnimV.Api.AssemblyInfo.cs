@@ -15,10 +15,14 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
 <<<<<<< HEAD:StoronnimV.Server/StoronnimV.Api/obj/Debug/net9.0/StoronnimV.Api.AssemblyInfo.cs
+<<<<<<< HEAD:StoronnimV.Server/StoronnimV.Api/obj/Debug/net9.0/StoronnimV.Api.AssemblyInfo.cs
 [assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+e370661368a7bb065c20a8b1f6c842a5bdf894b2")]
 =======
 [assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+d5ff990ac6df4402805ddc6c5c0b230295bb4139")]
 >>>>>>> 97002c8 (commit):StoronnimV/StoronnimV.Api/obj/Debug/net8.0/StoronnimV.Api.AssemblyInfo.cs
+=======
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+bc0b8548427555585f213634ef38a938ff01b4ab")]
+>>>>>>> 48fb647 (merge):StoronnimV/StoronnimV.Api/obj/Debug/net9.0/StoronnimV.Api.AssemblyInfo.cs
 [assembly: System.Reflection.AssemblyProductAttribute("StoronnimV.Api")]
 [assembly: System.Reflection.AssemblyTitleAttribute("StoronnimV.Api")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
