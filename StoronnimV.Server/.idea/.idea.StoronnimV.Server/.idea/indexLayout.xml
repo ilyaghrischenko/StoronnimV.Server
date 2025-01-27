@@ -1,10 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="UserContentModel">
+<<<<<<< HEAD
     <attachedFolders>
       <Path>../../StoronnimV</Path>
       <Path>StoronnimV.Client</Path>
     </attachedFolders>
+=======
+    <attachedFolders />
+>>>>>>> c300134 (asd)
     <explicitIncludes />
     <explicitExcludes />
   </component>
