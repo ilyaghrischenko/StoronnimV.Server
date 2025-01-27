@@ -1,35 +1,38 @@
 {
   "format": 1,
   "restore": {
-    "D:\\GitHub\\StoronnimV.Server\\StoronnimV.Server\\StoronnimV.Domain\\StoronnimV.Domain.csproj": {}
+    "C:\\github\\StoronnimV\\StoronnimV\\StoronnimV.Api\\StoronnimV.Api.csproj": {}
   },
   "projects": {
-    "D:\\GitHub\\StoronnimV.Server\\StoronnimV.Server\\StoronnimV.Domain\\StoronnimV.Domain.csproj": {
+    "C:\\github\\StoronnimV\\StoronnimV\\StoronnimV.Api\\StoronnimV.Api.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\GitHub\\StoronnimV.Server\\StoronnimV.Server\\StoronnimV.Domain\\StoronnimV.Domain.csproj",
-        "projectName": "StoronnimV.Domain",
-        "projectPath": "D:\\GitHub\\StoronnimV.Server\\StoronnimV.Server\\StoronnimV.Domain\\StoronnimV.Domain.csproj",
+        "projectUniqueName": "C:\\github\\StoronnimV\\StoronnimV\\StoronnimV.Api\\StoronnimV.Api.csproj",
+        "projectName": "StoronnimV.Api",
+        "projectPath": "C:\\github\\StoronnimV\\StoronnimV\\StoronnimV.Api\\StoronnimV.Api.csproj",
         "packagesPath": "C:\\Users\\User\\.nuget\\packages\\",
-        "outputPath": "D:\\GitHub\\StoronnimV.Server\\StoronnimV.Server\\StoronnimV.Domain\\obj\\",
+        "outputPath": "C:\\github\\StoronnimV\\StoronnimV\\StoronnimV.Api\\obj\\",
         "projectStyle": "PackageReference",
+        "UsingMicrosoftNETSdk": false,
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
         ],
         "configFilePaths": [
           "C:\\Users\\User\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config"
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
-          "net9.0"
+          "net8.0"
         ],
         "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
           "C:\\Program Files\\dotnet\\library-packs": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
-          "net9.0": {
-            "targetAlias": "net9.0",
+          "net8.0": {
+            "targetAlias": "net8.0",
             "projectReferences": {}
           }
         },
@@ -41,18 +44,22 @@
         "restoreAuditProperties": {
           "enableAudit": "true",
           "auditLevel": "low",
-<<<<<<< HEAD:StoronnimV.Server/StoronnimV.Domain/obj/StoronnimV.Domain.csproj.nuget.dgspec.json
-          "auditMode": "direct"
-        },
-        "SdkAnalysisLevel": "9.0.100"
-=======
           "auditMode": "all"
         }
->>>>>>> 97002c8 (commit):StoronnimV/StoronnimV.Domain/obj/StoronnimV.Domain.csproj.nuget.dgspec.json
       },
       "frameworks": {
-        "net9.0": {
-          "targetAlias": "net9.0",
+        "net8.0": {
+          "targetAlias": "net8.0",
+          "dependencies": {
+            "Microsoft.AspNetCore.OpenApi": {
+              "target": "Package",
+              "version": "[8.0.11, )"
+            },
+            "Swashbuckle.AspNetCore": {
+              "target": "Package",
+              "version": "[6.6.2, )"
+            }
+          },
           "imports": [
             "net461",
             "net462",
@@ -71,15 +78,14 @@
             }
           ],
           "frameworkReferences": {
+            "Microsoft.AspNetCore.App": {
+              "privateAssets": "none"
+            },
             "Microsoft.NETCore.App": {
               "privateAssets": "all"
             }
           },
-<<<<<<< HEAD:StoronnimV.Server/StoronnimV.Domain/obj/StoronnimV.Domain.csproj.nuget.dgspec.json
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.101/PortableRuntimeIdentifierGraph.json"
-=======
           "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.100/PortableRuntimeIdentifierGraph.json"
->>>>>>> 97002c8 (commit):StoronnimV/StoronnimV.Domain/obj/StoronnimV.Domain.csproj.nuget.dgspec.json
         }
       }
     }

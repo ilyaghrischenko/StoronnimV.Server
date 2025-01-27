@@ -11,18 +11,12 @@
 using System;
 using System.Reflection;
 
-[assembly: System.Reflection.AssemblyCompanyAttribute("StoronnimV.Tests")]
+[assembly: System.Reflection.AssemblyCompanyAttribute("StoronnimV.Contracts")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-<<<<<<< HEAD:StoronnimV.Server/StoronnimV.Tests/obj/Debug/net9.0/StoronnimV.Tests.AssemblyInfo.cs
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+9c9a7444dbd661c98d7d10f4e489d7c5c5b89fcc")]
-[assembly: System.Reflection.AssemblyProductAttribute("StoronnimV.Tests")]
-[assembly: System.Reflection.AssemblyTitleAttribute("StoronnimV.Tests")]
-=======
 [assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+d5ff990ac6df4402805ddc6c5c0b230295bb4139")]
-[assembly: System.Reflection.AssemblyProductAttribute("StoronnimV.DTO")]
-[assembly: System.Reflection.AssemblyTitleAttribute("StoronnimV.DTO")]
->>>>>>> 97002c8 (commit):StoronnimV/StoronnimV.DTO/obj/Debug/net8.0/StoronnimV.DTO.AssemblyInfo.cs
+[assembly: System.Reflection.AssemblyProductAttribute("StoronnimV.Contracts")]
+[assembly: System.Reflection.AssemblyTitleAttribute("StoronnimV.Contracts")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
 
 // Создано классом WriteCodeFragment MSBuild.
