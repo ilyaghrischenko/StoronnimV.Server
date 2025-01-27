@@ -4,14 +4,16 @@ using StoronnimV.Application.Extensions;
 
 namespace StoronnimV.Application.Mapping.Video;
 
-public class VideoPageMappingProfile : Profile
+/// <summary>
+/// Профиль маппинга для мапа с (object) в (VideoPageShortResponse)
+/// </summary>
+public class VideoPageShortMappingProfile : Profile
 {
-    public VideoPageMappingProfile()
+    public VideoPageShortMappingProfile()
     {
-        CreateMap<object, VideoPageResponse>()
+        CreateMap<object, VideoPageShortResponse>()
             .ForMember(dest => dest.Id, opt => opt.MapFrom(src => (long)src.GetPropertyValue("Id")!))
             .ForMember(dest => dest.Title, opt => opt.MapFrom(src => (string)src.GetPropertyValue("Title")!))
-            .ForMember(dest => dest.Url, opt => opt.MapFrom(src => (string)src.GetPropertyValue("Url")!))
-            .ForMember(dest => dest.Type, opt => opt.MapFrom(src => (string)src.GetPropertyValue("Type")!));
+            .ForMember(dest => dest.Url, opt => opt.MapFrom(src => (string)src.GetPropertyValue("Url")!));
     }
 }

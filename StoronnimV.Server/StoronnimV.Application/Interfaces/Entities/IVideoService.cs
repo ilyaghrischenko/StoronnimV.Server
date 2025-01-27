@@ -2,7 +2,7 @@ using StoronnimV.Application.Interfaces.Entities.Shared;
 
 namespace StoronnimV.Application.Interfaces.Entities;
 
-public interface IVideoService : IReceivableService, IPaginationService
+public interface IVideoService : IReceivableService, IAdminPaginationService, IPaginationService
 {
     
 }

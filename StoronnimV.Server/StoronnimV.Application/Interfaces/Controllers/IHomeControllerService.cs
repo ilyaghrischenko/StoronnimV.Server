@@ -7,5 +7,5 @@ public interface IHomeControllerService
 {
     Task<IEnumerable<NewsHomeResponse>> GetNewsAsync(int count);
     Task<ScheduleHomeResponse> GetScheduleAsync();
-    Task<VideoPageResponse> GetVideoAsync();
+    Task<VideoPageShortResponse> GetVideoAsync();
 }

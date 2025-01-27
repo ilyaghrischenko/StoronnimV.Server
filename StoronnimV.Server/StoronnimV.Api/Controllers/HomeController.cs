@@ -40,7 +40,7 @@ namespace StoronnimV.Api.Controllers
         }
 
         [HttpGet("video")]
-        public async Task<ActionResult<VideoPageResponse>> GetPromotionVideo()
+        public async Task<ActionResult<VideoPageShortResponse>> GetPromotionVideo()
         {
             _logger.LogInformation($"Controller: HomeController Method: GetPromotionVideo started at {DateTime.UtcNow}");
 

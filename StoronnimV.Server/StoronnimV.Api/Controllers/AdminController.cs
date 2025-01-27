@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using StoronnimV.Application.DTO.Responses.NewsPage;
 using StoronnimV.Application.DTO.Responses.Shared;
+using StoronnimV.Application.DTO.Responses.Video;
 using StoronnimV.Application.Interfaces.Controllers;
 
 namespace StoronnimV.Api.Controllers
@@ -27,14 +28,24 @@ namespace StoronnimV.Api.Controllers
         {
             _logger.LogInformation($"Controller: AdminController Method: GetNewsForAdminPage with [page: {page}, pageSize: {pageSize}] started at {DateTime.UtcNow}");
             
-            var newsPaginationResponse = await _adminControllerService.GetForPageAsync(page, pageSize);
+            var newsPaginationResponse = await _adminControllerService.GetNewsForPageAsync(page, pageSize);
             
             _logger.LogInformation($"Controller: AdminController Method: GetNewsForAdminPage with [page: {page}, pageSize: {pageSize}] ended at {DateTime.UtcNow}");
 
             return Ok(newsPaginationResponse);
         }
-        
-        // [HttpGet("videos/page/{page:int}")]
-        // public async Task<ActionResult<PaginationResponse<>>>
+
+        [HttpGet("videos/page/{page:int}")]
+        public async Task<ActionResult<PaginationResponse<VideoPageResponse>>> GetVideosForAdminPage([FromRoute] int page,
+            [FromQuery] int pageSize = 30)
+        {
+            _logger.LogInformation($"Controller: AdminController Method: GetVideosForAdminPage with [page: {page}, pageSize: {pageSize}] started at {DateTime.UtcNow}");
+            
+            var videosPaginationResult = await _adminControllerService.GetVideosForPageAsync(page, pageSize);
+            
+            _logger.LogInformation($"Controller: AdminController Method: GetVideosForAdminPage with [page: {page}, pageSize: {pageSize}] ended at {DateTime.UtcNow}");
+
+            return Ok(videosPaginationResult);
+        }
     }
 }

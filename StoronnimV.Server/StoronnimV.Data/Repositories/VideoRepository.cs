@@ -133,4 +133,43 @@ public class VideoRepository(
 
         return count;
     }
+
+    public async Task<IEnumerable<object>?> GetForAdminPageAsync(int page, int pageSize = 10, params object[] args)
+    {
+        _logger.LogInformation($"Repository: VideoRepository Method: GetForAdminPageAsync with [page: {page}, pageSize: {pageSize}] started at {DateTime.UtcNow}");
+        
+        await using var context = await _contextFactory.CreateDbContextAsync();
+
+        var videos = await context.Videos
+            .AsNoTracking()
+            .Skip((page - 1) * pageSize)
+            .Take(pageSize)
+            .Select(v => new
+            {
+                Id = v.Id,
+                Title = v.Title,
+                Url = v.Url,
+                Type = v.Type.ToString()
+            })
+            .ToListAsync();
+        
+        _logger.LogInformation($"Repository: VideoRepository Method: GetForAdminPageAsync with [page: {page}, pageSize: {pageSize}] ended at {DateTime.UtcNow}");
+
+        return videos;
+    }
+
+    public async Task<int> GetTotalCountForAdminPageAsync()
+    {
+        _logger.LogInformation($"Repository: VideoRepository Method: GetTotalCountForAdminPageAsync started at {DateTime.UtcNow}");
+        
+        await using var context = await _contextFactory.CreateDbContextAsync();
+
+        var count = await context.Videos
+            .AsNoTracking()
+            .CountAsync();
+        
+        _logger.LogInformation($"Repository: VideoRepository Method: GetTotalCountForAdminPageAsync ended at {DateTime.UtcNow}");
+
+        return count;
+    }
 }

@@ -24,7 +24,7 @@ namespace StoronnimV.Api.Controllers
         private readonly ILogger<VideoController> _logger = logger;
 
         [HttpGet("{id:long}")]
-        public async Task<ActionResult<VideoPageResponse>> GetVideo([FromRoute] long id)
+        public async Task<ActionResult<VideoPageShortResponse>> GetVideo([FromRoute] long id)
         {
             _logger.LogInformation(
                 $"Controller: VideoController Method: GetVideo with id: {id} started at {DateTime.UtcNow}");
@@ -38,7 +38,7 @@ namespace StoronnimV.Api.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<VideoPageResponse>>> GetVideos()
+        public async Task<ActionResult<IEnumerable<VideoPageShortResponse>>> GetVideos()
         {
             _logger.LogInformation($"Controller: VideoController Method: GetVideos started at {DateTime.UtcNow}");
 
@@ -50,7 +50,7 @@ namespace StoronnimV.Api.Controllers
         }
         
         [HttpGet("page/{type}/{page:int}")]
-        public async Task<ActionResult<PaginationResponse<VideoPageResponse>>> GetVideosForPage
+        public async Task<ActionResult<PaginationResponse<VideoPageShortResponse>>> GetVideosForPage
             ([FromRoute] int page, [FromRoute] string type, [FromQuery] int pageSize = 5)
         {
             _logger.LogInformation($"Controller: NewsController Method: GetNewsForPage with page: {page} started at {DateTime.UtcNow}");

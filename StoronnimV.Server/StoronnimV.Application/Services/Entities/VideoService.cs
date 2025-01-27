@@ -92,4 +92,52 @@ public class VideoService(
 
         return paginationResult;
     }
+
+    public async Task<PaginationResult> GetForAdminPageAsync(int page, int pageSize, params object[] args)
+    {
+        _logger.LogInformation($"Service: VideoService Method: GetForAdminPageAsync with [page: {page}, pageSize: {pageSize}] started at {DateTime.UtcNow}");
+        
+        if (page <= 0)
+        {
+            throw new PaginationException("invalid page number");
+        }
+
+        var totalCount = await _videoRepository.GetTotalCountForAdminPageAsync();
+
+        if (totalCount == 0)
+        {
+            return new PaginationResult(
+                currentPage: page,
+                totalPages: 0,
+                totalItems: 0,
+                items: []
+            );
+        }
+
+        var totalPages = (int)Math.Ceiling((double)totalCount / pageSize);
+        var items = await _videoRepository.GetForAdminPageAsync(page, pageSize);
+        
+        if (items is null || !items.Any())
+        {
+            return new PaginationResult(
+                currentPage: page,
+                totalPages: 0,
+                totalItems: 0,
+                items: []
+            );
+        }
+
+        var sortedItems = items.ToList();
+
+        var paginationResult = new PaginationResult(
+            currentPage: page,
+            totalPages: totalPages,
+            totalItems: totalCount,
+            items: sortedItems
+        );
+        
+        _logger.LogInformation($"Service: VideoService Method: GetForAdminPageAsync with [page: {page}, pageSize: {pageSize}] ended at {DateTime.UtcNow}");
+
+        return paginationResult;
+    }
 }

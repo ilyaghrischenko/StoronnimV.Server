@@ -42,13 +42,13 @@ public class HomeControllerService(
         return scheduleDto;
     }
 
-    public async Task<VideoPageResponse> GetVideoAsync()
+    public async Task<VideoPageShortResponse> GetVideoAsync()
     {
         _logger.LogInformation($"Service: HomeControllerService Method: GetVideoAsync started at {DateTime.UtcNow}");
 
         var promotionVideo = await _homeService.GetPromotionVideoForHomePageAsync();
         
-        var promotionVideoDto = _mapper.Map<VideoPageResponse>(promotionVideo);
+        var promotionVideoDto = _mapper.Map<VideoPageShortResponse>(promotionVideo);
         
         _logger.LogInformation($"Service: HomeControllerService Method: GetVideoAsync ended at {DateTime.UtcNow}");
         

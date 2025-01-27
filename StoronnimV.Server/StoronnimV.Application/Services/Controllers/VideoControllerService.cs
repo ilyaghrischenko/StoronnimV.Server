@@ -17,33 +17,33 @@ public class VideoControllerService(
     private readonly ILogger<VideoControllerService> _logger = logger;
     private readonly IMapper _mapper = mapper;
     
-    public async Task<VideoPageResponse> GetItemByIdAsync(long id)
+    public async Task<VideoPageShortResponse> GetItemByIdAsync(long id)
     {
         _logger.LogInformation($"Service: VideoControllerService Method: GetItemByIdAsync with id: {id} started at {DateTime.UtcNow}");
 
         var video = await _videoService.GetItemByIdAsync(id);
         
-        var videoDto = _mapper.Map<VideoPageResponse>(video);
+        var videoDto = _mapper.Map<VideoPageShortResponse>(video);
         
         _logger.LogInformation($"Service: VideoControllerService Method: GetItemByIdAsync with id: {id} ended at {DateTime.UtcNow}");
 
         return videoDto;
     }
 
-    public async Task<IEnumerable<VideoPageResponse>> GetAllAsync()
+    public async Task<IEnumerable<VideoPageShortResponse>> GetAllAsync()
     {
         _logger.LogInformation($"Service: VideoControllerService Method: GetAllAsync started at {DateTime.UtcNow}");
         
         var videos = await _videoService.GetAllAsync();
         
-        var videosDto = _mapper.Map<IEnumerable<VideoPageResponse>>(videos);
+        var videosDto = _mapper.Map<IEnumerable<VideoPageShortResponse>>(videos);
         
         _logger.LogInformation($"Service: VideoControllerService Method: GetAllAsync ended at {DateTime.UtcNow}");
 
         return videosDto;
     }
 
-    public async Task<PaginationResponse<VideoPageResponse>> GetForPageAsync(int page, int pageSize, params object[] args)
+    public async Task<PaginationResponse<VideoPageShortResponse>> GetForPageAsync(int page, int pageSize, params object[] args)
     {
         _logger.LogInformation($"Service: VideoControllerService Method: GetForPageAsync with page: {page} started at {DateTime.UtcNow}");
         
@@ -51,9 +51,9 @@ public class VideoControllerService(
         
         var paginationResult = await _videoService.GetForPageAsync(page, pageSize, type);
         
-        var newsDto = _mapper.Map<IEnumerable<VideoPageResponse>>(paginationResult.Items);
+        var newsDto = _mapper.Map<IEnumerable<VideoPageShortResponse>>(paginationResult.Items);
         
-        var paginationResponse = new PaginationResponse<VideoPageResponse>(
+        var paginationResponse = new PaginationResponse<VideoPageShortResponse>(
             currentPage: paginationResult.CurrentPage,
             totalPages: paginationResult.TotalPages,
             totalItems: paginationResult.TotalItems,
