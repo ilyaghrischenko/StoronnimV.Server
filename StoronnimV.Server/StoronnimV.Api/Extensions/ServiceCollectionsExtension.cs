@@ -1,3 +1,4 @@
+using System.Configuration;
 using Hangfire;
 using Hangfire.PostgreSql;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -6,6 +7,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
 using Serilog;
 using StoronnimV.Application.AutentificationOptions;
+using StoronnimV.Application.Interfaces.BlobAzure;
 using StoronnimV.Application.Interfaces.Controllers;
 using StoronnimV.Application.Interfaces.Entities;
 using StoronnimV.Application.Interfaces.Home;
@@ -16,6 +18,7 @@ using StoronnimV.Application.Mapping.Music;
 using StoronnimV.Application.Mapping.News;
 using StoronnimV.Application.Mapping.Schedule;
 using StoronnimV.Application.Mapping.Video;
+using StoronnimV.Application.Services.BlobAzure;
 using StoronnimV.Application.Services.Controllers;
 using StoronnimV.Application.Services.Entities;
 using StoronnimV.Application.Services.Hangfire;
@@ -54,6 +57,7 @@ public static class ServiceCollectionsExtension
 
         builder.Services.AddScoped<IHomeService, HomeService>();
         builder.Services.AddScoped<IJwtBearerService, JwtBearerService>();
+        builder.Services.AddScoped<IBlobService, BlobService>();
         
         return builder;
     }
