@@ -104,6 +104,36 @@ public class NewsRepository(IDbContextFactory<StoronnimVContext> contextFactory,
         return result;
     }
 
+    public async Task<IEnumerable<object>?> GetForAdminPageAsync(int page, int pageSize = 10, params object[] args)
+    {
+        _logger.LogInformation($"Repository: NewsRepository Method: GetForAdminPageAsync with [page: {page}, pageSize: {pageSize}] started at {DateTime.UtcNow}");
+        
+        using var context = await _contextFactory.CreateDbContextAsync();
+        var dbSet = context.NewsItems;
+        var query = ApplyIncludes(dbSet);
+        
+        var result = await query
+            .AsNoTracking()
+            .OrderByDescending(newsItem => newsItem.Date)
+            .Skip((page - 1) * pageSize)
+            .Take(pageSize)
+            .Select(newsItem => new
+            {
+                Id = newsItem.Id,
+                Photo = newsItem.Photo,
+                Video = newsItem.Video.Url,
+                Title = newsItem.Title,
+                Description = newsItem.Description,
+                Priority = newsItem.Priority.ToString(),
+                Date = newsItem.Date.ToShortDateString()
+            })
+            .ToListAsync();
+        
+        _logger.LogInformation($"Repository: NewsRepository Method: GetForAdminPageAsync with [page: {page}, pageSize: {pageSize}] ended at {DateTime.UtcNow}");
+
+        return result;
+    }
+
     public async Task<int> GetTotalCountAsync(params object[] args)
     {
         _logger.LogInformation($"Repository: NewsRepository Method: GetTotalCountAsync started at {DateTime.UtcNow}");

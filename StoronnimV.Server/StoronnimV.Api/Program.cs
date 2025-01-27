@@ -69,9 +69,9 @@ if (app.Environment.IsDevelopment())
 }
 
 app.MapControllers();
-app.UseAuthorization();
 app.UseHttpsRedirection();
 app.UseRouting();
+app.UseAuthorization();
 app.UseStaticFiles();
 
 app.UseCors("AllowReactApp");

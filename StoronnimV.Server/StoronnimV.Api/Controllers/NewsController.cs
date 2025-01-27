@@ -44,11 +44,11 @@ namespace StoronnimV.Api.Controllers
         [HttpGet("page/{page:int}")]
         public async Task<ActionResult<PaginationResponse<NewsShortResponse>>> GetNewsForPage([FromRoute] int page, [FromQuery] int pageSize = 9)
         {
-            _logger.LogInformation($"Controller: NewsController Method: GetNewsForPage with page: {page} started at {DateTime.UtcNow}");
+            _logger.LogInformation($"Controller: NewsController Method: GetNewsForPage with [page: {page}, pageSize: {pageSize}] started at {DateTime.UtcNow}");
             
             var newsPaginationResponse = await _newsControllerService.GetForPageAsync(page, pageSize);
             
-            _logger.LogInformation($"Controller: NewsController Method: GetNewsForPage with page: {page} ended at {DateTime.UtcNow}");
+            _logger.LogInformation($"Controller: NewsController Method: GetNewsForPage with [page: {page}, pageSize: {pageSize}] ended at {DateTime.UtcNow}");
             
             return Ok(newsPaginationResponse);
         }

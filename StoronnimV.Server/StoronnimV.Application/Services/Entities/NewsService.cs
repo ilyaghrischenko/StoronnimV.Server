@@ -11,7 +11,8 @@ namespace StoronnimV.Application.Services.Entities;
 /// Сервис для проверки полученных данных, полученых с репозитория. Так же используется сортировка
 /// </summary>
 /// <param name="newsRepository"></param>
-public class NewsService(INewsRepository newsRepository,
+public class NewsService(
+    INewsRepository newsRepository,
     ILogger<NewsService> logger) : INewsService
 {
     private readonly INewsRepository _newsRepository = newsRepository;
@@ -93,6 +94,54 @@ public class NewsService(INewsRepository newsRepository,
         );
 
         _logger.LogInformation($"Service: NewsService Method: GetForPageAsync with [page: {page}, pageSize: {pageSize}] ended at {DateTime.UtcNow}");
+
+        return response;
+    }
+
+    public async Task<PaginationResult> GetForAdminPageAsync(int page, int pageSize, params object[] args)
+    {
+        _logger.LogInformation($"Service: NewsService Method: GetForPageAsync with [page: {page}, pageSize: {pageSize}] started at {DateTime.UtcNow}");
+        
+        if (page <= 0)
+        {
+            throw new PaginationException("invalid page number");
+        }
+        
+        var totalCount = await _newsRepository.GetTotalCountAsync();
+
+        if (totalCount == 0)
+        {
+            return new PaginationResult(
+                currentPage: page,
+                totalPages: 0,
+                totalItems: 0,
+                items: Enumerable.Empty<object>()
+            );
+        }
+        
+        var totalPages = (int)Math.Ceiling((double)totalCount / pageSize);
+        var items = await _newsRepository.GetForAdminPageAsync(page, pageSize);
+        
+        if (items is null || !items.Any())
+        {
+            return new PaginationResult(
+                currentPage: page,
+                totalPages: 0,
+                totalItems: 0,
+                items: Enumerable.Empty<object>()
+            );
+        }
+        
+        var sortedItems = items.ToList();
+        
+        var response = new PaginationResult(
+            currentPage: page,
+            totalPages: totalPages,
+            totalItems: totalCount,
+            items: sortedItems
+        );
+        
+        _logger.LogInformation($"Service: NewsService Method: GetForPageAsync with [page: {page}, pageSize: {pageSize}] started at {DateTime.UtcNow}");
 
         return response;
     }
