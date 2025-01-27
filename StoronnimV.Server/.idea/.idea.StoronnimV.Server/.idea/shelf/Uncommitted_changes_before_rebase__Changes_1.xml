@@ -1,0 +1,49 @@
+<changelist name="Uncommitted_changes_before_rebase_[Changes]1" date="1738006250601" recycled="true" deleted="true">
+  <option name="PATH" value="$PROJECT_DIR$/.idea/.idea.StoronnimV.Server/.idea/shelf/Uncommitted_changes_before_rebase_[Changes]1/shelved.patch" />
+  <option name="DESCRIPTION" value="Uncommitted changes before rebase [Changes]" />
+  <binary>
+    <option name="BEFORE_PATH" value="StoronnimV.Tests/obj/Debug/net9.0/StoronnimV.Tests.AssemblyInfoInputs.cache" />
+    <option name="AFTER_PATH" value="StoronnimV.Tests/obj/Debug/net9.0/StoronnimV.Tests.AssemblyInfoInputs.cache" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/.idea.StoronnimV.Server/.idea/shelf/Uncommitted_changes_before_rebase_[Changes]1/StoronnimV.Tests.AssemblyInfoInputs.cache" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="StoronnimV.Tests/obj/Debug/net9.0/StoronnimV.Tests.csproj.AssemblyReference.cache" />
+    <option name="AFTER_PATH" value="StoronnimV.Tests/obj/Debug/net9.0/StoronnimV.Tests.csproj.AssemblyReference.cache" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/.idea.StoronnimV.Server/.idea/shelf/Uncommitted_changes_before_rebase_[Changes]1/StoronnimV.Tests.csproj.AssemblyReference.cache" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="StoronnimV.Api/obj/Debug/net9.0/StoronnimV.Api.AssemblyInfoInputs.cache" />
+    <option name="AFTER_PATH" value="StoronnimV.Api/obj/Debug/net9.0/StoronnimV.Api.AssemblyInfoInputs.cache" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/.idea.StoronnimV.Server/.idea/shelf/Uncommitted_changes_before_rebase_[Changes]1/StoronnimV.Api.AssemblyInfoInputs.cache" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="StoronnimV.Application/obj/Debug/net9.0/StoronnimV.Application.AssemblyInfoInputs.cache" />
+    <option name="AFTER_PATH" value="StoronnimV.Application/obj/Debug/net9.0/StoronnimV.Application.AssemblyInfoInputs.cache" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/.idea.StoronnimV.Server/.idea/shelf/Uncommitted_changes_before_rebase_[Changes]1/StoronnimV.Application.AssemblyInfoInputs.cache" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="StoronnimV.Data/obj/Debug/net9.0/StoronnimV.Data.csproj.AssemblyReference.cache" />
+    <option name="AFTER_PATH" value="StoronnimV.Data/obj/Debug/net9.0/StoronnimV.Data.csproj.AssemblyReference.cache" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/.idea.StoronnimV.Server/.idea/shelf/Uncommitted_changes_before_rebase_[Changes]1/StoronnimV.Data.csproj.AssemblyReference.cache" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="StoronnimV.Application/obj/Debug/net9.0/StoronnimV.Application.csproj.AssemblyReference.cache" />
+    <option name="AFTER_PATH" value="StoronnimV.Application/obj/Debug/net9.0/StoronnimV.Application.csproj.AssemblyReference.cache" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/.idea.StoronnimV.Server/.idea/shelf/Uncommitted_changes_before_rebase_[Changes]1/StoronnimV.Application.csproj.AssemblyReference.cache" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="StoronnimV.Data/obj/Debug/net9.0/StoronnimV.Data.AssemblyInfoInputs.cache" />
+    <option name="AFTER_PATH" value="StoronnimV.Data/obj/Debug/net9.0/StoronnimV.Data.AssemblyInfoInputs.cache" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/.idea.StoronnimV.Server/.idea/shelf/Uncommitted_changes_before_rebase_[Changes]1/StoronnimV.Data.AssemblyInfoInputs.cache" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="StoronnimV.Domain/obj/Debug/net9.0/StoronnimV.Domain.AssemblyInfoInputs.cache" />
+    <option name="AFTER_PATH" value="StoronnimV.Domain/obj/Debug/net9.0/StoronnimV.Domain.AssemblyInfoInputs.cache" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/.idea.StoronnimV.Server/.idea/shelf/Uncommitted_changes_before_rebase_[Changes]1/StoronnimV.Domain.AssemblyInfoInputs.cache" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="StoronnimV.Api/obj/Debug/net9.0/StoronnimV.Api.csproj.AssemblyReference.cache" />
+    <option name="AFTER_PATH" value="StoronnimV.Api/obj/Debug/net9.0/StoronnimV.Api.csproj.AssemblyReference.cache" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/.idea.StoronnimV.Server/.idea/shelf/Uncommitted_changes_before_rebase_[Changes]1/StoronnimV.Api.csproj.AssemblyReference.cache" />
+  </binary>
+</changelist>
