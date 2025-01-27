@@ -5,7 +5,7 @@ namespace StoronnimV.Application.Interfaces.Controllers;
 
 public interface IHomeControllerService
 {
-    Task<IEnumerable<NewsHomeResponse>> GetNewsAsync(int count);
-    Task<ScheduleHomeResponse> GetScheduleAsync();
-    Task<VideoPageShortResponse> GetVideoAsync();
+    Task<IEnumerable<NewsHomeResponse>> GetNewsAsync(int count, CancellationToken ct);
+    Task<ScheduleHomeResponse> GetScheduleAsync(CancellationToken ct);
+    Task<VideoPageShortResponse> GetVideoAsync(CancellationToken ct);
 }

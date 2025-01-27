@@ -20,11 +20,11 @@ public class SchedulesControllerService(
     private readonly IMapper _mapper = mapper;
     private readonly ILogger<SchedulesControllerService> _logger = logger;
     
-    public async Task<ScheduleResponse> GetItemByIdAsync(long id)
+    public async Task<ScheduleResponse> GetItemByIdAsync(long id, CancellationToken ct)
     {
         _logger.LogInformation($"Service: SchedulesControllerService Method: GetItemByIdAsync with id: {id} started at {DateTime.UtcNow}");
         
-        var schedule = await _scheduleService.GetItemByIdAsync(id);
+        var schedule = await _scheduleService.GetItemByIdAsync(id, ct);
         
         var scheduleDto = _mapper.Map<ScheduleResponse>(schedule);
         
@@ -33,11 +33,11 @@ public class SchedulesControllerService(
         return scheduleDto;
     }
 
-    public async Task<IEnumerable<ScheduleShortResponse>> GetAllAsync()
+    public async Task<IEnumerable<ScheduleShortResponse>> GetAllAsync(CancellationToken ct)
     {
         _logger.LogInformation($"Service: SchedulesControllerService Method: GetAllAsync started at {DateTime.UtcNow}");
         
-        var schedules = await _scheduleService.GetAllAsync();
+        var schedules = await _scheduleService.GetAllAsync(ct);
         
         var schedulesDto = _mapper.Map<IEnumerable<ScheduleShortResponse>>(schedules);
         

@@ -16,11 +16,11 @@ namespace StoronnimV.Api.Controllers
         private readonly ILogger<HomeController> _logger = logger;
 
         [HttpGet("news/{count:int}")]
-        public async Task<ActionResult<IEnumerable<NewsHomeResponse>>> GetNews([FromRoute] int count)
+        public async Task<ActionResult<IEnumerable<NewsHomeResponse>>> GetNews([FromRoute] int count, CancellationToken ct)
         {
             _logger.LogInformation($"Controller: HomeController Method: GetNews with count: {count} started at {DateTime.UtcNow}");
             
-            var newsDto = await _homeControllerService.GetNewsAsync(count);
+            var newsDto = await _homeControllerService.GetNewsAsync(count, ct);
             
             _logger.LogInformation($"Controller: HomeController Method: GetNews with count: {count} ended at {DateTime.UtcNow}");
 
@@ -28,11 +28,11 @@ namespace StoronnimV.Api.Controllers
         }
 
         [HttpGet("schedule")]
-        public async Task<ActionResult<ScheduleHomeResponse>> GetSchedule()
+        public async Task<ActionResult<ScheduleHomeResponse>> GetSchedule(CancellationToken ct)
         {
             _logger.LogInformation($"Controller: HomeController Method: GetSchedule started at {DateTime.UtcNow}");
             
-            var scheduleDto = await _homeControllerService.GetScheduleAsync();
+            var scheduleDto = await _homeControllerService.GetScheduleAsync(ct);
             
             _logger.LogInformation($"Controller: HomeController Method: GetSchedule ended at {DateTime.UtcNow}");
 
@@ -40,11 +40,11 @@ namespace StoronnimV.Api.Controllers
         }
 
         [HttpGet("video")]
-        public async Task<ActionResult<VideoPageShortResponse>> GetPromotionVideo()
+        public async Task<ActionResult<VideoPageShortResponse>> GetPromotionVideo(CancellationToken ct)
         {
             _logger.LogInformation($"Controller: HomeController Method: GetPromotionVideo started at {DateTime.UtcNow}");
 
-            var videoDto = await _homeControllerService.GetVideoAsync();
+            var videoDto = await _homeControllerService.GetVideoAsync(ct);
             
             _logger.LogInformation($"Controller: HomeController Method: GetPromotionVideo ended at {DateTime.UtcNow}");
 

@@ -16,22 +16,22 @@ public class MemberService(IMemberRepository memberRepository,
     private readonly IMemberRepository _memberRepository = memberRepository;
     private readonly ILogger<MemberService> _logger = logger;
     
-    public async Task<IEnumerable<object>> GetAllAsync()
+    public async Task<IEnumerable<object>> GetAllAsync(CancellationToken ct)
     {
         _logger.LogInformation($"Service: MemberService Method: GetAllAsync started at {DateTime.UtcNow}");
         
-        var members = await _memberRepository.GetAllAsync();
+        var members = await _memberRepository.GetAllAsync(ct);
         
         _logger.LogInformation($"Service: MemberService Method: GetAllAsync ended at {DateTime.UtcNow}");
 
         return members ?? new List<object>();
     }
 
-    public async Task<object> GetItemByIdAsync(long id)
+    public async Task<object> GetItemByIdAsync(long id, CancellationToken ct)
     {
         _logger.LogInformation($"Service: MemberService Method: GetItemByIdAsync with id: {id} started at {DateTime.UtcNow}");
         
-        var member = await _memberRepository.GetByIdAsNoTrackingAsync(id)
+        var member = await _memberRepository.GetByIdAsNoTrackingAsync(id, ct)
             ?? throw new EntityNotFoundException($"Member with id: {id} was not found");
 
         _logger.LogInformation($"Service: MemberService Method: GetItemByIdAsync with id: {id} ended at {DateTime.UtcNow}");

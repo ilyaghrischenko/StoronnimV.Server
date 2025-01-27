@@ -15,11 +15,11 @@ public class AccountControllerService(
     private readonly IJwtBearerService _jwtBearerService = jwtBearerService;
     private readonly ILogger<AccountControllerService> _logger = logger;
 
-    public async Task<string> LogInAsync(LogInRequest request)
+    public async Task<string> LogInAsync(LogInRequest request, CancellationToken ct)
     {
         _logger.LogInformation($"Service: AccountControllerService Method: LogInAsync with [login: {request.Login}, password: {request.Password}] started at {DateTime.UtcNow}");
 
-        var admin = await _adminService.LogInAsync(request);
+        var admin = await _adminService.LogInAsync(request, ct);
         
         var identity = _jwtBearerService.GetIdentity(admin);
         var token = _jwtBearerService.GetToken(identity);

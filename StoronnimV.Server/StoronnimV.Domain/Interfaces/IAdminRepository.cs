@@ -6,5 +6,5 @@ namespace StoronnimV.Domain.Interfaces;
 public interface IAdminRepository
     : IRepository<Admin>, IReceivableRepository<Admin>
 {
-    Task<Admin?> GetByLoginAsync(string login);
+    Task<Admin?> GetByLoginAsync(string login, CancellationToken ct);
 }

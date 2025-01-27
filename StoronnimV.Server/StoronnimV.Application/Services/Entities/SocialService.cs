@@ -15,11 +15,11 @@ public class SocialService(ISocialRepository socialRepository,
     private readonly ISocialRepository _socialRepository = socialRepository;
     private readonly ILogger<SocialService> _logger = logger;
     
-    public async Task<object> GetItemByIdAsync(long id)
+    public async Task<object> GetItemByIdAsync(long id, CancellationToken ct)
     {
         _logger.LogInformation($"Service: SocialService Method: GetItemByIdAsync with id: {id} started at {DateTime.UtcNow}");
         
-        var social = await _socialRepository.GetByIdAsNoTrackingAsync(id)
+        var social = await _socialRepository.GetByIdAsNoTrackingAsync(id, ct)
             ?? throw new EntityNotFoundException($"Social with id: {id} was not found");
         
         _logger.LogInformation($"Service: SocialService Method: GetItemByIdAsync with id: {id} ended at {DateTime.UtcNow}");
@@ -27,22 +27,22 @@ public class SocialService(ISocialRepository socialRepository,
         return social;
     }
 
-    public async Task<IEnumerable<object>> GetAllAsync()
+    public async Task<IEnumerable<object>> GetAllAsync(CancellationToken ct)
     {
         _logger.LogInformation($"Service: SocialService Method: GetAllAsync started at {DateTime.UtcNow}");
         
-        var socials = await _socialRepository.GetAllAsync();
+        var socials = await _socialRepository.GetAllAsync(ct);
         
         _logger.LogInformation($"Service: SocialService Method: GetAllAsync ended at {DateTime.UtcNow}");
 
         return socials ?? new List<object>();
     }
     
-    public async Task<IEnumerable<object>> GetAllForMemberAsync(long memberId)
+    public async Task<IEnumerable<object>> GetAllForMemberAsync(long memberId, CancellationToken ct)
     {
         _logger.LogInformation($"Service: SocialService Method: GetAllForMemberAsync with memberId: {memberId} started at {DateTime.UtcNow}");
         
-        var socials = await _socialRepository.GetAllForMemberAsync(memberId)
+        var socials = await _socialRepository.GetAllForMemberAsync(memberId, ct)
             ?? throw new EntityNotFoundException($"Socials with member id: {memberId} was not found");
         
         _logger.LogInformation($"Service: SocialService Method: GetAllForMemberAsync with memberId: {memberId} ended at {DateTime.UtcNow}");

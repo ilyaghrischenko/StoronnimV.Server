@@ -6,6 +6,6 @@ namespace StoronnimV.Application.Interfaces.Controllers;
 
 public interface IVideoControllerService :  IPaginationControllerService<PaginationResponse<VideoPageShortResponse>>
 {
-    Task<VideoPageShortResponse> GetItemByIdAsync(long id);
-    Task<IEnumerable<VideoPageShortResponse>> GetAllAsync();
+    Task<VideoPageShortResponse> GetItemByIdAsync(long id, CancellationToken ct);
+    Task<IEnumerable<VideoPageShortResponse>> GetAllAsync(CancellationToken ct);
 }

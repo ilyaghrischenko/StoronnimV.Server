@@ -101,7 +101,7 @@ using (var scope = app.Services.CreateScope())
 #region StatusUpdaterSettings
 RecurringJob.AddOrUpdate<ScheduleStatusUpdaterService>(
     "update-schedule-statuses",
-    service => service.UpdateScheduleStatusesAsync(),
+    service => service.UpdateScheduleStatusesAsync(CancellationToken.None),
     Cron.Daily);
 #endregion
 

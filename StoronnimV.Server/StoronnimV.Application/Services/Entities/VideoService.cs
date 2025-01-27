@@ -15,12 +15,12 @@ public class VideoService(
     private readonly IVideoRepository _videoRepository = videoRepository;
     private readonly ILogger<VideoService> _logger = logger;
 
-    public async Task<object> GetItemByIdAsync(long id)
+    public async Task<object> GetItemByIdAsync(long id, CancellationToken ct)
     {
         _logger.LogInformation(
             $"Service: VideoService Method: GetItemByIdAsync with id: {id} started at {DateTime.UtcNow}");
 
-        var video = await _videoRepository.GetByIdAsNoTrackingAsync(id)
+        var video = await _videoRepository.GetByIdAsNoTrackingAsync(id, ct)
                     ?? throw new EntityNotFoundException($"Video with id: {id} was not found");
 
         _logger.LogInformation(
@@ -29,11 +29,11 @@ public class VideoService(
         return video;
     }
 
-    public async Task<IEnumerable<object>> GetAllAsync()
+    public async Task<IEnumerable<object>> GetAllAsync(CancellationToken ct)
     {
         _logger.LogInformation($"Service: VideoService Method: GetAllAsync started at {DateTime.UtcNow}");
 
-        var videos = await _videoRepository.GetAllAsync();
+        var videos = await _videoRepository.GetAllAsync(ct);
 
         _logger.LogInformation($"Service: VideoService Method: GetAllAsync ended at {DateTime.UtcNow}");
 
@@ -41,7 +41,7 @@ public class VideoService(
     }
 
 
-    public async Task<PaginationResult> GetForPageAsync(int page, int pageSize, params object[] args)
+    public async Task<PaginationResult> GetForPageAsync(int page, int pageSize, CancellationToken ct, params object[] args)
     {
         _logger.LogInformation(
             $"Service: VideoService Method: GetForPageAsync with [page: {page}, pageSize: {pageSize}] started at {DateTime.UtcNow}");
@@ -53,7 +53,7 @@ public class VideoService(
             throw new PaginationException("invalid page number");
         }
 
-        var totalCount = await _videoRepository.GetTotalCountAsync(type);
+        var totalCount = await _videoRepository.GetTotalCountAsync(ct, type);
 
         if (totalCount == 0)
         {
@@ -66,7 +66,7 @@ public class VideoService(
         }
 
         var totalPages = (int)Math.Ceiling((double)totalCount / pageSize);
-        var items = await _videoRepository.GetForPageAsync(page, pageSize, type);
+        var items = await _videoRepository.GetForPageAsync(page, ct, pageSize, type);
 
         if (items is null || !items.Any())
         {
@@ -93,7 +93,7 @@ public class VideoService(
         return paginationResult;
     }
 
-    public async Task<PaginationResult> GetForAdminPageAsync(int page, int pageSize, params object[] args)
+    public async Task<PaginationResult> GetForAdminPageAsync(int page, int pageSize, CancellationToken ct, params object[] args)
     {
         _logger.LogInformation($"Service: VideoService Method: GetForAdminPageAsync with [page: {page}, pageSize: {pageSize}] started at {DateTime.UtcNow}");
         
@@ -102,7 +102,7 @@ public class VideoService(
             throw new PaginationException("invalid page number");
         }
 
-        var totalCount = await _videoRepository.GetTotalCountForAdminPageAsync();
+        var totalCount = await _videoRepository.GetTotalCountForAdminPageAsync(ct);
 
         if (totalCount == 0)
         {
@@ -115,7 +115,7 @@ public class VideoService(
         }
 
         var totalPages = (int)Math.Ceiling((double)totalCount / pageSize);
-        var items = await _videoRepository.GetForAdminPageAsync(page, pageSize);
+        var items = await _videoRepository.GetForAdminPageAsync(page, ct, pageSize);
         
         if (items is null || !items.Any())
         {

@@ -28,12 +28,12 @@ public class GroupPageControllerService(
     private readonly IMapper _mapper = mapper;
     private readonly ILogger<GroupPageControllerService> _logger = logger;
     
-    public async Task<GroupPageFullInfoResponse> GetGroupPageInfoAsync()
+    public async Task<GroupPageFullInfoResponse> GetGroupPageInfoAsync(CancellationToken ct)
     {
         _logger.LogInformation($"Service: GroupPageControllerService Method: GetGroupPageInfoAsync started at {DateTime.UtcNow}");
         
-        var groupPageTask = _groupPageService.GetFirstGroupPageAsync();
-        var membersTask = _memberService.GetAllAsync();
+        var groupPageTask = _groupPageService.GetFirstGroupPageAsync(ct);
+        var membersTask = _memberService.GetAllAsync(ct);
         
         await Task.WhenAll(groupPageTask, membersTask);
         
@@ -50,12 +50,12 @@ public class GroupPageControllerService(
         return groupPageFullInfoDto;
     }
 
-    public async Task<MemberFullInfoResponse> GetMemberInfoAsync(long memberId)
+    public async Task<MemberFullInfoResponse> GetMemberInfoAsync(long memberId, CancellationToken ct)
     {
         _logger.LogInformation($"Service: GroupPageControllerService Method: GetMemberInfoAsync with memberId: {memberId} started at {DateTime.UtcNow}");
         
-        var memberTask = _memberService.GetItemByIdAsync(memberId);
-        var socialsTask = _socialService.GetAllForMemberAsync(memberId);
+        var memberTask = _memberService.GetItemByIdAsync(memberId, ct);
+        var socialsTask = _socialService.GetAllForMemberAsync(memberId, ct);
         
         await Task.WhenAll(memberTask, socialsTask);
         

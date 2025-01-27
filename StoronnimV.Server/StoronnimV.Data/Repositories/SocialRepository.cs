@@ -23,11 +23,11 @@ public class SocialRepository(IDbContextFactory<StoronnimVContext> contextFactor
         return dbSet.Include(social => social.Member);
     }
 
-    public async Task<object?> GetByIdAsNoTrackingAsync(long id)
+    public async Task<object?> GetByIdAsNoTrackingAsync(long id, CancellationToken ct)
     {
         _logger.LogInformation($"Repository: SocialRepository Method: GetByIdAsNoTrackingAsync with id: {id} started at {DateTime.UtcNow}");
         
-        using var context = await _contextFactory.CreateDbContextAsync();
+        using var context = await _contextFactory.CreateDbContextAsync(ct);
         var dbSet = context.Socials;
         var query = ApplyIncludes(dbSet);
 
@@ -39,18 +39,18 @@ public class SocialRepository(IDbContextFactory<StoronnimVContext> contextFactor
                 Type = social.Type.ToString(),
                 Url = social.Url
             })
-            .FirstOrDefaultAsync(x => x.Id == id);
+            .FirstOrDefaultAsync(x => x.Id == id, ct);
         
         _logger.LogInformation($"Repository: SocialRepository Method: GetByIdAsNoTrackingAsync with id: {id} ended at {DateTime.UtcNow}");
 
         return result;
     }
 
-    public async Task<IEnumerable<object>?> GetAllAsync()
+    public async Task<IEnumerable<object>?> GetAllAsync(CancellationToken ct)
     {
         _logger.LogInformation($"Repository: SocialRepository Method: GetAllAsync started at {DateTime.UtcNow}");
         
-        using var context = await _contextFactory.CreateDbContextAsync();
+        using var context = await _contextFactory.CreateDbContextAsync(ct);
         var dbSet = context.Socials;
         var query = ApplyIncludes(dbSet);
         
@@ -63,18 +63,18 @@ public class SocialRepository(IDbContextFactory<StoronnimVContext> contextFactor
                 Type = social.Type.ToString(),
                 Url = social.Url
             })
-            .ToListAsync();
+            .ToListAsync(ct);
         
         _logger.LogInformation($"Repository: SocialRepository Method: GetAllAsync started at {DateTime.UtcNow}");
 
         return result;
     }
     
-    public async Task<IEnumerable<object>?> GetAllForMemberAsync(long memberId)
+    public async Task<IEnumerable<object>?> GetAllForMemberAsync(long memberId, CancellationToken ct)
     {
         _logger.LogInformation($"Repository: SocialRepository Method: GetAllForMemberAsync with memberId: {memberId} started at {DateTime.UtcNow}");
         
-        using var context = await _contextFactory.CreateDbContextAsync();
+        using var context = await _contextFactory.CreateDbContextAsync(ct);
         var dbSet = context.Socials;
         var query = ApplyIncludes(dbSet);
         
@@ -87,7 +87,7 @@ public class SocialRepository(IDbContextFactory<StoronnimVContext> contextFactor
                 Type = social.Type.ToString(),
                 Url = social.Url
             })
-            .ToListAsync();
+            .ToListAsync(ct);
         
         _logger.LogInformation($"Repository: SocialRepository Method: GetAllForMemberAsync with memberId: {memberId} ended at {DateTime.UtcNow}");
 

@@ -18,11 +18,11 @@ public class ScheduleService(IScheduleRepository scheduleRepository,
     private readonly IScheduleRepository _scheduleRepository = scheduleRepository;
     private readonly ILogger<ScheduleService> _logger = logger;
     
-    public async Task<object> GetItemByIdAsync(long id)
+    public async Task<object> GetItemByIdAsync(long id, CancellationToken ct)
     {
         _logger.LogInformation($"Service: ScheduleService Method: GetItemByIdAsync with id: {id} started at {DateTime.UtcNow}");
         
-        var schedule = await _scheduleRepository.GetByIdAsNoTrackingAsync(id)
+        var schedule = await _scheduleRepository.GetByIdAsNoTrackingAsync(id, ct)
             ?? throw new EntityNotFoundException($"Schedule with id: {id} was not found");
         
         _logger.LogInformation($"Service: ScheduleService Method: GetItemByIdAsync with id: {id} ended at {DateTime.UtcNow}");
@@ -30,11 +30,11 @@ public class ScheduleService(IScheduleRepository scheduleRepository,
         return schedule;
     }
 
-    public async Task<IEnumerable<object>> GetAllAsync()
+    public async Task<IEnumerable<object>> GetAllAsync(CancellationToken ct)
     {
         _logger.LogInformation($"Service: ScheduleService Method: GetAllAsync started at {DateTime.UtcNow}");
         
-        var allSchedules = await _scheduleRepository.GetAllAsync();
+        var allSchedules = await _scheduleRepository.GetAllAsync(ct);
         if (allSchedules is null)
         {
             return new List<object>();
@@ -49,12 +49,12 @@ public class ScheduleService(IScheduleRepository scheduleRepository,
         return result;
     }
 
-    public async Task UpdateStatusesAsync()
+    public async Task UpdateStatusesAsync(CancellationToken ct)
     {
         _logger.LogInformation($"Service: ScheduleService Method: UpdateStatusesAsync started at {DateTime.UtcNow}");
         
         var allSchedules = await _scheduleRepository
-            .GetAllSchedulesAsync();
+            .GetAllSchedulesAsync(ct);
         
         var today = DateTime.UtcNow.Date;
         
@@ -67,7 +67,7 @@ public class ScheduleService(IScheduleRepository scheduleRepository,
             _scheduleRepository.UpdateAsync(schedule, () =>
             {
                 schedule.Status = ScheduleStatus.Passed;
-            })
+            }, ct)
         );
         
         await Task.WhenAll(updateTasks);

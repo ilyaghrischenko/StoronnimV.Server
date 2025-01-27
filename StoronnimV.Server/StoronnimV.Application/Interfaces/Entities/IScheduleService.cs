@@ -4,5 +4,5 @@ namespace StoronnimV.Application.Interfaces.Entities;
 
 public interface IScheduleService : IReceivableService
 {
-    Task UpdateStatusesAsync();
+    Task UpdateStatusesAsync(CancellationToken ct);
 }

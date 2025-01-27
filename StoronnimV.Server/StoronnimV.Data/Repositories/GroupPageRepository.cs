@@ -17,11 +17,11 @@ public class GroupPageRepository(IDbContextFactory<StoronnimVContext> contextFac
     private readonly IDbContextFactory<StoronnimVContext> _contextFactory = contextFactory;
     private readonly ILogger<GroupPageRepository> _logger = logger;
 
-    public async Task<object?> GetByIdAsNoTrackingAsync(long id)
+    public async Task<object?> GetByIdAsNoTrackingAsync(long id, CancellationToken ct)
     {
         _logger.LogInformation($"Repository: GroupPageRepository Method: GetByIdAsNoTrackingAsync with id: {id} started at {DateTime.UtcNow}");
         
-        using var context = await _contextFactory.CreateDbContextAsync();
+        using var context = await _contextFactory.CreateDbContextAsync(ct);
         var dbSet = context.GroupPages;
         var query = ApplyIncludes(dbSet);
 
@@ -33,18 +33,18 @@ public class GroupPageRepository(IDbContextFactory<StoronnimVContext> contextFac
                 PhotoUrl = groupPage.PhotoUrl,
                 Description = groupPage.Description
             })
-            .FirstOrDefaultAsync(x => x.Id == id);
+            .FirstOrDefaultAsync(x => x.Id == id, ct);
         
         _logger.LogInformation($"Repository: GroupPageRepository Method: GetByIdAsNoTrackingAsync with id: {id} ended at {DateTime.UtcNow}");
 
         return result;
     }
 
-    public async Task<IEnumerable<object>?> GetAllAsync()
+    public async Task<IEnumerable<object>?> GetAllAsync(CancellationToken ct)
     {
         _logger.LogInformation($"Repository: GroupPageRepository Method: GetAllAsync started at {DateTime.UtcNow}");
         
-        using var context = await _contextFactory.CreateDbContextAsync();
+        using var context = await _contextFactory.CreateDbContextAsync(ct);
         var dbSet = context.GroupPages;
         var query = ApplyIncludes(dbSet);
         
@@ -56,18 +56,18 @@ public class GroupPageRepository(IDbContextFactory<StoronnimVContext> contextFac
                 PhotoUrl = groupPage.PhotoUrl,
                 Description = groupPage.Description
             })
-            .ToListAsync();
+            .ToListAsync(ct);
         
         _logger.LogInformation($"Repository: GroupPageRepository Method: GetAllAsync ended at {DateTime.UtcNow}");
 
         return result;
     }
     
-    public async Task<object?> GetFirstGroupPageAsync()
+    public async Task<object?> GetFirstGroupPageAsync(CancellationToken ct)
     {
         _logger.LogInformation($"Repository: GroupPageRepository Method: GetFirstGroupPageAsync started at {DateTime.UtcNow}");
         
-        using var context = await _contextFactory.CreateDbContextAsync();
+        using var context = await _contextFactory.CreateDbContextAsync(ct);
         var dbSet = context.GroupPages;
         var query = ApplyIncludes(dbSet);
         
@@ -79,7 +79,7 @@ public class GroupPageRepository(IDbContextFactory<StoronnimVContext> contextFac
                 PhotoUrl = groupPage.PhotoUrl,
                 Description = groupPage.Description
             })
-            .FirstOrDefaultAsync();
+            .FirstOrDefaultAsync(ct);
         
         _logger.LogInformation($"Repository: GroupPageRepository Method: GetFirstGroupPageAsync ended at {DateTime.UtcNow}");
 

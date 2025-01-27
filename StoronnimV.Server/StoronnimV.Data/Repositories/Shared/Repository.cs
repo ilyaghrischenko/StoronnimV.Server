@@ -20,42 +20,42 @@ public class Repository<T>(IDbContextFactory<StoronnimVContext> contextFactory)
         return dbSet;
     }
     
-    public async Task<T?> GetByIdAsync(long id)
+    public async Task<T?> GetByIdAsync(long id, CancellationToken ct)
     {
-        using var context = await _contextFactory.CreateDbContextAsync();
+        using var context = await _contextFactory.CreateDbContextAsync(ct);
         var dbSet = context.Set<T>();
         var query = ApplyIncludes(dbSet);
 
         return await query
-            .FirstOrDefaultAsync(x => x.Id == id);
+            .FirstOrDefaultAsync(x => x.Id == id, ct);
     }
 
-    public async Task AddAsync(T entity)
+    public async Task AddAsync(T entity, CancellationToken ct)
     {
-        using var context = await _contextFactory.CreateDbContextAsync();
+        using var context = await _contextFactory.CreateDbContextAsync(ct);
         var dbSet = context.Set<T>();
         
-        await dbSet.AddAsync(entity);
-        await context.SaveChangesAsync();
+        await dbSet.AddAsync(entity, ct);
+        await context.SaveChangesAsync(ct);
     }
 
-    public async Task UpdateAsync(T entity, Action updateAction)
+    public async Task UpdateAsync(T entity, Action updateAction, CancellationToken ct)
     {
-        using var context = await _contextFactory.CreateDbContextAsync();
+        using var context = await _contextFactory.CreateDbContextAsync(ct);
         var dbSet = context.Set<T>();
 
         dbSet.Update(entity);
         updateAction();
         
-        await context.SaveChangesAsync();
+        await context.SaveChangesAsync(ct);
     }
 
-    public async Task DeleteAsync(T entity)
+    public async Task DeleteAsync(T entity, CancellationToken ct)
     {
-        using var context = await _contextFactory.CreateDbContextAsync();
+        using var context = await _contextFactory.CreateDbContextAsync(ct);
         var dbSet = context.Set<T>();
         
         dbSet.Remove(entity);
-        await context.SaveChangesAsync();
+        await context.SaveChangesAsync(ct);
     }
 }

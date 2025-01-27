@@ -4,5 +4,5 @@ namespace StoronnimV.Application.Interfaces.Entities;
 
 public interface ISocialService : IReceivableService
 {
-    public Task<IEnumerable<object>> GetAllForMemberAsync(long memberId);
+    public Task<IEnumerable<object>> GetAllForMemberAsync(long memberId, CancellationToken ct);
 }

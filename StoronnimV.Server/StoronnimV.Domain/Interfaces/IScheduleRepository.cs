@@ -6,6 +6,6 @@ namespace StoronnimV.Domain.Interfaces;
 public interface IScheduleRepository
     : IRepository<Schedule>, IReceivableRepository<Schedule>
 {
-    Task<IEnumerable<Schedule>?> GetAllSchedulesAsync();
-    Task<object?> GetScheduleForHomePageAsync();
+    Task<IEnumerable<Schedule>?> GetAllSchedulesAsync(CancellationToken ct);
+    Task<object?> GetScheduleForHomePageAsync(CancellationToken ct);
 }

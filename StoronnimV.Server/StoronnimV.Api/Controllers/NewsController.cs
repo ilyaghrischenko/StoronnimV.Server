@@ -18,11 +18,11 @@ namespace StoronnimV.Api.Controllers
         private readonly ILogger<NewsController> _logger = logger;
 
         [HttpGet("{id:long}")]
-        public async Task<ActionResult<NewsResponse>> GetNewsItem([FromRoute] long id)
+        public async Task<ActionResult<NewsResponse>> GetNewsItem([FromRoute] long id, CancellationToken ct)
         {
             _logger.LogInformation($"Controller: NewsController Method: GetNewsItem with id: {id} started at {DateTime.UtcNow}");
             
-            var newsItem = await _newsControllerService.GetItemByIdAsync(id);
+            var newsItem = await _newsControllerService.GetItemByIdAsync(id, ct);
             
             _logger.LogInformation($"Controller: NewsController Method: GetNewsItem with id: {id} ended at {DateTime.UtcNow}");
             
@@ -30,11 +30,11 @@ namespace StoronnimV.Api.Controllers
         }
         
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<NewsResponse>>> GetNews()
+        public async Task<ActionResult<IEnumerable<NewsResponse>>> GetNews(CancellationToken ct)
         {
             _logger.LogInformation($"Controller: NewsController Method: GetNews started at {DateTime.UtcNow}");
             
-            var news = await _newsControllerService.GetAllAsync();
+            var news = await _newsControllerService.GetAllAsync(ct);
             
             _logger.LogInformation($"Controller: NewsController Method: GetNews ended at {DateTime.UtcNow}");
             
@@ -42,11 +42,11 @@ namespace StoronnimV.Api.Controllers
         }
 
         [HttpGet("page/{page:int}")]
-        public async Task<ActionResult<PaginationResponse<NewsShortResponse>>> GetNewsForPage([FromRoute] int page, [FromQuery] int pageSize = 9)
+        public async Task<ActionResult<PaginationResponse<NewsShortResponse>>> GetNewsForPage([FromRoute] int page, CancellationToken ct, [FromQuery] int pageSize = 9)
         {
             _logger.LogInformation($"Controller: NewsController Method: GetNewsForPage with [page: {page}, pageSize: {pageSize}] started at {DateTime.UtcNow}");
             
-            var newsPaginationResponse = await _newsControllerService.GetForPageAsync(page, pageSize);
+            var newsPaginationResponse = await _newsControllerService.GetForPageAsync(page, pageSize, ct);
             
             _logger.LogInformation($"Controller: NewsController Method: GetNewsForPage with [page: {page}, pageSize: {pageSize}] ended at {DateTime.UtcNow}");
             

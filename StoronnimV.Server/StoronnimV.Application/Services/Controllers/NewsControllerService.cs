@@ -22,11 +22,11 @@ public class NewsControllerService(
     private readonly IMapper _mapper = mapper;
     private readonly ILogger<NewsControllerService> _logger = logger;
 
-    public async Task<NewsResponse> GetItemByIdAsync(long id)
+    public async Task<NewsResponse> GetItemByIdAsync(long id, CancellationToken ct)
     {
         _logger.LogInformation($"Service: NewsControllerService Method: GetItemByIdAsync with id: {id} started at {DateTime.UtcNow}");
         
-        var newsItem = await _newsService.GetItemByIdAsync(id);
+        var newsItem = await _newsService.GetItemByIdAsync(id, ct);
 
         var newsItemDto = _mapper.Map<NewsResponse>(newsItem);
         
@@ -35,11 +35,11 @@ public class NewsControllerService(
         return newsItemDto;
     }
 
-    public async Task<IEnumerable<NewsResponse>> GetAllAsync()
+    public async Task<IEnumerable<NewsResponse>> GetAllAsync(CancellationToken ct)
     {
         _logger.LogInformation($"Service: NewsControllerService Method: GetAllAsync started at {DateTime.UtcNow}");
         
-        var sortedNews = await _newsService.GetAllAsync();
+        var sortedNews = await _newsService.GetAllAsync(ct);
 
         var newsDto = _mapper.Map<IEnumerable<NewsResponse>>(sortedNews);
         
@@ -48,11 +48,11 @@ public class NewsControllerService(
         return newsDto;
     }
 
-    public async Task<PaginationResponse<NewsShortResponse>> GetForPageAsync(int page, int pageSize, params object[] args)
+    public async Task<PaginationResponse<NewsShortResponse>> GetForPageAsync(int page, int pageSize, CancellationToken ct, params object[] args)
     {
         _logger.LogInformation($"Service: NewsControllerService Method: GetForPageAsync with page: {page} started at {DateTime.UtcNow}");
         
-        var paginationResult = await _newsService.GetForPageAsync(page, pageSize);
+        var paginationResult = await _newsService.GetForPageAsync(page, pageSize, ct);
         
         var newsDto = _mapper.Map<IEnumerable<NewsShortResponse>>(paginationResult.Items);
         

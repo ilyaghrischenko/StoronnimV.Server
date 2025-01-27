@@ -13,11 +13,11 @@ public class MusicPlatformRepository(IDbContextFactory<StoronnimVContext> contex
     private readonly IDbContextFactory<StoronnimVContext> _contextFactory = contextFactory;
     private readonly ILogger<MusicPlatformRepository> _logger = logger;
     
-    public async Task<object?> GetByIdAsNoTrackingAsync(long id)
+    public async Task<object?> GetByIdAsNoTrackingAsync(long id, CancellationToken ct)
     {
         _logger.LogInformation($"Repository: MusicPlatformRepository Method: GetByIdAsNoTrackingAsync with id: {id} started at {DateTime.UtcNow}");
         
-        using var context = await _contextFactory.CreateDbContextAsync();
+        using var context = await _contextFactory.CreateDbContextAsync(ct);
         var dbSet = context.MusicPlatforms;
         var query = ApplyIncludes(dbSet);
         
@@ -29,18 +29,18 @@ public class MusicPlatformRepository(IDbContextFactory<StoronnimVContext> contex
                 BgImageUrl = musicPlatform.BgImageUrl,
                 PlatformUrl = musicPlatform.PlatformUrl
             })
-            .FirstOrDefaultAsync(musicPlatform => musicPlatform.Id == id);
+            .FirstOrDefaultAsync(musicPlatform => musicPlatform.Id == id, ct);
         
         _logger.LogInformation($"Repository: MusicPlatformRepository Method: GetByIdAsNoTrackingAsync with id: {id} ended at {DateTime.UtcNow}");
 
         return result;
     }
 
-    public async Task<IEnumerable<object>?> GetAllAsync()
+    public async Task<IEnumerable<object>?> GetAllAsync(CancellationToken ct)
     {
         _logger.LogInformation($"Repository: MusicPlatformRepository Method: GetAllAsync started at {DateTime.UtcNow}");
         
-        using var context = await _contextFactory.CreateDbContextAsync();
+        using var context = await _contextFactory.CreateDbContextAsync(ct);
         var dbSet = context.MusicPlatforms;
         var query = ApplyIncludes(dbSet);
         
@@ -52,7 +52,7 @@ public class MusicPlatformRepository(IDbContextFactory<StoronnimVContext> contex
                 BgImageUrl = musicPlatform.BgImageUrl,
                 PlatformUrl = musicPlatform.PlatformUrl
             })
-            .ToListAsync();
+            .ToListAsync(ct);
         
         _logger.LogInformation($"Repository: MusicPlatformRepository Method: GetAllAsync ended at {DateTime.UtcNow}");
 

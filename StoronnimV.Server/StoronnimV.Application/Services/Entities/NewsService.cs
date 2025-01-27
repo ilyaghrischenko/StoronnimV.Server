@@ -18,11 +18,11 @@ public class NewsService(
     private readonly INewsRepository _newsRepository = newsRepository;
     private readonly ILogger<NewsService> _logger = logger;
 
-    public async Task<object> GetItemByIdAsync(long id)
+    public async Task<object> GetItemByIdAsync(long id, CancellationToken ct)
     {
         _logger.LogInformation($"Service: NewsService Method: GetItemByIdAsync with id: {id} started at {DateTime.UtcNow}");
         
-        var newsItem = await _newsRepository.GetByIdAsNoTrackingAsync(id)
+        var newsItem = await _newsRepository.GetByIdAsNoTrackingAsync(id, ct)
             ?? throw new EntityNotFoundException($"News with id: {id} was not found");
         
         _logger.LogInformation($"Service: NewsService Method: GetItemByIdAsync with id: {id} ended at {DateTime.UtcNow}");
@@ -30,11 +30,11 @@ public class NewsService(
         return newsItem;
     }
     
-    public async Task<IEnumerable<object>> GetAllAsync()
+    public async Task<IEnumerable<object>> GetAllAsync(CancellationToken ct)
     {
         _logger.LogInformation($"Service: NewsService Method: GetAllAsync started at {DateTime.UtcNow}");
         
-        var allNews = await _newsRepository.GetAllAsync();
+        var allNews = await _newsRepository.GetAllAsync(ct);
         if (allNews is null || !allNews.Any())
         {
             return new List<object>();
@@ -50,7 +50,7 @@ public class NewsService(
         return result;
     }
 
-    public async Task<PaginationResult> GetForPageAsync(int page, int pageSize, params object[] args)
+    public async Task<PaginationResult> GetForPageAsync(int page, int pageSize, CancellationToken ct, params object[] args)
     {
         _logger.LogInformation($"Service: NewsService Method: GetForPageAsync with [page: {page}, pageSize: {pageSize}] started at {DateTime.UtcNow}");
         
@@ -59,7 +59,7 @@ public class NewsService(
             throw new PaginationException("invalid page number");
         }
         
-        var totalCount = await _newsRepository.GetTotalCountAsync();
+        var totalCount = await _newsRepository.GetTotalCountAsync(ct);
 
         if (totalCount == 0)
         {
@@ -72,7 +72,7 @@ public class NewsService(
         }
         
         var totalPages = (int)Math.Ceiling((double)totalCount / pageSize);
-        var items = await _newsRepository.GetForPageAsync(page, pageSize);
+        var items = await _newsRepository.GetForPageAsync(page, ct, pageSize);
 
         if (items is null || !items.Any())
         {
@@ -98,7 +98,7 @@ public class NewsService(
         return response;
     }
 
-    public async Task<PaginationResult> GetForAdminPageAsync(int page, int pageSize, params object[] args)
+    public async Task<PaginationResult> GetForAdminPageAsync(int page, int pageSize, CancellationToken ct, params object[] args)
     {
         _logger.LogInformation($"Service: NewsService Method: GetForPageAsync with [page: {page}, pageSize: {pageSize}] started at {DateTime.UtcNow}");
         
@@ -107,7 +107,7 @@ public class NewsService(
             throw new PaginationException("invalid page number");
         }
         
-        var totalCount = await _newsRepository.GetTotalCountAsync();
+        var totalCount = await _newsRepository.GetTotalCountAsync(ct);
 
         if (totalCount == 0)
         {
@@ -120,7 +120,7 @@ public class NewsService(
         }
         
         var totalPages = (int)Math.Ceiling((double)totalCount / pageSize);
-        var items = await _newsRepository.GetForAdminPageAsync(page, pageSize);
+        var items = await _newsRepository.GetForAdminPageAsync(page, ct, pageSize);
         
         if (items is null || !items.Any())
         {

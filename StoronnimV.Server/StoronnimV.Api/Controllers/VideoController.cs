@@ -24,12 +24,12 @@ namespace StoronnimV.Api.Controllers
         private readonly ILogger<VideoController> _logger = logger;
 
         [HttpGet("{id:long}")]
-        public async Task<ActionResult<VideoPageShortResponse>> GetVideo([FromRoute] long id)
+        public async Task<ActionResult<VideoPageShortResponse>> GetVideo([FromRoute] long id, CancellationToken ct)
         {
             _logger.LogInformation(
                 $"Controller: VideoController Method: GetVideo with id: {id} started at {DateTime.UtcNow}");
 
-            var video = await _videoControllerService.GetItemByIdAsync(id);
+            var video = await _videoControllerService.GetItemByIdAsync(id, ct);
 
             _logger.LogInformation(
                 $"Controller: VideoController Method: GetVideo with id: {id} ended at {DateTime.UtcNow}");
@@ -38,11 +38,11 @@ namespace StoronnimV.Api.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<VideoPageShortResponse>>> GetVideos()
+        public async Task<ActionResult<IEnumerable<VideoPageShortResponse>>> GetVideos(CancellationToken ct)
         {
             _logger.LogInformation($"Controller: VideoController Method: GetVideos started at {DateTime.UtcNow}");
 
-            var videos = await _videoControllerService.GetAllAsync();
+            var videos = await _videoControllerService.GetAllAsync(ct);
 
             _logger.LogInformation($"Controller: VideoController Method: GetVideos ended at {DateTime.UtcNow}");
 
@@ -51,11 +51,11 @@ namespace StoronnimV.Api.Controllers
         
         [HttpGet("page/{type}/{page:int}")]
         public async Task<ActionResult<PaginationResponse<VideoPageShortResponse>>> GetVideosForPage
-            ([FromRoute] int page, [FromRoute] string type, [FromQuery] int pageSize = 5)
+            ([FromRoute] int page, [FromRoute] string type, CancellationToken ct, [FromQuery] int pageSize = 5)
         {
             _logger.LogInformation($"Controller: NewsController Method: GetNewsForPage with page: {page} started at {DateTime.UtcNow}");
             
-            var videosPaginationResponse = await _videoControllerService.GetForPageAsync(page, pageSize,type);
+            var videosPaginationResponse = await _videoControllerService.GetForPageAsync(page, pageSize, ct, type);
             
             _logger.LogInformation($"Controller: NewsController Method: GetNewsForPage with page: {page} ended at {DateTime.UtcNow}");
             

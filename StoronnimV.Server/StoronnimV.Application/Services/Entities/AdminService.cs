@@ -18,11 +18,11 @@ public class AdminService(
     private readonly ILogger<AdminService> _logger = logger;
     private readonly IPasswordHasher<Admin> _passwordHasher = passwordHasher;
     
-    public async Task<object> GetItemByIdAsync(long id)
+    public async Task<object> GetItemByIdAsync(long id, CancellationToken ct)
     {
         _logger.LogInformation($"Service: AdminService Method: GetItemByIdAsync with id: {id} started at {DateTime.UtcNow}");
 
-        var admin = await _adminRepository.GetByIdAsNoTrackingAsync(id);
+        var admin = await _adminRepository.GetByIdAsNoTrackingAsync(id, ct);
 
         if (admin is null)
         {
@@ -34,11 +34,11 @@ public class AdminService(
         return admin;
     }
 
-    public async Task<IEnumerable<object>> GetAllAsync()
+    public async Task<IEnumerable<object>> GetAllAsync(CancellationToken ct)
     {
         _logger.LogInformation($"Service: AdminService Method: GetAllAsync started at {DateTime.UtcNow}");
         
-        var admins = await _adminRepository.GetAllAsync();
+        var admins = await _adminRepository.GetAllAsync(ct);
 
         if (admins is null || !admins.Any())
         {
@@ -50,11 +50,11 @@ public class AdminService(
         return admins;
     }
 
-    public async Task<Admin> LogInAsync(LogInRequest request)
+    public async Task<Admin> LogInAsync(LogInRequest request, CancellationToken ct)
     {
         _logger.LogInformation($"Service: AdminService Method: LogInAsync started at {DateTime.UtcNow}");
         
-        var admin = await _adminRepository.GetByLoginAsync(request.Login);
+        var admin = await _adminRepository.GetByLoginAsync(request.Login, ct);
 
         if (admin is null)
         {

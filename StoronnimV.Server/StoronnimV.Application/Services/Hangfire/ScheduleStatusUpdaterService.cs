@@ -10,8 +10,8 @@ public class ScheduleStatusUpdaterService(IScheduleService scheduleService)
 {
     private readonly IScheduleService _scheduleService = scheduleService;
 
-    public async Task UpdateScheduleStatusesAsync()
+    public async Task UpdateScheduleStatusesAsync(CancellationToken ct)
     {
-        await _scheduleService.UpdateStatusesAsync();
+        await _scheduleService.UpdateStatusesAsync(ct);
     }
 }

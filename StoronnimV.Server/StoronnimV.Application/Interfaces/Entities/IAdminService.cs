@@ -6,5 +6,5 @@ namespace StoronnimV.Application.Interfaces.Entities;
 
 public interface IAdminService : IReceivableService
 {
-    public Task<Admin> LogInAsync(LogInRequest request);
+    public Task<Admin> LogInAsync(LogInRequest request, CancellationToken ct);
 }

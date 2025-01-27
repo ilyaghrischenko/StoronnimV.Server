@@ -4,5 +4,5 @@ namespace StoronnimV.Application.Interfaces.Entities;
 
 public interface IGroupPageService : IReceivableService
 {
-    public Task<object> GetFirstGroupPageAsync();
+    public Task<object> GetFirstGroupPageAsync(CancellationToken ct);
 }

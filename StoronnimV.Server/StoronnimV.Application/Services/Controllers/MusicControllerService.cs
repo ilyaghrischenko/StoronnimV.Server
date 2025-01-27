@@ -16,11 +16,11 @@ public class MusicControllerService(
     private readonly IMapper _mapper = mapper;
     private readonly ILogger<MusicControllerService> _logger = logger;
     
-    public async Task<MusicResponse> GetItemByIdAsync(long id)
+    public async Task<MusicResponse> GetItemByIdAsync(long id, CancellationToken ct)
     {
         _logger.LogInformation($"Service: MusicControllerService Method: GetItemByIdAsync with id: {id} started at {DateTime.UtcNow}");
         
-        var musicPlatformItem = await _musicPlatformService.GetItemByIdAsync(id);
+        var musicPlatformItem = await _musicPlatformService.GetItemByIdAsync(id, ct);
 
         var musicPlatformDto = _mapper.Map<MusicResponse>(musicPlatformItem);
         
@@ -29,11 +29,11 @@ public class MusicControllerService(
         return musicPlatformDto;
     }
 
-    public async Task<IEnumerable<MusicResponse>> GetAllAsync()
+    public async Task<IEnumerable<MusicResponse>> GetAllAsync(CancellationToken ct)
     {
         _logger.LogInformation($"Service: MusicControllerService Method: GetAllAsync started at {DateTime.UtcNow}");
         
-        var musicPlatforms = await _musicPlatformService.GetAllAsync();
+        var musicPlatforms = await _musicPlatformService.GetAllAsync(ct);
 
         var musicPlatformsDto = _mapper.Map<IEnumerable<MusicResponse>>(musicPlatforms);
         

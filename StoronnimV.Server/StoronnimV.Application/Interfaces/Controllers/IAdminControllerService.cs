@@ -7,6 +7,6 @@ namespace StoronnimV.Application.Interfaces.Controllers;
 
 public interface IAdminControllerService
 {
-    Task<PaginationResponse<NewsResponse>> GetNewsForPageAsync(int page, int pageSize, params object[] args);
-    Task<PaginationResponse<VideoPageResponse>> GetVideosForPageAsync(int page, int pageSize, params object[] args);
+    Task<PaginationResponse<NewsResponse>> GetNewsForPageAsync(int page, int pageSize, CancellationToken ct, params object[] args);
+    Task<PaginationResponse<VideoPageResponse>> GetVideosForPageAsync(int page, int pageSize, CancellationToken ct, params object[] args);
 }

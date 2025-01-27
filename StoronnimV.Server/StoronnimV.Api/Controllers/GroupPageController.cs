@@ -18,11 +18,11 @@ namespace StoronnimV.Api.Controllers
         private readonly ILogger<GroupPageController> _logger = logger;
         
         [HttpGet]
-        public async Task<ActionResult<GroupPageFullInfoResponse>> GetGroupPageInfoAsync()
+        public async Task<ActionResult<GroupPageFullInfoResponse>> GetGroupPageInfoAsync(CancellationToken ct)
         {
             _logger.LogInformation($"Controller: GroupPageController Method: GetGroupPageInfoAsync started at {DateTime.UtcNow}");
             
-            var groupPage = await _groupPageControllerService.GetGroupPageInfoAsync();
+            var groupPage = await _groupPageControllerService.GetGroupPageInfoAsync(ct);
             
             _logger.LogInformation($"Controller: GroupPageController Method: GetGroupPageInfoAsync ended at {DateTime.UtcNow}");
             
@@ -31,11 +31,11 @@ namespace StoronnimV.Api.Controllers
         }
         
         [HttpGet("member/{memberId:long}")]
-        public async Task<ActionResult<MemberFullInfoResponse>> GetMemberInfoAsync([FromRoute] long memberId)
+        public async Task<ActionResult<MemberFullInfoResponse>> GetMemberInfoAsync([FromRoute] long memberId, CancellationToken ct)
         {
             _logger.LogInformation($"Controller: GroupPageController Method: GetMemberInfoAsync started at {DateTime.UtcNow}");
             
-            var member = await _groupPageControllerService.GetMemberInfoAsync(memberId);
+            var member = await _groupPageControllerService.GetMemberInfoAsync(memberId, ct);
             
             _logger.LogInformation($"Controller: GroupPageController Method: GetMemberInfoAsync ended at {DateTime.UtcNow}");
             

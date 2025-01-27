@@ -12,13 +12,13 @@ public class ExceptionMiddleware : IExceptionMiddleware
 {
     private readonly RequestDelegate _next;
     private readonly ILogger<ExceptionMiddleware> _logger;
-    
+
     public ExceptionMiddleware(RequestDelegate next, ILogger<ExceptionMiddleware> logger)
     {
         _next = next;
         _logger = logger;
     }
-    
+
     public async Task InvokeAsync(HttpContext context)
     {
         try
@@ -49,6 +49,12 @@ public class ExceptionMiddleware : IExceptionMiddleware
                 HttpStatusCode.Unauthorized,
                 ex.Message);
         }
+        catch (OperationCanceledException ex)
+        {
+            await HandleExceptionAsync(context,
+                499,
+                ex.Message);
+        }
         catch (Exception ex)
         {
             await HandleExceptionAsync(context,
@@ -61,7 +67,16 @@ public class ExceptionMiddleware : IExceptionMiddleware
     {
         context.Response.StatusCode = (int)statusCode;
         context.Response.ContentType = "text/plain";
-        
+
+        _logger.LogError($"{statusCode}: {message}");
+        await context.Response.WriteAsync(message);
+    }
+
+    public async Task HandleExceptionAsync(HttpContext context, int statusCode, string message)
+    {
+        context.Response.StatusCode = statusCode;
+        context.Response.ContentType = "text/plain";
+
         _logger.LogError($"{statusCode}: {message}");
         await context.Response.WriteAsync(message);
     }

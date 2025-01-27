@@ -4,8 +4,8 @@ namespace StoronnimV.Domain.Interfaces.Shared;
 
 public interface IRepository<T> where T : BaseEntity
 {
-    Task<T?> GetByIdAsync(long id);
-    Task AddAsync(T entity);
-    Task UpdateAsync(T entity, Action updateAction);
-    Task DeleteAsync(T entity);
+    Task<T?> GetByIdAsync(long id, CancellationToken ct);
+    Task AddAsync(T entity, CancellationToken ct);
+    Task UpdateAsync(T entity, Action updateAction, CancellationToken ct);
+    Task DeleteAsync(T entity, CancellationToken ct);
 }

@@ -13,11 +13,11 @@ public class AdminRepository(IDbContextFactory<StoronnimVContext> contextFactory
     private readonly IDbContextFactory<StoronnimVContext> _contextFactory = contextFactory;
     private readonly ILogger<AdminRepository> _logger = logger;
     
-    public async Task<object?> GetByIdAsNoTrackingAsync(long id)
+    public async Task<object?> GetByIdAsNoTrackingAsync(long id, CancellationToken ct)
     {
         _logger.LogInformation($"Repository: AdminRepository Method: GetByIdAsNoTrackingAsync with id: {id} started at {DateTime.UtcNow}");
         
-        using var context = await _contextFactory.CreateDbContextAsync();
+        using var context = await _contextFactory.CreateDbContextAsync(ct);
         var dbSet = context.Admins;
         var query = ApplyIncludes(dbSet);
         
@@ -29,18 +29,18 @@ public class AdminRepository(IDbContextFactory<StoronnimVContext> contextFactory
                 Login = admin.Login,
                 Password = admin.Password
             })
-            .FirstOrDefaultAsync(admin => admin.Id == id);
+            .FirstOrDefaultAsync(admin => admin.Id == id, ct);
         
         _logger.LogInformation($"Repository: AdminRepository Method: GetByIdAsNoTrackingAsync with id: {id} ended at {DateTime.UtcNow}");
 
         return result;
     }
 
-    public async Task<IEnumerable<object>?> GetAllAsync()
+    public async Task<IEnumerable<object>?> GetAllAsync(CancellationToken ct)
     {
         _logger.LogInformation($"Repository: AdminRepository Method: GetAllAsync started at {DateTime.UtcNow}");
         
-        using var context = await _contextFactory.CreateDbContextAsync();
+        using var context = await _contextFactory.CreateDbContextAsync(ct);
         var dbSet = context.Admins;
         var query = ApplyIncludes(dbSet);
         
@@ -52,24 +52,24 @@ public class AdminRepository(IDbContextFactory<StoronnimVContext> contextFactory
                 Login = admin.Login,
                 Password = admin.Password
             })
-            .ToListAsync();
+            .ToListAsync(ct);
         
         _logger.LogInformation($"Repository: AdminRepository Method: GetAllAsync ended at {DateTime.UtcNow}");
 
         return result;
     }
 
-    public async Task<Admin?> GetByLoginAsync(string login)
+    public async Task<Admin?> GetByLoginAsync(string login, CancellationToken ct)
     {
         _logger.LogInformation($"Repository: AdminRepository Method: GetByLoginAsync started at {DateTime.UtcNow}");
         
-        using var context = await _contextFactory.CreateDbContextAsync();
+        using var context = await _contextFactory.CreateDbContextAsync(ct);
         var dbSet = context.Admins;
         var query = ApplyIncludes(dbSet);
         
         var result = await query
             .AsNoTracking()
-            .FirstOrDefaultAsync(admin => admin.Login == login);
+            .FirstOrDefaultAsync(admin => admin.Login == login, ct);
         
         _logger.LogInformation($"Repository: AdminRepository Method: GetByLoginAsync ended at {DateTime.UtcNow}");
 

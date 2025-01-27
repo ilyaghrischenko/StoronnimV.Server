@@ -16,11 +16,11 @@ public class HomeControllerService(
     private readonly ILogger<HomeControllerService> _logger = logger;
     private readonly IMapper _mapper = mapper;
 
-    public async Task<IEnumerable<NewsHomeResponse>> GetNewsAsync(int count)
+    public async Task<IEnumerable<NewsHomeResponse>> GetNewsAsync(int count, CancellationToken ct)
     {
         _logger.LogInformation($"Service: HomeControllerService Method: GetNewsAsync with count: {count} started at {DateTime.UtcNow}");
 
-        var news = await _homeService.GetNewsForHomePageAsync(count);
+        var news = await _homeService.GetNewsForHomePageAsync(count, ct);
 
         var newsDto = _mapper.Map<IEnumerable<NewsHomeResponse>>(news);
         
@@ -29,11 +29,11 @@ public class HomeControllerService(
         return newsDto;
     }
 
-    public async Task<ScheduleHomeResponse> GetScheduleAsync()
+    public async Task<ScheduleHomeResponse> GetScheduleAsync(CancellationToken ct)
     {
         _logger.LogInformation($"Service: HomeControllerService Method: GetScheduleAsync started at {DateTime.UtcNow}");
 
-        var schedule = await _homeService.GetScheduleForHomePageAsync();
+        var schedule = await _homeService.GetScheduleForHomePageAsync(ct);
         
         var scheduleDto = _mapper.Map<ScheduleHomeResponse>(schedule);
         
@@ -42,11 +42,11 @@ public class HomeControllerService(
         return scheduleDto;
     }
 
-    public async Task<VideoPageShortResponse> GetVideoAsync()
+    public async Task<VideoPageShortResponse> GetVideoAsync(CancellationToken ct)
     {
         _logger.LogInformation($"Service: HomeControllerService Method: GetVideoAsync started at {DateTime.UtcNow}");
 
-        var promotionVideo = await _homeService.GetPromotionVideoForHomePageAsync();
+        var promotionVideo = await _homeService.GetPromotionVideoForHomePageAsync(ct);
         
         var promotionVideoDto = _mapper.Map<VideoPageShortResponse>(promotionVideo);
         

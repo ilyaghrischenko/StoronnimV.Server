@@ -6,6 +6,6 @@ namespace StoronnimV.Application.Interfaces.Controllers;
 
 public interface INewsControllerService : IPaginationControllerService<PaginationResponse<NewsShortResponse>>
 {
-    Task<NewsResponse> GetItemByIdAsync(long id);
-    Task<IEnumerable<NewsResponse>> GetAllAsync();
+    Task<NewsResponse> GetItemByIdAsync(long id, CancellationToken ct);
+    Task<IEnumerable<NewsResponse>> GetAllAsync(CancellationToken ct);
 }

@@ -22,11 +22,11 @@ public class MemberRepository(IDbContextFactory<StoronnimVContext> contextFactor
         return dbSet.Include(member => member.Socials);
     }
 
-    public async Task<object?> GetByIdAsNoTrackingAsync(long id)
+    public async Task<object?> GetByIdAsNoTrackingAsync(long id, CancellationToken ct)
     {
         _logger.LogInformation($"Repository: MemberRepository Method: GetByIdAsNoTrackingAsync with id: {id} started at {DateTime.UtcNow}");
         
-        using var context = await _contextFactory.CreateDbContextAsync();
+        using var context = await _contextFactory.CreateDbContextAsync(ct);
         var dbSet = context.Members;
         var query = ApplyIncludes(dbSet);
 
@@ -40,18 +40,18 @@ public class MemberRepository(IDbContextFactory<StoronnimVContext> contextFactor
                 Description = member.Description,
                 Role = member.Role
             })
-            .FirstOrDefaultAsync(x => x.Id == id);
+            .FirstOrDefaultAsync(x => x.Id == id, ct);
         
         _logger.LogInformation($"Repository: MemberRepository Method: GetByIdAsNoTrackingAsync with id: {id} ended at {DateTime.UtcNow}");
 
         return result;
     }
 
-    public async Task<IEnumerable<object>?> GetAllAsync()
+    public async Task<IEnumerable<object>?> GetAllAsync(CancellationToken ct)
     {
         _logger.LogInformation($"Repository: MemberRepository Method: GetAllAsync started at {DateTime.UtcNow}");
         
-        using var context = await _contextFactory.CreateDbContextAsync();
+        using var context = await _contextFactory.CreateDbContextAsync(ct);
         var dbSet = context.Members;
         var query = ApplyIncludes(dbSet);
         
@@ -64,7 +64,7 @@ public class MemberRepository(IDbContextFactory<StoronnimVContext> contextFactor
                 FullName = member.FullName,
                 Role = member.Role
             })
-            .ToListAsync();
+            .ToListAsync(ct);
         
         _logger.LogInformation($"Repository: MemberRepository Method: GetAllAsync ended at {DateTime.UtcNow}");
 

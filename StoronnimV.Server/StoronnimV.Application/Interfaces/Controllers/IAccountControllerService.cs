@@ -4,5 +4,5 @@ namespace StoronnimV.Application.Interfaces.Controllers;
 
 public interface IAccountControllerService
 {
-    Task<string> LogInAsync(LogInRequest request);
+    Task<string> LogInAsync(LogInRequest request, CancellationToken ct);
 }

@@ -6,5 +6,5 @@ namespace StoronnimV.Domain.Interfaces;
 public interface IGroupPageRepository
     : IRepository<GroupPage>, IReceivableRepository<GroupPage>
 {
-    public Task<object?> GetFirstGroupPageAsync();
+    public Task<object?> GetFirstGroupPageAsync(CancellationToken ct);
 }

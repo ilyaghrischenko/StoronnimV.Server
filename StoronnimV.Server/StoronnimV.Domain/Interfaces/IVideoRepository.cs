@@ -7,6 +7,6 @@ namespace StoronnimV.Domain.Interfaces;
 public interface IVideoRepository 
     : IRepository<Video>, IReceivableRepository<Video>, IPaginationRepository, IAdminPaginationRepository
 {
-    public Task<object?> GetPromotionVideoForHomePageAsync();
-    public Task<int> GetTotalCountForAdminPageAsync();
+    public Task<object?> GetPromotionVideoForHomePageAsync(CancellationToken ct);
+    public Task<int> GetTotalCountForAdminPageAsync(CancellationToken ct);
 }

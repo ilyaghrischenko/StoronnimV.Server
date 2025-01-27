@@ -16,11 +16,11 @@ public class HomeService(
     private readonly IVideoRepository _videoRepository = videoRepository;
     private readonly ILogger<HomeService> _logger = logger;
     
-    public async Task<IEnumerable<object>> GetNewsForHomePageAsync(int count)
+    public async Task<IEnumerable<object>> GetNewsForHomePageAsync(int count, CancellationToken ct)
     {
         _logger.LogInformation($"Service: HomeService Method: GetNewsForHomePageAsync with count: {count} started at {DateTime.UtcNow}");
         
-        var newsForHomePage = await _newsRepository.GetNewsForHomePageAsync(count);
+        var newsForHomePage = await _newsRepository.GetNewsForHomePageAsync(count, ct);
         if (newsForHomePage is null || !newsForHomePage.Any())
         {
             return new List<object>();
@@ -32,22 +32,22 @@ public class HomeService(
             .ToList();
     }
 
-    public async Task<object?> GetScheduleForHomePageAsync()
+    public async Task<object?> GetScheduleForHomePageAsync(CancellationToken ct)
     {
         _logger.LogInformation($"Service: HomeService Method: GetScheduleForHomePageAsync started at {DateTime.UtcNow}");
         
-        var schedule = await _scheduleRepository.GetScheduleForHomePageAsync();
+        var schedule = await _scheduleRepository.GetScheduleForHomePageAsync(ct);
         
         _logger.LogInformation($"Service: HomeService Method: GetScheduleForHomePageAsync ended at {DateTime.UtcNow}");
 
         return schedule;
     }
 
-    public async Task<object?> GetPromotionVideoForHomePageAsync()
+    public async Task<object?> GetPromotionVideoForHomePageAsync(CancellationToken ct)
     {
         _logger.LogInformation($"Service: HomeService Method: GetScheduleForHomePageAsync started at {DateTime.UtcNow}");
 
-        var promotionVideo = await _videoRepository.GetPromotionVideoForHomePageAsync();
+        var promotionVideo = await _videoRepository.GetPromotionVideoForHomePageAsync(ct);
         
         _logger.LogInformation($"Service: HomeService Method: GetScheduleForHomePageAsync ended at {DateTime.UtcNow}");
         
