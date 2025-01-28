@@ -26,7 +26,7 @@ public class VideoRepository(
         _logger.LogInformation(
             $"Repository: VideoRepository Method: GetByIdAsNoTrackingAsync with id: {id} started at {DateTime.UtcNow}");
 
-        await using var context = await _contextFactory.CreateDbContextAsync(ct);
+        await using StoronnimVContext context = await _contextFactory.CreateDbContextAsync(ct);
 
         var video = await context.Videos
             .AsNoTracking()
@@ -48,7 +48,7 @@ public class VideoRepository(
     {
         _logger.LogInformation($"Repository: VideoRepository Method: GetAllAsync started at {DateTime.UtcNow}");
 
-        await using var context = await _contextFactory.CreateDbContextAsync(ct);
+        await using StoronnimVContext context = await _contextFactory.CreateDbContextAsync(ct);
 
         var videos = await context.Videos
             .AsNoTracking()
@@ -69,7 +69,7 @@ public class VideoRepository(
     {
         _logger.LogInformation($"Repository: VideoRepository Method: GetPromotionVideoForHomePageAsync started at {DateTime.UtcNow}");
         
-        await using var context = await _contextFactory.CreateDbContextAsync(ct);
+        await using StoronnimVContext context = await _contextFactory.CreateDbContextAsync(ct);
 
         var promotionVideo = await context.Videos
             .AsNoTracking()
@@ -92,10 +92,10 @@ public class VideoRepository(
     {
         _logger.LogInformation($"Repository: VideoRepository Method: GetForPageAsync with [page: {page}, pageSize: {pageSize}] started at {DateTime.UtcNow}");
 
-        var type = (string)args[0];
-        var typeEnum = (VideoType)Enum.Parse(typeof(VideoType), type);
+        string type = (string)args[0];
+        var typeEnum = Enum.Parse<VideoType>(type);
         
-        await using var context = await _contextFactory.CreateDbContextAsync(ct);
+        await using StoronnimVContext context = await _contextFactory.CreateDbContextAsync(ct);
 
         var videos = await context.Videos
             .AsNoTracking()
@@ -119,12 +119,12 @@ public class VideoRepository(
     {
         _logger.LogInformation($"Repository: VideoRepository Method: GetTotalCountAsync started at {DateTime.UtcNow}");
         
-        var type = (string)args[0];
-        var typeEnum = (VideoType)Enum.Parse(typeof(VideoType), type);
+        string type = (string)args[0];
+        var typeEnum = Enum.Parse<VideoType>(type);
         
-        await using var context = await _contextFactory.CreateDbContextAsync(ct);
+        await using StoronnimVContext context = await _contextFactory.CreateDbContextAsync(ct);
 
-        var count = await context.Videos
+        int count = await context.Videos
             .AsNoTracking()
             .Where(video => video.Type == typeEnum)
             .CountAsync(ct);
@@ -138,7 +138,7 @@ public class VideoRepository(
     {
         _logger.LogInformation($"Repository: VideoRepository Method: GetForAdminPageAsync with [page: {page}, pageSize: {pageSize}] started at {DateTime.UtcNow}");
         
-        await using var context = await _contextFactory.CreateDbContextAsync(ct);
+        await using StoronnimVContext context = await _contextFactory.CreateDbContextAsync(ct);
 
         var videos = await context.Videos
             .AsNoTracking()
@@ -162,9 +162,9 @@ public class VideoRepository(
     {
         _logger.LogInformation($"Repository: VideoRepository Method: GetTotalCountForAdminPageAsync started at {DateTime.UtcNow}");
         
-        await using var context = await _contextFactory.CreateDbContextAsync(ct);
+        await using StoronnimVContext context = await _contextFactory.CreateDbContextAsync(ct);
 
-        var count = await context.Videos
+        int count = await context.Videos
             .AsNoTracking()
             .CountAsync(ct);
         

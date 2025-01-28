@@ -17,7 +17,7 @@ public class AdminRepository(IDbContextFactory<StoronnimVContext> contextFactory
     {
         _logger.LogInformation($"Repository: AdminRepository Method: GetByIdAsNoTrackingAsync with id: {id} started at {DateTime.UtcNow}");
         
-        using var context = await _contextFactory.CreateDbContextAsync(ct);
+        using StoronnimVContext context = await _contextFactory.CreateDbContextAsync(ct);
         var dbSet = context.Admins;
         var query = ApplyIncludes(dbSet);
         
@@ -40,7 +40,7 @@ public class AdminRepository(IDbContextFactory<StoronnimVContext> contextFactory
     {
         _logger.LogInformation($"Repository: AdminRepository Method: GetAllAsync started at {DateTime.UtcNow}");
         
-        using var context = await _contextFactory.CreateDbContextAsync(ct);
+        using StoronnimVContext context = await _contextFactory.CreateDbContextAsync(ct);
         var dbSet = context.Admins;
         var query = ApplyIncludes(dbSet);
         
@@ -63,11 +63,11 @@ public class AdminRepository(IDbContextFactory<StoronnimVContext> contextFactory
     {
         _logger.LogInformation($"Repository: AdminRepository Method: GetByLoginAsync started at {DateTime.UtcNow}");
         
-        using var context = await _contextFactory.CreateDbContextAsync(ct);
+        using StoronnimVContext context = await _contextFactory.CreateDbContextAsync(ct);
         var dbSet = context.Admins;
         var query = ApplyIncludes(dbSet);
         
-        var result = await query
+        Admin? result = await query
             .AsNoTracking()
             .FirstOrDefaultAsync(admin => admin.Login == login, ct);
         

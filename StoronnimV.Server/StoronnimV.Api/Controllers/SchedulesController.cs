@@ -23,7 +23,7 @@ namespace StoronnimV.Api.Controllers
         {
             _logger.LogInformation($"Controller: SchedulesController Method: GetSchedule with id: {id} started at {DateTime.UtcNow}");
             
-            var schedule = await _schedulesControllerService.GetItemByIdAsync(id, ct);
+            ScheduleResponse schedule = await _schedulesControllerService.GetItemByIdAsync(id, ct);
             
             _logger.LogInformation($"Controller: SchedulesController Method: GetSchedule with id: {id} ended at {DateTime.UtcNow}");
             

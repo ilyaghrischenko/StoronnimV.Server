@@ -18,7 +18,7 @@ namespace StoronnimV.Api.Controllers
         {
             _logger.LogInformation($"Controller: MusicController Method: GetMusicPlatform with id: {id} started at {DateTime.UtcNow}");
 
-            var musicPlatform = await _musicControllerService.GetItemByIdAsync(id, ct);
+            MusicResponse musicPlatform = await _musicControllerService.GetItemByIdAsync(id, ct);
             
             _logger.LogInformation($"Controller: MusicController Method: GetMusicPlatform with id: {id} ended at {DateTime.UtcNow}");
 

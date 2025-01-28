@@ -5,6 +5,7 @@ using StoronnimV.Application.DTO.Responses.Shared;
 using StoronnimV.Application.Extensions;
 using StoronnimV.Application.Interfaces.Controllers;
 using StoronnimV.Application.Interfaces.Entities;
+using StoronnimV.Application.Models;
 
 namespace StoronnimV.Application.Services.Controllers;
 
@@ -26,7 +27,7 @@ public class NewsControllerService(
     {
         _logger.LogInformation($"Service: NewsControllerService Method: GetItemByIdAsync with id: {id} started at {DateTime.UtcNow}");
         
-        var newsItem = await _newsService.GetItemByIdAsync(id, ct);
+        object newsItem = await _newsService.GetItemByIdAsync(id, ct);
 
         var newsItemDto = _mapper.Map<NewsResponse>(newsItem);
         
@@ -52,7 +53,7 @@ public class NewsControllerService(
     {
         _logger.LogInformation($"Service: NewsControllerService Method: GetForPageAsync with page: {page} started at {DateTime.UtcNow}");
         
-        var paginationResult = await _newsService.GetForPageAsync(page, pageSize, ct);
+        PaginationResult paginationResult = await _newsService.GetForPageAsync(page, pageSize, ct);
         
         var newsDto = _mapper.Map<IEnumerable<NewsShortResponse>>(paginationResult.Items);
         

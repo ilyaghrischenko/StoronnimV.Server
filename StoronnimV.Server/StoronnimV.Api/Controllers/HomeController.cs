@@ -32,7 +32,7 @@ namespace StoronnimV.Api.Controllers
         {
             _logger.LogInformation($"Controller: HomeController Method: GetSchedule started at {DateTime.UtcNow}");
             
-            var scheduleDto = await _homeControllerService.GetScheduleAsync(ct);
+            ScheduleHomeResponse scheduleDto = await _homeControllerService.GetScheduleAsync(ct);
             
             _logger.LogInformation($"Controller: HomeController Method: GetSchedule ended at {DateTime.UtcNow}");
 
@@ -44,7 +44,7 @@ namespace StoronnimV.Api.Controllers
         {
             _logger.LogInformation($"Controller: HomeController Method: GetPromotionVideo started at {DateTime.UtcNow}");
 
-            var videoDto = await _homeControllerService.GetVideoAsync(ct);
+            VideoPageShortResponse videoDto = await _homeControllerService.GetVideoAsync(ct);
             
             _logger.LogInformation($"Controller: HomeController Method: GetPromotionVideo ended at {DateTime.UtcNow}");
 

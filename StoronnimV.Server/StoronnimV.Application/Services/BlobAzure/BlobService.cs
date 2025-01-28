@@ -10,16 +10,16 @@ public class BlobService : IBlobService
 
     public BlobService(IConfiguration configuration)
     {
-        var connectionString = configuration.GetValue<string>("BlobStorageConnectionString");
+        string? connectionString = configuration.GetValue<string>("BlobStorageConnectionString");
         _blobServiceClient = new BlobServiceClient(connectionString);
     }
     
     public async Task<string> AddFileAsync(string containerName, string fileName, Stream fileStream, CancellationToken ct)
     {
-        var container = _blobServiceClient.GetBlobContainerClient(containerName);
+        BlobContainerClient? container = _blobServiceClient.GetBlobContainerClient(containerName);
         await container.CreateIfNotExistsAsync(cancellationToken: ct);
         
-        var blobClient = container.GetBlobClient(fileName);
+        BlobClient? blobClient = container.GetBlobClient(fileName);
         
         await blobClient.UploadAsync(fileStream, overwrite: true, cancellationToken: ct);
 
@@ -28,17 +28,17 @@ public class BlobService : IBlobService
 
     public string GetFileUrl(string containerName, string fileName, CancellationToken ct)
     {
-        var blobClient = _blobServiceClient.GetBlobContainerClient(containerName);
-        var blob = blobClient.GetBlobClient(fileName);
+        BlobContainerClient? blobClient = _blobServiceClient.GetBlobContainerClient(containerName);
+        BlobClient? blob = blobClient.GetBlobClient(fileName);
         
         return blob.Uri.ToString();
     }
 
     public async Task DeleteFileAsync(string containerName, string fileName, CancellationToken ct)
     {
-        var container = _blobServiceClient.GetBlobContainerClient(containerName);
+        BlobContainerClient? container = _blobServiceClient.GetBlobContainerClient(containerName);
         
-        var blobClient = container.GetBlobClient(fileName);
+        BlobClient? blobClient = container.GetBlobClient(fileName);
         
         await blobClient.DeleteIfExistsAsync(cancellationToken: ct);
     }

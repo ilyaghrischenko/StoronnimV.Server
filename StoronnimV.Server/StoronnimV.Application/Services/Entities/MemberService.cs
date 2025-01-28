@@ -31,8 +31,8 @@ public class MemberService(IMemberRepository memberRepository,
     {
         _logger.LogInformation($"Service: MemberService Method: GetItemByIdAsync with id: {id} started at {DateTime.UtcNow}");
         
-        var member = await _memberRepository.GetByIdAsNoTrackingAsync(id, ct)
-            ?? throw new EntityNotFoundException($"Member with id: {id} was not found");
+        object member = await _memberRepository.GetByIdAsNoTrackingAsync(id, ct)
+                        ?? throw new EntityNotFoundException($"Member with id: {id} was not found");
 
         _logger.LogInformation($"Service: MemberService Method: GetItemByIdAsync with id: {id} ended at {DateTime.UtcNow}");
 

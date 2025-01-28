@@ -20,7 +20,7 @@ public class MusicControllerService(
     {
         _logger.LogInformation($"Service: MusicControllerService Method: GetItemByIdAsync with id: {id} started at {DateTime.UtcNow}");
         
-        var musicPlatformItem = await _musicPlatformService.GetItemByIdAsync(id, ct);
+        object musicPlatformItem = await _musicPlatformService.GetItemByIdAsync(id, ct);
 
         var musicPlatformDto = _mapper.Map<MusicResponse>(musicPlatformItem);
         

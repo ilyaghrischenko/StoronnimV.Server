@@ -33,7 +33,7 @@ public class HomeControllerService(
     {
         _logger.LogInformation($"Service: HomeControllerService Method: GetScheduleAsync started at {DateTime.UtcNow}");
 
-        var schedule = await _homeService.GetScheduleForHomePageAsync(ct);
+        object? schedule = await _homeService.GetScheduleForHomePageAsync(ct);
         
         var scheduleDto = _mapper.Map<ScheduleHomeResponse>(schedule);
         
@@ -46,7 +46,7 @@ public class HomeControllerService(
     {
         _logger.LogInformation($"Service: HomeControllerService Method: GetVideoAsync started at {DateTime.UtcNow}");
 
-        var promotionVideo = await _homeService.GetPromotionVideoForHomePageAsync(ct);
+        object? promotionVideo = await _homeService.GetPromotionVideoForHomePageAsync(ct);
         
         var promotionVideoDto = _mapper.Map<VideoPageShortResponse>(promotionVideo);
         

@@ -37,13 +37,13 @@ public class GroupPageControllerService(
         
         await Task.WhenAll(groupPageTask, membersTask);
         
-        var groupPage = await groupPageTask;
+        object groupPage = await groupPageTask;
         var members = await membersTask;
         
         var groupPageDto = _mapper.Map<GroupPageResponse>(groupPage);
         var membersShort = _mapper.Map<IEnumerable<MemberShortResponse>>(members);
         
-        var groupPageFullInfoDto = new GroupPageFullInfoResponse(groupPageDto, membersShort);
+        GroupPageFullInfoResponse groupPageFullInfoDto = new(groupPageDto, membersShort);
         
         _logger.LogInformation($"Service: GroupPageControllerService Method: GetGroupPageInfoAsync ended at {DateTime.UtcNow}");
         
@@ -59,13 +59,13 @@ public class GroupPageControllerService(
         
         await Task.WhenAll(memberTask, socialsTask);
         
-        var member = await memberTask;
+        object member = await memberTask;
         var socials = await socialsTask;
         
         var memberDto = _mapper.Map<MemberResponse>(member);
         var socialsDto = _mapper.Map<IEnumerable<SocialResponse>>(socials);
         
-        var memberFullInfoDto = new MemberFullInfoResponse(memberDto, socialsDto);
+        MemberFullInfoResponse memberFullInfoDto = new(memberDto, socialsDto);
         
         _logger.LogInformation($"Service: GroupPageControllerService Method: GetMemberInfoAsync with memberId: {memberId} ended at {DateTime.UtcNow}");
         

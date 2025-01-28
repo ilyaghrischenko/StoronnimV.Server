@@ -29,7 +29,7 @@ namespace StoronnimV.Api.Controllers
             _logger.LogInformation(
                 $"Controller: VideoController Method: GetVideo with id: {id} started at {DateTime.UtcNow}");
 
-            var video = await _videoControllerService.GetItemByIdAsync(id, ct);
+            VideoPageShortResponse video = await _videoControllerService.GetItemByIdAsync(id, ct);
 
             _logger.LogInformation(
                 $"Controller: VideoController Method: GetVideo with id: {id} ended at {DateTime.UtcNow}");

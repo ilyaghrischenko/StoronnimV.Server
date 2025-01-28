@@ -17,7 +17,7 @@ public class JwtBearerService : IJwtBearerService
             new(ClaimsIdentity.DefaultRoleClaimType, admin.Type.ToString())
         };
         
-        var identity = new ClaimsIdentity(claims, "Token",
+        ClaimsIdentity identity = new(claims, "Token",
             ClaimsIdentity.DefaultNameClaimType, ClaimsIdentity.DefaultRoleClaimType);
         
         return identity;
@@ -25,8 +25,8 @@ public class JwtBearerService : IJwtBearerService
 
     public string GetToken(ClaimsIdentity identity)
     {
-        var timeNow = DateTime.UtcNow;
-        var jwt = new JwtSecurityToken(
+        DateTime timeNow = DateTime.UtcNow;
+        JwtSecurityToken jwt = new JwtSecurityToken(
             issuer: JwtOptions.ISSUER,
             audience: JwtOptions.AUDIENCE,
             notBefore: timeNow,

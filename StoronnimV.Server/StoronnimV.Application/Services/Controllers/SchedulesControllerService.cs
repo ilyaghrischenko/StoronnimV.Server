@@ -24,7 +24,7 @@ public class SchedulesControllerService(
     {
         _logger.LogInformation($"Service: SchedulesControllerService Method: GetItemByIdAsync with id: {id} started at {DateTime.UtcNow}");
         
-        var schedule = await _scheduleService.GetItemByIdAsync(id, ct);
+        object schedule = await _scheduleService.GetItemByIdAsync(id, ct);
         
         var scheduleDto = _mapper.Map<ScheduleResponse>(schedule);
         

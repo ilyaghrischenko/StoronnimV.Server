@@ -87,7 +87,7 @@ public static class ServiceCollectionsExtension
 
     public static WebApplicationBuilder AddPooledDbContextFactory(this WebApplicationBuilder builder)
     {
-        var connectionString = builder.Configuration.GetConnectionString("CloudConnection");
+        string? connectionString = builder.Configuration.GetConnectionString("CloudConnection");
         
         builder.Services.AddPooledDbContextFactory<StoronnimVContext>(options =>
             options.UseNpgsql(connectionString));
@@ -147,7 +147,7 @@ public static class ServiceCollectionsExtension
 
     public static WebApplicationBuilder AddHangfire(this WebApplicationBuilder builder)
     {
-        var connectionString = builder.Configuration.GetConnectionString("CloudConnection");
+        string? connectionString = builder.Configuration.GetConnectionString("CloudConnection");
         
         builder.Services.AddHangfire(config => config
             .UsePostgreSqlStorage(connectionString));

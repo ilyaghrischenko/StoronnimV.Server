@@ -22,8 +22,8 @@ public class ScheduleService(IScheduleRepository scheduleRepository,
     {
         _logger.LogInformation($"Service: ScheduleService Method: GetItemByIdAsync with id: {id} started at {DateTime.UtcNow}");
         
-        var schedule = await _scheduleRepository.GetByIdAsNoTrackingAsync(id, ct)
-            ?? throw new EntityNotFoundException($"Schedule with id: {id} was not found");
+        object schedule = await _scheduleRepository.GetByIdAsNoTrackingAsync(id, ct)
+                          ?? throw new EntityNotFoundException($"Schedule with id: {id} was not found");
         
         _logger.LogInformation($"Service: ScheduleService Method: GetItemByIdAsync with id: {id} ended at {DateTime.UtcNow}");
 
@@ -56,7 +56,7 @@ public class ScheduleService(IScheduleRepository scheduleRepository,
         var allSchedules = await _scheduleRepository
             .GetAllSchedulesAsync(ct);
         
-        var today = DateTime.UtcNow.Date;
+        DateTime today = DateTime.UtcNow.Date;
         
         var schedulesToChange = allSchedules
             .Where(schedule =>schedule.Status == ScheduleStatus.Active

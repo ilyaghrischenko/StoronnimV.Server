@@ -22,7 +22,7 @@ namespace StoronnimV.Api.Controllers
         {
             _logger.LogInformation($"Controller: NewsController Method: GetNewsItem with id: {id} started at {DateTime.UtcNow}");
             
-            var newsItem = await _newsControllerService.GetItemByIdAsync(id, ct);
+            NewsResponse newsItem = await _newsControllerService.GetItemByIdAsync(id, ct);
             
             _logger.LogInformation($"Controller: NewsController Method: GetNewsItem with id: {id} ended at {DateTime.UtcNow}");
             

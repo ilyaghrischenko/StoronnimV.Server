@@ -10,7 +10,7 @@ using StoronnimV.Application.Mapping.Schedule;
 using StoronnimV.Application.Services.Hangfire;
 using StoronnimV.Data;
 
-var builder = WebApplication.CreateBuilder(args);
+WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 
 builder
     .AddSerilogLogger()
@@ -24,7 +24,7 @@ builder
     .AddJwtBearer();
     
 #region AutoMapper
-var mapperConfig = new MapperConfiguration(cfg =>
+MapperConfiguration mapperConfig = new(cfg =>
 {
     #region Group
     cfg.AddProfile<GroupPageMappingProfile>();
@@ -58,7 +58,7 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddControllers();
 
-var app = builder.Build();
+WebApplication app = builder.Build();
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
@@ -88,7 +88,7 @@ using (var scope = app.Services.CreateScope())
     try
     {
         var dbContextFactory = services.GetRequiredService<IDbContextFactory<StoronnimVContext>>();
-        using var context = dbContextFactory.CreateDbContext();
+        using StoronnimVContext context = dbContextFactory.CreateDbContext();
         DatabaseInitializer.Initialize(context);
     }
     catch (Exception ex)

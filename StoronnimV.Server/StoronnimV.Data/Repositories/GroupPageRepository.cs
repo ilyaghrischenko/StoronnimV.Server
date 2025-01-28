@@ -21,7 +21,7 @@ public class GroupPageRepository(IDbContextFactory<StoronnimVContext> contextFac
     {
         _logger.LogInformation($"Repository: GroupPageRepository Method: GetByIdAsNoTrackingAsync with id: {id} started at {DateTime.UtcNow}");
         
-        using var context = await _contextFactory.CreateDbContextAsync(ct);
+        using StoronnimVContext context = await _contextFactory.CreateDbContextAsync(ct);
         var dbSet = context.GroupPages;
         var query = ApplyIncludes(dbSet);
 
@@ -44,7 +44,7 @@ public class GroupPageRepository(IDbContextFactory<StoronnimVContext> contextFac
     {
         _logger.LogInformation($"Repository: GroupPageRepository Method: GetAllAsync started at {DateTime.UtcNow}");
         
-        using var context = await _contextFactory.CreateDbContextAsync(ct);
+        using StoronnimVContext context = await _contextFactory.CreateDbContextAsync(ct);
         var dbSet = context.GroupPages;
         var query = ApplyIncludes(dbSet);
         
@@ -67,7 +67,7 @@ public class GroupPageRepository(IDbContextFactory<StoronnimVContext> contextFac
     {
         _logger.LogInformation($"Repository: GroupPageRepository Method: GetFirstGroupPageAsync started at {DateTime.UtcNow}");
         
-        using var context = await _contextFactory.CreateDbContextAsync(ct);
+        using StoronnimVContext context = await _contextFactory.CreateDbContextAsync(ct);
         var dbSet = context.GroupPages;
         var query = ApplyIncludes(dbSet);
         

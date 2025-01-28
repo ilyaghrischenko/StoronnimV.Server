@@ -17,7 +17,7 @@ public class MusicPlatformRepository(IDbContextFactory<StoronnimVContext> contex
     {
         _logger.LogInformation($"Repository: MusicPlatformRepository Method: GetByIdAsNoTrackingAsync with id: {id} started at {DateTime.UtcNow}");
         
-        using var context = await _contextFactory.CreateDbContextAsync(ct);
+        using StoronnimVContext context = await _contextFactory.CreateDbContextAsync(ct);
         var dbSet = context.MusicPlatforms;
         var query = ApplyIncludes(dbSet);
         
@@ -40,7 +40,7 @@ public class MusicPlatformRepository(IDbContextFactory<StoronnimVContext> contex
     {
         _logger.LogInformation($"Repository: MusicPlatformRepository Method: GetAllAsync started at {DateTime.UtcNow}");
         
-        using var context = await _contextFactory.CreateDbContextAsync(ct);
+        using StoronnimVContext context = await _contextFactory.CreateDbContextAsync(ct);
         var dbSet = context.MusicPlatforms;
         var query = ApplyIncludes(dbSet);
         

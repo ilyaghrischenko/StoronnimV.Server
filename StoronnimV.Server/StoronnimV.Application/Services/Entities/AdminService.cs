@@ -22,7 +22,7 @@ public class AdminService(
     {
         _logger.LogInformation($"Service: AdminService Method: GetItemByIdAsync with id: {id} started at {DateTime.UtcNow}");
 
-        var admin = await _adminRepository.GetByIdAsNoTrackingAsync(id, ct);
+        object? admin = await _adminRepository.GetByIdAsNoTrackingAsync(id, ct);
 
         if (admin is null)
         {
@@ -54,14 +54,14 @@ public class AdminService(
     {
         _logger.LogInformation($"Service: AdminService Method: LogInAsync started at {DateTime.UtcNow}");
         
-        var admin = await _adminRepository.GetByLoginAsync(request.Login, ct);
+        Admin? admin = await _adminRepository.GetByLoginAsync(request.Login, ct);
 
         if (admin is null)
         {
             throw new LogInException($"Admin with login: {request.Login} was not found");
         }
         
-        var verificationResult = _passwordHasher.VerifyHashedPassword(admin, admin.Password, request.Password);
+        PasswordVerificationResult verificationResult = _passwordHasher.VerifyHashedPassword(admin, admin.Password, request.Password);
 
         if (verificationResult == PasswordVerificationResult.Failed)
         {

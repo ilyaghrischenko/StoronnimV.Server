@@ -27,7 +27,7 @@ public class SocialRepository(IDbContextFactory<StoronnimVContext> contextFactor
     {
         _logger.LogInformation($"Repository: SocialRepository Method: GetByIdAsNoTrackingAsync with id: {id} started at {DateTime.UtcNow}");
         
-        using var context = await _contextFactory.CreateDbContextAsync(ct);
+        using StoronnimVContext context = await _contextFactory.CreateDbContextAsync(ct);
         var dbSet = context.Socials;
         var query = ApplyIncludes(dbSet);
 
@@ -50,7 +50,7 @@ public class SocialRepository(IDbContextFactory<StoronnimVContext> contextFactor
     {
         _logger.LogInformation($"Repository: SocialRepository Method: GetAllAsync started at {DateTime.UtcNow}");
         
-        using var context = await _contextFactory.CreateDbContextAsync(ct);
+        using StoronnimVContext context = await _contextFactory.CreateDbContextAsync(ct);
         var dbSet = context.Socials;
         var query = ApplyIncludes(dbSet);
         
@@ -74,7 +74,7 @@ public class SocialRepository(IDbContextFactory<StoronnimVContext> contextFactor
     {
         _logger.LogInformation($"Repository: SocialRepository Method: GetAllForMemberAsync with memberId: {memberId} started at {DateTime.UtcNow}");
         
-        using var context = await _contextFactory.CreateDbContextAsync(ct);
+        using StoronnimVContext context = await _contextFactory.CreateDbContextAsync(ct);
         var dbSet = context.Socials;
         var query = ApplyIncludes(dbSet);
         

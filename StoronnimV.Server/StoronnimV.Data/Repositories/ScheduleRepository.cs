@@ -24,7 +24,7 @@ public class ScheduleRepository(
         _logger.LogInformation(
             $"Repository: ScheduleRepository Method: GetByIdAsNoTrackingAsync with id: {id} started at {DateTime.UtcNow}");
 
-        using var context = await _contextFactory.CreateDbContextAsync(ct);
+        using StoronnimVContext context = await _contextFactory.CreateDbContextAsync(ct);
         var dbSet = context.Schedules;
         var query = ApplyIncludes(dbSet);
 
@@ -52,7 +52,7 @@ public class ScheduleRepository(
     {
         _logger.LogInformation($"Repository: ScheduleRepository Method: GetAllAsync started at {DateTime.UtcNow}");
 
-        using var context = await _contextFactory.CreateDbContextAsync(ct);
+        using StoronnimVContext context = await _contextFactory.CreateDbContextAsync(ct);
         var dbSet = context.Schedules;
         var query = ApplyIncludes(dbSet);
 
@@ -80,7 +80,7 @@ public class ScheduleRepository(
         _logger.LogInformation(
             $"Repository: ScheduleRepository Method: GetAllSchedulesAsync started at {DateTime.UtcNow}");
 
-        using var context = await _contextFactory.CreateDbContextAsync(ct);
+        using StoronnimVContext context = await _contextFactory.CreateDbContextAsync(ct);
         var dbSet = context.Schedules;
         var query = ApplyIncludes(dbSet);
 
@@ -97,7 +97,7 @@ public class ScheduleRepository(
         _logger.LogInformation(
             $"Repository: ScheduleRepository Method: GetScheduleForHomePageAsync started at {DateTime.UtcNow}");
 
-        using var context = await _contextFactory.CreateDbContextAsync(ct);
+        using StoronnimVContext context = await _contextFactory.CreateDbContextAsync(ct);
         var dbSet = context.Schedules;
         var query = ApplyIncludes(dbSet);
 

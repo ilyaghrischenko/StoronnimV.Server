@@ -36,7 +36,7 @@ public class HomeService(
     {
         _logger.LogInformation($"Service: HomeService Method: GetScheduleForHomePageAsync started at {DateTime.UtcNow}");
         
-        var schedule = await _scheduleRepository.GetScheduleForHomePageAsync(ct);
+        object? schedule = await _scheduleRepository.GetScheduleForHomePageAsync(ct);
         
         _logger.LogInformation($"Service: HomeService Method: GetScheduleForHomePageAsync ended at {DateTime.UtcNow}");
 
@@ -47,7 +47,7 @@ public class HomeService(
     {
         _logger.LogInformation($"Service: HomeService Method: GetScheduleForHomePageAsync started at {DateTime.UtcNow}");
 
-        var promotionVideo = await _videoRepository.GetPromotionVideoForHomePageAsync(ct);
+        object? promotionVideo = await _videoRepository.GetPromotionVideoForHomePageAsync(ct);
         
         _logger.LogInformation($"Service: HomeService Method: GetScheduleForHomePageAsync ended at {DateTime.UtcNow}");
         

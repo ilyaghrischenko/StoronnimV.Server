@@ -35,4 +35,9 @@
       </Content>
     </ItemGroup>
 
+    <ItemGroup>
+      <_ContentIncludedByDefault Remove="wwwroot\photo\favicon-standard.png" />
+      <_ContentIncludedByDefault Remove="wwwroot\photo\news.jpg" />
+    </ItemGroup>
+
 </Project>

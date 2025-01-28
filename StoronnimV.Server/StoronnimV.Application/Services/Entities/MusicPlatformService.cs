@@ -15,8 +15,8 @@ public class MusicPlatformService(IMusicPlatformRepository musicPlatformReposito
     {
         _logger.LogInformation($"Service: MusicPlatformService Method: GetItemByIdAsync with id: {id} started at {DateTime.UtcNow}");
         
-        var musicPlatform = await _musicPlatformRepository.GetByIdAsNoTrackingAsync(id, ct)
-            ?? throw new EntityNotFoundException($"Music Platform with id: {id} was not found");
+        object musicPlatform = await _musicPlatformRepository.GetByIdAsNoTrackingAsync(id, ct)
+                               ?? throw new EntityNotFoundException($"Music Platform with id: {id} was not found");
         
         _logger.LogInformation($"Service: MusicPlatformService Method: GetItemByIdAsync with id: {id} ended at {DateTime.UtcNow}");
         

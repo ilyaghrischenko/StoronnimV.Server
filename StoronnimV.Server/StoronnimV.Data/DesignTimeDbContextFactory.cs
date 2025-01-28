@@ -11,15 +11,15 @@ public class DesignTimeDbContextFactory : IDesignTimeDbContextFactory<StoronnimV
 {
     public StoronnimVContext CreateDbContext(string[] args)
     {
-        var currentDirectory = Directory.GetCurrentDirectory();
-        var relativePath = "../StoronnimV.Api";
+        string currentDirectory = Directory.GetCurrentDirectory();
+        string relativePath = "../StoronnimV.Api";
         
-        var configuration = new ConfigurationBuilder()
+        IConfigurationRoot configuration = new ConfigurationBuilder()
             .SetBasePath(Path.Combine(currentDirectory, relativePath))
             .AddJsonFile("appsettings.json")
             .Build();
 
-        var connectionString = configuration.GetConnectionString("CloudConnection");
+        string? connectionString = configuration.GetConnectionString("CloudConnection");
 
         var optionsBuilder = new DbContextOptionsBuilder<StoronnimVContext>();
         optionsBuilder.UseNpgsql(connectionString);

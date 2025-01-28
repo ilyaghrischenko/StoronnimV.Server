@@ -20,8 +20,8 @@ public class VideoService(
         _logger.LogInformation(
             $"Service: VideoService Method: GetItemByIdAsync with id: {id} started at {DateTime.UtcNow}");
 
-        var video = await _videoRepository.GetByIdAsNoTrackingAsync(id, ct)
-                    ?? throw new EntityNotFoundException($"Video with id: {id} was not found");
+        object video = await _videoRepository.GetByIdAsNoTrackingAsync(id, ct)
+                       ?? throw new EntityNotFoundException($"Video with id: {id} was not found");
 
         _logger.LogInformation(
             $"Service: VideoService Method: GetItemByIdAsync with id: {id} ended at {DateTime.UtcNow}");
@@ -46,14 +46,14 @@ public class VideoService(
         _logger.LogInformation(
             $"Service: VideoService Method: GetForPageAsync with [page: {page}, pageSize: {pageSize}] started at {DateTime.UtcNow}");
 
-        var type = (string)args[0];
+        string type = (string)args[0];
         
         if (page <= 0)
         {
             throw new PaginationException("invalid page number");
         }
 
-        var totalCount = await _videoRepository.GetTotalCountAsync(ct, type);
+        int totalCount = await _videoRepository.GetTotalCountAsync(ct, type);
 
         if (totalCount == 0)
         {
@@ -65,7 +65,7 @@ public class VideoService(
             );
         }
 
-        var totalPages = (int)Math.Ceiling((double)totalCount / pageSize);
+        int totalPages = (int)Math.Ceiling((double)totalCount / pageSize);
         var items = await _videoRepository.GetForPageAsync(page, ct, pageSize, type);
 
         if (items is null || !items.Any())
@@ -80,7 +80,7 @@ public class VideoService(
 
         var sortedItems = items.ToList();
 
-        var paginationResult = new PaginationResult(
+        PaginationResult paginationResult = new(
             currentPage: page,
             totalPages: totalPages,
             totalItems: totalCount,
@@ -102,7 +102,7 @@ public class VideoService(
             throw new PaginationException("invalid page number");
         }
 
-        var totalCount = await _videoRepository.GetTotalCountForAdminPageAsync(ct);
+        int totalCount = await _videoRepository.GetTotalCountForAdminPageAsync(ct);
 
         if (totalCount == 0)
         {
@@ -114,7 +114,7 @@ public class VideoService(
             );
         }
 
-        var totalPages = (int)Math.Ceiling((double)totalCount / pageSize);
+        int totalPages = (int)Math.Ceiling((double)totalCount / pageSize);
         var items = await _videoRepository.GetForAdminPageAsync(page, ct, pageSize);
         
         if (items is null || !items.Any())
@@ -129,7 +129,7 @@ public class VideoService(
 
         var sortedItems = items.ToList();
 
-        var paginationResult = new PaginationResult(
+        PaginationResult paginationResult = new(
             currentPage: page,
             totalPages: totalPages,
             totalItems: totalCount,

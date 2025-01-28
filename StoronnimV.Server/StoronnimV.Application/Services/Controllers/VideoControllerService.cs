@@ -4,6 +4,7 @@ using StoronnimV.Application.DTO.Responses.Shared;
 using StoronnimV.Application.DTO.Responses.Video;
 using StoronnimV.Application.Interfaces.Controllers;
 using StoronnimV.Application.Interfaces.Entities;
+using StoronnimV.Application.Models;
 
 namespace StoronnimV.Application.Services.Controllers;
 
@@ -21,7 +22,7 @@ public class VideoControllerService(
     {
         _logger.LogInformation($"Service: VideoControllerService Method: GetItemByIdAsync with id: {id} started at {DateTime.UtcNow}");
 
-        var video = await _videoService.GetItemByIdAsync(id, ct);
+        object video = await _videoService.GetItemByIdAsync(id, ct);
         
         var videoDto = _mapper.Map<VideoPageShortResponse>(video);
         
@@ -47,9 +48,9 @@ public class VideoControllerService(
     {
         _logger.LogInformation($"Service: VideoControllerService Method: GetForPageAsync with page: {page} started at {DateTime.UtcNow}");
         
-        var type = (string)args[0];
+        string type = (string)args[0];
         
-        var paginationResult = await _videoService.GetForPageAsync(page, pageSize, ct, type);
+        PaginationResult paginationResult = await _videoService.GetForPageAsync(page, pageSize, ct, type);
         
         var newsDto = _mapper.Map<IEnumerable<VideoPageShortResponse>>(paginationResult.Items);
         

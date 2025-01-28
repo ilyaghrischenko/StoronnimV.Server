@@ -20,13 +20,13 @@ public static class ObjectExtensions
             throw new GetPropertyValueException($"Property: {propertyName} in object: {obj} is null or empty");
         }
 
-        var canBeNull = propertyName.Last() == '?';
+        bool canBeNull = propertyName.Last() == '?';
         if (canBeNull is true)
         {
             propertyName = propertyName.Remove(propertyName.Length - 1);
         }
         
-        var property = obj.GetType().GetProperty(propertyName, BindingFlags.Public | BindingFlags.Instance);
+        PropertyInfo? property = obj.GetType().GetProperty(propertyName, BindingFlags.Public | BindingFlags.Instance);
 
         if (canBeNull is true && property is null)
         {

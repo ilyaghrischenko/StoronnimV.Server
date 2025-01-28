@@ -19,8 +19,8 @@ public class SocialService(ISocialRepository socialRepository,
     {
         _logger.LogInformation($"Service: SocialService Method: GetItemByIdAsync with id: {id} started at {DateTime.UtcNow}");
         
-        var social = await _socialRepository.GetByIdAsNoTrackingAsync(id, ct)
-            ?? throw new EntityNotFoundException($"Social with id: {id} was not found");
+        object social = await _socialRepository.GetByIdAsNoTrackingAsync(id, ct)
+                        ?? throw new EntityNotFoundException($"Social with id: {id} was not found");
         
         _logger.LogInformation($"Service: SocialService Method: GetItemByIdAsync with id: {id} ended at {DateTime.UtcNow}");
 

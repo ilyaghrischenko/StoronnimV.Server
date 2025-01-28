@@ -19,7 +19,7 @@ namespace StoronnimV.Api.Controllers
         {
             _logger.LogInformation($"Controller: AccountController Method: LogIn with [login: {request.Login}, password: {request.Password}] started at {DateTime.UtcNow}");
             
-            var token = await _accountControllerService.LogInAsync(request, ct);
+            string token = await _accountControllerService.LogInAsync(request, ct);
             
             _logger.LogInformation($"Controller: AccountController Method: LogIn with [login: {request.Login}, password: {request.Password}] ended at {DateTime.UtcNow}");
             

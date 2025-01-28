@@ -27,7 +27,7 @@ public class NewsRepository(IDbContextFactory<StoronnimVContext> contextFactory,
     {
         _logger.LogInformation($"Repository: NewsRepository Method: GetByIdAsNoTrackingAsync with id: {id} started at {DateTime.UtcNow}");
         
-        using var context = await _contextFactory.CreateDbContextAsync(ct);
+        using StoronnimVContext context = await _contextFactory.CreateDbContextAsync(ct);
         var dbSet = context.NewsItems;
         var query = ApplyIncludes(dbSet);
 
@@ -54,7 +54,7 @@ public class NewsRepository(IDbContextFactory<StoronnimVContext> contextFactory,
     {
         _logger.LogInformation($"Repository: NewsRepository Method: GetAllAsync started at {DateTime.UtcNow}");
         
-        using var context = await _contextFactory.CreateDbContextAsync(ct);
+        using StoronnimVContext context = await _contextFactory.CreateDbContextAsync(ct);
         var dbSet = context.NewsItems;
         var query = ApplyIncludes(dbSet);
         
@@ -80,7 +80,7 @@ public class NewsRepository(IDbContextFactory<StoronnimVContext> contextFactory,
     {
         _logger.LogInformation($"Repository: NewsRepository Method: GetForPageAsync with [page: {page}, pageSize: {pageSize}] started at {DateTime.UtcNow}");
         
-        using var context = await _contextFactory.CreateDbContextAsync(ct);
+        using StoronnimVContext context = await _contextFactory.CreateDbContextAsync(ct);
         var dbSet = context.NewsItems;
         var query = ApplyIncludes(dbSet);
         
@@ -108,7 +108,7 @@ public class NewsRepository(IDbContextFactory<StoronnimVContext> contextFactory,
     {
         _logger.LogInformation($"Repository: NewsRepository Method: GetForAdminPageAsync with [page: {page}, pageSize: {pageSize}] started at {DateTime.UtcNow}");
         
-        using var context = await _contextFactory.CreateDbContextAsync(ct);
+        using StoronnimVContext context = await _contextFactory.CreateDbContextAsync(ct);
         var dbSet = context.NewsItems;
         var query = ApplyIncludes(dbSet);
         
@@ -138,9 +138,9 @@ public class NewsRepository(IDbContextFactory<StoronnimVContext> contextFactory,
     {
         _logger.LogInformation($"Repository: NewsRepository Method: GetTotalCountAsync started at {DateTime.UtcNow}");
         
-        using var context = await _contextFactory.CreateDbContextAsync(ct);
+        using StoronnimVContext context = await _contextFactory.CreateDbContextAsync(ct);
         
-        var result = await context.NewsItems.CountAsync(ct);
+        int result = await context.NewsItems.CountAsync(ct);
         
         _logger.LogInformation($"Repository: NewsRepository Method: GetTotalCountAsync ended at {DateTime.UtcNow}");
 
@@ -151,7 +151,7 @@ public class NewsRepository(IDbContextFactory<StoronnimVContext> contextFactory,
     {
         _logger.LogInformation($"Repository: NewsRepository Method: GetNewsForHomePageAsync with count: {count} started at {DateTime.UtcNow}");
         
-        using var context = await _contextFactory.CreateDbContextAsync(ct);
+        using StoronnimVContext context = await _contextFactory.CreateDbContextAsync(ct);
         var dbSet = context.NewsItems;
         var query = ApplyIncludes(dbSet);
         
