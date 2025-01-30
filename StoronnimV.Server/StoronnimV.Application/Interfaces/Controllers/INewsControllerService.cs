@@ -4,7 +4,7 @@ using StoronnimV.Application.Interfaces.Controllers.Shared;
 
 namespace StoronnimV.Application.Interfaces.Controllers;
 
-public interface INewsControllerService : IPaginationControllerService<PaginationResponse<NewsShortResponse>>
+public interface INewsControllerService : IPaginationControllerService<NewsShortResponse>
 {
     Task<NewsResponse> GetItemByIdAsync(long id, CancellationToken ct);
     Task<IEnumerable<NewsResponse>> GetAllAsync(CancellationToken ct);

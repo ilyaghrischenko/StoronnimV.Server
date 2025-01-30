@@ -147,7 +147,7 @@ public class NewsRepository(IDbContextFactory<StoronnimVContext> contextFactory,
         return result;
     }
     
-    public async Task<IEnumerable<object>?> GetNewsForHomePageAsync(int count, CancellationToken ct)
+    public async Task<IEnumerable<object>?> GetMainNewsForHomePageAsync(int count, CancellationToken ct)
     {
         _logger.LogInformation($"Repository: NewsRepository Method: GetNewsForHomePageAsync with count: {count} started at {DateTime.UtcNow}");
         

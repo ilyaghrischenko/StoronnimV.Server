@@ -4,7 +4,7 @@ using StoronnimV.Domain.Interfaces.Shared;
 namespace StoronnimV.Domain.Interfaces;
 
 public interface INewsRepository
-    : IRepository<News>, IReceivableRepository<News>, IPaginationRepository, IAdminPaginationRepository
+    : IRepository<News>, IReceivableRepository, IPaginationRepository, IAdminPaginationRepository
 {
-    Task<IEnumerable<object>?> GetNewsForHomePageAsync(int count, CancellationToken ct);
+    Task<IEnumerable<object>?> GetMainNewsForHomePageAsync(int count, CancellationToken ct);
 }

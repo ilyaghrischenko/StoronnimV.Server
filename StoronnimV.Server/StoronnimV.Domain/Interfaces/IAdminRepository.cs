@@ -4,7 +4,7 @@ using StoronnimV.Domain.Interfaces.Shared;
 namespace StoronnimV.Domain.Interfaces;
 
 public interface IAdminRepository
-    : IRepository<Admin>, IReceivableRepository<Admin>
+    : IRepository<Admin>, IReceivableRepository
 {
     Task<Admin?> GetByLoginAsync(string login, CancellationToken ct);
 }

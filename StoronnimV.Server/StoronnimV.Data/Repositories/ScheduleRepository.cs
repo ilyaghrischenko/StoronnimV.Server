@@ -92,7 +92,7 @@ public class ScheduleRepository(
         return result;
     }
 
-    public async Task<object?> GetScheduleForHomePageAsync(CancellationToken ct)
+    public async Task<object?> GetNearestScheduleForHomePageAsync(CancellationToken ct)
     {
         _logger.LogInformation(
             $"Repository: ScheduleRepository Method: GetScheduleForHomePageAsync started at {DateTime.UtcNow}");

@@ -4,6 +4,6 @@ using StoronnimV.Domain.Interfaces.Shared;
 namespace StoronnimV.Domain.Interfaces;
 
 public interface IMemberRepository
-    : IRepository<Member>, IReceivableRepository<Member>
+    : IRepository<Member>, IReceivableRepository
 {
 }

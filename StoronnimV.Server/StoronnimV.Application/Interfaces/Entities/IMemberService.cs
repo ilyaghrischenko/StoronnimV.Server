@@ -4,4 +4,5 @@ namespace StoronnimV.Application.Interfaces.Entities;
 
 public interface IMemberService : IReceivableService
 {
+    
 }

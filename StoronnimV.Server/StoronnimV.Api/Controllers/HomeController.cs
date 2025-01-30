@@ -16,11 +16,11 @@ namespace StoronnimV.Api.Controllers
         private readonly ILogger<HomeController> _logger = logger;
 
         [HttpGet("news/{count:int}")]
-        public async Task<ActionResult<IEnumerable<NewsHomeResponse>>> GetNews([FromRoute] int count, CancellationToken ct)
+        public async Task<ActionResult<IEnumerable<NewsHomeResponse>>> GetMainNews([FromRoute] int count, CancellationToken ct)
         {
             _logger.LogInformation($"Controller: HomeController Method: GetNews with count: {count} started at {DateTime.UtcNow}");
             
-            var newsDto = await _homeControllerService.GetNewsAsync(count, ct);
+            var newsDto = await _homeControllerService.GetMainNewsAsync(count, ct);
             
             _logger.LogInformation($"Controller: HomeController Method: GetNews with count: {count} ended at {DateTime.UtcNow}");
 
@@ -28,11 +28,11 @@ namespace StoronnimV.Api.Controllers
         }
 
         [HttpGet("schedule")]
-        public async Task<ActionResult<ScheduleHomeResponse>> GetSchedule(CancellationToken ct)
+        public async Task<ActionResult<ScheduleHomeResponse>> GetNearestSchedule(CancellationToken ct)
         {
             _logger.LogInformation($"Controller: HomeController Method: GetSchedule started at {DateTime.UtcNow}");
             
-            ScheduleHomeResponse scheduleDto = await _homeControllerService.GetScheduleAsync(ct);
+            ScheduleHomeResponse scheduleDto = await _homeControllerService.GetNearestScheduleAsync(ct);
             
             _logger.LogInformation($"Controller: HomeController Method: GetSchedule ended at {DateTime.UtcNow}");
 
@@ -44,7 +44,7 @@ namespace StoronnimV.Api.Controllers
         {
             _logger.LogInformation($"Controller: HomeController Method: GetPromotionVideo started at {DateTime.UtcNow}");
 
-            VideoPageShortResponse videoDto = await _homeControllerService.GetVideoAsync(ct);
+            VideoPageShortResponse videoDto = await _homeControllerService.GetPromotionVideoAsync(ct);
             
             _logger.LogInformation($"Controller: HomeController Method: GetPromotionVideo ended at {DateTime.UtcNow}");
 

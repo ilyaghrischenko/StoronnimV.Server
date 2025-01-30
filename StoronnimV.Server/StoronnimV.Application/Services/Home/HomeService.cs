@@ -16,11 +16,11 @@ public class HomeService(
     private readonly IVideoRepository _videoRepository = videoRepository;
     private readonly ILogger<HomeService> _logger = logger;
     
-    public async Task<IEnumerable<object>> GetNewsForHomePageAsync(int count, CancellationToken ct)
+    public async Task<IEnumerable<object>> GetMainNewsForHomePageAsync(int count, CancellationToken ct)
     {
         _logger.LogInformation($"Service: HomeService Method: GetNewsForHomePageAsync with count: {count} started at {DateTime.UtcNow}");
         
-        var newsForHomePage = await _newsRepository.GetNewsForHomePageAsync(count, ct);
+        var newsForHomePage = await _newsRepository.GetMainNewsForHomePageAsync(count, ct);
         if (newsForHomePage is null || !newsForHomePage.Any())
         {
             return new List<object>();
@@ -32,11 +32,11 @@ public class HomeService(
             .ToList();
     }
 
-    public async Task<object?> GetScheduleForHomePageAsync(CancellationToken ct)
+    public async Task<object?> GetNearestScheduleForHomePageAsync(CancellationToken ct)
     {
         _logger.LogInformation($"Service: HomeService Method: GetScheduleForHomePageAsync started at {DateTime.UtcNow}");
         
-        object? schedule = await _scheduleRepository.GetScheduleForHomePageAsync(ct);
+        object? schedule = await _scheduleRepository.GetNearestScheduleForHomePageAsync(ct);
         
         _logger.LogInformation($"Service: HomeService Method: GetScheduleForHomePageAsync ended at {DateTime.UtcNow}");
 

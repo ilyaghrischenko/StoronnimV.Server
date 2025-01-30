@@ -50,7 +50,7 @@ public class GroupPageControllerService(
         return groupPageFullInfoDto;
     }
 
-    public async Task<MemberFullInfoResponse> GetMemberInfoAsync(long memberId, CancellationToken ct)
+    public async Task<MemberFullInfoResponse> GetMemberAsync(long memberId, CancellationToken ct)
     {
         _logger.LogInformation($"Service: GroupPageControllerService Method: GetMemberInfoAsync with memberId: {memberId} started at {DateTime.UtcNow}");
         
