@@ -12,7 +12,8 @@ public class Social : BaseEntity
     public SocialType Type { get; set; } = SocialType.Other;
     public string Url { get; set; } = string.Empty;
 
-    public Social() {}
+    private Social() {}
+    
     public Social(Member member, SocialType type, string url)
     {
         Member = member;

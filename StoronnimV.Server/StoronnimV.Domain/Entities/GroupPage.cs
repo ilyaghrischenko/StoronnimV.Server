@@ -10,7 +10,8 @@ public class GroupPage : BaseEntity
     public string PhotoUrl { get; set; }
     public string Description { get; set; }
     
-    public GroupPage() {}
+    private GroupPage() {}
+    
     public GroupPage(string photoUrl, string description)
     {
         PhotoUrl = photoUrl;

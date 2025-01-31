@@ -15,7 +15,7 @@ public class Schedule : BaseEntity
     public string Location { get; set; }
     public ScheduleStatus Status { get; set; }
     
-    public Schedule() {}
+    private Schedule() {}
 
     public Schedule(string title, DateTime performanceDateTime, 
         string description, string location, ScheduleStatus status = ScheduleStatus.Active, string? photo = null)

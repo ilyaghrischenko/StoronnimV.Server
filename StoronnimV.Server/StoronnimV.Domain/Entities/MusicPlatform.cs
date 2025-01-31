@@ -7,7 +7,7 @@ public class MusicPlatform : BaseEntity
     public string BgImageUrl { get; set; }
     public string PlatformUrl { get; set; }
     
-    public MusicPlatform() {}
+    private MusicPlatform() {}
 
     public MusicPlatform(string bgImageUrl, string platformUrl)
     {

@@ -9,7 +9,7 @@ public class Video : BaseEntity
     public string Title { get; set; }
     public VideoType Type { get; set; }
     
-    public Video() {}
+    private Video() {}
     
     public Video(string url, string title, VideoType type)
     {

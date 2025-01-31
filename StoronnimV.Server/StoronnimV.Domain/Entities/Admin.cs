@@ -9,7 +9,7 @@ public class Admin : BaseEntity
     public string Password { get; set; }
     public AdminType Type { get; set; }
     
-    public Admin() {}
+    private Admin() {}
 
     public Admin(string login, string password, AdminType type = AdminType.Basic)
     {
