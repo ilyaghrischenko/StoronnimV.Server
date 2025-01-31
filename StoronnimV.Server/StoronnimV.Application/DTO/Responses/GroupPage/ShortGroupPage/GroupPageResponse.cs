@@ -4,15 +4,6 @@ namespace StoronnimV.Application.DTO.Responses.GroupPage.ShortGroupPage;
 
 public class GroupPageResponse : BaseResponseDto
 {
-    public string PhotoUrl { get; set; }
-    public string Description { get; set; }
-    
-    public GroupPageResponse() { }
-    
-    public GroupPageResponse(long id, string photoUrl, string description)
-    {
-        Id = id;
-        PhotoUrl = photoUrl;
-        Description = description;
-    }
+    public required string PhotoUrl { get; init; }
+    public required string Description { get; init; }
 }

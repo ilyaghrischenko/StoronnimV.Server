@@ -1,0 +1,6 @@
+2025-01-31 19:49:31.375 +02:00 [ERR] NotFound: Music Platform with id: 1 was not found
+2025-01-31 19:49:47.344 +02:00 [ERR] NotFound: Music Platform with id: 4 was not found
+2025-01-31 19:49:51.660 +02:00 [ERR] NotFound: Music Platform with id: 5 was not found
+2025-01-31 19:50:00.681 +02:00 [ERR] NotFound: Music Platform with id: 23 was not found
+2025-01-31 19:51:48.640 +02:00 [ERR] NotFound: Video with id: 24 was not found
+2025-01-31 19:51:56.473 +02:00 [ERR] NotFound: Video with id: 5 was not found

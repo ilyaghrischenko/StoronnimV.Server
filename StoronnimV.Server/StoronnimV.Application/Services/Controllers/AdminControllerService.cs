@@ -29,12 +29,13 @@ public class AdminControllerService(
 
         var newsDto = _mapper.Map<IEnumerable<NewsResponse>>(paginationResult.Items);
 
-        var response = new PaginationResponse<NewsResponse>(
-            currentPage: paginationResult.CurrentPage,
-            totalPages: paginationResult.TotalPages,
-            totalItems: paginationResult.TotalItems,
-            items: newsDto
-        );
+        var response = new PaginationResponse<NewsResponse>
+        {
+            CurrentPage = paginationResult.CurrentPage,
+            TotalPages = paginationResult.TotalPages,
+            TotalItems = paginationResult.TotalItems,
+            Items = newsDto
+        };
         
         _logger.LogInformation($"Service: AdminControllerService Method: GetNewsForPageAsync with [page: {page}, pageSize: {pageSize}] ended at {DateTime.UtcNow}");
 
@@ -49,12 +50,13 @@ public class AdminControllerService(
 
         var videosDto = _mapper.Map<IEnumerable<VideoPageResponse>>(paginationResult.Items);
 
-        var response = new PaginationResponse<VideoPageResponse>(
-            currentPage: paginationResult.CurrentPage,
-            totalPages: paginationResult.TotalPages,
-            totalItems: paginationResult.TotalItems,
-            items: videosDto
-        );
+        var response = new PaginationResponse<VideoPageResponse>
+        {
+            CurrentPage = paginationResult.CurrentPage,
+            TotalPages = paginationResult.TotalPages,
+            TotalItems = paginationResult.TotalItems,
+            Items = videosDto
+        };
         
         _logger.LogInformation($"Service: AdminControllerService Method: GetVideosForPageAsync with [page: {page}, pageSize: {pageSize}] started at {DateTime.UtcNow}");
 

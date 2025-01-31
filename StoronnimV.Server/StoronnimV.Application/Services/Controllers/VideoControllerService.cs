@@ -52,14 +52,15 @@ public class VideoControllerService(
         
         PaginationResult paginationResult = await _videoService.GetForPageAsync(page, pageSize, ct, type);
         
-        var newsDto = _mapper.Map<IEnumerable<VideoPageShortResponse>>(paginationResult.Items);
+        var videosDto = _mapper.Map<IEnumerable<VideoPageShortResponse>>(paginationResult.Items);
         
-        var paginationResponse = new PaginationResponse<VideoPageShortResponse>(
-            currentPage: paginationResult.CurrentPage,
-            totalPages: paginationResult.TotalPages,
-            totalItems: paginationResult.TotalItems,
-            items: newsDto
-        );
+        var paginationResponse = new PaginationResponse<VideoPageShortResponse>
+        {
+            CurrentPage = paginationResult.CurrentPage,
+            TotalPages = paginationResult.TotalPages,
+            TotalItems = paginationResult.TotalItems,
+            Items = videosDto
+        };
         
         _logger.LogInformation($"Service: VideoControllerService Method: GetForPageAsync with page: {page} ended at {DateTime.UtcNow}");
 

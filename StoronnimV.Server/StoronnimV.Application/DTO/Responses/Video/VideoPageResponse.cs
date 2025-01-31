@@ -4,16 +4,7 @@ namespace StoronnimV.Application.DTO.Responses.Video;
 
 public class VideoPageResponse : BaseResponseDto
 {
-    public string Title { get; set; }
-    public string Url { get; set; }
-    public string Type { get; set; }
-    
-    public VideoPageResponse() {}
-
-    public VideoPageResponse(string title, string url, string type)
-    {
-        Title = title;
-        Url = url;
-        Type = type;
-    }
+    public required string Title { get; init; }
+    public required string Url { get; init; }
+    public required string Type { get; init; }
 }

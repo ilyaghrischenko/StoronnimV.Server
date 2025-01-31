@@ -55,42 +55,47 @@ public class VideoService(
 
         int totalCount = await _videoRepository.GetTotalCountAsync(ct, type);
 
-        if (totalCount == 0)
+        try
         {
-            return new PaginationResult(
-                currentPage: page,
-                totalPages: 0,
-                totalItems: 0,
-                items: []
-            );
+            if (totalCount == 0)
+            {
+                throw new PaginationException(string.Empty);
+            }
+
+            int totalPages = (int)Math.Ceiling((double)totalCount / pageSize);
+            var items = await _videoRepository.GetForPageAsync(page, ct, pageSize, type);
+
+            if (items is null || !items.Any())
+            {
+                throw new PaginationException(string.Empty);
+            }
+
+            var sortedItems = items.ToList();
+
+            PaginationResult paginationResult = new()
+            {
+                CurrentPage = page,
+                TotalPages = totalPages,
+                TotalItems = totalCount,
+                Items = sortedItems
+            };
+
+            return paginationResult;
         }
-
-        int totalPages = (int)Math.Ceiling((double)totalCount / pageSize);
-        var items = await _videoRepository.GetForPageAsync(page, ct, pageSize, type);
-
-        if (items is null || !items.Any())
+        catch (PaginationException)
         {
-            return new PaginationResult(
-                currentPage: page,
-                totalPages: 0,
-                totalItems: 0,
-                items: []
-            );
+            return new PaginationResult
+            {
+                CurrentPage = page,
+                TotalPages = 0,
+                TotalItems = 0,
+                Items = []
+            };
         }
-
-        var sortedItems = items.ToList();
-
-        PaginationResult paginationResult = new(
-            currentPage: page,
-            totalPages: totalPages,
-            totalItems: totalCount,
-            items: sortedItems
-        );
-
-        _logger.LogInformation(
-            $"Service: VideoService Method: GetForPageAsync with [page: {page}, pageSize: {pageSize}] ended at {DateTime.UtcNow}");
-
-        return paginationResult;
+        finally
+        {
+            _logger.LogInformation($"Service: VideoService Method: GetForPageAsync with [page: {page}, pageSize: {pageSize}] ended at {DateTime.UtcNow}");
+        }
     }
 
     public async Task<PaginationResult> GetForAdminPageAsync(int page, int pageSize, CancellationToken ct, params object[] args)
@@ -104,40 +109,47 @@ public class VideoService(
 
         int totalCount = await _videoRepository.GetTotalCountForAdminPageAsync(ct);
 
-        if (totalCount == 0)
+        try
         {
-            return new PaginationResult(
-                currentPage: page,
-                totalPages: 0,
-                totalItems: 0,
-                items: []
-            );
-        }
+            if (totalCount == 0)
+            {
+                throw new PaginationException(string.Empty);
+            }
 
-        int totalPages = (int)Math.Ceiling((double)totalCount / pageSize);
-        var items = await _videoRepository.GetForAdminPageAsync(page, ct, pageSize);
-        
-        if (items is null || !items.Any())
+            int totalPages = (int)Math.Ceiling((double)totalCount / pageSize);
+            var items = await _videoRepository.GetForAdminPageAsync(page, ct, pageSize);
+
+            if (items is null || !items.Any())
+            {
+                throw new PaginationException(string.Empty);
+            }
+
+            var sortedItems = items.ToList();
+
+            PaginationResult paginationResult = new()
+            {
+                CurrentPage = page,
+                TotalPages = totalPages,
+                TotalItems = totalCount,
+                Items = sortedItems
+            };
+
+            return paginationResult;
+        }
+        catch (PaginationException)
         {
-            return new PaginationResult(
-                currentPage: page,
-                totalPages: 0,
-                totalItems: 0,
-                items: []
-            );
+            return new PaginationResult
+            {
+                CurrentPage = page,
+                TotalPages = 0,
+                TotalItems = 0,
+                Items = []
+            };
         }
-
-        var sortedItems = items.ToList();
-
-        PaginationResult paginationResult = new(
-            currentPage: page,
-            totalPages: totalPages,
-            totalItems: totalCount,
-            items: sortedItems
-        );
-        
-        _logger.LogInformation($"Service: VideoService Method: GetForAdminPageAsync with [page: {page}, pageSize: {pageSize}] ended at {DateTime.UtcNow}");
-
-        return paginationResult;
+        finally
+        {
+            _logger.LogInformation(
+                $"Service: VideoService Method: GetForAdminPageAsync with [page: {page}, pageSize: {pageSize}] ended at {DateTime.UtcNow}");
+        }
     }
 }

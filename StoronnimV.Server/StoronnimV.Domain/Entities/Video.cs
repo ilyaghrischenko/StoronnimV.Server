@@ -5,16 +5,9 @@ namespace StoronnimV.Domain.Entities;
 
 public class Video : BaseEntity
 {
-    public string Url { get; set; }
-    public string Title { get; set; }
-    public VideoType Type { get; set; }
+    public required string Url { get; set; } = string.Empty;
+    public required string Title { get; set; } = string.Empty;
+    public required VideoType Type { get; set; } = VideoType.Performance;
     
     private Video() {}
-    
-    public Video(string url, string title, VideoType type)
-    {
-        Url = url;
-        Title = title;
-        Type = type;
-    }
 }

@@ -7,21 +7,12 @@ namespace StoronnimV.Domain.Entities;
 /// </summary>
 public class Member : BaseEntity
 {
-    public string PhotoUrl { get; set; }
-    public string FullName { get; set; }
-    public string Description { get; set; }
-    public string Role { get; set; }
+    public required string PhotoUrl { get; set; } = string.Empty;
+    public required string FullName { get; set; } = string.Empty;
+    public required string Description { get; set; } = string.Empty;
+    public required string Role { get; set; } = string.Empty;
     
     public virtual IEnumerable<Social> Socials { get; set; } = new List<Social>();
     
     private Member() {}
-    
-    public Member(string photoUrl, string fullName, string description, string role)
-    {
-        PhotoUrl = photoUrl;
-        FullName = fullName;
-        Description = description;
-        Role = role;
-    }
-    
 }

@@ -8,16 +8,9 @@ namespace StoronnimV.Domain.Entities;
 /// </summary>
 public class Social : BaseEntity
 {
-    public Member Member { get; set; }
-    public SocialType Type { get; set; } = SocialType.Other;
-    public string Url { get; set; } = string.Empty;
+    public required Member Member { get; set; }
+    public required string Url { get; set; } = string.Empty;
+    public required SocialType Type { get; set; } = SocialType.Other;
 
     private Social() {}
-    
-    public Social(Member member, SocialType type, string url)
-    {
-        Member = member;
-        Type = type;
-        Url = url;
-    }
 }

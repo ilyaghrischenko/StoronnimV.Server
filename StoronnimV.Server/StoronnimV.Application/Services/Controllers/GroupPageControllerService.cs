@@ -42,8 +42,12 @@ public class GroupPageControllerService(
         
         var groupPageDto = _mapper.Map<GroupPageResponse>(groupPage);
         var membersShort = _mapper.Map<IEnumerable<MemberShortResponse>>(members);
-        
-        GroupPageFullInfoResponse groupPageFullInfoDto = new(groupPageDto, membersShort);
+
+        GroupPageFullInfoResponse groupPageFullInfoDto = new()
+        {
+            GroupPage = groupPageDto,
+            Members = membersShort
+        };
         
         _logger.LogInformation($"Service: GroupPageControllerService Method: GetGroupPageInfoAsync ended at {DateTime.UtcNow}");
         
@@ -65,7 +69,11 @@ public class GroupPageControllerService(
         var memberDto = _mapper.Map<MemberResponse>(member);
         var socialsDto = _mapper.Map<IEnumerable<SocialResponse>>(socials);
         
-        MemberFullInfoResponse memberFullInfoDto = new(memberDto, socialsDto);
+        MemberFullInfoResponse memberFullInfoDto = new()
+        {
+            Member = memberDto,
+            Socials = socialsDto
+        };
         
         _logger.LogInformation($"Service: GroupPageControllerService Method: GetMemberInfoAsync with memberId: {memberId} ended at {DateTime.UtcNow}");
         

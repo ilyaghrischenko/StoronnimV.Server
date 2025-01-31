@@ -4,22 +4,10 @@ namespace StoronnimV.Application.DTO.Responses.SchedulePage;
 
 public class ScheduleShortResponse : BaseResponseDto
 {
-    public string? Photo  { get; set; }
-    public string Title  { get; set; }
-    public string PerformanceDateTime  { get; set; }
-    public string Location { get; set; }
-    public string Status { get; set; }
+    public required string Title  { get; init; }
+    public required string PerformanceDateTime  { get; init; }
+    public required string Location { get; init; }
+    public required string Status { get; init; }
     
-    public ScheduleShortResponse() {}
-
-    public ScheduleShortResponse(long id, string title,
-        string performanceDateTime, string location, string status, string? photo)
-    {
-        Id = id;
-        Photo = photo;
-        Title = title;
-        PerformanceDateTime = performanceDateTime;
-        Location = location;
-        Status = status;
-    }
+    public string? Photo { get; init; } = string.Empty;
 }

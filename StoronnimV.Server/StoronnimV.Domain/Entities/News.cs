@@ -8,21 +8,13 @@ namespace StoronnimV.Domain.Entities;
 /// </summary>
 public class News : BaseEntity
 {
-    public string? Photo { get; set; }
-    public string Title { get; set; }
-    public string Description { get; set; }
-    public Video? Video { get; set; }
-    public NewsPriority Priority { get; set; }
+    public required string Title { get; set; } = string.Empty;
+    public required string Description { get; set; } = string.Empty;
+    
+    public string? Photo { get; set; } = null;
+    public Video? Video { get; set; } = null;
+    public NewsPriority Priority { get; set; } = NewsPriority.Secondary;
     public DateOnly Date { get; set; } = DateOnly.FromDateTime(DateTime.UtcNow);
     
     private News() {}
-    
-    public News(string title, string description, NewsPriority priority, string? photo = null, Video? video = null)
-    {
-        Photo = photo;
-        Title = title;
-        Description = description;
-        Video = video;
-        Priority = priority;
-    }
 }

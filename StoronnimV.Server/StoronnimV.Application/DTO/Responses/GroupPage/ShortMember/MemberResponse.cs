@@ -4,19 +4,8 @@ namespace StoronnimV.Application.DTO.Responses.GroupPage.ShortMember;
 
 public class MemberResponse : BaseResponseDto
 {
-    public string PhotoUrl { get; set; }
-    public string FullName { get; set; }
-    public string Description { get; set; }
-    public string Role { get; set; }
-
-    public MemberResponse(){}
-
-    public MemberResponse(long id, string photoUrl, string fullName, string description, string role)
-    {
-        Id = id;
-        PhotoUrl = photoUrl;
-        FullName = fullName;
-        Description = description;
-        Role = role;
-    }
+    public required string PhotoUrl { get; init; }
+    public required string FullName { get; init; }
+    public required string Description { get; init; }
+    public required string Role { get; init; }
 }

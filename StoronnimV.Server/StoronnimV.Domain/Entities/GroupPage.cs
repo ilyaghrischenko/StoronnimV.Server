@@ -7,14 +7,8 @@ namespace StoronnimV.Domain.Entities;
 /// </summary>
 public class GroupPage : BaseEntity
 {
-    public string PhotoUrl { get; set; }
-    public string Description { get; set; }
+    public required string PhotoUrl { get; set; } = string.Empty;
+    public required string Description { get; set; } = string.Empty;
     
     private GroupPage() {}
-    
-    public GroupPage(string photoUrl, string description)
-    {
-        PhotoUrl = photoUrl;
-        Description = description;
-    }
 }

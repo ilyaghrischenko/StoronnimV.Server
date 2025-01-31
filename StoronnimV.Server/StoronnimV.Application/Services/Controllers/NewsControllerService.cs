@@ -57,12 +57,13 @@ public class NewsControllerService(
         
         var newsDto = _mapper.Map<IEnumerable<NewsShortResponse>>(paginationResult.Items);
         
-        var response = new PaginationResponse<NewsShortResponse>(
-            currentPage: paginationResult.CurrentPage,
-            totalPages: paginationResult.TotalPages,
-            totalItems: paginationResult.TotalItems,
-            items: newsDto
-        );
+        var response = new PaginationResponse<NewsShortResponse>
+        {
+            CurrentPage = paginationResult.CurrentPage,
+            TotalPages = paginationResult.TotalPages,
+            TotalItems = paginationResult.TotalItems,
+            Items = newsDto
+        };
         
         _logger.LogInformation($"Service: NewsControllerService Method: GetForPageAsync with page: {page} ended at {DateTime.UtcNow}");
 

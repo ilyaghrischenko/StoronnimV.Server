@@ -4,14 +4,6 @@ namespace StoronnimV.Application.DTO.Responses.GroupPage;
 
 public class GroupPageFullInfoResponse
 {
-    public GroupPageResponse GroupPage { get; set; }
-    public IEnumerable<MemberShortResponse> Members { get; set; }
-    
-    public GroupPageFullInfoResponse() { }
-    
-    public GroupPageFullInfoResponse(GroupPageResponse groupPage, IEnumerable<MemberShortResponse> members)
-    {
-        GroupPage = groupPage;
-        Members = members;
-    }
+    public required GroupPageResponse GroupPage { get; init; }
+    public required IEnumerable<MemberShortResponse> Members { get; init; }
 }

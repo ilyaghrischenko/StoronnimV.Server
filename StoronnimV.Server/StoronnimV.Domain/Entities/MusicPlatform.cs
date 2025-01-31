@@ -4,14 +4,8 @@ namespace StoronnimV.Domain.Entities;
 
 public class MusicPlatform : BaseEntity
 {
-    public string BgImageUrl { get; set; }
-    public string PlatformUrl { get; set; }
+    public required string BgImageUrl { get; set; } = string.Empty;
+    public required string PlatformUrl { get; set; } = string.Empty;
     
     private MusicPlatform() {}
-
-    public MusicPlatform(string bgImageUrl, string platformUrl)
-    {
-        BgImageUrl = bgImageUrl;
-        PlatformUrl = platformUrl;
-    }
 }
