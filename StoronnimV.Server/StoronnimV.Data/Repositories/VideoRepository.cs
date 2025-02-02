@@ -5,6 +5,7 @@ using StoronnimV.Domain.Entities;
 using StoronnimV.Domain.Enums;
 using StoronnimV.Domain.Interfaces;
 using StoronnimV.Domain.Interfaces.Shared;
+using StoronnimV.Domain.Projections.Video;
 
 namespace StoronnimV.Data.Repositories;
 
@@ -28,9 +29,9 @@ public class VideoRepository(
 
         await using StoronnimVContext context = await _contextFactory.CreateDbContextAsync(ct);
 
-        var video = await context.Videos
+        VideoShortProjection? video = await context.Videos
             .AsNoTracking()
-            .Select(v => new
+            .Select(v => new VideoShortProjection
             {
                 Id = v.Id,
                 Title = v.Title,
@@ -52,7 +53,7 @@ public class VideoRepository(
 
         var videos = await context.Videos
             .AsNoTracking()
-            .Select(v => new
+            .Select(v => new VideoShortProjection
             {
                 Id = v.Id,
                 Title = v.Title,
@@ -71,10 +72,10 @@ public class VideoRepository(
         
         await using StoronnimVContext context = await _contextFactory.CreateDbContextAsync(ct);
 
-        var promotionVideo = await context.Videos
+        VideoShortProjection? promotionVideo = await context.Videos
             .AsNoTracking()
             .Where(video => video.Type == VideoType.Promotion)
-            .Select(video => new
+            .Select(video => new VideoShortProjection
             {
                 Id = video.Id,
                 Title = video.Title,
@@ -102,7 +103,7 @@ public class VideoRepository(
             .Where(video => video.Type == typeEnum)
             .Skip((page - 1) * pageSize)
             .Take(pageSize)
-            .Select(v => new
+            .Select(v => new VideoShortProjection
             {
                 Id = v.Id,
                 Title = v.Title,
@@ -144,12 +145,12 @@ public class VideoRepository(
             .AsNoTracking()
             .Skip((page - 1) * pageSize)
             .Take(pageSize)
-            .Select(v => new
+            .Select(v => new VideoFullProjection
             {
                 Id = v.Id,
                 Title = v.Title,
                 Url = v.Url,
-                Type = v.Type.ToString()
+                Type = v.Type
             })
             .ToListAsync(ct);
         

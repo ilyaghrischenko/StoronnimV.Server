@@ -3,35 +3,39 @@ using Microsoft.Extensions.Logging;
 using StoronnimV.Data.Repositories.Shared;
 using StoronnimV.Domain.Entities;
 using StoronnimV.Domain.Interfaces;
+using StoronnimV.Domain.Projections;
 
 namespace StoronnimV.Data.Repositories;
 
-public class AdminRepository(IDbContextFactory<StoronnimVContext> contextFactory,
+public class AdminRepository(
+    IDbContextFactory<StoronnimVContext> contextFactory,
     ILogger<AdminRepository> logger)
     : Repository<Admin>(contextFactory), IAdminRepository
 {
     private readonly IDbContextFactory<StoronnimVContext> _contextFactory = contextFactory;
     private readonly ILogger<AdminRepository> _logger = logger;
-    
+
     public async Task<object?> GetByIdAsNoTrackingAsync(long id, CancellationToken ct)
     {
-        _logger.LogInformation($"Repository: AdminRepository Method: GetByIdAsNoTrackingAsync with id: {id} started at {DateTime.UtcNow}");
-        
-        using StoronnimVContext context = await _contextFactory.CreateDbContextAsync(ct);
+        _logger.LogInformation(
+            $"Repository: AdminRepository Method: GetByIdAsNoTrackingAsync with id: {id} started at {DateTime.UtcNow}");
+
+        await using StoronnimVContext context = await _contextFactory.CreateDbContextAsync(ct);
         var dbSet = context.Admins;
         var query = ApplyIncludes(dbSet);
-        
-        var result = await query
+
+        AdminProjection? result = await query
             .AsNoTracking()
-            .Select(admin => new
+            .Select(admin => new AdminProjection
             {
                 Id = admin.Id,
                 Login = admin.Login,
                 Password = admin.Password
             })
             .FirstOrDefaultAsync(admin => admin.Id == id, ct);
-        
-        _logger.LogInformation($"Repository: AdminRepository Method: GetByIdAsNoTrackingAsync with id: {id} ended at {DateTime.UtcNow}");
+
+        _logger.LogInformation(
+            $"Repository: AdminRepository Method: GetByIdAsNoTrackingAsync with id: {id} ended at {DateTime.UtcNow}");
 
         return result;
     }
@@ -39,21 +43,21 @@ public class AdminRepository(IDbContextFactory<StoronnimVContext> contextFactory
     public async Task<IEnumerable<object>?> GetAllAsync(CancellationToken ct)
     {
         _logger.LogInformation($"Repository: AdminRepository Method: GetAllAsync started at {DateTime.UtcNow}");
-        
-        using StoronnimVContext context = await _contextFactory.CreateDbContextAsync(ct);
+
+        await using StoronnimVContext context = await _contextFactory.CreateDbContextAsync(ct);
         var dbSet = context.Admins;
         var query = ApplyIncludes(dbSet);
-        
+
         var result = await query
             .AsNoTracking()
-            .Select(admin => new
+            .Select(admin => new AdminProjection
             {
                 Id = admin.Id,
                 Login = admin.Login,
                 Password = admin.Password
             })
             .ToListAsync(ct);
-        
+
         _logger.LogInformation($"Repository: AdminRepository Method: GetAllAsync ended at {DateTime.UtcNow}");
 
         return result;
@@ -62,15 +66,15 @@ public class AdminRepository(IDbContextFactory<StoronnimVContext> contextFactory
     public async Task<Admin?> GetByLoginAsync(string login, CancellationToken ct)
     {
         _logger.LogInformation($"Repository: AdminRepository Method: GetByLoginAsync started at {DateTime.UtcNow}");
-        
-        using StoronnimVContext context = await _contextFactory.CreateDbContextAsync(ct);
+
+        await using StoronnimVContext context = await _contextFactory.CreateDbContextAsync(ct);
         var dbSet = context.Admins;
         var query = ApplyIncludes(dbSet);
-        
+
         Admin? result = await query
             .AsNoTracking()
             .FirstOrDefaultAsync(admin => admin.Login == login, ct);
-        
+
         _logger.LogInformation($"Repository: AdminRepository Method: GetByLoginAsync ended at {DateTime.UtcNow}");
 
         return result;

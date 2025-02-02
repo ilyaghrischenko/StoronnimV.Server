@@ -3,6 +3,7 @@ using Microsoft.Extensions.Logging;
 using StoronnimV.Data.Repositories.Shared;
 using StoronnimV.Domain.Entities;
 using StoronnimV.Domain.Interfaces;
+using StoronnimV.Domain.Projections;
 
 namespace StoronnimV.Data.Repositories;
 
@@ -21,13 +22,13 @@ public class GroupPageRepository(IDbContextFactory<StoronnimVContext> contextFac
     {
         _logger.LogInformation($"Repository: GroupPageRepository Method: GetByIdAsNoTrackingAsync with id: {id} started at {DateTime.UtcNow}");
         
-        using StoronnimVContext context = await _contextFactory.CreateDbContextAsync(ct);
+        await using StoronnimVContext context = await _contextFactory.CreateDbContextAsync(ct);
         var dbSet = context.GroupPages;
         var query = ApplyIncludes(dbSet);
 
-        var result = await query
+        GroupPageProjection? result = await query
             .AsNoTracking()
-            .Select(groupPage => new
+            .Select(groupPage => new GroupPageProjection
             {
                 Id = groupPage.Id,
                 PhotoUrl = groupPage.PhotoUrl,
@@ -44,13 +45,13 @@ public class GroupPageRepository(IDbContextFactory<StoronnimVContext> contextFac
     {
         _logger.LogInformation($"Repository: GroupPageRepository Method: GetAllAsync started at {DateTime.UtcNow}");
         
-        using StoronnimVContext context = await _contextFactory.CreateDbContextAsync(ct);
+        await using StoronnimVContext context = await _contextFactory.CreateDbContextAsync(ct);
         var dbSet = context.GroupPages;
         var query = ApplyIncludes(dbSet);
         
         var result = await query
             .AsNoTracking()
-            .Select(groupPage => new
+            .Select(groupPage => new GroupPageProjection
             {
                 Id = groupPage.Id,
                 PhotoUrl = groupPage.PhotoUrl,
@@ -67,13 +68,13 @@ public class GroupPageRepository(IDbContextFactory<StoronnimVContext> contextFac
     {
         _logger.LogInformation($"Repository: GroupPageRepository Method: GetFirstGroupPageAsync started at {DateTime.UtcNow}");
         
-        using StoronnimVContext context = await _contextFactory.CreateDbContextAsync(ct);
+        await using StoronnimVContext context = await _contextFactory.CreateDbContextAsync(ct);
         var dbSet = context.GroupPages;
         var query = ApplyIncludes(dbSet);
         
-        var result = await query
+        GroupPageProjection? result = await query
             .AsNoTracking()
-            .Select(groupPage => new
+            .Select(groupPage => new GroupPageProjection
             {
                 Id = groupPage.Id,
                 PhotoUrl = groupPage.PhotoUrl,

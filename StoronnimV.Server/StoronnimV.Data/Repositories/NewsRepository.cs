@@ -4,6 +4,7 @@ using StoronnimV.Data.Repositories.Shared;
 using StoronnimV.Domain.Entities;
 using StoronnimV.Domain.Enums;
 using StoronnimV.Domain.Interfaces;
+using StoronnimV.Domain.Projections.News;
 
 namespace StoronnimV.Data.Repositories;
 
@@ -11,9 +12,10 @@ namespace StoronnimV.Data.Repositories;
 /// Репозиторий для конкретной сущности, нужен для описания метода с инклудами, а так же для специальных селект методов
 /// </summary>
 /// <param name="contextFactory"></param>
-public class NewsRepository(IDbContextFactory<StoronnimVContext> contextFactory,
-    ILogger<NewsRepository> logger)
-    : Repository<News>(contextFactory), INewsRepository
+public class NewsRepository(
+    IDbContextFactory<StoronnimVContext> contextFactory,
+    ILogger<NewsRepository> logger
+    ) : Repository<News>(contextFactory), INewsRepository
 {
     private readonly IDbContextFactory<StoronnimVContext> _contextFactory = contextFactory;
     private readonly ILogger<NewsRepository> _logger = logger;
@@ -27,21 +29,21 @@ public class NewsRepository(IDbContextFactory<StoronnimVContext> contextFactory,
     {
         _logger.LogInformation($"Repository: NewsRepository Method: GetByIdAsNoTrackingAsync with id: {id} started at {DateTime.UtcNow}");
         
-        using StoronnimVContext context = await _contextFactory.CreateDbContextAsync(ct);
+        await using StoronnimVContext context = await _contextFactory.CreateDbContextAsync(ct);
         var dbSet = context.NewsItems;
         var query = ApplyIncludes(dbSet);
 
-        var result = await query
+        NewsFullProjection? result = await query
             .AsNoTracking()
-            .Select(newsItem => new
+            .Select(newsItem => new NewsFullProjection
             {
                 Id = newsItem.Id,
                 Photo = newsItem.Photo,
                 Video = newsItem.Video.Url,
                 Title = newsItem.Title,
                 Description = newsItem.Description,
-                Priority = newsItem.Priority.ToString(),
-                Date = newsItem.Date.ToShortDateString()
+                Priority = newsItem.Priority,
+                Date = newsItem.Date
             })
             .FirstOrDefaultAsync(x => x.Id == id, ct);
         
@@ -54,20 +56,21 @@ public class NewsRepository(IDbContextFactory<StoronnimVContext> contextFactory,
     {
         _logger.LogInformation($"Repository: NewsRepository Method: GetAllAsync started at {DateTime.UtcNow}");
         
-        using StoronnimVContext context = await _contextFactory.CreateDbContextAsync(ct);
+        await using StoronnimVContext context = await _contextFactory.CreateDbContextAsync(ct);
         var dbSet = context.NewsItems;
         var query = ApplyIncludes(dbSet);
         
         var result = await query
             .AsNoTracking()
-            .Select(newsItem => new
+            .Select(newsItem => new NewsFullProjection
             {
                 Id = newsItem.Id,
                 Photo = newsItem.Photo,
                 Title = newsItem.Title,
                 Description = newsItem.Description,
-                Priority = newsItem.Priority.ToString(),
-                Date = newsItem.Date.ToShortDateString()
+                Video = newsItem.Video.Url,
+                Priority = newsItem.Priority,
+                Date = newsItem.Date
             })
             .ToListAsync(ct);
         
@@ -80,7 +83,7 @@ public class NewsRepository(IDbContextFactory<StoronnimVContext> contextFactory,
     {
         _logger.LogInformation($"Repository: NewsRepository Method: GetForPageAsync with [page: {page}, pageSize: {pageSize}] started at {DateTime.UtcNow}");
         
-        using StoronnimVContext context = await _contextFactory.CreateDbContextAsync(ct);
+        await using StoronnimVContext context = await _contextFactory.CreateDbContextAsync(ct);
         var dbSet = context.NewsItems;
         var query = ApplyIncludes(dbSet);
         
@@ -89,13 +92,13 @@ public class NewsRepository(IDbContextFactory<StoronnimVContext> contextFactory,
             .OrderByDescending(newsItem => newsItem.Date)
             .Skip((page - 1) * pageSize)
             .Take(pageSize)
-            .Select(newsItem => new
+            .Select(newsItem => new NewsPaginationProjection
             {
                 Id = newsItem.Id,
                 Photo = newsItem.Photo,
                 Title = newsItem.Title,
-                Priority = newsItem.Priority.ToString(),
-                Date = newsItem.Date.ToShortDateString()
+                Priority = newsItem.Priority,
+                Date = newsItem.Date
             })
             .ToListAsync(ct);
         
@@ -108,7 +111,7 @@ public class NewsRepository(IDbContextFactory<StoronnimVContext> contextFactory,
     {
         _logger.LogInformation($"Repository: NewsRepository Method: GetForAdminPageAsync with [page: {page}, pageSize: {pageSize}] started at {DateTime.UtcNow}");
         
-        using StoronnimVContext context = await _contextFactory.CreateDbContextAsync(ct);
+        await using StoronnimVContext context = await _contextFactory.CreateDbContextAsync(ct);
         var dbSet = context.NewsItems;
         var query = ApplyIncludes(dbSet);
         
@@ -117,15 +120,15 @@ public class NewsRepository(IDbContextFactory<StoronnimVContext> contextFactory,
             .OrderByDescending(newsItem => newsItem.Date)
             .Skip((page - 1) * pageSize)
             .Take(pageSize)
-            .Select(newsItem => new
+            .Select(newsItem => new NewsFullProjection
             {
                 Id = newsItem.Id,
                 Photo = newsItem.Photo,
                 Video = newsItem.Video.Url,
                 Title = newsItem.Title,
                 Description = newsItem.Description,
-                Priority = newsItem.Priority.ToString(),
-                Date = newsItem.Date.ToShortDateString()
+                Priority = newsItem.Priority,
+                Date = newsItem.Date
             })
             .ToListAsync(ct);
         
@@ -138,7 +141,7 @@ public class NewsRepository(IDbContextFactory<StoronnimVContext> contextFactory,
     {
         _logger.LogInformation($"Repository: NewsRepository Method: GetTotalCountAsync started at {DateTime.UtcNow}");
         
-        using StoronnimVContext context = await _contextFactory.CreateDbContextAsync(ct);
+        await using StoronnimVContext context = await _contextFactory.CreateDbContextAsync(ct);
         
         int result = await context.NewsItems.CountAsync(ct);
         
@@ -151,7 +154,7 @@ public class NewsRepository(IDbContextFactory<StoronnimVContext> contextFactory,
     {
         _logger.LogInformation($"Repository: NewsRepository Method: GetNewsForHomePageAsync with count: {count} started at {DateTime.UtcNow}");
         
-        using StoronnimVContext context = await _contextFactory.CreateDbContextAsync(ct);
+        await using StoronnimVContext context = await _contextFactory.CreateDbContextAsync(ct);
         var dbSet = context.NewsItems;
         var query = ApplyIncludes(dbSet);
         
@@ -160,7 +163,7 @@ public class NewsRepository(IDbContextFactory<StoronnimVContext> contextFactory,
             .Where(newsItem => newsItem.Priority == NewsPriority.Main)
             .OrderByDescending(newsItem => newsItem.Date)
             .Take(count)
-            .Select(newsItem => new
+            .Select(newsItem => new NewsHomeProjection
             {
                 Id = newsItem.Id,
                 Photo = newsItem.Photo,

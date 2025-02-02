@@ -4,6 +4,7 @@ using Microsoft.Extensions.Logging;
 using StoronnimV.Data.Repositories.Shared;
 using StoronnimV.Domain.Entities;
 using StoronnimV.Domain.Interfaces;
+using StoronnimV.Domain.Projections.Social;
 
 namespace StoronnimV.Data.Repositories;
 
@@ -27,16 +28,16 @@ public class SocialRepository(IDbContextFactory<StoronnimVContext> contextFactor
     {
         _logger.LogInformation($"Repository: SocialRepository Method: GetByIdAsNoTrackingAsync with id: {id} started at {DateTime.UtcNow}");
         
-        using StoronnimVContext context = await _contextFactory.CreateDbContextAsync(ct);
+        await using StoronnimVContext context = await _contextFactory.CreateDbContextAsync(ct);
         var dbSet = context.Socials;
         var query = ApplyIncludes(dbSet);
 
-        var result = await query
+        SocialShortProjection? result = await query
             .AsNoTracking()
-            .Select(social => new
+            .Select(social => new SocialShortProjection
             {
                 Id = social.Id,
-                Type = social.Type.ToString(),
+                Type = social.Type,
                 Url = social.Url
             })
             .FirstOrDefaultAsync(x => x.Id == id, ct);
@@ -50,17 +51,17 @@ public class SocialRepository(IDbContextFactory<StoronnimVContext> contextFactor
     {
         _logger.LogInformation($"Repository: SocialRepository Method: GetAllAsync started at {DateTime.UtcNow}");
         
-        using StoronnimVContext context = await _contextFactory.CreateDbContextAsync(ct);
+        await using StoronnimVContext context = await _contextFactory.CreateDbContextAsync(ct);
         var dbSet = context.Socials;
         var query = ApplyIncludes(dbSet);
         
         var result = await query
             .AsNoTracking()
-            .Select(social => new
+            .Select(social => new SocialFullProjection
             {
                 Id = social.Id,
                 Name = social.Member.FullName,
-                Type = social.Type.ToString(),
+                Type = social.Type,
                 Url = social.Url
             })
             .ToListAsync(ct);
@@ -74,17 +75,17 @@ public class SocialRepository(IDbContextFactory<StoronnimVContext> contextFactor
     {
         _logger.LogInformation($"Repository: SocialRepository Method: GetAllForMemberAsync with memberId: {memberId} started at {DateTime.UtcNow}");
         
-        using StoronnimVContext context = await _contextFactory.CreateDbContextAsync(ct);
+        await using StoronnimVContext context = await _contextFactory.CreateDbContextAsync(ct);
         var dbSet = context.Socials;
         var query = ApplyIncludes(dbSet);
         
         var result = await query
             .AsNoTracking()
             .Where(social => social.Member.Id == memberId)
-            .Select(social => new
+            .Select(social => new SocialShortProjection
             {
                 Id = social.Id,
-                Type = social.Type.ToString(),
+                Type = social.Type,
                 Url = social.Url
             })
             .ToListAsync(ct);

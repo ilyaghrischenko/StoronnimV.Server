@@ -3,6 +3,7 @@ using Microsoft.Extensions.Logging;
 using StoronnimV.Data.Repositories.Shared;
 using StoronnimV.Domain.Entities;
 using StoronnimV.Domain.Interfaces;
+using StoronnimV.Domain.Projections.Member;
 
 namespace StoronnimV.Data.Repositories;
 
@@ -26,13 +27,13 @@ public class MemberRepository(IDbContextFactory<StoronnimVContext> contextFactor
     {
         _logger.LogInformation($"Repository: MemberRepository Method: GetByIdAsNoTrackingAsync with id: {id} started at {DateTime.UtcNow}");
         
-        using StoronnimVContext context = await _contextFactory.CreateDbContextAsync(ct);
+        await using StoronnimVContext context = await _contextFactory.CreateDbContextAsync(ct);
         var dbSet = context.Members;
         var query = ApplyIncludes(dbSet);
 
-        var result = await query
+        MemberFullProjection? result = await query
             .AsNoTracking()
-            .Select(member => new
+            .Select(member => new MemberFullProjection
             {
                 Id = member.Id,
                 PhotoUrl = member.PhotoUrl,
@@ -51,13 +52,13 @@ public class MemberRepository(IDbContextFactory<StoronnimVContext> contextFactor
     {
         _logger.LogInformation($"Repository: MemberRepository Method: GetAllAsync started at {DateTime.UtcNow}");
         
-        using StoronnimVContext context = await _contextFactory.CreateDbContextAsync(ct);
+        await using StoronnimVContext context = await _contextFactory.CreateDbContextAsync(ct);
         var dbSet = context.Members;
         var query = ApplyIncludes(dbSet);
         
         var result = await query
             .AsNoTracking()
-            .Select(member => new
+            .Select(member => new MemberShortProjection
             {
                 Id = member.Id,
                 PhotoUrl = member.PhotoUrl,

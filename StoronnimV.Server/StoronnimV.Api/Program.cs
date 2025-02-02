@@ -88,7 +88,7 @@ using (var scope = app.Services.CreateScope())
     try
     {
         var dbContextFactory = services.GetRequiredService<IDbContextFactory<StoronnimVContext>>();
-        using StoronnimVContext context = dbContextFactory.CreateDbContext();
+        await using StoronnimVContext context = dbContextFactory.CreateDbContext();
         DatabaseInitializer.Initialize(context);
     }
     catch (Exception ex)

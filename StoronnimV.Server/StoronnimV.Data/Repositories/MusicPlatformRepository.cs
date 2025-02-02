@@ -3,6 +3,7 @@ using Microsoft.Extensions.Logging;
 using StoronnimV.Data.Repositories.Shared;
 using StoronnimV.Domain.Entities;
 using StoronnimV.Domain.Interfaces;
+using StoronnimV.Domain.Projections;
 
 namespace StoronnimV.Data.Repositories;
 
@@ -17,13 +18,13 @@ public class MusicPlatformRepository(IDbContextFactory<StoronnimVContext> contex
     {
         _logger.LogInformation($"Repository: MusicPlatformRepository Method: GetByIdAsNoTrackingAsync with id: {id} started at {DateTime.UtcNow}");
         
-        using StoronnimVContext context = await _contextFactory.CreateDbContextAsync(ct);
+        await using StoronnimVContext context = await _contextFactory.CreateDbContextAsync(ct);
         var dbSet = context.MusicPlatforms;
         var query = ApplyIncludes(dbSet);
         
-        var result = await query
+        MusicPlatformProjection? result = await query
             .AsNoTracking()
-            .Select(musicPlatform => new
+            .Select(musicPlatform => new MusicPlatformProjection
             {
                 Id = musicPlatform.Id,
                 BgImageUrl = musicPlatform.BgImageUrl,
@@ -40,13 +41,13 @@ public class MusicPlatformRepository(IDbContextFactory<StoronnimVContext> contex
     {
         _logger.LogInformation($"Repository: MusicPlatformRepository Method: GetAllAsync started at {DateTime.UtcNow}");
         
-        using StoronnimVContext context = await _contextFactory.CreateDbContextAsync(ct);
+        await using StoronnimVContext context = await _contextFactory.CreateDbContextAsync(ct);
         var dbSet = context.MusicPlatforms;
         var query = ApplyIncludes(dbSet);
         
         var result = await query
             .AsNoTracking()
-            .Select(musicPlatform => new
+            .Select(musicPlatform => new MusicPlatformProjection
             {
                 Id = musicPlatform.Id,
                 BgImageUrl = musicPlatform.BgImageUrl,

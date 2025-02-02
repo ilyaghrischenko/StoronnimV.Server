@@ -4,6 +4,7 @@ using StoronnimV.Data.Repositories.Shared;
 using StoronnimV.Domain.Entities;
 using StoronnimV.Domain.Enums;
 using StoronnimV.Domain.Interfaces;
+using StoronnimV.Domain.Projections.Schedule;
 
 namespace StoronnimV.Data.Repositories;
 
@@ -24,21 +25,21 @@ public class ScheduleRepository(
         _logger.LogInformation(
             $"Repository: ScheduleRepository Method: GetByIdAsNoTrackingAsync with id: {id} started at {DateTime.UtcNow}");
 
-        using StoronnimVContext context = await _contextFactory.CreateDbContextAsync(ct);
+        await using StoronnimVContext context = await _contextFactory.CreateDbContextAsync(ct);
         var dbSet = context.Schedules;
         var query = ApplyIncludes(dbSet);
 
-        var result = await query
+        ScheduleFullProjection? result = await query
             .AsNoTracking()
-            .Select(schedule => new
+            .Select(schedule => new ScheduleFullProjection
             {
                 Id = schedule.Id,
                 Photo = schedule.Photo,
                 Title = schedule.Title,
                 Description = schedule.Description,
-                PerformanceDateTime = schedule.PerformanceDateTime.ToShortDateString(),
+                PerformanceDateTime = schedule.PerformanceDateTime,
                 Location = schedule.Location,
-                Status = schedule.Status.ToString()
+                Status = schedule.Status
             })
             .FirstOrDefaultAsync(schedule => schedule.Id == id, ct);
 
@@ -52,21 +53,21 @@ public class ScheduleRepository(
     {
         _logger.LogInformation($"Repository: ScheduleRepository Method: GetAllAsync started at {DateTime.UtcNow}");
 
-        using StoronnimVContext context = await _contextFactory.CreateDbContextAsync(ct);
+        await using StoronnimVContext context = await _contextFactory.CreateDbContextAsync(ct);
         var dbSet = context.Schedules;
         var query = ApplyIncludes(dbSet);
 
         var result = await query
             .AsNoTracking()
-            .Select(schedule => new
+            .Select(schedule => new ScheduleFullProjection
             {
                 Id = schedule.Id,
                 Photo = schedule.Photo,
                 Title = schedule.Title,
                 Description = schedule.Description,
-                PerformanceDateTime = schedule.PerformanceDateTime.ToShortDateString(),
+                PerformanceDateTime = schedule.PerformanceDateTime,
                 Location = schedule.Location,
-                Status = schedule.Status.ToString()
+                Status = schedule.Status
             })
             .ToListAsync(ct);
 
@@ -80,7 +81,7 @@ public class ScheduleRepository(
         _logger.LogInformation(
             $"Repository: ScheduleRepository Method: GetAllSchedulesAsync started at {DateTime.UtcNow}");
 
-        using StoronnimVContext context = await _contextFactory.CreateDbContextAsync(ct);
+        await using StoronnimVContext context = await _contextFactory.CreateDbContextAsync(ct);
         var dbSet = context.Schedules;
         var query = ApplyIncludes(dbSet);
 
@@ -97,21 +98,21 @@ public class ScheduleRepository(
         _logger.LogInformation(
             $"Repository: ScheduleRepository Method: GetScheduleForHomePageAsync started at {DateTime.UtcNow}");
 
-        using StoronnimVContext context = await _contextFactory.CreateDbContextAsync(ct);
+        await using StoronnimVContext context = await _contextFactory.CreateDbContextAsync(ct);
         var dbSet = context.Schedules;
         var query = ApplyIncludes(dbSet);
 
-        var result = await query
+        ScheduleShortProjection? result = await query
             .AsNoTracking()
             .Where(schedule => schedule.Status == ScheduleStatus.Active)
             .OrderBy(schedule => schedule.PerformanceDateTime)
-            .Select(schedule => new
+            .Select(schedule => new ScheduleShortProjection
             {
                 Id = schedule.Id,
                 Photo = schedule.Photo,
                 Title = schedule.Title,
                 Description = schedule.Description,
-                PerformanceDateTime = schedule.PerformanceDateTime.ToShortDateString(),
+                PerformanceDateTime = schedule.PerformanceDateTime,
                 Location = schedule.Location
             })
             .FirstOrDefaultAsync(ct);
