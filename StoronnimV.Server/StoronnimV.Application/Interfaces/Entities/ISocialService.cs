@@ -5,5 +5,5 @@ namespace StoronnimV.Application.Interfaces.Entities;
 
 public interface ISocialService : IGetByIdService<SocialShortProjection>
 {
-    public Task<IEnumerable<object>> GetAllForMemberAsync(long memberId, CancellationToken ct);
+    public Task<IEnumerable<SocialShortProjection>> GetAllForMemberAsync(long memberId, CancellationToken ct);
 }

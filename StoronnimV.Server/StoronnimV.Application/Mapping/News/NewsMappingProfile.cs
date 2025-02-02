@@ -1,6 +1,6 @@
 using AutoMapper;
 using StoronnimV.Application.DTO.Responses.NewsPage;
-using StoronnimV.Application.Extensions;
+using StoronnimV.Domain.Projections.News;
 
 namespace StoronnimV.Application.Mapping.News;
 
@@ -11,13 +11,13 @@ public class NewsMappingProfile : Profile
 {
     public NewsMappingProfile()
     {
-        CreateMap<object, NewsResponse>()
-            .ForMember(dest => dest.Id, opt => opt.MapFrom(src => (long)src.GetPropertyValue("Id")!))
-            .ForMember(dest => dest.Photo, opt => opt.MapFrom(src => (string)src.GetPropertyValue("Photo?")!))
-            .ForMember(dest => dest.Video, opt => opt.MapFrom(src => (string)src.GetPropertyValue("Video?")!))
-            .ForMember(dest => dest.Title, opt => opt.MapFrom(src => (string)src.GetPropertyValue("Title")!))
-            .ForMember(dest => dest.Description, opt => opt.MapFrom(src => (string)src.GetPropertyValue("Description")!))
-            .ForMember(dest => dest.Priority, opt => opt.MapFrom(src => (string)src.GetPropertyValue("Priority")!))
-            .ForMember(dest => dest.Date, opt => opt.MapFrom(src => (string)src.GetPropertyValue("Date")!));
+        CreateMap<NewsFullProjection, NewsResponse>()
+            .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.Id))
+            .ForMember(dest => dest.Photo, opt => opt.MapFrom(src => src.Photo))
+            .ForMember(dest => dest.Video, opt => opt.MapFrom(src => src.Video))
+            .ForMember(dest => dest.Title, opt => opt.MapFrom(src => src.Title))
+            .ForMember(dest => dest.Description, opt => opt.MapFrom(src => src.Description))
+            .ForMember(dest => dest.Priority, opt => opt.MapFrom(src => src.Priority.ToString()))
+            .ForMember(dest => dest.Date, opt => opt.MapFrom(src => src.Date.ToShortDateString()));
     }
 }

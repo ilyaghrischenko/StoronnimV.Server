@@ -9,6 +9,6 @@ public interface IVideoRepository
     : IRepository<Video>, IGetByIdRepository<VideoShortProjection>,
         IPaginationRepository<VideoShortProjection>, IAdminPaginationRepository<VideoFullProjection>
 {
-    public Task<object?> GetPromotionVideoForHomePageAsync(CancellationToken ct);
+    public Task<VideoShortProjection?> GetPromotionVideoForHomePageAsync(CancellationToken ct);
     public Task<int> GetTotalCountForAdminPageAsync(CancellationToken ct);
 }

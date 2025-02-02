@@ -7,5 +7,5 @@ namespace StoronnimV.Domain.Interfaces;
 public interface IGroupPageRepository
     : IRepository<GroupPage>, IGetByIdRepository<GroupPageProjection>, IGetAllRepository<GroupPageProjection>
 {
-    public Task<object?> GetFirstGroupPageAsync(CancellationToken ct);
+    public Task<GroupPageProjection?> GetFirstGroupPageAsync(CancellationToken ct);
 }

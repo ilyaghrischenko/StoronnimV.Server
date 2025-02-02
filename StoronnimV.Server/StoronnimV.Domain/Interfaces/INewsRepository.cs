@@ -8,5 +8,5 @@ public interface INewsRepository
     : IRepository<News>, IGetByIdRepository<NewsFullProjection>,
         IPaginationRepository<NewsPaginationProjection>, IAdminPaginationRepository<NewsFullProjection>
 {
-    Task<IEnumerable<object>?> GetMainNewsForHomePageAsync(int count, CancellationToken ct);
+    Task<IEnumerable<NewsHomeProjection>?> GetMainNewsForHomePageAsync(int count, CancellationToken ct);
 }

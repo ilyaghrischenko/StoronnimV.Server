@@ -29,18 +29,6 @@ public class VideoService(
         return video;
     }
 
-    // public async Task<IEnumerable<object>> GetAllAsync(CancellationToken ct)
-    // {
-    //     _logger.LogInformation($"Service: VideoService Method: GetAllAsync started at {DateTime.UtcNow}");
-    //
-    //     var videos = await _videoRepository.GetAllAsNoTrackingAsync(ct);
-    //
-    //     _logger.LogInformation($"Service: VideoService Method: GetAllAsync ended at {DateTime.UtcNow}");
-    //
-    //     return videos ?? new List<object>();
-    // }
-
-
     public async Task<PaginationResult<VideoShortProjection>> GetForPageAsync(int page, int pageSize, CancellationToken ct, params object[] args)
     {
         _logger.LogInformation(

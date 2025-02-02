@@ -1,6 +1,5 @@
 using Microsoft.Extensions.Logging;
 using StoronnimV.Application.Exceptions;
-using StoronnimV.Application.Extensions;
 using StoronnimV.Application.Interfaces.Entities;
 using StoronnimV.Application.Models;
 using StoronnimV.Domain.Interfaces;
@@ -32,26 +31,6 @@ public class NewsService(
 
         return newsItem;
     }
-
-    // public async Task<IEnumerable<object>> GetAllAsync(CancellationToken ct)
-    // {
-    //     _logger.LogInformation($"Service: NewsService Method: GetAllAsync started at {DateTime.UtcNow}");
-    //
-    //     var allNews = await _newsRepository.GetAllAsync(ct);
-    //     if (allNews is null || !allNews.Any())
-    //     {
-    //         return new List<object>();
-    //     }
-    //
-    //     var result = allNews
-    //         .OrderBy(news => (string)news.GetPropertyValue("Priority")!)
-    //         .ThenByDescending(news => (string)news.GetPropertyValue("Date")!)
-    //         .ToList();
-    //
-    //     _logger.LogInformation($"Service: NewsService Method: GetAllAsync ended at {DateTime.UtcNow}");
-    //
-    //     return result;
-    // }
 
     public async Task<PaginationResult<NewsPaginationProjection>> GetForPageAsync(int page, int pageSize, CancellationToken ct,
         params object[] args)

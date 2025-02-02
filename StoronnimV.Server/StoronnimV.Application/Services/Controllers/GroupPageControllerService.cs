@@ -5,6 +5,7 @@ using StoronnimV.Application.DTO.Responses.GroupPage.ShortGroupPage;
 using StoronnimV.Application.DTO.Responses.GroupPage.ShortMember;
 using StoronnimV.Application.Interfaces.Controllers;
 using StoronnimV.Application.Interfaces.Entities;
+using StoronnimV.Domain.Projections;
 
 namespace StoronnimV.Application.Services.Controllers;
 
@@ -37,7 +38,7 @@ public class GroupPageControllerService(
         
         await Task.WhenAll(groupPageTask, membersTask);
         
-        object groupPage = await groupPageTask;
+        GroupPageProjection groupPage = await groupPageTask;
         var members = await membersTask;
         
         var groupPageDto = _mapper.Map<GroupPageResponse>(groupPage);

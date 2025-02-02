@@ -49,7 +49,7 @@ public class ScheduleRepository(
         return result;
     }
 
-    public async Task<IEnumerable<ScheduleFullProjection>?> GetAllAsNoTrackingAsync(CancellationToken ct)
+    public async Task<IEnumerable<ScheduleShortProjection>?> GetAllAsNoTrackingAsync(CancellationToken ct)
     {
         _logger.LogInformation($"Repository: ScheduleRepository Method: GetAllAsync started at {DateTime.UtcNow}");
 
@@ -59,15 +59,15 @@ public class ScheduleRepository(
 
         var result = await query
             .AsNoTracking()
-            .Select(schedule => new ScheduleFullProjection
+            .Where(schedule => schedule.Status == ScheduleStatus.Active)
+            .OrderBy(schedule => schedule.PerformanceDateTime)
+            .Select(schedule => new ScheduleShortProjection
             {
                 Id = schedule.Id,
                 Photo = schedule.Photo,
                 Title = schedule.Title,
-                Description = schedule.Description,
                 PerformanceDateTime = schedule.PerformanceDateTime,
                 Location = schedule.Location,
-                Status = schedule.Status
             })
             .ToListAsync(ct);
 
@@ -93,7 +93,7 @@ public class ScheduleRepository(
         return result;
     }
 
-    public async Task<object?> GetNearestScheduleForHomePageAsync(CancellationToken ct)
+    public async Task<ScheduleShortProjection?> GetNearestScheduleForHomePageAsync(CancellationToken ct)
     {
         _logger.LogInformation(
             $"Repository: ScheduleRepository Method: GetScheduleForHomePageAsync started at {DateTime.UtcNow}");
@@ -111,7 +111,6 @@ public class ScheduleRepository(
                 Id = schedule.Id,
                 Photo = schedule.Photo,
                 Title = schedule.Title,
-                Description = schedule.Description,
                 PerformanceDateTime = schedule.PerformanceDateTime,
                 Location = schedule.Location
             })

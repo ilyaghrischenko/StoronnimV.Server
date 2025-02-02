@@ -1,6 +1,6 @@
 using AutoMapper;
 using StoronnimV.Application.DTO.Responses.GroupPage.ShortGroupPage;
-using StoronnimV.Application.Extensions;
+using StoronnimV.Domain.Projections.Member;
 
 namespace StoronnimV.Application.Mapping.Group;
 
@@ -11,10 +11,10 @@ public class MemberShortMappingProfile : Profile
 {
     public MemberShortMappingProfile()
     {
-        CreateMap<object, MemberShortResponse>()
-            .ForMember(dest => dest.Id, opt => opt.MapFrom(src => (long)src.GetPropertyValue("Id")!))
-            .ForMember(dest => dest.PhotoUrl, opt => opt.MapFrom(src => (string)src.GetPropertyValue("PhotoUrl")!))
-            .ForMember(dest => dest.FullName, opt => opt.MapFrom(src => (string)src.GetPropertyValue("FullName")!))
-            .ForMember(dest => dest.Role, opt => opt.MapFrom(src => (string)src.GetPropertyValue("Role")!));
+        CreateMap<MemberShortProjection, MemberShortResponse>()
+            .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.Id))
+            .ForMember(dest => dest.PhotoUrl, opt => opt.MapFrom(src => src.PhotoUrl))
+            .ForMember(dest => dest.FullName, opt => opt.MapFrom(src => src.FullName))
+            .ForMember(dest => dest.Role, opt => opt.MapFrom(src => src.Role));
     }
 }

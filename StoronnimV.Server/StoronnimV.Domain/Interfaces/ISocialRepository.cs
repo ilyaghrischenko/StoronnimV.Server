@@ -7,5 +7,5 @@ namespace StoronnimV.Domain.Interfaces;
 public interface ISocialRepository
     : IRepository<Social>, IGetByIdRepository<SocialShortProjection>
 {
-    public Task<IEnumerable<object>?> GetAllForMemberAsync(long memberId, CancellationToken ct);
+    public Task<IEnumerable<SocialShortProjection>?> GetAllForMemberAsync(long memberId, CancellationToken ct);
 }

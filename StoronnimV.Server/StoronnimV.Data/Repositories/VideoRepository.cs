@@ -45,28 +45,7 @@ public class VideoRepository(
         return video;
     }
 
-    // public async Task<IEnumerable<object>?> GetAllAsync(CancellationToken ct)
-    // {
-    //     _logger.LogInformation($"Repository: VideoRepository Method: GetAllAsync started at {DateTime.UtcNow}");
-    //
-    //     await using StoronnimVContext context = await _contextFactory.CreateDbContextAsync(ct);
-    //
-    //     var videos = await context.Videos
-    //         .AsNoTracking()
-    //         .Select(v => new VideoShortProjection
-    //         {
-    //             Id = v.Id,
-    //             Title = v.Title,
-    //             Url = v.Url
-    //         })
-    //         .ToListAsync(ct);
-    //
-    //     _logger.LogInformation($"Repository: VideoRepository Method: GetAllAsync ended at {DateTime.UtcNow}");
-    //
-    //     return videos;
-    // }
-
-    public async Task<object?> GetPromotionVideoForHomePageAsync(CancellationToken ct)
+    public async Task<VideoShortProjection?> GetPromotionVideoForHomePageAsync(CancellationToken ct)
     {
         _logger.LogInformation($"Repository: VideoRepository Method: GetPromotionVideoForHomePageAsync started at {DateTime.UtcNow}");
         

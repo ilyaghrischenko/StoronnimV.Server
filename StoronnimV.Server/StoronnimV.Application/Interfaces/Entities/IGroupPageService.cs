@@ -5,5 +5,5 @@ namespace StoronnimV.Application.Interfaces.Entities;
 
 public interface IGroupPageService : IGetByIdService<GroupPageProjection>, IGetAllService<GroupPageProjection>
 {
-    public Task<object> GetFirstGroupPageAsync(CancellationToken ct);
+    public Task<GroupPageProjection> GetFirstGroupPageAsync(CancellationToken ct);
 }

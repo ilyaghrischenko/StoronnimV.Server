@@ -64,7 +64,7 @@ public class GroupPageRepository(IDbContextFactory<StoronnimVContext> contextFac
         return result;
     }
     
-    public async Task<object?> GetFirstGroupPageAsync(CancellationToken ct)
+    public async Task<GroupPageProjection?> GetFirstGroupPageAsync(CancellationToken ct)
     {
         _logger.LogInformation($"Repository: GroupPageRepository Method: GetFirstGroupPageAsync started at {DateTime.UtcNow}");
         

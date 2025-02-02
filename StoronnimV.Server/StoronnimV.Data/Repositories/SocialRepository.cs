@@ -46,32 +46,8 @@ public class SocialRepository(IDbContextFactory<StoronnimVContext> contextFactor
 
         return result;
     }
-
-    // public async Task<IEnumerable<object>?> GetAllAsync(CancellationToken ct)
-    // {
-    //     _logger.LogInformation($"Repository: SocialRepository Method: GetAllAsync started at {DateTime.UtcNow}");
-    //     
-    //     await using StoronnimVContext context = await _contextFactory.CreateDbContextAsync(ct);
-    //     var dbSet = context.Socials;
-    //     var query = ApplyIncludes(dbSet);
-    //     
-    //     var result = await query
-    //         .AsNoTracking()
-    //         .Select(social => new SocialFullProjection
-    //         {
-    //             Id = social.Id,
-    //             Name = social.Member.FullName,
-    //             Type = social.Type,
-    //             Url = social.Url
-    //         })
-    //         .ToListAsync(ct);
-    //     
-    //     _logger.LogInformation($"Repository: SocialRepository Method: GetAllAsync started at {DateTime.UtcNow}");
-    //
-    //     return result;
-    // }
     
-    public async Task<IEnumerable<object>?> GetAllForMemberAsync(long memberId, CancellationToken ct)
+    public async Task<IEnumerable<SocialShortProjection>?> GetAllForMemberAsync(long memberId, CancellationToken ct)
     {
         _logger.LogInformation($"Repository: SocialRepository Method: GetAllForMemberAsync with memberId: {memberId} started at {DateTime.UtcNow}");
         

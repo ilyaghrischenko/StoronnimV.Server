@@ -1,6 +1,6 @@
 using AutoMapper;
 using StoronnimV.Application.DTO.Responses.GroupPage.ShortGroupPage;
-using StoronnimV.Application.Extensions;
+using StoronnimV.Domain.Projections;
 
 namespace StoronnimV.Application.Mapping.Group;
 
@@ -9,12 +9,11 @@ namespace StoronnimV.Application.Mapping.Group;
 /// </summary>
 public class GroupPageMappingProfile : Profile
 {
-    
     public GroupPageMappingProfile()
     {
-        CreateMap<object, GroupPageResponse>()
-            .ForMember(dest => dest.Id, opt => opt.MapFrom(src => (long)src.GetPropertyValue("Id")!))
-            .ForMember(dest => dest.PhotoUrl, opt => opt.MapFrom(src => (string)src.GetPropertyValue("PhotoUrl")!))
-            .ForMember(dest => dest.Description, opt => opt.MapFrom(src => (string)src.GetPropertyValue("Description")!));
+        CreateMap<GroupPageProjection, GroupPageResponse>()
+            .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.Id))
+            .ForMember(dest => dest.PhotoUrl, opt => opt.MapFrom(src => src.PhotoUrl))
+            .ForMember(dest => dest.Description, opt => opt.MapFrom(src => src.Description));
     }
 }

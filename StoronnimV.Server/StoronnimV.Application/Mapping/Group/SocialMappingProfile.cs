@@ -1,6 +1,6 @@
 using AutoMapper;
 using StoronnimV.Application.DTO.Responses.GroupPage.ShortMember;
-using StoronnimV.Application.Extensions;
+using StoronnimV.Domain.Projections.Social;
 
 namespace StoronnimV.Application.Mapping.Group;
 
@@ -11,10 +11,10 @@ public class SocialMappingProfile : Profile
 {
     public SocialMappingProfile()
     {
-        CreateMap<object, SocialResponse>()
-            .ForMember(dest => dest.Id, opt => opt.MapFrom(src => (long)src.GetPropertyValue("Id")!))
-            .ForMember(dest => dest.SocialNetwork, opt => opt.MapFrom(src => (string)src.GetPropertyValue("Type")!))
-            .ForMember(dest => dest.Url, opt => opt.MapFrom(src => (string)src.GetPropertyValue("Url")!));
+        CreateMap<SocialShortProjection, SocialResponse>()
+            .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.Id))
+            .ForMember(dest => dest.SocialNetwork, opt => opt.MapFrom(src => src.Type.ToString()))
+            .ForMember(dest => dest.Url, opt => opt.MapFrom(src => src.Url));
     }
     
 }

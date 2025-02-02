@@ -2,7 +2,6 @@ using AutoMapper;
 using Microsoft.Extensions.Logging;
 using StoronnimV.Application.DTO.Responses.NewsPage;
 using StoronnimV.Application.DTO.Responses.Shared;
-using StoronnimV.Application.Extensions;
 using StoronnimV.Application.Interfaces.Controllers;
 using StoronnimV.Application.Interfaces.Entities;
 using StoronnimV.Application.Models;

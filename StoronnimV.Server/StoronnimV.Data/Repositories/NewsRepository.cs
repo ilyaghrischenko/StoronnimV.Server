@@ -52,33 +52,6 @@ public class NewsRepository(
         return result;
     }
 
-    // public async Task<IEnumerable<object>?> GetAllAsync(CancellationToken ct)
-    // {
-    //     _logger.LogInformation($"Repository: NewsRepository Method: GetAllAsync started at {DateTime.UtcNow}");
-    //     
-    //     await using StoronnimVContext context = await _contextFactory.CreateDbContextAsync(ct);
-    //     var dbSet = context.NewsItems;
-    //     var query = ApplyIncludes(dbSet);
-    //     
-    //     var result = await query
-    //         .AsNoTracking()
-    //         .Select(newsItem => new NewsFullProjection
-    //         {
-    //             Id = newsItem.Id,
-    //             Photo = newsItem.Photo,
-    //             Title = newsItem.Title,
-    //             Description = newsItem.Description,
-    //             Video = newsItem.Video.Url,
-    //             Priority = newsItem.Priority,
-    //             Date = newsItem.Date
-    //         })
-    //         .ToListAsync(ct);
-    //     
-    //     _logger.LogInformation($"Repository: NewsRepository Method: GetAllAsync ended at {DateTime.UtcNow}");
-    //
-    //     return result;
-    // }
-
     public async Task<IEnumerable<NewsPaginationProjection>?> GetForPageAsync(int page, CancellationToken ct, int pageSize, params object[] args)
     {
         _logger.LogInformation($"Repository: NewsRepository Method: GetForPageAsync with [page: {page}, pageSize: {pageSize}] started at {DateTime.UtcNow}");
@@ -150,7 +123,7 @@ public class NewsRepository(
         return result;
     }
     
-    public async Task<IEnumerable<object>?> GetMainNewsForHomePageAsync(int count, CancellationToken ct)
+    public async Task<IEnumerable<NewsHomeProjection>?> GetMainNewsForHomePageAsync(int count, CancellationToken ct)
     {
         _logger.LogInformation($"Repository: NewsRepository Method: GetNewsForHomePageAsync with count: {count} started at {DateTime.UtcNow}");
         

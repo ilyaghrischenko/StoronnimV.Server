@@ -39,12 +39,12 @@ public class GroupPageService(IGroupPageRepository groupPageRepository,
         return groupPages ?? new List<GroupPageProjection>();
     }
     
-    public async Task<object> GetFirstGroupPageAsync(CancellationToken ct)
+    public async Task<GroupPageProjection> GetFirstGroupPageAsync(CancellationToken ct)
     {
         _logger.LogInformation($"Service: GroupPageService Method: GetFirstGroupPageAsync started at {DateTime.UtcNow}");
         
-        object groupPage = await _groupPageRepository.GetFirstGroupPageAsync(ct)
-                           ?? throw new EntityNotFoundException($"GroupPage was not found");
+        GroupPageProjection groupPage = await _groupPageRepository.GetFirstGroupPageAsync(ct)
+                                        ?? throw new EntityNotFoundException($"GroupPage was not found");
         
         _logger.LogInformation($"Service: GroupPageService Method: GetFirstGroupPageAsync ended at {DateTime.UtcNow}");
 

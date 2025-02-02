@@ -27,24 +27,13 @@ public class SocialService(ISocialRepository socialRepository,
 
         return social;
     }
-
-    // public async Task<IEnumerable<object>> GetAllAsync(CancellationToken ct)
-    // {
-    //     _logger.LogInformation($"Service: SocialService Method: GetAllAsync started at {DateTime.UtcNow}");
-    //     
-    //     var socials = await _socialRepository.GetAllAsNoTrackingAsync(ct);
-    //     
-    //     _logger.LogInformation($"Service: SocialService Method: GetAllAsync ended at {DateTime.UtcNow}");
-    //
-    //     return socials ?? new List<object>();
-    // }
     
-    public async Task<IEnumerable<object>> GetAllForMemberAsync(long memberId, CancellationToken ct)
+    public async Task<IEnumerable<SocialShortProjection>> GetAllForMemberAsync(long memberId, CancellationToken ct)
     {
         _logger.LogInformation($"Service: SocialService Method: GetAllForMemberAsync with memberId: {memberId} started at {DateTime.UtcNow}");
         
         var socials = await _socialRepository.GetAllForMemberAsync(memberId, ct)
-            ?? throw new EntityNotFoundException($"Socials with member id: {memberId} was not found");
+                                        ?? throw new EntityNotFoundException($"Socials with member id: {memberId} was not found");
         
         _logger.LogInformation($"Service: SocialService Method: GetAllForMemberAsync with memberId: {memberId} ended at {DateTime.UtcNow}");
 

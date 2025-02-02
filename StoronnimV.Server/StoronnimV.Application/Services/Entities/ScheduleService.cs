@@ -1,8 +1,6 @@
 using Microsoft.Extensions.Logging;
 using StoronnimV.Application.Exceptions;
-using StoronnimV.Application.Extensions;
 using StoronnimV.Application.Interfaces.Entities;
-using StoronnimV.Domain.Entities;
 using StoronnimV.Domain.Enums;
 using StoronnimV.Domain.Interfaces;
 using StoronnimV.Domain.Projections.Schedule;
@@ -31,19 +29,17 @@ public class ScheduleService(IScheduleRepository scheduleRepository,
         return schedule;
     }
 
-    public async Task<IEnumerable<ScheduleFullProjection>> GetAllAsync(CancellationToken ct)
+    public async Task<IEnumerable<ScheduleShortProjection>> GetAllAsync(CancellationToken ct)
     {
         _logger.LogInformation($"Service: ScheduleService Method: GetAllAsync started at {DateTime.UtcNow}");
         
         var allSchedules = await _scheduleRepository.GetAllAsNoTrackingAsync(ct);
         if (allSchedules is null)
         {
-            return new List<ScheduleFullProjection>();
+            return new List<ScheduleShortProjection>();
         }
 
-        var result = allSchedules
-            .Where(schedule => (string)schedule.GetPropertyValue("Status")! == "Active")
-            .ToList();
+        var result = allSchedules.ToList();
         
         _logger.LogInformation($"Service: ScheduleService Method: GetAllAsync ended at {DateTime.UtcNow}");
 

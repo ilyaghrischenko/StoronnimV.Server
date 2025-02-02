@@ -7,4 +7,5 @@ namespace StoronnimV.Domain.Interfaces;
 public interface IMemberRepository
     : IRepository<Member>, IGetByIdRepository<MemberFullProjection>, IGetAllRepository<MemberShortProjection>
 {
+    
 }
