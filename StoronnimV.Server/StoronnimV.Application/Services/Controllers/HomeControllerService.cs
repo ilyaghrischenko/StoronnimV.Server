@@ -1,9 +1,9 @@
 using AutoMapper;
 using Microsoft.Extensions.Logging;
+using StoronnimV.Application.Contracts.Controllers;
+using StoronnimV.Application.Contracts.Home;
 using StoronnimV.Application.DTO.Responses.HomePage;
 using StoronnimV.Application.DTO.Responses.Video;
-using StoronnimV.Application.Interfaces.Controllers;
-using StoronnimV.Application.Interfaces.Home;
 
 namespace StoronnimV.Application.Services.Controllers;
 

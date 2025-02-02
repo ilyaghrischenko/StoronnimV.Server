@@ -1,9 +1,9 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using StoronnimV.Data.Repositories.Shared;
+using StoronnimV.Domain.Contracts;
 using StoronnimV.Domain.Entities;
 using StoronnimV.Domain.Enums;
-using StoronnimV.Domain.Interfaces;
 using StoronnimV.Domain.Projections.News;
 
 namespace StoronnimV.Data.Repositories;

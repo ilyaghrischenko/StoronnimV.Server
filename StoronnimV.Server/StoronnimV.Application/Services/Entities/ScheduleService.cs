@@ -1,8 +1,8 @@
 using Microsoft.Extensions.Logging;
+using StoronnimV.Application.Contracts.Entities;
 using StoronnimV.Application.Exceptions;
-using StoronnimV.Application.Interfaces.Entities;
+using StoronnimV.Domain.Contracts;
 using StoronnimV.Domain.Enums;
-using StoronnimV.Domain.Interfaces;
 using StoronnimV.Domain.Projections.Schedule;
 
 namespace StoronnimV.Application.Services.Entities;

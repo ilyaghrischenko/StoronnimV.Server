@@ -1,5 +1,5 @@
 using System.Net;
-using StoronnimV.Api.Interfaces.Middlewares;
+using StoronnimV.Api.Contracts.Middlewares;
 using StoronnimV.Application.Exceptions;
 
 namespace StoronnimV.Api.Middlewares;

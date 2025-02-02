@@ -1,8 +1,8 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using StoronnimV.Application.Contracts.Controllers;
 using StoronnimV.Application.DTO.Responses.HomePage;
 using StoronnimV.Application.DTO.Responses.Video;
-using StoronnimV.Application.Interfaces.Controllers;
 
 namespace StoronnimV.Api.Controllers
 {

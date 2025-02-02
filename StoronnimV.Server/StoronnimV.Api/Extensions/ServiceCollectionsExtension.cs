@@ -7,11 +7,11 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
 using Serilog;
 using StoronnimV.Application.AutentificationOptions;
-using StoronnimV.Application.Interfaces.BlobAzure;
-using StoronnimV.Application.Interfaces.Controllers;
-using StoronnimV.Application.Interfaces.Entities;
-using StoronnimV.Application.Interfaces.Home;
-using StoronnimV.Application.Interfaces.Jwt;
+using StoronnimV.Application.Contracts.BlobAzure;
+using StoronnimV.Application.Contracts.Controllers;
+using StoronnimV.Application.Contracts.Entities;
+using StoronnimV.Application.Contracts.Home;
+using StoronnimV.Application.Contracts.Jwt;
 using StoronnimV.Application.Mapping.Group;
 using StoronnimV.Application.Mapping.Home;
 using StoronnimV.Application.Mapping.Music;
@@ -27,9 +27,9 @@ using StoronnimV.Application.Services.Jwt;
 using StoronnimV.Data;
 using StoronnimV.Data.Repositories;
 using StoronnimV.Data.Repositories.Shared;
+using StoronnimV.Domain.Contracts;
+using StoronnimV.Domain.Contracts.Shared;
 using StoronnimV.Domain.Entities;
-using StoronnimV.Domain.Interfaces;
-using StoronnimV.Domain.Interfaces.Shared;
 
 namespace StoronnimV.Api.Extensions;
 

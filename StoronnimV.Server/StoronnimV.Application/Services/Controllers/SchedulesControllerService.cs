@@ -1,8 +1,8 @@
 using AutoMapper;
 using Microsoft.Extensions.Logging;
+using StoronnimV.Application.Contracts.Controllers;
+using StoronnimV.Application.Contracts.Entities;
 using StoronnimV.Application.DTO.Responses.SchedulePage;
-using StoronnimV.Application.Interfaces.Controllers;
-using StoronnimV.Application.Interfaces.Entities;
 
 namespace StoronnimV.Application.Services.Controllers;
 

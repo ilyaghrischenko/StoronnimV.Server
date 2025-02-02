@@ -1,7 +1,7 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using StoronnimV.Application.Contracts.Controllers;
 using StoronnimV.Application.DTO.Responses.GroupPage;
-using StoronnimV.Application.Interfaces.Controllers;
 
 namespace StoronnimV.Api.Controllers
 {

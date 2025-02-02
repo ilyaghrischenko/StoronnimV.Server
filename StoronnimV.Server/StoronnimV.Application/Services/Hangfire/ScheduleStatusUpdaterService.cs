@@ -1,4 +1,4 @@
-using StoronnimV.Application.Interfaces.Entities;
+using StoronnimV.Application.Contracts.Entities;
 
 namespace StoronnimV.Application.Services.Hangfire;
 

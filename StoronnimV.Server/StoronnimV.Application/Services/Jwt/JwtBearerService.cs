@@ -2,7 +2,7 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using Microsoft.IdentityModel.Tokens;
 using StoronnimV.Application.AutentificationOptions;
-using StoronnimV.Application.Interfaces.Jwt;
+using StoronnimV.Application.Contracts.Jwt;
 using StoronnimV.Domain.Entities;
 
 namespace StoronnimV.Application.Services.Jwt;

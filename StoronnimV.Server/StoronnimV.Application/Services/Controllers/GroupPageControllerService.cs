@@ -1,10 +1,10 @@
 using AutoMapper;
 using Microsoft.Extensions.Logging;
+using StoronnimV.Application.Contracts.Controllers;
+using StoronnimV.Application.Contracts.Entities;
 using StoronnimV.Application.DTO.Responses.GroupPage;
 using StoronnimV.Application.DTO.Responses.GroupPage.ShortGroupPage;
 using StoronnimV.Application.DTO.Responses.GroupPage.ShortMember;
-using StoronnimV.Application.Interfaces.Controllers;
-using StoronnimV.Application.Interfaces.Entities;
 using StoronnimV.Domain.Projections;
 
 namespace StoronnimV.Application.Services.Controllers;

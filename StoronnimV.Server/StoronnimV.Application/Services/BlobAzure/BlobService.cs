@@ -1,6 +1,6 @@
 using Azure.Storage.Blobs;
 using Microsoft.Extensions.Configuration;
-using StoronnimV.Application.Interfaces.BlobAzure;
+using StoronnimV.Application.Contracts.BlobAzure;
 
 namespace StoronnimV.Application.Services.BlobAzure;
 

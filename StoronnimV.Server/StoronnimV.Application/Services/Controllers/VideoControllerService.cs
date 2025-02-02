@@ -1,9 +1,9 @@
 using AutoMapper;
 using Microsoft.Extensions.Logging;
+using StoronnimV.Application.Contracts.Controllers;
+using StoronnimV.Application.Contracts.Entities;
 using StoronnimV.Application.DTO.Responses.Shared;
 using StoronnimV.Application.DTO.Responses.Video;
-using StoronnimV.Application.Interfaces.Controllers;
-using StoronnimV.Application.Interfaces.Entities;
 using StoronnimV.Application.Models;
 using StoronnimV.Domain.Projections.Video;
 
