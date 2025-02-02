@@ -79,7 +79,7 @@ public class NewsService(
                 CurrentPage = page,
                 TotalPages = 0,
                 TotalItems = 0,
-                Items = Enumerable.Empty<NewsPaginationProjection>()
+                Items = []
             };
         }
         finally
@@ -135,7 +135,7 @@ public class NewsService(
                 CurrentPage = page,
                 TotalPages = 0,
                 TotalItems = 0,
-                Items = Enumerable.Empty<NewsFullProjection>()
+                Items = []
             };
         }
         finally
