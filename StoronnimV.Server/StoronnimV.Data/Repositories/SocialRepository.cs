@@ -24,7 +24,7 @@ public class SocialRepository(IDbContextFactory<StoronnimVContext> contextFactor
         return dbSet.Include(social => social.Member);
     }
 
-    public async Task<object?> GetByIdAsNoTrackingAsync(long id, CancellationToken ct)
+    public async Task<SocialShortProjection?> GetByIdAsNoTrackingAsync(long id, CancellationToken ct)
     {
         _logger.LogInformation($"Repository: SocialRepository Method: GetByIdAsNoTrackingAsync with id: {id} started at {DateTime.UtcNow}");
         
@@ -47,29 +47,29 @@ public class SocialRepository(IDbContextFactory<StoronnimVContext> contextFactor
         return result;
     }
 
-    public async Task<IEnumerable<object>?> GetAllAsync(CancellationToken ct)
-    {
-        _logger.LogInformation($"Repository: SocialRepository Method: GetAllAsync started at {DateTime.UtcNow}");
-        
-        await using StoronnimVContext context = await _contextFactory.CreateDbContextAsync(ct);
-        var dbSet = context.Socials;
-        var query = ApplyIncludes(dbSet);
-        
-        var result = await query
-            .AsNoTracking()
-            .Select(social => new SocialFullProjection
-            {
-                Id = social.Id,
-                Name = social.Member.FullName,
-                Type = social.Type,
-                Url = social.Url
-            })
-            .ToListAsync(ct);
-        
-        _logger.LogInformation($"Repository: SocialRepository Method: GetAllAsync started at {DateTime.UtcNow}");
-
-        return result;
-    }
+    // public async Task<IEnumerable<object>?> GetAllAsync(CancellationToken ct)
+    // {
+    //     _logger.LogInformation($"Repository: SocialRepository Method: GetAllAsync started at {DateTime.UtcNow}");
+    //     
+    //     await using StoronnimVContext context = await _contextFactory.CreateDbContextAsync(ct);
+    //     var dbSet = context.Socials;
+    //     var query = ApplyIncludes(dbSet);
+    //     
+    //     var result = await query
+    //         .AsNoTracking()
+    //         .Select(social => new SocialFullProjection
+    //         {
+    //             Id = social.Id,
+    //             Name = social.Member.FullName,
+    //             Type = social.Type,
+    //             Url = social.Url
+    //         })
+    //         .ToListAsync(ct);
+    //     
+    //     _logger.LogInformation($"Repository: SocialRepository Method: GetAllAsync started at {DateTime.UtcNow}");
+    //
+    //     return result;
+    // }
     
     public async Task<IEnumerable<object>?> GetAllForMemberAsync(long memberId, CancellationToken ct)
     {

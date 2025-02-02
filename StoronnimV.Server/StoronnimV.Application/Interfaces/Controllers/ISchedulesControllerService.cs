@@ -1,9 +1,10 @@
 using StoronnimV.Application.DTO.Responses.SchedulePage;
+using StoronnimV.Application.Interfaces.Controllers.Shared;
 
 namespace StoronnimV.Application.Interfaces.Controllers;
 
 public interface ISchedulesControllerService
+    : IGetByIdControllerService<ScheduleResponse>, IGetAllControllerService<ScheduleShortResponse>
 {
-    Task<ScheduleResponse> GetItemByIdAsync(long id, CancellationToken ct);
-    Task<IEnumerable<ScheduleShortResponse>> GetAllAsync(CancellationToken ct);
+    
 }

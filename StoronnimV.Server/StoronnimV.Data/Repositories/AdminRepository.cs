@@ -15,7 +15,7 @@ public class AdminRepository(
     private readonly IDbContextFactory<StoronnimVContext> _contextFactory = contextFactory;
     private readonly ILogger<AdminRepository> _logger = logger;
 
-    public async Task<object?> GetByIdAsNoTrackingAsync(long id, CancellationToken ct)
+    public async Task<AdminProjection?> GetByIdAsNoTrackingAsync(long id, CancellationToken ct)
     {
         _logger.LogInformation(
             $"Repository: AdminRepository Method: GetByIdAsNoTrackingAsync with id: {id} started at {DateTime.UtcNow}");
@@ -40,7 +40,7 @@ public class AdminRepository(
         return result;
     }
 
-    public async Task<IEnumerable<object>?> GetAllAsync(CancellationToken ct)
+    public async Task<IEnumerable<AdminProjection>?> GetAllAsNoTrackingAsync(CancellationToken ct)
     {
         _logger.LogInformation($"Repository: AdminRepository Method: GetAllAsync started at {DateTime.UtcNow}");
 

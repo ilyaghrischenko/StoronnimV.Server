@@ -4,24 +4,24 @@ using StoronnimV.Application.Interfaces.Entities;
 using StoronnimV.Application.Models;
 using StoronnimV.Domain.Enums;
 using StoronnimV.Domain.Interfaces;
+using StoronnimV.Domain.Projections.Video;
 
 namespace StoronnimV.Application.Services.Entities;
 
 public class VideoService(
     IVideoRepository videoRepository,
-    ILogger<VideoService> logger)
-    : IVideoService
+    ILogger<VideoService> logger) : IVideoService
 {
     private readonly IVideoRepository _videoRepository = videoRepository;
     private readonly ILogger<VideoService> _logger = logger;
 
-    public async Task<object> GetItemByIdAsync(long id, CancellationToken ct)
+    public async Task<VideoShortProjection> GetItemByIdAsync(long id, CancellationToken ct)
     {
         _logger.LogInformation(
             $"Service: VideoService Method: GetItemByIdAsync with id: {id} started at {DateTime.UtcNow}");
 
-        object video = await _videoRepository.GetByIdAsNoTrackingAsync(id, ct)
-                       ?? throw new EntityNotFoundException($"Video with id: {id} was not found");
+        VideoShortProjection video = await _videoRepository.GetByIdAsNoTrackingAsync(id, ct)
+                                     ?? throw new EntityNotFoundException($"Video with id: {id} was not found");
 
         _logger.LogInformation(
             $"Service: VideoService Method: GetItemByIdAsync with id: {id} ended at {DateTime.UtcNow}");
@@ -29,19 +29,19 @@ public class VideoService(
         return video;
     }
 
-    public async Task<IEnumerable<object>> GetAllAsync(CancellationToken ct)
-    {
-        _logger.LogInformation($"Service: VideoService Method: GetAllAsync started at {DateTime.UtcNow}");
+    // public async Task<IEnumerable<object>> GetAllAsync(CancellationToken ct)
+    // {
+    //     _logger.LogInformation($"Service: VideoService Method: GetAllAsync started at {DateTime.UtcNow}");
+    //
+    //     var videos = await _videoRepository.GetAllAsNoTrackingAsync(ct);
+    //
+    //     _logger.LogInformation($"Service: VideoService Method: GetAllAsync ended at {DateTime.UtcNow}");
+    //
+    //     return videos ?? new List<object>();
+    // }
 
-        var videos = await _videoRepository.GetAllAsync(ct);
 
-        _logger.LogInformation($"Service: VideoService Method: GetAllAsync ended at {DateTime.UtcNow}");
-
-        return videos ?? new List<object>();
-    }
-
-
-    public async Task<PaginationResult> GetForPageAsync(int page, int pageSize, CancellationToken ct, params object[] args)
+    public async Task<PaginationResult<VideoShortProjection>> GetForPageAsync(int page, int pageSize, CancellationToken ct, params object[] args)
     {
         _logger.LogInformation(
             $"Service: VideoService Method: GetForPageAsync with [page: {page}, pageSize: {pageSize}] started at {DateTime.UtcNow}");
@@ -72,7 +72,7 @@ public class VideoService(
 
             var sortedItems = items.ToList();
 
-            PaginationResult paginationResult = new()
+            PaginationResult<VideoShortProjection> paginationResult = new()
             {
                 CurrentPage = page,
                 TotalPages = totalPages,
@@ -84,7 +84,7 @@ public class VideoService(
         }
         catch (PaginationException)
         {
-            return new PaginationResult
+            return new PaginationResult<VideoShortProjection>
             {
                 CurrentPage = page,
                 TotalPages = 0,
@@ -98,7 +98,7 @@ public class VideoService(
         }
     }
 
-    public async Task<PaginationResult> GetForAdminPageAsync(int page, int pageSize, CancellationToken ct, params object[] args)
+    public async Task<PaginationResult<VideoFullProjection>> GetForAdminPageAsync(int page, int pageSize, CancellationToken ct, params object[] args)
     {
         _logger.LogInformation($"Service: VideoService Method: GetForAdminPageAsync with [page: {page}, pageSize: {pageSize}] started at {DateTime.UtcNow}");
         
@@ -126,7 +126,7 @@ public class VideoService(
 
             var sortedItems = items.ToList();
 
-            PaginationResult paginationResult = new()
+            PaginationResult<VideoFullProjection> paginationResult = new()
             {
                 CurrentPage = page,
                 TotalPages = totalPages,
@@ -138,7 +138,7 @@ public class VideoService(
         }
         catch (PaginationException)
         {
-            return new PaginationResult
+            return new PaginationResult<VideoFullProjection>
             {
                 CurrentPage = page,
                 TotalPages = 0,

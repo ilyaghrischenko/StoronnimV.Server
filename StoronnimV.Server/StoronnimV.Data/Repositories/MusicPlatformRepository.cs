@@ -14,7 +14,7 @@ public class MusicPlatformRepository(IDbContextFactory<StoronnimVContext> contex
     private readonly IDbContextFactory<StoronnimVContext> _contextFactory = contextFactory;
     private readonly ILogger<MusicPlatformRepository> _logger = logger;
     
-    public async Task<object?> GetByIdAsNoTrackingAsync(long id, CancellationToken ct)
+    public async Task<MusicPlatformProjection?> GetByIdAsNoTrackingAsync(long id, CancellationToken ct)
     {
         _logger.LogInformation($"Repository: MusicPlatformRepository Method: GetByIdAsNoTrackingAsync with id: {id} started at {DateTime.UtcNow}");
         
@@ -37,7 +37,7 @@ public class MusicPlatformRepository(IDbContextFactory<StoronnimVContext> contex
         return result;
     }
 
-    public async Task<IEnumerable<object>?> GetAllAsync(CancellationToken ct)
+    public async Task<IEnumerable<MusicPlatformProjection>?> GetAllAsNoTrackingAsync(CancellationToken ct)
     {
         _logger.LogInformation($"Repository: MusicPlatformRepository Method: GetAllAsync started at {DateTime.UtcNow}");
         

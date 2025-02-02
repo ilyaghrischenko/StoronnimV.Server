@@ -7,6 +7,8 @@ using StoronnimV.Application.Interfaces.Controllers;
 using StoronnimV.Application.Interfaces.Controllers.Shared;
 using StoronnimV.Application.Interfaces.Entities;
 using StoronnimV.Application.Models;
+using StoronnimV.Domain.Projections.News;
+using StoronnimV.Domain.Projections.Video;
 
 namespace StoronnimV.Application.Services.Controllers;
 
@@ -25,7 +27,7 @@ public class AdminControllerService(
     {
         _logger.LogInformation($"Service: AdminControllerService Method: GetNewsForPageAsync with [page: {page}, pageSize: {pageSize}] started at {DateTime.UtcNow}");
         
-        PaginationResult paginationResult = await _newsService.GetForAdminPageAsync(page, pageSize, ct);
+        PaginationResult<NewsFullProjection> paginationResult = await _newsService.GetForAdminPageAsync(page, pageSize, ct);
 
         var newsDto = _mapper.Map<IEnumerable<NewsResponse>>(paginationResult.Items);
 
@@ -46,7 +48,7 @@ public class AdminControllerService(
     {
         _logger.LogInformation($"Service: AdminControllerService Method: GetVideosForPageAsync with [page: {page}, pageSize: {pageSize}] started at {DateTime.UtcNow}");
 
-        PaginationResult paginationResult = await _videoService.GetForAdminPageAsync(page, pageSize, ct);
+        PaginationResult<VideoFullProjection> paginationResult = await _videoService.GetForAdminPageAsync(page, pageSize, ct);
 
         var videosDto = _mapper.Map<IEnumerable<VideoPageResponse>>(paginationResult.Items);
 

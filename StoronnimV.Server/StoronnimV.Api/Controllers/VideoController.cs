@@ -37,17 +37,17 @@ namespace StoronnimV.Api.Controllers
             return Ok(video);
         }
 
-        [HttpGet]
-        public async Task<ActionResult<IEnumerable<VideoPageShortResponse>>> GetVideos(CancellationToken ct)
-        {
-            _logger.LogInformation($"Controller: VideoController Method: GetVideos started at {DateTime.UtcNow}");
-
-            var videos = await _videoControllerService.GetAllAsync(ct);
-
-            _logger.LogInformation($"Controller: VideoController Method: GetVideos ended at {DateTime.UtcNow}");
-
-            return Ok(videos);
-        }
+        // [HttpGet]
+        // public async Task<ActionResult<IEnumerable<VideoPageShortResponse>>> GetVideos(CancellationToken ct)
+        // {
+        //     _logger.LogInformation($"Controller: VideoController Method: GetVideos started at {DateTime.UtcNow}");
+        //
+        //     var videos = await _videoControllerService.GetAllAsync(ct);
+        //
+        //     _logger.LogInformation($"Controller: VideoController Method: GetVideos ended at {DateTime.UtcNow}");
+        //
+        //     return Ok(videos);
+        // }
         
         [HttpGet("page/{type}/{page:int}")]
         public async Task<ActionResult<PaginationResponse<VideoPageShortResponse>>> GetVideosForPage

@@ -5,6 +5,7 @@ using StoronnimV.Application.DTO.Responses.Video;
 using StoronnimV.Application.Interfaces.Controllers;
 using StoronnimV.Application.Interfaces.Entities;
 using StoronnimV.Application.Models;
+using StoronnimV.Domain.Projections.Video;
 
 namespace StoronnimV.Application.Services.Controllers;
 
@@ -31,18 +32,18 @@ public class VideoControllerService(
         return videoDto;
     }
 
-    public async Task<IEnumerable<VideoPageShortResponse>> GetAllAsync(CancellationToken ct)
-    {
-        _logger.LogInformation($"Service: VideoControllerService Method: GetAllAsync started at {DateTime.UtcNow}");
-        
-        var videos = await _videoService.GetAllAsync(ct);
-        
-        var videosDto = _mapper.Map<IEnumerable<VideoPageShortResponse>>(videos);
-        
-        _logger.LogInformation($"Service: VideoControllerService Method: GetAllAsync ended at {DateTime.UtcNow}");
-
-        return videosDto;
-    }
+    // public async Task<IEnumerable<VideoPageShortResponse>> GetAllAsync(CancellationToken ct)
+    // {
+    //     _logger.LogInformation($"Service: VideoControllerService Method: GetAllAsync started at {DateTime.UtcNow}");
+    //     
+    //     var videos = await _videoService.GetAllAsync(ct);
+    //     
+    //     var videosDto = _mapper.Map<IEnumerable<VideoPageShortResponse>>(videos);
+    //     
+    //     _logger.LogInformation($"Service: VideoControllerService Method: GetAllAsync ended at {DateTime.UtcNow}");
+    //
+    //     return videosDto;
+    // }
 
     public async Task<PaginationResponse<VideoPageShortResponse>> GetForPageAsync(int page, int pageSize, CancellationToken ct, params object[] args)
     {
@@ -50,7 +51,7 @@ public class VideoControllerService(
         
         string type = (string)args[0];
         
-        PaginationResult paginationResult = await _videoService.GetForPageAsync(page, pageSize, ct, type);
+        PaginationResult<VideoShortProjection> paginationResult = await _videoService.GetForPageAsync(page, pageSize, ct, type);
         
         var videosDto = _mapper.Map<IEnumerable<VideoPageShortResponse>>(paginationResult.Items);
         

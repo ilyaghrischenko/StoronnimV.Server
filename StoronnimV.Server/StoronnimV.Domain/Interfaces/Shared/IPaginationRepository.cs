@@ -1,9 +1,10 @@
 using StoronnimV.Domain.Enums;
+using StoronnimV.Domain.Projections.Shared;
 
 namespace StoronnimV.Domain.Interfaces.Shared;
 
-public interface IPaginationRepository
+public interface IPaginationRepository<TProjection> where TProjection : BaseProjection
 {
-    Task<IEnumerable<object>?> GetForPageAsync(int page, CancellationToken ct, int pageSize = 10, params object[] args);
+    Task<IEnumerable<TProjection>?> GetForPageAsync(int page, CancellationToken ct, int pageSize = 10, params object[] args);
     Task<int> GetTotalCountAsync(CancellationToken ct, params object[] args);
 }

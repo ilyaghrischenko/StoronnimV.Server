@@ -22,7 +22,7 @@ public class VideoRepository(
     private readonly IDbContextFactory<StoronnimVContext> _contextFactory = contextFactory;
     private readonly ILogger<VideoRepository> _logger = logger;
 
-    public async Task<object?> GetByIdAsNoTrackingAsync(long id, CancellationToken ct)
+    public async Task<VideoShortProjection?> GetByIdAsNoTrackingAsync(long id, CancellationToken ct)
     {
         _logger.LogInformation(
             $"Repository: VideoRepository Method: GetByIdAsNoTrackingAsync with id: {id} started at {DateTime.UtcNow}");
@@ -45,26 +45,26 @@ public class VideoRepository(
         return video;
     }
 
-    public async Task<IEnumerable<object>?> GetAllAsync(CancellationToken ct)
-    {
-        _logger.LogInformation($"Repository: VideoRepository Method: GetAllAsync started at {DateTime.UtcNow}");
-
-        await using StoronnimVContext context = await _contextFactory.CreateDbContextAsync(ct);
-
-        var videos = await context.Videos
-            .AsNoTracking()
-            .Select(v => new VideoShortProjection
-            {
-                Id = v.Id,
-                Title = v.Title,
-                Url = v.Url
-            })
-            .ToListAsync(ct);
-
-        _logger.LogInformation($"Repository: VideoRepository Method: GetAllAsync ended at {DateTime.UtcNow}");
-
-        return videos;
-    }
+    // public async Task<IEnumerable<object>?> GetAllAsync(CancellationToken ct)
+    // {
+    //     _logger.LogInformation($"Repository: VideoRepository Method: GetAllAsync started at {DateTime.UtcNow}");
+    //
+    //     await using StoronnimVContext context = await _contextFactory.CreateDbContextAsync(ct);
+    //
+    //     var videos = await context.Videos
+    //         .AsNoTracking()
+    //         .Select(v => new VideoShortProjection
+    //         {
+    //             Id = v.Id,
+    //             Title = v.Title,
+    //             Url = v.Url
+    //         })
+    //         .ToListAsync(ct);
+    //
+    //     _logger.LogInformation($"Repository: VideoRepository Method: GetAllAsync ended at {DateTime.UtcNow}");
+    //
+    //     return videos;
+    // }
 
     public async Task<object?> GetPromotionVideoForHomePageAsync(CancellationToken ct)
     {
@@ -89,7 +89,7 @@ public class VideoRepository(
     }
 
 
-    public async Task<IEnumerable<object>?> GetForPageAsync(int page, CancellationToken ct, int pageSize = 10, params object[] args)
+    public async Task<IEnumerable<VideoShortProjection>?> GetForPageAsync(int page, CancellationToken ct, int pageSize = 10, params object[] args)
     {
         _logger.LogInformation($"Repository: VideoRepository Method: GetForPageAsync with [page: {page}, pageSize: {pageSize}] started at {DateTime.UtcNow}");
 
@@ -135,7 +135,7 @@ public class VideoRepository(
         return count;
     }
 
-    public async Task<IEnumerable<object>?> GetForAdminPageAsync(int page, CancellationToken ct, int pageSize = 10, params object[] args)
+    public async Task<IEnumerable<VideoFullProjection>?> GetForAdminPageAsync(int page, CancellationToken ct, int pageSize = 10, params object[] args)
     {
         _logger.LogInformation($"Repository: VideoRepository Method: GetForAdminPageAsync with [page: {page}, pageSize: {pageSize}] started at {DateTime.UtcNow}");
         

@@ -2,6 +2,7 @@ using Microsoft.Extensions.Logging;
 using StoronnimV.Application.Exceptions;
 using StoronnimV.Application.Interfaces.Entities;
 using StoronnimV.Domain.Interfaces;
+using StoronnimV.Domain.Projections.Social;
 
 namespace StoronnimV.Application.Services.Entities;
 
@@ -15,28 +16,28 @@ public class SocialService(ISocialRepository socialRepository,
     private readonly ISocialRepository _socialRepository = socialRepository;
     private readonly ILogger<SocialService> _logger = logger;
     
-    public async Task<object> GetItemByIdAsync(long id, CancellationToken ct)
+    public async Task<SocialShortProjection> GetItemByIdAsync(long id, CancellationToken ct)
     {
         _logger.LogInformation($"Service: SocialService Method: GetItemByIdAsync with id: {id} started at {DateTime.UtcNow}");
         
-        object social = await _socialRepository.GetByIdAsNoTrackingAsync(id, ct)
-                        ?? throw new EntityNotFoundException($"Social with id: {id} was not found");
+        SocialShortProjection social = await _socialRepository.GetByIdAsNoTrackingAsync(id, ct)
+                                       ?? throw new EntityNotFoundException($"Social with id: {id} was not found");
         
         _logger.LogInformation($"Service: SocialService Method: GetItemByIdAsync with id: {id} ended at {DateTime.UtcNow}");
 
         return social;
     }
 
-    public async Task<IEnumerable<object>> GetAllAsync(CancellationToken ct)
-    {
-        _logger.LogInformation($"Service: SocialService Method: GetAllAsync started at {DateTime.UtcNow}");
-        
-        var socials = await _socialRepository.GetAllAsync(ct);
-        
-        _logger.LogInformation($"Service: SocialService Method: GetAllAsync ended at {DateTime.UtcNow}");
-
-        return socials ?? new List<object>();
-    }
+    // public async Task<IEnumerable<object>> GetAllAsync(CancellationToken ct)
+    // {
+    //     _logger.LogInformation($"Service: SocialService Method: GetAllAsync started at {DateTime.UtcNow}");
+    //     
+    //     var socials = await _socialRepository.GetAllAsNoTrackingAsync(ct);
+    //     
+    //     _logger.LogInformation($"Service: SocialService Method: GetAllAsync ended at {DateTime.UtcNow}");
+    //
+    //     return socials ?? new List<object>();
+    // }
     
     public async Task<IEnumerable<object>> GetAllForMemberAsync(long memberId, CancellationToken ct)
     {

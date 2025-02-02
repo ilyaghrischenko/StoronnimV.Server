@@ -4,6 +4,7 @@ using StoronnimV.Application.Extensions;
 using StoronnimV.Application.Interfaces.Entities;
 using StoronnimV.Application.Models;
 using StoronnimV.Domain.Interfaces;
+using StoronnimV.Domain.Projections.News;
 
 namespace StoronnimV.Application.Services.Entities;
 
@@ -18,13 +19,13 @@ public class NewsService(
     private readonly INewsRepository _newsRepository = newsRepository;
     private readonly ILogger<NewsService> _logger = logger;
 
-    public async Task<object> GetItemByIdAsync(long id, CancellationToken ct)
+    public async Task<NewsFullProjection> GetItemByIdAsync(long id, CancellationToken ct)
     {
         _logger.LogInformation(
             $"Service: NewsService Method: GetItemByIdAsync with id: {id} started at {DateTime.UtcNow}");
 
-        object newsItem = await _newsRepository.GetByIdAsNoTrackingAsync(id, ct)
-                          ?? throw new EntityNotFoundException($"News with id: {id} was not found");
+        NewsFullProjection newsItem = await _newsRepository.GetByIdAsNoTrackingAsync(id, ct)
+                                      ?? throw new EntityNotFoundException($"News with id: {id} was not found");
 
         _logger.LogInformation(
             $"Service: NewsService Method: GetItemByIdAsync with id: {id} ended at {DateTime.UtcNow}");
@@ -32,27 +33,27 @@ public class NewsService(
         return newsItem;
     }
 
-    public async Task<IEnumerable<object>> GetAllAsync(CancellationToken ct)
-    {
-        _logger.LogInformation($"Service: NewsService Method: GetAllAsync started at {DateTime.UtcNow}");
+    // public async Task<IEnumerable<object>> GetAllAsync(CancellationToken ct)
+    // {
+    //     _logger.LogInformation($"Service: NewsService Method: GetAllAsync started at {DateTime.UtcNow}");
+    //
+    //     var allNews = await _newsRepository.GetAllAsync(ct);
+    //     if (allNews is null || !allNews.Any())
+    //     {
+    //         return new List<object>();
+    //     }
+    //
+    //     var result = allNews
+    //         .OrderBy(news => (string)news.GetPropertyValue("Priority")!)
+    //         .ThenByDescending(news => (string)news.GetPropertyValue("Date")!)
+    //         .ToList();
+    //
+    //     _logger.LogInformation($"Service: NewsService Method: GetAllAsync ended at {DateTime.UtcNow}");
+    //
+    //     return result;
+    // }
 
-        var allNews = await _newsRepository.GetAllAsync(ct);
-        if (allNews is null || !allNews.Any())
-        {
-            return new List<object>();
-        }
-
-        var result = allNews
-            .OrderBy(news => (string)news.GetPropertyValue("Priority")!)
-            .ThenByDescending(news => (string)news.GetPropertyValue("Date")!)
-            .ToList();
-
-        _logger.LogInformation($"Service: NewsService Method: GetAllAsync ended at {DateTime.UtcNow}");
-
-        return result;
-    }
-
-    public async Task<PaginationResult> GetForPageAsync(int page, int pageSize, CancellationToken ct,
+    public async Task<PaginationResult<NewsPaginationProjection>> GetForPageAsync(int page, int pageSize, CancellationToken ct,
         params object[] args)
     {
         _logger.LogInformation(
@@ -82,7 +83,7 @@ public class NewsService(
 
             var sortedItems = items.ToList();
 
-            PaginationResult response = new()
+            PaginationResult<NewsPaginationProjection> response = new()
             {
                 CurrentPage = page,
                 TotalPages = totalPages,
@@ -94,12 +95,12 @@ public class NewsService(
         }
         catch (PaginationException)
         {
-            return new PaginationResult
+            return new PaginationResult<NewsPaginationProjection>
             {
                 CurrentPage = page,
                 TotalPages = 0,
                 TotalItems = 0,
-                Items = Enumerable.Empty<object>()
+                Items = Enumerable.Empty<NewsPaginationProjection>()
             };
         }
         finally
@@ -108,7 +109,7 @@ public class NewsService(
         }
     }
 
-    public async Task<PaginationResult> GetForAdminPageAsync(int page, int pageSize, CancellationToken ct,
+    public async Task<PaginationResult<NewsFullProjection>> GetForAdminPageAsync(int page, int pageSize, CancellationToken ct,
         params object[] args)
     {
         _logger.LogInformation(
@@ -138,7 +139,7 @@ public class NewsService(
 
             var sortedItems = items.ToList();
 
-            PaginationResult response = new()
+            PaginationResult<NewsFullProjection> response = new()
             {
                 CurrentPage = page,
                 TotalPages = totalPages,
@@ -150,12 +151,12 @@ public class NewsService(
         }
         catch (PaginationException)
         {
-            return new PaginationResult
+            return new PaginationResult<NewsFullProjection>
             {
                 CurrentPage = page,
                 TotalPages = 0,
                 TotalItems = 0,
-                Items = Enumerable.Empty<object>()
+                Items = Enumerable.Empty<NewsFullProjection>()
             };
         }
         finally

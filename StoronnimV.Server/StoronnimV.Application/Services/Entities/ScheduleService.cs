@@ -5,6 +5,7 @@ using StoronnimV.Application.Interfaces.Entities;
 using StoronnimV.Domain.Entities;
 using StoronnimV.Domain.Enums;
 using StoronnimV.Domain.Interfaces;
+using StoronnimV.Domain.Projections.Schedule;
 
 namespace StoronnimV.Application.Services.Entities;
 
@@ -18,26 +19,26 @@ public class ScheduleService(IScheduleRepository scheduleRepository,
     private readonly IScheduleRepository _scheduleRepository = scheduleRepository;
     private readonly ILogger<ScheduleService> _logger = logger;
     
-    public async Task<object> GetItemByIdAsync(long id, CancellationToken ct)
+    public async Task<ScheduleFullProjection> GetItemByIdAsync(long id, CancellationToken ct)
     {
         _logger.LogInformation($"Service: ScheduleService Method: GetItemByIdAsync with id: {id} started at {DateTime.UtcNow}");
         
-        object schedule = await _scheduleRepository.GetByIdAsNoTrackingAsync(id, ct)
-                          ?? throw new EntityNotFoundException($"Schedule with id: {id} was not found");
+        ScheduleFullProjection schedule = await _scheduleRepository.GetByIdAsNoTrackingAsync(id, ct)
+                                          ?? throw new EntityNotFoundException($"Schedule with id: {id} was not found");
         
         _logger.LogInformation($"Service: ScheduleService Method: GetItemByIdAsync with id: {id} ended at {DateTime.UtcNow}");
 
         return schedule;
     }
 
-    public async Task<IEnumerable<object>> GetAllAsync(CancellationToken ct)
+    public async Task<IEnumerable<ScheduleFullProjection>> GetAllAsync(CancellationToken ct)
     {
         _logger.LogInformation($"Service: ScheduleService Method: GetAllAsync started at {DateTime.UtcNow}");
         
-        var allSchedules = await _scheduleRepository.GetAllAsync(ct);
+        var allSchedules = await _scheduleRepository.GetAllAsNoTrackingAsync(ct);
         if (allSchedules is null)
         {
-            return new List<object>();
+            return new List<ScheduleFullProjection>();
         }
 
         var result = allSchedules

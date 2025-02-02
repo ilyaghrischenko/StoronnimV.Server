@@ -2,6 +2,7 @@ using Microsoft.Extensions.Logging;
 using StoronnimV.Application.Exceptions;
 using StoronnimV.Application.Interfaces.Entities;
 using StoronnimV.Domain.Interfaces;
+using StoronnimV.Domain.Projections;
 
 namespace StoronnimV.Application.Services.Entities;
 
@@ -15,27 +16,27 @@ public class GroupPageService(IGroupPageRepository groupPageRepository,
     private readonly IGroupPageRepository _groupPageRepository = groupPageRepository;
     private readonly ILogger<GroupPageService> _logger = logger;
     
-    public async Task<object> GetItemByIdAsync(long id, CancellationToken ct)
+    public async Task<GroupPageProjection> GetItemByIdAsync(long id, CancellationToken ct)
     {
         _logger.LogInformation($"Service: GroupPageService Method: GetItemByIdAsync with id: {id} started at {DateTime.UtcNow}");
         
-        object groupPage = await _groupPageRepository.GetByIdAsNoTrackingAsync(id, ct)
-                           ?? throw new EntityNotFoundException($"GroupPage with id: {id} was not found");
+        GroupPageProjection groupPage = await _groupPageRepository.GetByIdAsNoTrackingAsync(id, ct)
+                                        ?? throw new EntityNotFoundException($"GroupPage with id: {id} was not found");
         
         _logger.LogInformation($"Service: GroupPageService Method: GetItemByIdAsync with id: {id} ended at {DateTime.UtcNow}");
 
         return groupPage;
     }
 
-    public async Task<IEnumerable<object>> GetAllAsync(CancellationToken ct)
+    public async Task<IEnumerable<GroupPageProjection>> GetAllAsync(CancellationToken ct)
     {
         _logger.LogInformation($"Service: GroupPageService Method: GetAllAsync started at {DateTime.UtcNow}");
         
-        var groupPages = await _groupPageRepository.GetAllAsync(ct);
+        var groupPages = await _groupPageRepository.GetAllAsNoTrackingAsync(ct);
         
         _logger.LogInformation($"Service: GroupPageService Method: GetAllAsync ended at {DateTime.UtcNow}");
 
-        return groupPages ?? new List<object>();
+        return groupPages ?? new List<GroupPageProjection>();
     }
     
     public async Task<object> GetFirstGroupPageAsync(CancellationToken ct)

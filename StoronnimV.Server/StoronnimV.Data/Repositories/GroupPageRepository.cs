@@ -18,7 +18,7 @@ public class GroupPageRepository(IDbContextFactory<StoronnimVContext> contextFac
     private readonly IDbContextFactory<StoronnimVContext> _contextFactory = contextFactory;
     private readonly ILogger<GroupPageRepository> _logger = logger;
 
-    public async Task<object?> GetByIdAsNoTrackingAsync(long id, CancellationToken ct)
+    public async Task<GroupPageProjection?> GetByIdAsNoTrackingAsync(long id, CancellationToken ct)
     {
         _logger.LogInformation($"Repository: GroupPageRepository Method: GetByIdAsNoTrackingAsync with id: {id} started at {DateTime.UtcNow}");
         
@@ -41,7 +41,7 @@ public class GroupPageRepository(IDbContextFactory<StoronnimVContext> contextFac
         return result;
     }
 
-    public async Task<IEnumerable<object>?> GetAllAsync(CancellationToken ct)
+    public async Task<IEnumerable<GroupPageProjection>?> GetAllAsNoTrackingAsync(CancellationToken ct)
     {
         _logger.LogInformation($"Repository: GroupPageRepository Method: GetAllAsync started at {DateTime.UtcNow}");
         

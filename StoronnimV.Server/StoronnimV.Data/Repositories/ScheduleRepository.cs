@@ -20,7 +20,7 @@ public class ScheduleRepository(
     private readonly IDbContextFactory<StoronnimVContext> _contextFactory = contextFactory;
     private readonly ILogger<ScheduleRepository> _logger = logger;
 
-    public async Task<object?> GetByIdAsNoTrackingAsync(long id, CancellationToken ct)
+    public async Task<ScheduleFullProjection?> GetByIdAsNoTrackingAsync(long id, CancellationToken ct)
     {
         _logger.LogInformation(
             $"Repository: ScheduleRepository Method: GetByIdAsNoTrackingAsync with id: {id} started at {DateTime.UtcNow}");
@@ -49,7 +49,7 @@ public class ScheduleRepository(
         return result;
     }
 
-    public async Task<IEnumerable<object>?> GetAllAsync(CancellationToken ct)
+    public async Task<IEnumerable<ScheduleFullProjection>?> GetAllAsNoTrackingAsync(CancellationToken ct)
     {
         _logger.LogInformation($"Repository: ScheduleRepository Method: GetAllAsync started at {DateTime.UtcNow}");
 
