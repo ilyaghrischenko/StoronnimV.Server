@@ -143,4 +143,22 @@ public class NewsService(
             _logger.LogInformation($"Service: NewsService Method: GetForPageAsync with [page: {page}, pageSize: {pageSize}] ended at {DateTime.UtcNow}");
         }
     }
+
+    public async Task<IEnumerable<NewsFullProjection>> GetItemsByTitleAsync(string title, CancellationToken ct)
+    {
+        _logger.LogInformation($"Service: NewsService Method: GetItemByTitleAsync with title: {title} started at {DateTime.UtcNow}");
+
+        string formattedTitle = title.Trim().ToLower();
+        
+        var projectionsByTitle = await _newsRepository.GetItemsByTitle(formattedTitle, ct);
+
+        if (projectionsByTitle is null || !projectionsByTitle.Any())
+        {
+            return new List<NewsFullProjection>();
+        }
+        
+        _logger.LogInformation($"Service: NewsService Method: GetItemByTitleAsync with title: {title} ended at {DateTime.UtcNow}");
+
+        return projectionsByTitle;
+    }
 }

@@ -47,5 +47,30 @@ namespace StoronnimV.Api.Controllers
 
             return Ok(videosPaginationResult);
         }
+
+        [HttpGet("news/{title}")]
+        public async Task<ActionResult<IEnumerable<NewsResponse>>> GetNewsItemByTitle([FromRoute] string title, CancellationToken ct)
+        {
+            _logger.LogInformation($"Controller: AdminController Method: GetNewsItemByTitle with title: {title} started at {DateTime.UtcNow}");
+
+            var newsByTitle = await _adminControllerService.GetNewsItemsByTitleAsync(title, ct);
+            
+            _logger.LogInformation($"Controller: AdminController Method: GetNewsItemByTitle with title: {title} ended at {DateTime.UtcNow}");
+
+            return Ok(newsByTitle);
+        }
+
+        [HttpGet("videos/{title}")]
+        public async Task<ActionResult<IEnumerable<VideoPageResponse>>> GetVideosByTitle([FromRoute] string title,
+            CancellationToken ct)
+        {
+            _logger.LogInformation($"Controller: AdminController Method: GetVideosByTitle with title: {title} started at {DateTime.UtcNow}");
+
+            var videosByTitle = await _adminControllerService.GetVideosByTitleAsync(title, ct);
+            
+            _logger.LogInformation($"Controller: AdminController Method: GetVideosByTitle with title: {title} ended at {DateTime.UtcNow}");
+
+            return Ok(videosByTitle);
+        }
     }
 }

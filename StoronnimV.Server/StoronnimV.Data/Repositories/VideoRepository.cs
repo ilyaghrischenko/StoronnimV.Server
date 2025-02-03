@@ -151,4 +151,27 @@ public class VideoRepository(
 
         return count;
     }
+
+    public async Task<IEnumerable<VideoFullProjection>?> GetItemsByTitle(string title, CancellationToken ct)
+    {
+        _logger.LogInformation($"Repository: VideoRepository Method: GetItemsByTitle with title: {title} started at {DateTime.UtcNow}");
+        
+        await using StoronnimVContext context = await _contextFactory.CreateDbContextAsync(ct);
+
+        var itemsByTitle = await context.Videos
+            .AsNoTracking()
+            .Select(item => new VideoFullProjection
+            {
+                Id = item.Id,
+                Title = item.Title,
+                Url = item.Url,
+                Type = item.Type
+            })
+            .Where(item => item.Title.Trim().ToLower().Contains(title))
+            .ToListAsync(ct);
+        
+        _logger.LogInformation($"Repository: VideoRepository Method: GetItemsByTitle with title: {title} ended at {DateTime.UtcNow}");
+
+        return itemsByTitle;
+    }
 }

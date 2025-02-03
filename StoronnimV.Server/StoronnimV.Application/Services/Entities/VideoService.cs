@@ -140,4 +140,22 @@ public class VideoService(
                 $"Service: VideoService Method: GetForAdminPageAsync with [page: {page}, pageSize: {pageSize}] ended at {DateTime.UtcNow}");
         }
     }
+
+    public async Task<IEnumerable<VideoFullProjection>> GetItemsByTitleAsync(string title, CancellationToken ct)
+    {
+        _logger.LogInformation($"Service: VideoService Method: GetItemsByTitleAsync with title: {title} started at {DateTime.UtcNow}");
+
+        string formattedTitle = title.Trim().ToLower();
+        
+        var projectionsByTitle = await _videoRepository.GetItemsByTitle(formattedTitle, ct);
+
+        if (projectionsByTitle is null || !projectionsByTitle.Any())
+        {
+            return new List<VideoFullProjection>();
+        }
+        
+        _logger.LogInformation($"Service: VideoService Method: GetItemsByTitleAsync with title: {title} ended at {DateTime.UtcNow}");
+
+        return projectionsByTitle;
+    }
 }

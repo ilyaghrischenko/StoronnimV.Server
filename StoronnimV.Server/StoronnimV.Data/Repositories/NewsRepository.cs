@@ -148,4 +148,33 @@ public class NewsRepository(
 
         return result;
     }
+
+    public async Task<IEnumerable<NewsFullProjection>?> GetItemsByTitle(string title, CancellationToken ct)
+    {
+        _logger.LogInformation($"Repository: NewsRepository Method: GetItemsByTitle with title: {title} started at {DateTime.UtcNow}");
+        
+        await using StoronnimVContext context = await _contextFactory.CreateDbContextAsync(ct);
+        var dbSet = context.NewsItems;
+        var query = ApplyIncludes(dbSet);
+        
+        var itemsByTitle = await query
+            .AsNoTracking()
+            .Select(newsItem => new NewsFullProjection
+            {
+                Id = newsItem.Id,
+                Date = newsItem.Date,
+                Description = newsItem.Description,
+                Photo = newsItem.Photo,
+                Priority = newsItem.Priority,
+                Title = newsItem.Title,
+                Video = newsItem.Video.Url
+            })
+            .Where(newsItem => newsItem.Title.Trim().ToLower().Contains(title))
+            .OrderByDescending(newsItem => newsItem.Date)
+            .ToListAsync(ct);
+        
+        _logger.LogInformation($"Repository: NewsRepository Method: GetItemsByTitle with title: {title} ended at {DateTime.UtcNow}");
+
+        return itemsByTitle;
+    }
 }

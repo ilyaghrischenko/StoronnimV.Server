@@ -63,4 +63,30 @@ public class AdminControllerService(
 
         return response;
     }
+
+    public async Task<IEnumerable<NewsResponse>> GetNewsItemsByTitleAsync(string title, CancellationToken ct)
+    {
+        _logger.LogInformation($"Service: AdminControllerService Method: GetNewsItemByTitleAsync with title: {title} started at {DateTime.UtcNow}");
+
+        var newsProjections = await _newsService.GetItemsByTitleAsync(title, ct);
+
+        var newsDto = _mapper.Map<IEnumerable<NewsResponse>>(newsProjections);
+        
+        _logger.LogInformation($"Service: AdminControllerService Method: GetNewsItemByTitleAsync with title: {title} ended at {DateTime.UtcNow}");
+        
+        return newsDto;
+    }
+
+    public async Task<IEnumerable<VideoPageResponse>> GetVideosByTitleAsync(string title, CancellationToken ct)
+    {
+        _logger.LogInformation($"Service: AdminControllerService Method: GetVideosByTitleAsync with title: {title} started at {DateTime.UtcNow}");
+
+        var videosProjections = await _videoService.GetItemsByTitleAsync(title, ct);
+
+        var videosDto = _mapper.Map<IEnumerable<VideoPageResponse>>(videosProjections);
+        
+        _logger.LogInformation($"Service: AdminControllerService Method: GetVideosByTitleAsync with title: {title} ended at {DateTime.UtcNow}");
+
+        return videosDto;
+    }
 }

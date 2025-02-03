@@ -4,7 +4,8 @@ using StoronnimV.Domain.Projections.News;
 namespace StoronnimV.Application.Contracts.Entities;
 
 public interface INewsService
-    : IPaginationService<NewsPaginationProjection>, IAdminPaginationService<NewsFullProjection>, IGetByIdService<NewsFullProjection>
+    : IPaginationService<NewsPaginationProjection>, IAdminPaginationService<NewsFullProjection>,
+        IGetByIdService<NewsFullProjection>, IReceivableByTitleService<NewsFullProjection>
 {
     
 }

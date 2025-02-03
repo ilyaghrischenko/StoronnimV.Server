@@ -6,7 +6,8 @@ namespace StoronnimV.Domain.Contracts;
 
 public interface INewsRepository
     : IRepository<News>, IGetByIdRepository<NewsFullProjection>,
-        IPaginationRepository<NewsPaginationProjection>, IAdminPaginationRepository<NewsFullProjection>
+        IPaginationRepository<NewsPaginationProjection>, IAdminPaginationRepository<NewsFullProjection>,
+        IReceivableByTitleRepository<NewsFullProjection>
 {
     Task<IEnumerable<NewsHomeProjection>?> GetMainNewsForHomePageAsync(int count, CancellationToken ct);
 }
