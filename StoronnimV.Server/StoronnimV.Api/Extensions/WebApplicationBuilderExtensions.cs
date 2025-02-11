@@ -35,7 +35,7 @@ using StoronnimV.Infrastructure.Repositories.Database.Shared;
 
 namespace StoronnimV.Api.Extensions;
 
-public static class ServiceCollectionsExtension
+public static class WebApplicationBuilderExtensions
 {
     public static WebApplicationBuilder AddApplicationServices(this WebApplicationBuilder builder)
     {
