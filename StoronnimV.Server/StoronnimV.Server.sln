@@ -6,7 +6,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StoronnimV.Domain", "Storon
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StoronnimV.Application", "StoronnimV.Application\StoronnimV.Application.csproj", "{BF5FE0D1-8C10-478C-9BD3-644D182F9B37}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StoronnimV.Data", "StoronnimV.Data\StoronnimV.Data.csproj", "{851B2316-391C-47CF-8F63-D3A6955E9796}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StoronnimV.Infrastructure", "StoronnimV.Infrastructure\StoronnimV.Infrastructure.csproj", "{851B2316-391C-47CF-8F63-D3A6955E9796}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StoronnimV.Tests", "StoronnimV.Tests\StoronnimV.Tests.csproj", "{32D45EF2-F5B0-459E-A8EC-07C700EA5565}"
 EndProject

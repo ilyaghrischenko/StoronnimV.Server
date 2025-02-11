@@ -10,7 +10,7 @@ WORKDIR /src
 COPY ["StoronnimV.Api/StoronnimV.Api.csproj", "StoronnimV.Api/"]
 COPY ["StoronnimV.Domain/StoronnimV.Domain.csproj", "StoronnimV.Domain/"]
 COPY ["StoronnimV.Application/StoronnimV.Application.csproj", "StoronnimV.Application/"]
-COPY ["StoronnimV.Data/StoronnimV.Data.csproj", "StoronnimV.Data/"]
+COPY ["StoronnimV.Infrastructure/StoronnimV.Infrastructure.csproj", "StoronnimV.Infrastructure/"]
 RUN dotnet restore "StoronnimV.Api/StoronnimV.Api.csproj"
 COPY . .
 WORKDIR "/src/StoronnimV.Api"

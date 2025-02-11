@@ -1,9 +1,9 @@
 using StoronnimV.Application.Contracts.Entities.Shared;
-using StoronnimV.Domain.Projections.Social;
+using StoronnimV.Domain.Projections;
 
 namespace StoronnimV.Application.Contracts.Entities;
 
-public interface ISocialService : IGetByIdService<SocialShortProjection>
+public interface ISocialService : IGetByIdService<SocialProjection>
 {
-    public Task<IEnumerable<SocialShortProjection>> GetAllForMemberAsync(long memberId, CancellationToken ct);
+    public Task<IEnumerable<SocialProjection>> GetAllForMemberAsync(long memberId, CancellationToken ct);
 }

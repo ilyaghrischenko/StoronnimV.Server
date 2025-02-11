@@ -1,5 +1,6 @@
 using Microsoft.Extensions.Logging;
 using StoronnimV.Application.Contracts.Entities;
+using StoronnimV.Application.Contracts.Entities.Shared;
 using StoronnimV.Application.Exceptions;
 using StoronnimV.Domain.Contracts;
 using StoronnimV.Domain.Projections;
@@ -50,4 +51,5 @@ public class GroupPageService(IGroupPageRepository groupPageRepository,
 
         return groupPage;
     }
+
 }

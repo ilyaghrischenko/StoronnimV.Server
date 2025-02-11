@@ -3,6 +3,7 @@ using Microsoft.Extensions.Logging;
 using StoronnimV.Application.Contracts.Controllers;
 using StoronnimV.Application.Contracts.Entities;
 using StoronnimV.Application.DTO.Responses.SchedulePage;
+using StoronnimV.Domain.Projections.Schedule;
 
 namespace StoronnimV.Application.Services.Controllers;
 
@@ -24,7 +25,7 @@ public class SchedulesControllerService(
     {
         _logger.LogInformation($"Service: SchedulesControllerService Method: GetItemByIdAsync with id: {id} started at {DateTime.UtcNow}");
         
-        object schedule = await _scheduleService.GetItemByIdAsync(id, ct);
+        ScheduleFullProjection schedule = await _scheduleService.GetItemByIdAsync(id, ct);
         
         var scheduleDto = _mapper.Map<ScheduleResponse>(schedule);
         

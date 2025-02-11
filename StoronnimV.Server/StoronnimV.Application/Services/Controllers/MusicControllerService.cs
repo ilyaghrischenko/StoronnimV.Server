@@ -4,6 +4,7 @@ using StoronnimV.Application.Contracts.Controllers;
 using StoronnimV.Application.Contracts.Entities;
 using StoronnimV.Application.DTO.Responses.MusicPage;
 using StoronnimV.Application.DTO.Responses.SchedulePage;
+using StoronnimV.Domain.Projections;
 
 namespace StoronnimV.Application.Services.Controllers;
 
@@ -20,7 +21,7 @@ public class MusicControllerService(
     {
         _logger.LogInformation($"Service: MusicControllerService Method: GetItemByIdAsync with id: {id} started at {DateTime.UtcNow}");
         
-        object musicPlatformItem = await _musicPlatformService.GetItemByIdAsync(id, ct);
+        MusicPlatformProjection musicPlatformItem = await _musicPlatformService.GetItemByIdAsync(id, ct);
 
         var musicPlatformDto = _mapper.Map<MusicResponse>(musicPlatformItem);
         

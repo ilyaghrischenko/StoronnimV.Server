@@ -27,7 +27,7 @@ public class NewsControllerService(
     {
         _logger.LogInformation($"Service: NewsControllerService Method: GetItemByIdAsync with id: {id} started at {DateTime.UtcNow}");
         
-        object newsItem = await _newsService.GetItemByIdAsync(id, ct);
+        NewsFullProjection newsItem = await _newsService.GetItemByIdAsync(id, ct);
 
         var newsItemDto = _mapper.Map<NewsResponse>(newsItem);
         
@@ -35,19 +35,6 @@ public class NewsControllerService(
         
         return newsItemDto;
     }
-
-    // public async Task<IEnumerable<NewsResponse>> GetAllAsync(CancellationToken ct)
-    // {
-    //     _logger.LogInformation($"Service: NewsControllerService Method: GetAllAsync started at {DateTime.UtcNow}");
-    //     
-    //     var sortedNews = await _newsService.GetAllAsync(ct);
-    //
-    //     var newsDto = _mapper.Map<IEnumerable<NewsResponse>>(sortedNews);
-    //     
-    //     _logger.LogInformation($"Service: NewsControllerService Method: GetAllAsync ended at {DateTime.UtcNow}");
-    //     
-    //     return newsDto;
-    // }
 
     public async Task<PaginationResponse<NewsShortResponse>> GetForPageAsync(int page, int pageSize, CancellationToken ct, params object[] args)
     {

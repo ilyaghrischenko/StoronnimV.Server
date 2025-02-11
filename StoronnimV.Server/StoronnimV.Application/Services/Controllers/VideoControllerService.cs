@@ -23,7 +23,7 @@ public class VideoControllerService(
     {
         _logger.LogInformation($"Service: VideoControllerService Method: GetItemByIdAsync with id: {id} started at {DateTime.UtcNow}");
 
-        object video = await _videoService.GetItemByIdAsync(id, ct);
+        VideoShortProjection video = await _videoService.GetItemByIdAsync(id, ct);
         
         var videoDto = _mapper.Map<VideoPageShortResponse>(video);
         
@@ -31,20 +31,7 @@ public class VideoControllerService(
 
         return videoDto;
     }
-
-    // public async Task<IEnumerable<VideoPageShortResponse>> GetAllAsync(CancellationToken ct)
-    // {
-    //     _logger.LogInformation($"Service: VideoControllerService Method: GetAllAsync started at {DateTime.UtcNow}");
-    //     
-    //     var videos = await _videoService.GetAllAsync(ct);
-    //     
-    //     var videosDto = _mapper.Map<IEnumerable<VideoPageShortResponse>>(videos);
-    //     
-    //     _logger.LogInformation($"Service: VideoControllerService Method: GetAllAsync ended at {DateTime.UtcNow}");
-    //
-    //     return videosDto;
-    // }
-
+    
     public async Task<PaginationResponse<VideoPageShortResponse>> GetForPageAsync(int page, int pageSize, CancellationToken ct, params object[] args)
     {
         _logger.LogInformation($"Service: VideoControllerService Method: GetForPageAsync with page: {page} started at {DateTime.UtcNow}");

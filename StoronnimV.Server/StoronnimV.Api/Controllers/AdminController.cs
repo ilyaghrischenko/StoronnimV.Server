@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using StoronnimV.Application.Contracts.Controllers;
+using StoronnimV.Application.DTO.Responses.GroupPage;
 using StoronnimV.Application.DTO.Responses.NewsPage;
 using StoronnimV.Application.DTO.Responses.Shared;
 using StoronnimV.Application.DTO.Responses.Video;
@@ -48,14 +49,26 @@ namespace StoronnimV.Api.Controllers
             return Ok(videosPaginationResult);
         }
 
-        [HttpGet("news/{title}")]
-        public async Task<ActionResult<IEnumerable<NewsResponse>>> GetNewsItemByTitle([FromRoute] string title, CancellationToken ct)
+        [HttpGet("group")]
+        public async Task<ActionResult<AdminGroupPageFullResponse>> GetGroupInfo(CancellationToken ct)
         {
-            _logger.LogInformation($"Controller: AdminController Method: GetNewsItemByTitle with title: {title} started at {DateTime.UtcNow}");
+            _logger.LogInformation($"Controller: AdminController Method: GetGroupInfo started at {DateTime.UtcNow}");
 
-            var newsByTitle = await _adminControllerService.GetNewsItemsByTitleAsync(title, ct);
+            var adminGroupInfo = await _adminControllerService.GetGroupInfoAsync(ct);
             
-            _logger.LogInformation($"Controller: AdminController Method: GetNewsItemByTitle with title: {title} ended at {DateTime.UtcNow}");
+            _logger.LogInformation($"Controller: AdminController Method: GetGroupInfo ended at {DateTime.UtcNow}");
+
+            return adminGroupInfo;
+        }
+
+        [HttpGet("news/{title}")]
+        public async Task<ActionResult<IEnumerable<NewsResponse>>> GetNewsByTitle([FromRoute] string title, CancellationToken ct)
+        {
+            _logger.LogInformation($"Controller: AdminController Method: GetNewsByTitle with title: {title} started at {DateTime.UtcNow}");
+
+            var newsByTitle = await _adminControllerService.GetNewsByTitleAsync(title, ct);
+            
+            _logger.LogInformation($"Controller: AdminController Method: GetNewsByTitle with title: {title} ended at {DateTime.UtcNow}");
 
             return Ok(newsByTitle);
         }

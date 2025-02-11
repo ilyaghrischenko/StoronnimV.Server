@@ -29,18 +29,6 @@ namespace StoronnimV.Api.Controllers
             return Ok(newsItem);
         }
         
-        // [HttpGet]
-        // public async Task<ActionResult<IEnumerable<NewsResponse>>> GetNews(CancellationToken ct)
-        // {
-        //     _logger.LogInformation($"Controller: NewsController Method: GetNews started at {DateTime.UtcNow}");
-        //     
-        //     var news = await _newsControllerService.GetAllAsync(ct);
-        //     
-        //     _logger.LogInformation($"Controller: NewsController Method: GetNews ended at {DateTime.UtcNow}");
-        //     
-        //     return Ok(news);
-        // }
-
         [HttpGet("page/{page:int}")]
         public async Task<ActionResult<PaginationResponse<NewsShortResponse>>> GetNewsForPage([FromRoute] int page, CancellationToken ct, [FromQuery] int pageSize = 9)
         {

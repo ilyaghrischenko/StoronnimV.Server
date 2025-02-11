@@ -27,7 +27,7 @@
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\StoronnimV.Data\StoronnimV.Data.csproj" />
+      <ProjectReference Include="..\StoronnimV.Infrastructure\StoronnimV.Infrastructure.csproj" />
     </ItemGroup>
 
 </Project>

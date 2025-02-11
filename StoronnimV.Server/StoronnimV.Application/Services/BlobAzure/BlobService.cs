@@ -23,6 +23,8 @@ public class BlobService : IBlobService
         
         await blobClient.UploadAsync(fileStream, overwrite: true, cancellationToken: ct);
 
+        await fileStream.DisposeAsync();
+        
         return blobClient.Uri.ToString();
     }
 

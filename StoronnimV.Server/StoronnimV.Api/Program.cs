@@ -8,7 +8,7 @@ using StoronnimV.Application.Mapping.Home;
 using StoronnimV.Application.Mapping.News;
 using StoronnimV.Application.Mapping.Schedule;
 using StoronnimV.Application.Services.Hangfire;
-using StoronnimV.Data;
+using StoronnimV.Infrastructure;
 
 WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 

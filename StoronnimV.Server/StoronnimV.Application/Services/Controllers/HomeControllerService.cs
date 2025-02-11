@@ -4,6 +4,8 @@ using StoronnimV.Application.Contracts.Controllers;
 using StoronnimV.Application.Contracts.Home;
 using StoronnimV.Application.DTO.Responses.HomePage;
 using StoronnimV.Application.DTO.Responses.Video;
+using StoronnimV.Domain.Projections.Schedule;
+using StoronnimV.Domain.Projections.Video;
 
 namespace StoronnimV.Application.Services.Controllers;
 
@@ -33,7 +35,7 @@ public class HomeControllerService(
     {
         _logger.LogInformation($"Service: HomeControllerService Method: GetScheduleAsync started at {DateTime.UtcNow}");
 
-        object? schedule = await _homeService.GetNearestScheduleForHomePageAsync(ct);
+        ScheduleShortProjection? schedule = await _homeService.GetNearestScheduleForHomePageAsync(ct);
         
         var scheduleDto = _mapper.Map<ScheduleHomeResponse>(schedule);
         
@@ -46,7 +48,7 @@ public class HomeControllerService(
     {
         _logger.LogInformation($"Service: HomeControllerService Method: GetVideoAsync started at {DateTime.UtcNow}");
 
-        object? promotionVideo = await _homeService.GetPromotionVideoForHomePageAsync(ct);
+        VideoShortProjection? promotionVideo = await _homeService.GetPromotionVideoForHomePageAsync(ct);
         
         var promotionVideoDto = _mapper.Map<VideoPageShortResponse>(promotionVideo);
         

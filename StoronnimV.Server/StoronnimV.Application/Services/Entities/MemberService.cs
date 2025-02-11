@@ -39,4 +39,20 @@ public class MemberService(IMemberRepository memberRepository,
 
         return member;
     }
+
+    public async Task<IEnumerable<MemberFullProjection>> GetAllForAdminAsync(CancellationToken ct)
+    {
+        _logger.LogInformation($"Service: MemberService Method: GetAllForAdminAsync started at {DateTime.UtcNow}");
+
+        var members = await _memberRepository.GetAllForAdminAsync(ct);
+
+        if (members is null || !members.Any())
+        {
+            return new List<MemberFullProjection>();
+        }
+        
+        _logger.LogInformation($"Service: MemberService Method: GetAllForAdminAsync ended at {DateTime.UtcNow}");
+
+        return members;
+    }
 }

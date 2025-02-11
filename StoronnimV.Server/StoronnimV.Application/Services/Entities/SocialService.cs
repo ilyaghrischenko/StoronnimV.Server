@@ -2,7 +2,7 @@ using Microsoft.Extensions.Logging;
 using StoronnimV.Application.Contracts.Entities;
 using StoronnimV.Application.Exceptions;
 using StoronnimV.Domain.Contracts;
-using StoronnimV.Domain.Projections.Social;
+using StoronnimV.Domain.Projections;
 
 namespace StoronnimV.Application.Services.Entities;
 
@@ -16,11 +16,11 @@ public class SocialService(ISocialRepository socialRepository,
     private readonly ISocialRepository _socialRepository = socialRepository;
     private readonly ILogger<SocialService> _logger = logger;
     
-    public async Task<SocialShortProjection> GetItemByIdAsync(long id, CancellationToken ct)
+    public async Task<SocialProjection> GetItemByIdAsync(long id, CancellationToken ct)
     {
         _logger.LogInformation($"Service: SocialService Method: GetItemByIdAsync with id: {id} started at {DateTime.UtcNow}");
         
-        SocialShortProjection social = await _socialRepository.GetByIdAsNoTrackingAsync(id, ct)
+        SocialProjection social = await _socialRepository.GetByIdAsNoTrackingAsync(id, ct)
                                        ?? throw new EntityNotFoundException($"Social with id: {id} was not found");
         
         _logger.LogInformation($"Service: SocialService Method: GetItemByIdAsync with id: {id} ended at {DateTime.UtcNow}");
@@ -28,7 +28,7 @@ public class SocialService(ISocialRepository socialRepository,
         return social;
     }
     
-    public async Task<IEnumerable<SocialShortProjection>> GetAllForMemberAsync(long memberId, CancellationToken ct)
+    public async Task<IEnumerable<SocialProjection>> GetAllForMemberAsync(long memberId, CancellationToken ct)
     {
         _logger.LogInformation($"Service: SocialService Method: GetAllForMemberAsync with memberId: {memberId} started at {DateTime.UtcNow}");
         

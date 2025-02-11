@@ -2,10 +2,15 @@ using AutoMapper;
 using Microsoft.Extensions.Logging;
 using StoronnimV.Application.Contracts.Controllers;
 using StoronnimV.Application.Contracts.Entities;
+using StoronnimV.Application.DTO.Responses.GroupPage;
+using StoronnimV.Application.DTO.Responses.GroupPage.ShortGroupPage;
+using StoronnimV.Application.DTO.Responses.GroupPage.ShortMember;
 using StoronnimV.Application.DTO.Responses.NewsPage;
 using StoronnimV.Application.DTO.Responses.Shared;
 using StoronnimV.Application.DTO.Responses.Video;
 using StoronnimV.Application.Models;
+using StoronnimV.Domain.Projections;
+using StoronnimV.Domain.Projections.Member;
 using StoronnimV.Domain.Projections.News;
 using StoronnimV.Domain.Projections.Video;
 
@@ -14,11 +19,17 @@ namespace StoronnimV.Application.Services.Controllers;
 public class AdminControllerService(
     INewsService newsService,
     IVideoService videoService,
+    IMemberService memberService,
+    IGroupPageService groupPageService,
+    ISocialService socialService,
     IMapper mapper,
     ILogger<AdminControllerService> logger) : IAdminControllerService
 {
     private readonly INewsService _newsService = newsService;
     private readonly IVideoService _videoService = videoService;
+    private readonly IMemberService _memberService = memberService;
+    private readonly IGroupPageService _groupPageService = groupPageService;
+    private readonly ISocialService _socialService = socialService;
     private readonly IMapper _mapper = mapper;
     private readonly ILogger<AdminControllerService> _logger = logger;
     
@@ -64,7 +75,7 @@ public class AdminControllerService(
         return response;
     }
 
-    public async Task<IEnumerable<NewsResponse>> GetNewsItemsByTitleAsync(string title, CancellationToken ct)
+    public async Task<IEnumerable<NewsResponse>> GetNewsByTitleAsync(string title, CancellationToken ct)
     {
         _logger.LogInformation($"Service: AdminControllerService Method: GetNewsItemByTitleAsync with title: {title} started at {DateTime.UtcNow}");
 
@@ -88,5 +99,45 @@ public class AdminControllerService(
         _logger.LogInformation($"Service: AdminControllerService Method: GetVideosByTitleAsync with title: {title} ended at {DateTime.UtcNow}");
 
         return videosDto;
+    }
+
+    //TODO!!
+    public async Task<AdminGroupPageFullResponse> GetGroupInfoAsync(CancellationToken ct)
+    {
+        _logger.LogInformation($"Service: AdminControllerService Method: GetGroupInfoAsync started at {DateTime.UtcNow}");
+
+        var groupPageTask = _groupPageService.GetFirstGroupPageAsync(ct);
+        var membersTask = _memberService.GetAllForAdminAsync(ct);
+        
+        await Task.WhenAll(groupPageTask, membersTask);
+        
+        GroupPageProjection groupPage = await groupPageTask;
+        var members = await membersTask;
+
+        var membersWithSocials = new List<MemberWithSocialsProjection>();
+        members.ToList().ForEach(async void (member) =>
+        {
+            var socialsForMember = await _socialService.GetAllForMemberAsync(member.Id, ct);
+            membersWithSocials.Add(new MemberWithSocialsProjection
+            {
+                Id = member.Id,
+                Member = member,
+                Socials = socialsForMember
+            });
+        });
+        
+        var membersDto = _mapper.Map<IEnumerable<MemberResponse>>(membersWithSocials);
+        
+        var groupPageDto = _mapper.Map<GroupPageResponse>(groupPage);
+
+        AdminGroupPageFullResponse response = new()
+        {
+            GroupPage = groupPageDto,
+            Members = membersDto
+        };
+        
+        _logger.LogInformation($"Service: AdminControllerService Method: GetGroupInfoAsync ended at {DateTime.UtcNow}");
+
+        return response;
     }
 }
