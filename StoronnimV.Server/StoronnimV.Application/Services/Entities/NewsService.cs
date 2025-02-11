@@ -3,6 +3,7 @@ using StoronnimV.Application.Contracts.Entities;
 using StoronnimV.Application.Exceptions;
 using StoronnimV.Application.Models;
 using StoronnimV.Domain.Contracts;
+using StoronnimV.Domain.Contracts.Database;
 using StoronnimV.Domain.Projections.News;
 
 namespace StoronnimV.Application.Services.Entities;

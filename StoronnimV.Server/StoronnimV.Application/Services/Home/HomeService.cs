@@ -1,6 +1,7 @@
 using Microsoft.Extensions.Logging;
 using StoronnimV.Application.Contracts.Home;
 using StoronnimV.Domain.Contracts;
+using StoronnimV.Domain.Contracts.Database;
 using StoronnimV.Domain.Projections.News;
 using StoronnimV.Domain.Projections.Schedule;
 using StoronnimV.Domain.Projections.Video;

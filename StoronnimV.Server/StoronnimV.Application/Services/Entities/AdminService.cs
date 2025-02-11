@@ -4,6 +4,7 @@ using StoronnimV.Application.Contracts.Entities;
 using StoronnimV.Application.DTO.Requests.Account;
 using StoronnimV.Application.Exceptions;
 using StoronnimV.Domain.Contracts;
+using StoronnimV.Domain.Contracts.Database;
 using StoronnimV.Domain.Entities;
 using StoronnimV.Domain.Projections;
 

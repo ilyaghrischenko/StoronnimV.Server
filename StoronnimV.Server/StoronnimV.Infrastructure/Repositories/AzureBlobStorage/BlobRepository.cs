@@ -1,16 +1,16 @@
 using Azure.Storage.Blobs;
 using Microsoft.Extensions.Configuration;
-using StoronnimV.Application.Contracts.BlobAzure;
+using StoronnimV.Domain.Contracts.AzureBlobStorage;
 
-namespace StoronnimV.Application.Services.BlobAzure;
+namespace StoronnimV.Infrastructure.Repositories.AzureBlobStorage;
 
-public class BlobService : IBlobService
+public class BlobRepository : IBlobRepository
 {
     private readonly BlobServiceClient _blobServiceClient;
 
-    public BlobService(IConfiguration configuration)
+    public BlobRepository(IConfiguration configuration)
     {
-        string? connectionString = configuration.GetValue<string>("BlobStorageConnectionString");
+        string? connectionString = configuration.GetSection("BlobStorageConnectionString").Value;
         _blobServiceClient = new BlobServiceClient(connectionString);
     }
     

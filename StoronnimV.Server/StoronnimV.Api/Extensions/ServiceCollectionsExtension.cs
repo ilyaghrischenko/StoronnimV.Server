@@ -7,7 +7,6 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
 using Serilog;
 using StoronnimV.Application.AutentificationOptions;
-using StoronnimV.Application.Contracts.BlobAzure;
 using StoronnimV.Application.Contracts.Controllers;
 using StoronnimV.Application.Contracts.Entities;
 using StoronnimV.Application.Contracts.Home;
@@ -18,7 +17,6 @@ using StoronnimV.Application.Mapping.Music;
 using StoronnimV.Application.Mapping.News;
 using StoronnimV.Application.Mapping.Schedule;
 using StoronnimV.Application.Mapping.Video;
-using StoronnimV.Application.Services.BlobAzure;
 using StoronnimV.Application.Services.Controllers;
 using StoronnimV.Application.Services.Entities;
 using StoronnimV.Application.Services.Hangfire;
@@ -26,10 +24,14 @@ using StoronnimV.Application.Services.Home;
 using StoronnimV.Application.Services.Jwt;
 using StoronnimV.Infrastructure;
 using StoronnimV.Infrastructure.Repositories;
-using StoronnimV.Infrastructure.Repositories.Shared;
 using StoronnimV.Domain.Contracts;
-using StoronnimV.Domain.Contracts.Shared;
+using StoronnimV.Domain.Contracts.AzureBlobStorage;
+using StoronnimV.Domain.Contracts.Database;
+using StoronnimV.Domain.Contracts.Database.Shared;
 using StoronnimV.Domain.Entities;
+using StoronnimV.Infrastructure.Repositories.AzureBlobStorage;
+using StoronnimV.Infrastructure.Repositories.Database;
+using StoronnimV.Infrastructure.Repositories.Database.Shared;
 
 namespace StoronnimV.Api.Extensions;
 
@@ -57,7 +59,7 @@ public static class ServiceCollectionsExtension
 
         builder.Services.AddScoped<IHomeService, HomeService>();
         builder.Services.AddScoped<IJwtBearerService, JwtBearerService>();
-        builder.Services.AddScoped<IBlobService, BlobService>();
+        builder.Services.AddScoped<IBlobRepository, BlobRepository>();
         
         return builder;
     }

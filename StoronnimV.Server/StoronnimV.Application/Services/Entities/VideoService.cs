@@ -3,6 +3,7 @@ using StoronnimV.Application.Contracts.Entities;
 using StoronnimV.Application.Exceptions;
 using StoronnimV.Application.Models;
 using StoronnimV.Domain.Contracts;
+using StoronnimV.Domain.Contracts.Database;
 using StoronnimV.Domain.Enums;
 using StoronnimV.Domain.Projections.Video;
 

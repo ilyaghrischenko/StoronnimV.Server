@@ -1,6 +1,6 @@
 using StoronnimV.Domain.Projections.Shared;
 
-namespace StoronnimV.Domain.Contracts.Shared;
+namespace StoronnimV.Domain.Contracts.Database.Shared;
 
 public interface IAdminPaginationRepository<TProjection> where TProjection : BaseProjection
 {

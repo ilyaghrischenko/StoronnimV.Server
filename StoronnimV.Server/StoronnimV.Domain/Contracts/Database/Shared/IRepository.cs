@@ -1,6 +1,6 @@
 using StoronnimV.Domain.Entities.Shared;
 
-namespace StoronnimV.Domain.Contracts.Shared;
+namespace StoronnimV.Domain.Contracts.Database.Shared;
 
 public interface IRepository<T> where T : BaseEntity
 {

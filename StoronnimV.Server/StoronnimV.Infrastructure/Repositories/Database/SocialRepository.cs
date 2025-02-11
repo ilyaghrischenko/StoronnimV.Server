@@ -1,12 +1,12 @@
-using System.Xml;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using StoronnimV.Domain.Contracts;
+using StoronnimV.Domain.Contracts.Database;
 using StoronnimV.Domain.Entities;
 using StoronnimV.Domain.Projections;
-using StoronnimV.Infrastructure.Repositories.Shared;
+using StoronnimV.Infrastructure.Repositories.Database.Shared;
 
-namespace StoronnimV.Infrastructure.Repositories;
+namespace StoronnimV.Infrastructure.Repositories.Database;
 
 /// <summary>
 /// Репозиторий для получения данных напрямую с бд

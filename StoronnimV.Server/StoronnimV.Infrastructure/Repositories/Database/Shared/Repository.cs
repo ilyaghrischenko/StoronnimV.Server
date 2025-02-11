@@ -1,9 +1,8 @@
 using Microsoft.EntityFrameworkCore;
-using StoronnimV.Domain.Contracts.Shared;
-using StoronnimV.Domain.Entities;
+using StoronnimV.Domain.Contracts.Database.Shared;
 using StoronnimV.Domain.Entities.Shared;
 
-namespace StoronnimV.Infrastructure.Repositories.Shared;
+namespace StoronnimV.Infrastructure.Repositories.Database.Shared;
 
 /// <summary>
 /// Общий репозиторий (Generic), нужен для круд запросов для каждой из сущностей

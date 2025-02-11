@@ -1,12 +1,13 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using StoronnimV.Domain.Contracts;
+using StoronnimV.Domain.Contracts.Database;
 using StoronnimV.Domain.Entities;
 using StoronnimV.Domain.Enums;
 using StoronnimV.Domain.Projections.News;
-using StoronnimV.Infrastructure.Repositories.Shared;
+using StoronnimV.Infrastructure.Repositories.Database.Shared;
 
-namespace StoronnimV.Infrastructure.Repositories;
+namespace StoronnimV.Infrastructure.Repositories.Database;
 
 /// <summary>
 /// Репозиторий для конкретной сущности, нужен для описания метода с инклудами, а так же для специальных селект методов
