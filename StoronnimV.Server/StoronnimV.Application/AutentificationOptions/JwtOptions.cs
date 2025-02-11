@@ -5,12 +5,12 @@ namespace StoronnimV.Application.AutentificationOptions;
 
 public class JwtOptions
 {
-    public const string ISSUER = "MyIssuer";
-    public const string AUDIENCE = "MyAudience";
-    const string KEY = "qzwxecrvtbynumi,o.p/asdfgafdgadfgdfgadfbadfgafdvbsfgbaf";
-    public const int LIFETIME = 1;
+    public required string ISSUER = string.Empty;
+    public required string AUDIENCE = string.Empty;
+    public required string KEY = string.Empty;
+    public required int LIFETIME = 1;
 
-    public static SymmetricSecurityKey GetKey()
+    public SymmetricSecurityKey GetKey()
     {
         return new SymmetricSecurityKey(Encoding.ASCII.GetBytes(KEY));
     }

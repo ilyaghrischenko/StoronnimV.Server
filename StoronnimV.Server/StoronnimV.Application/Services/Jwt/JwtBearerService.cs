@@ -1,5 +1,6 @@
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
+using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using StoronnimV.Application.AutentificationOptions;
 using StoronnimV.Application.Contracts.Jwt;
@@ -7,8 +8,10 @@ using StoronnimV.Domain.Entities;
 
 namespace StoronnimV.Application.Services.Jwt;
 
-public class JwtBearerService : IJwtBearerService
+public class JwtBearerService(IOptions<JwtOptions> jwtOptions) : IJwtBearerService
 {
+    private readonly JwtOptions _jwtOptions = jwtOptions.Value;
+    
     public ClaimsIdentity GetIdentity(Admin admin)
     {
         var claims = new List<Claim>
@@ -27,12 +30,12 @@ public class JwtBearerService : IJwtBearerService
     {
         DateTime timeNow = DateTime.UtcNow;
         JwtSecurityToken jwt = new JwtSecurityToken(
-            issuer: JwtOptions.ISSUER,
-            audience: JwtOptions.AUDIENCE,
+            issuer: _jwtOptions.ISSUER,
+            audience: _jwtOptions.AUDIENCE,
             notBefore: timeNow,
             claims: identity.Claims,
-            expires: timeNow.Add(TimeSpan.FromDays(JwtOptions.LIFETIME)),
-            signingCredentials: new SigningCredentials(JwtOptions.GetKey(), SecurityAlgorithms.HmacSha256)
+            expires: timeNow.Add(TimeSpan.FromDays(_jwtOptions.LIFETIME)),
+            signingCredentials: new SigningCredentials(_jwtOptions.GetKey(), SecurityAlgorithms.HmacSha256)
         );
         return new JwtSecurityTokenHandler().WriteToken(jwt);
     }

@@ -161,6 +161,9 @@ public static class ServiceCollectionsExtension
 
     public static WebApplicationBuilder AddJwtBearer(this WebApplicationBuilder builder)
     {
+        var jwtOptions = builder.Configuration.GetSection("JwtOptions").Get<JwtOptions>();
+        builder.Services.Configure<JwtOptions>(builder.Configuration.GetSection("JwtOptions"));
+        
         builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
             .AddJwtBearer(options =>
             {
@@ -168,15 +171,15 @@ public static class ServiceCollectionsExtension
                 options.TokenValidationParameters = new()
                 {
                     ValidateIssuer = true,
-                    ValidIssuer = JwtOptions.ISSUER,
+                    ValidIssuer = jwtOptions!.ISSUER,
 
                     ValidateAudience = true,
-                    ValidAudience = JwtOptions.AUDIENCE,
+                    ValidAudience = jwtOptions.AUDIENCE,
 
                     ValidateLifetime = true,
 
                     ValidateIssuerSigningKey = true,
-                    IssuerSigningKey = JwtOptions.GetKey()
+                    IssuerSigningKey = jwtOptions.GetKey()
                 };
             });
         builder.Services.AddSwaggerGen(options =>
