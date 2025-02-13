@@ -1,10 +1,12 @@
 using System.Configuration;
 using Hangfire;
 using Hangfire.PostgreSql;
+using Hangfire.PostgreSql.Factories;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
+using Npgsql;
 using Serilog;
 using StoronnimV.Application.AutentificationOptions;
 using StoronnimV.Application.Contracts.Controllers;
@@ -152,7 +154,10 @@ public static class WebApplicationBuilderExtensions
         string? connectionString = builder.Configuration.GetConnectionString("CloudConnection");
         
         builder.Services.AddHangfire(config => config
-            .UsePostgreSqlStorage(connectionString));
+            .UsePostgreSqlStorage(options =>
+            {
+                options.UseNpgsqlConnection(connectionString);
+            }));
 
         builder.Services.AddHangfireServer();
         
