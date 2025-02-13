@@ -47,28 +47,28 @@ public class SocialRepository(IDbContextFactory<StoronnimVContext> contextFactor
         return result;
     }
     
-    public async Task<IEnumerable<SocialProjection>?> GetAllForMemberAsync(long memberId, CancellationToken ct)
-    {
-        _logger.LogInformation($"Repository: SocialRepository Method: GetAllForMemberAsync with memberId: {memberId} started at {DateTime.UtcNow}");
-        
-        await using StoronnimVContext context = await _contextFactory.CreateDbContextAsync(ct);
-        var dbSet = context.Socials;
-        var query = ApplyIncludes(dbSet);
-        
-        var result = await query
-            .AsNoTracking()
-            .Where(social => social.Member.Id == memberId)
-            .Select(social => new SocialProjection
-            {
-                Id = social.Id,
-                Type = social.Type,
-                Url = social.Url
-            })
-            .ToListAsync(ct);
-        
-        _logger.LogInformation($"Repository: SocialRepository Method: GetAllForMemberAsync with memberId: {memberId} ended at {DateTime.UtcNow}");
-
-        return result;
-    }
+    // public async Task<IEnumerable<SocialProjection>?> GetAllForMemberAsync(long memberId, CancellationToken ct)
+    // {
+    //     _logger.LogInformation($"Repository: SocialRepository Method: GetAllForMemberAsync with memberId: {memberId} started at {DateTime.UtcNow}");
+    //     
+    //     await using StoronnimVContext context = await _contextFactory.CreateDbContextAsync(ct);
+    //     var dbSet = context.Socials;
+    //     var query = ApplyIncludes(dbSet);
+    //     
+    //     var result = await query
+    //         .AsNoTracking()
+    //         .Where(social => social.Member.Id == memberId)
+    //         .Select(social => new SocialProjection
+    //         {
+    //             Id = social.Id,
+    //             Type = social.Type,
+    //             Url = social.Url
+    //         })
+    //         .ToListAsync(ct);
+    //     
+    //     _logger.LogInformation($"Repository: SocialRepository Method: GetAllForMemberAsync with memberId: {memberId} ended at {DateTime.UtcNow}");
+    //
+    //     return result;
+    // }
 
 }

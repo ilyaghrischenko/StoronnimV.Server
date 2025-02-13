@@ -3,6 +3,7 @@ using Microsoft.Extensions.Logging;
 using StoronnimV.Domain.Contracts;
 using StoronnimV.Domain.Contracts.Database;
 using StoronnimV.Domain.Entities;
+using StoronnimV.Domain.Projections;
 using StoronnimV.Domain.Projections.Member;
 using StoronnimV.Infrastructure.Repositories.Database.Shared;
 
@@ -40,7 +41,13 @@ public class MemberRepository(IDbContextFactory<StoronnimVContext> contextFactor
                 PhotoUrl = member.PhotoUrl,
                 FullName = member.FullName,
                 Description = member.Description,
-                Role = member.Role
+                Role = member.Role,
+                Socials = member.Socials.Select(social => new SocialProjection
+                {
+                    Id = social.Id,
+                    Type = social.Type,
+                    Url = social.Url
+                })
             })
             .FirstOrDefaultAsync(x => x.Id == id, ct);
         
@@ -54,10 +61,8 @@ public class MemberRepository(IDbContextFactory<StoronnimVContext> contextFactor
         _logger.LogInformation($"Repository: MemberRepository Method: GetAllAsync started at {DateTime.UtcNow}");
         
         await using StoronnimVContext context = await _contextFactory.CreateDbContextAsync(ct);
-        var dbSet = context.Members;
-        var query = ApplyIncludes(dbSet);
         
-        var result = await query
+        var result = await context.Members
             .AsNoTracking()
             .Select(member => new MemberShortProjection
             {
@@ -89,7 +94,13 @@ public class MemberRepository(IDbContextFactory<StoronnimVContext> contextFactor
                 Description = item.Description,
                 FullName = item.FullName,
                 PhotoUrl = item.PhotoUrl,
-                Role = item.Role
+                Role = item.Role,
+                Socials = item.Socials.Select(social => new SocialProjection
+                {
+                    Id = social.Id,
+                    Type = social.Type,
+                    Url = social.Url
+                })
             })
             .ToListAsync(ct);
 
