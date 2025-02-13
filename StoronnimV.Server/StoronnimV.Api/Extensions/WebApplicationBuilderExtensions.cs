@@ -161,7 +161,13 @@ public static class WebApplicationBuilderExtensions
 
     public static WebApplicationBuilder AddJwtBearer(this WebApplicationBuilder builder)
     {
-        var jwtOptions = builder.Configuration.GetSection("JwtOptions").Get<JwtOptions>();
+        JwtOptions? jwtOptions = builder.Configuration.GetSection("JwtOptions").Get<JwtOptions>();
+
+        if (jwtOptions == null)
+        {
+            throw new KeyNotFoundException("JwtOptions are not configured correctly.");
+        }
+        
         builder.Services.Configure<JwtOptions>(builder.Configuration.GetSection("JwtOptions"));
         
         builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
@@ -171,7 +177,7 @@ public static class WebApplicationBuilderExtensions
                 options.TokenValidationParameters = new()
                 {
                     ValidateIssuer = true,
-                    ValidIssuer = jwtOptions!.ISSUER,
+                    ValidIssuer = jwtOptions.ISSUER,
 
                     ValidateAudience = true,
                     ValidAudience = jwtOptions.AUDIENCE,
