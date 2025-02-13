@@ -106,38 +106,9 @@ public class AdminControllerService(
     {
         _logger.LogInformation($"Service: AdminControllerService Method: GetGroupInfoAsync started at {DateTime.UtcNow}");
 
-        var groupPageTask = _groupPageService.GetFirstGroupPageAsync(ct);
-        var membersTask = _memberService.GetAllForAdminAsync(ct);
-        
-        await Task.WhenAll(groupPageTask, membersTask);
-        
-        GroupPageProjection groupPage = await groupPageTask;
-        var members = await membersTask;
-
-        var membersWithSocials = new List<MemberWithSocialsProjection>();
-        members.ToList().ForEach(async void (member) =>
-        {
-            var socialsForMember = await _socialService.GetAllForMemberAsync(member.Id, ct);
-            membersWithSocials.Add(new MemberWithSocialsProjection
-            {
-                Id = member.Id,
-                Member = member,
-                Socials = socialsForMember
-            });
-        });
-        
-        var membersDto = _mapper.Map<IEnumerable<MemberResponse>>(membersWithSocials);
-        
-        var groupPageDto = _mapper.Map<GroupPageResponse>(groupPage);
-
-        AdminGroupPageFullResponse response = new()
-        {
-            GroupPage = groupPageDto,
-            Members = membersDto
-        };
         
         _logger.LogInformation($"Service: AdminControllerService Method: GetGroupInfoAsync ended at {DateTime.UtcNow}");
 
-        return response;
+        return null;
     }
 }

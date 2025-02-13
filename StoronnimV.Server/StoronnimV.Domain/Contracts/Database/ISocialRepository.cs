@@ -7,5 +7,5 @@ namespace StoronnimV.Domain.Contracts.Database;
 public interface ISocialRepository
     : IRepository<Social>, IGetByIdRepository<SocialProjection>
 {
-    public Task<IEnumerable<SocialProjection>?> GetAllForMemberAsync(long memberId, CancellationToken ct);
+    // public Task<IEnumerable<SocialProjection>?> GetAllForMemberAsync(long memberId, CancellationToken ct);
 }

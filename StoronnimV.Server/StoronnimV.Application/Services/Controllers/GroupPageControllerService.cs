@@ -60,20 +60,18 @@ public class GroupPageControllerService(
     {
         _logger.LogInformation($"Service: GroupPageControllerService Method: GetMemberInfoAsync with memberId: {memberId} started at {DateTime.UtcNow}");
         
-        var memberTask = _memberService.GetItemByIdAsync(memberId, ct);
-        var socialsTask = _socialService.GetAllForMemberAsync(memberId, ct);
-        
-        await Task.WhenAll(memberTask, socialsTask);
-        
-        MemberFullProjection member = await memberTask;
-        var socials = await socialsTask;
+        var member = await _memberService.GetItemByIdAsync(memberId, ct);
         
         var memberDto = _mapper.Map<MemberResponse>(member);
-        var socialsDto = _mapper.Map<IEnumerable<SocialResponse>>(socials);
+        var socialsDto = _mapper.Map<IEnumerable<SocialResponse>>(member.Socials);
         
         MemberFullInfoResponse memberFullInfoDto = new()
         {
-            Member = memberDto,
+            Id = memberDto.Id,
+            PhotoUrl = memberDto.PhotoUrl,
+            FullName = memberDto.FullName,
+            Description = memberDto.Description,
+            Role = memberDto.Role,
             Socials = socialsDto
         };
         
