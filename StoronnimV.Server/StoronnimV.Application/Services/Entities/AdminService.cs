@@ -73,4 +73,140 @@ public class AdminService(
 
         return admin;
     }
+
+    public async Task DeleteNewsItemAsync(long id, CancellationToken ct)
+    {
+        _logger.LogInformation($"Service: AdminService Method: DeleteNewsItemAsync started at {DateTime.UtcNow}");
+
+        News? newsItem = await _newsRepository.GetByIdAsync(id, ct);
+
+        if (newsItem is null)
+        {
+            throw new EntityNotFoundException($"NewsItem with id: {id} was not found");
+        }
+        
+        await _newsRepository.DeleteAsync(newsItem, ct);
+
+        if (newsItem.Photo != null)
+        {
+            await _blobRepository.DeleteFileAsync("storonnimv-photo", $"news-{id}", ct);
+        }
+
+        if (newsItem.Video != null)
+        {
+            await _blobRepository.DeleteFileAsync("storonnimv-video", $"news-{id}", ct);
+        }
+
+        _logger.LogInformation($"Service: AdminService Method: DeleteNewsItemAsync ended at {DateTime.UtcNow}");
+    }
+
+    public async Task DeleteScheduleAsync(long id, CancellationToken ct)
+    {
+        _logger.LogInformation($"Service: AdminService Method: DeleteScheduleAsync started at {DateTime.UtcNow}");
+        
+        Schedule? schedule = await _scheduleRepository.GetByIdAsync(id, ct);
+
+        if (schedule is null)
+        {
+            throw new EntityNotFoundException($"Schedule with id: {id} was not found");
+        }
+        
+        await _scheduleRepository.DeleteAsync(schedule, ct);
+
+        if (schedule.Photo != null)
+        {
+            await _blobRepository.DeleteFileAsync("storonnimv-photo", $"schedule-{id}", ct);
+        }
+        
+        _logger.LogInformation($"Service: AdminService Method: DeleteScheduleAsync ended at {DateTime.UtcNow}");
+    }
+
+    public async Task DeleteVideoAsync(long id, CancellationToken ct)
+    {
+        _logger.LogInformation($"Service: AdminService Method: DeleteVideoAsync started at {DateTime.UtcNow}");
+        
+        Video? video = await _videoRepository.GetByIdAsync(id, ct);
+
+        if (video is null)
+        {
+            throw new EntityNotFoundException($"Video with id: {id} was not found");
+        }
+        
+        await _videoRepository.DeleteAsync(video, ct);
+        
+        //TODO:!!!!!!!
+        // await _blobRepository.DeleteFileAsync()
+        
+        _logger.LogInformation($"Service: AdminService Method: DeleteVideoAsync ended at {DateTime.UtcNow}");
+    }
+
+    public async Task DeleteGroupPageAsync(long id, CancellationToken ct)
+    {
+        _logger.LogInformation($"Service: AdminService Method: DeleteGroupPageAsync started at {DateTime.UtcNow}");
+
+        GroupPage? groupPage = await _groupPageRepository.GetByIdAsync(id, ct);
+
+        if (groupPage is null)
+        {
+            throw new EntityNotFoundException($"Group page with id: {id} was not found");
+        }
+        
+        await _groupPageRepository.DeleteAsync(groupPage, ct);
+        
+        await _blobRepository.DeleteFileAsync("storonnimv-photo", $"group-page-{id}", ct);
+        
+        _logger.LogInformation($"Service: AdminService Method: DeleteGroupPageAsync ended at {DateTime.UtcNow}");
+    }
+
+    public async Task DeleteMemberAsync(long id, CancellationToken ct)
+    {
+        _logger.LogInformation($"Service: AdminService Method: DeleteMemberAsync started at {DateTime.UtcNow}");
+        
+        Member? member = await _memberRepository.GetByIdAsync(id, ct);
+
+        if (member is null)
+        {
+            throw new EntityNotFoundException($"Member with id: {id} was not found");
+        }
+        
+        await _memberRepository.DeleteAsync(member, ct);
+        
+        await _blobRepository.DeleteFileAsync("storonnimv-photo", $"member-{id}", ct);
+        
+        _logger.LogInformation($"Service: AdminService Method: DeleteMemberAsync ended at {DateTime.UtcNow}");
+    }
+
+    public async Task DeleteMusicPlatformAsync(long id, CancellationToken ct)
+    {
+        _logger.LogInformation($"Service: AdminService Method: DeleteMusicPlatformAsync started at {DateTime.UtcNow}");
+
+        MusicPlatform? musicPlatform = await _musicPlatformRepository.GetByIdAsync(id, ct);
+
+        if (musicPlatform is null)
+        {
+            throw new EntityNotFoundException($"Music platform with id: {id} was not found");
+        }
+        
+        await _musicPlatformRepository.DeleteAsync(musicPlatform, ct);
+
+        await _blobRepository.DeleteFileAsync("storonnimv-photo", $"music-platform-{id}", ct);
+        
+        _logger.LogInformation($"Service: AdminService Method: DeleteMusicPlatformAsync ended at {DateTime.UtcNow}");
+    }
+
+    public async Task DeleteSocialAsync(long id, CancellationToken ct)
+    {
+        _logger.LogInformation($"Service: AdminService Method: DeleteSocialAsync started at {DateTime.UtcNow}");
+        
+        Social? social = await _socialRepository.GetByIdAsync(id, ct);
+
+        if (social is null)
+        {
+            throw new EntityNotFoundException($"Social with id: {id} was not found");
+        }
+
+        await _socialRepository.DeleteAsync(social, ct);
+        
+        _logger.LogInformation($"Service: AdminService Method: DeleteSocialAsync ended at {DateTime.UtcNow}");
+    }
 }
