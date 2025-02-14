@@ -77,35 +77,4 @@ public class MemberRepository(IDbContextFactory<StoronnimVContext> contextFactor
 
         return result;
     }
-
-    public async Task<IEnumerable<MemberFullProjection>?> GetAllForAdminAsync(CancellationToken ct)
-    {
-        _logger.LogInformation($"Repository: MemberRepository Method: GetAllForAdminAsync started at {DateTime.UtcNow}");
-        
-        await using StoronnimVContext context = await _contextFactory.CreateDbContextAsync(ct);
-        var dbSet = context.Members;
-        var query = ApplyIncludes(dbSet);
-
-        var result = await query
-            .AsNoTracking()
-            .Select(item => new MemberFullProjection
-            {
-                Id = item.Id,
-                Description = item.Description,
-                FullName = item.FullName,
-                PhotoUrl = item.PhotoUrl,
-                Role = item.Role,
-                Socials = item.Socials.Select(social => new SocialProjection
-                {
-                    Id = social.Id,
-                    Type = social.Type,
-                    Url = social.Url
-                })
-            })
-            .ToListAsync(ct);
-
-        _logger.LogInformation($"Repository: MemberRepository Method: GetAllForAdminAsync ended at {DateTime.UtcNow}");
-
-        return result;
-    }
 }

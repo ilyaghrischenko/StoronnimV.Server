@@ -54,7 +54,6 @@ public static class WebApplicationBuilderExtensions
 
         builder.Services.AddScoped<IHomeService, HomeService>();
         builder.Services.AddScoped<IJwtBearerService, JwtBearerService>();
-        builder.Services.AddScoped<IBlobRepository, BlobRepository>();
         
         return builder;
     }
@@ -78,6 +77,7 @@ public static class WebApplicationBuilderExtensions
         builder.Services.AddScoped<IMusicPlatformRepository, MusicPlatformRepository>();
         builder.Services.AddScoped<IVideoRepository, VideoRepository>();
         builder.Services.AddScoped<IAdminRepository, AdminRepository>();
+        builder.Services.AddScoped<IBlobRepository, BlobRepository>();
         
         return builder;
     }

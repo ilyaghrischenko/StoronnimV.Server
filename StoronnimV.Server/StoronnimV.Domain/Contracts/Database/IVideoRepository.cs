@@ -6,9 +6,7 @@ namespace StoronnimV.Domain.Contracts.Database;
 
 public interface IVideoRepository 
     : IRepository<Video>, IGetByIdRepository<VideoShortProjection>,
-        IPaginationRepository<VideoShortProjection>, IAdminPaginationRepository<VideoFullProjection>,
-        IReceivableByTitleRepository<VideoFullProjection>
+        IPaginationRepository<VideoShortProjection>
 {
     public Task<VideoShortProjection?> GetPromotionVideoForHomePageAsync(CancellationToken ct);
-    public Task<int> GetTotalCountForAdminPageAsync(CancellationToken ct);
 }

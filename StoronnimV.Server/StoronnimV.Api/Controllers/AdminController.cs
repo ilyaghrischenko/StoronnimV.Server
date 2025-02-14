@@ -22,68 +22,17 @@ namespace StoronnimV.Api.Controllers
     {
         private readonly IAdminControllerService _adminControllerService = adminControllerService;
         private readonly ILogger<AdminController> _logger = logger;
-        
-        [HttpGet("news/page/{page:int}")]
-        public async Task<ActionResult<PaginationResponse<NewsResponse>>> GetNewsForAdminPage([FromRoute] int page,
-            CancellationToken ct, [FromQuery] int pageSize = 30)
+
+        [HttpDelete("news/{id:long}")]
+        public async Task<IActionResult> DeleteNewsItem([FromRoute] long id, CancellationToken ct)
         {
-            _logger.LogInformation($"Controller: AdminController Method: GetNewsForAdminPage with [page: {page}, pageSize: {pageSize}] started at {DateTime.UtcNow}");
+            _logger.LogInformation($"Controller: AdminController Method: DeleteNewsItem with id: {id} started at {DateTime.UtcNow}");
+
+            await _adminControllerService.DeleteNewsItemAsync(id, ct);
             
-            var newsPaginationResponse = await _adminControllerService.GetNewsForPageAsync(page, pageSize, ct);
-            
-            _logger.LogInformation($"Controller: AdminController Method: GetNewsForAdminPage with [page: {page}, pageSize: {pageSize}] ended at {DateTime.UtcNow}");
+            _logger.LogInformation($"Controller: AdminController Method: DeleteNewsItem with id: {id} ended at {DateTime.UtcNow}");
 
-            return Ok(newsPaginationResponse);
-        }
-
-        [HttpGet("videos/page/{page:int}")]
-        public async Task<ActionResult<PaginationResponse<VideoPageResponse>>> GetVideosForAdminPage([FromRoute] int page,
-            CancellationToken ct, [FromQuery] int pageSize = 30)
-        {
-            _logger.LogInformation($"Controller: AdminController Method: GetVideosForAdminPage with [page: {page}, pageSize: {pageSize}] started at {DateTime.UtcNow}");
-            
-            var videosPaginationResult = await _adminControllerService.GetVideosForPageAsync(page, pageSize, ct);
-            
-            _logger.LogInformation($"Controller: AdminController Method: GetVideosForAdminPage with [page: {page}, pageSize: {pageSize}] ended at {DateTime.UtcNow}");
-
-            return Ok(videosPaginationResult);
-        }
-
-        [HttpGet("group")]
-        public async Task<ActionResult<AdminGroupPageFullResponse>> GetGroupInfo(CancellationToken ct)
-        {
-            _logger.LogInformation($"Controller: AdminController Method: GetGroupInfo started at {DateTime.UtcNow}");
-
-            var adminGroupInfo = await _adminControllerService.GetGroupInfoAsync(ct);
-            
-            _logger.LogInformation($"Controller: AdminController Method: GetGroupInfo ended at {DateTime.UtcNow}");
-
-            return adminGroupInfo;
-        }
-
-        [HttpGet("news/{title}")]
-        public async Task<ActionResult<IEnumerable<NewsResponse>>> GetNewsByTitle([FromRoute] string title, CancellationToken ct)
-        {
-            _logger.LogInformation($"Controller: AdminController Method: GetNewsByTitle with title: {title} started at {DateTime.UtcNow}");
-
-            var newsByTitle = await _adminControllerService.GetNewsByTitleAsync(title, ct);
-            
-            _logger.LogInformation($"Controller: AdminController Method: GetNewsByTitle with title: {title} ended at {DateTime.UtcNow}");
-
-            return Ok(newsByTitle);
-        }
-
-        [HttpGet("videos/{title}")]
-        public async Task<ActionResult<IEnumerable<VideoPageResponse>>> GetVideosByTitle([FromRoute] string title,
-            CancellationToken ct)
-        {
-            _logger.LogInformation($"Controller: AdminController Method: GetVideosByTitle with title: {title} started at {DateTime.UtcNow}");
-
-            var videosByTitle = await _adminControllerService.GetVideosByTitleAsync(title, ct);
-            
-            _logger.LogInformation($"Controller: AdminController Method: GetVideosByTitle with title: {title} ended at {DateTime.UtcNow}");
-
-            return Ok(videosByTitle);
+            return NoContent();
         }
     }
 }

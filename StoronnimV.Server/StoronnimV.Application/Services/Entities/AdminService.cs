@@ -4,6 +4,7 @@ using StoronnimV.Application.Contracts.Entities;
 using StoronnimV.Application.DTO.Requests.Account;
 using StoronnimV.Application.Exceptions;
 using StoronnimV.Domain.Contracts;
+using StoronnimV.Domain.Contracts.AzureBlobStorage;
 using StoronnimV.Domain.Contracts.Database;
 using StoronnimV.Domain.Entities;
 using StoronnimV.Domain.Projections;
@@ -12,10 +13,26 @@ namespace StoronnimV.Application.Services.Entities;
 
 public class AdminService(
     IAdminRepository adminRepository,
+    INewsRepository newsRepository,
+    IScheduleRepository scheduleRepository,
+    IVideoRepository videoRepository,
+    IGroupPageRepository groupPageRepository,
+    IMemberRepository memberRepository,
+    IMusicPlatformRepository musicPlatformRepository,
+    ISocialRepository socialRepository,
+    IBlobRepository blobRepository,
     ILogger<AdminService> logger,
     IPasswordHasher<Admin> passwordHasher) : IAdminService
 {
     private readonly IAdminRepository _adminRepository = adminRepository;
+    private readonly INewsRepository _newsRepository = newsRepository;
+    private readonly IScheduleRepository _scheduleRepository = scheduleRepository;
+    private readonly IVideoRepository _videoRepository = videoRepository;
+    private readonly IGroupPageRepository _groupPageRepository = groupPageRepository;
+    private readonly IMemberRepository _memberRepository = memberRepository;
+    private readonly IMusicPlatformRepository _musicPlatformRepository = musicPlatformRepository;
+    private readonly ISocialRepository _socialRepository = socialRepository;
+    private readonly IBlobRepository _blobRepository = blobRepository;
     private readonly ILogger<AdminService> _logger = logger;
     private readonly IPasswordHasher<Admin> _passwordHasher = passwordHasher;
     
@@ -89,12 +106,13 @@ public class AdminService(
 
         if (newsItem.Photo != null)
         {
-            await _blobRepository.DeleteFileAsync("storonnimv-photo", $"news-{id}", ct);
+            await _blobRepository.DeleteAllFilesByNameAsync("storonnimv-photo", $"news-{id}", ct);
         }
 
+        //TODO!! удалять ли видео с блоба для каждой новости? или просто в методе удаления самого видео удалять с блоба
         if (newsItem.Video != null)
         {
-            await _blobRepository.DeleteFileAsync("storonnimv-video", $"news-{id}", ct);
+            await _blobRepository.DeleteFileAsync("storonnimv-video", $"video-{newsItem.Video.Id}", ct);
         }
 
         _logger.LogInformation($"Service: AdminService Method: DeleteNewsItemAsync ended at {DateTime.UtcNow}");
@@ -115,7 +133,7 @@ public class AdminService(
 
         if (schedule.Photo != null)
         {
-            await _blobRepository.DeleteFileAsync("storonnimv-photo", $"schedule-{id}", ct);
+            await _blobRepository.DeleteAllFilesByNameAsync("storonnimv-photo", $"schedule-{id}", ct);
         }
         
         _logger.LogInformation($"Service: AdminService Method: DeleteScheduleAsync ended at {DateTime.UtcNow}");
@@ -133,9 +151,8 @@ public class AdminService(
         }
         
         await _videoRepository.DeleteAsync(video, ct);
-        
-        //TODO:!!!!!!!
-        // await _blobRepository.DeleteFileAsync()
+
+        await _blobRepository.DeleteFileAsync("storonnimv-video", $"video-{id}", ct);
         
         _logger.LogInformation($"Service: AdminService Method: DeleteVideoAsync ended at {DateTime.UtcNow}");
     }
@@ -153,7 +170,7 @@ public class AdminService(
         
         await _groupPageRepository.DeleteAsync(groupPage, ct);
         
-        await _blobRepository.DeleteFileAsync("storonnimv-photo", $"group-page-{id}", ct);
+        await _blobRepository.DeleteAllFilesByNameAsync("storonnimv-photo", $"group-page-{id}", ct);
         
         _logger.LogInformation($"Service: AdminService Method: DeleteGroupPageAsync ended at {DateTime.UtcNow}");
     }
@@ -171,7 +188,7 @@ public class AdminService(
         
         await _memberRepository.DeleteAsync(member, ct);
         
-        await _blobRepository.DeleteFileAsync("storonnimv-photo", $"member-{id}", ct);
+        await _blobRepository.DeleteAllFilesByNameAsync("storonnimv-photo", $"member-{id}", ct);
         
         _logger.LogInformation($"Service: AdminService Method: DeleteMemberAsync ended at {DateTime.UtcNow}");
     }
@@ -189,7 +206,7 @@ public class AdminService(
         
         await _musicPlatformRepository.DeleteAsync(musicPlatform, ct);
 
-        await _blobRepository.DeleteFileAsync("storonnimv-photo", $"music-platform-{id}", ct);
+        await _blobRepository.DeleteAllFilesByNameAsync("storonnimv-photo", $"music-platform-{id}", ct);
         
         _logger.LogInformation($"Service: AdminService Method: DeleteMusicPlatformAsync ended at {DateTime.UtcNow}");
     }

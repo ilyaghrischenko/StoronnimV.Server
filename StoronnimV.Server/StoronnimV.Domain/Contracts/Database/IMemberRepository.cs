@@ -5,8 +5,7 @@ using StoronnimV.Domain.Projections.Member;
 namespace StoronnimV.Domain.Contracts.Database;
 
 public interface IMemberRepository
-    : IRepository<Member>, IGetByIdRepository<MemberFullProjection>, IGetAllRepository<MemberShortProjection>,
-        IAdminGetAllRepository<MemberFullProjection>
+    : IRepository<Member>, IGetByIdRepository<MemberFullProjection>, IGetAllRepository<MemberShortProjection>
 {
     
 }

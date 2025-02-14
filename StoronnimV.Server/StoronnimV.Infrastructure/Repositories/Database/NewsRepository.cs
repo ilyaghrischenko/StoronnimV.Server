@@ -81,36 +81,6 @@ public class NewsRepository(
         return result;
     }
 
-    public async Task<IEnumerable<NewsFullProjection>?> GetForAdminPageAsync(int page, CancellationToken ct, int pageSize = 10, params object[] args)
-    {
-        _logger.LogInformation($"Repository: NewsRepository Method: GetForAdminPageAsync with [page: {page}, pageSize: {pageSize}] started at {DateTime.UtcNow}");
-        
-        await using StoronnimVContext context = await _contextFactory.CreateDbContextAsync(ct);
-        var dbSet = context.NewsItems;
-        var query = ApplyIncludes(dbSet);
-        
-        var result = await query
-            .AsNoTracking()
-            .OrderByDescending(newsItem => newsItem.Date)
-            .Skip((page - 1) * pageSize)
-            .Take(pageSize)
-            .Select(newsItem => new NewsFullProjection
-            {
-                Id = newsItem.Id,
-                Photo = newsItem.Photo,
-                Video = newsItem.Video.Url,
-                Title = newsItem.Title,
-                Description = newsItem.Description,
-                Priority = newsItem.Priority,
-                Date = newsItem.Date
-            })
-            .ToListAsync(ct);
-        
-        _logger.LogInformation($"Repository: NewsRepository Method: GetForAdminPageAsync with [page: {page}, pageSize: {pageSize}] ended at {DateTime.UtcNow}");
-
-        return result;
-    }
-
     public async Task<int> GetTotalCountAsync(CancellationToken ct, params object[] args)
     {
         _logger.LogInformation($"Repository: NewsRepository Method: GetTotalCountAsync started at {DateTime.UtcNow}");
@@ -148,34 +118,5 @@ public class NewsRepository(
         _logger.LogInformation($"Repository: NewsRepository Method: GetNewsForHomePageAsync with count: {count} ended at {DateTime.UtcNow}");
 
         return result;
-    }
-
-    public async Task<IEnumerable<NewsFullProjection>?> GetItemsByTitle(string title, CancellationToken ct)
-    {
-        _logger.LogInformation($"Repository: NewsRepository Method: GetItemsByTitle with title: {title} started at {DateTime.UtcNow}");
-        
-        await using StoronnimVContext context = await _contextFactory.CreateDbContextAsync(ct);
-        var dbSet = context.NewsItems;
-        var query = ApplyIncludes(dbSet);
-        
-        var itemsByTitle = await query
-            .AsNoTracking()
-            .Select(newsItem => new NewsFullProjection
-            {
-                Id = newsItem.Id,
-                Date = newsItem.Date,
-                Description = newsItem.Description,
-                Photo = newsItem.Photo,
-                Priority = newsItem.Priority,
-                Title = newsItem.Title,
-                Video = newsItem.Video.Url
-            })
-            .Where(newsItem => newsItem.Title.Trim().ToLower().Contains(title))
-            .OrderByDescending(newsItem => newsItem.Date)
-            .ToListAsync(ct);
-        
-        _logger.LogInformation($"Repository: NewsRepository Method: GetItemsByTitle with title: {title} ended at {DateTime.UtcNow}");
-
-        return itemsByTitle;
     }
 }

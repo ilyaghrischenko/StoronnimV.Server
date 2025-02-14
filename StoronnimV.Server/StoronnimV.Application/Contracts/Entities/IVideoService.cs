@@ -4,8 +4,7 @@ using StoronnimV.Domain.Projections.Video;
 namespace StoronnimV.Application.Contracts.Entities;
 
 public interface IVideoService 
-    : IGetByIdService<VideoShortProjection>, IAdminPaginationService<VideoFullProjection>,
-        IPaginationService<VideoShortProjection>, IReceivableByTitleService<VideoFullProjection>
+    : IGetByIdService<VideoShortProjection>, IPaginationService<VideoShortProjection>
 {
     
 }
