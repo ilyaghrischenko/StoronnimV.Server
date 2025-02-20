@@ -77,6 +77,7 @@ app.UseStaticFiles();
 app.UseCors("AllowReactApp");
 
 app.UseMiddleware<ExceptionMiddleware>();
+app.UseMiddleware<LoggingMiddleware>();
 
 app.UseHangfireDashboard();
 app.MapHangfireDashboard();
