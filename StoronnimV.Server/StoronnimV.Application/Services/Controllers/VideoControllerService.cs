@@ -21,21 +21,15 @@ public class VideoControllerService(
     
     public async Task<VideoPageShortResponse> GetItemByIdAsync(long id, CancellationToken ct)
     {
-        _logger.LogInformation($"Service: VideoControllerService Method: GetItemByIdAsync with id: {id} started at {DateTime.UtcNow}");
-
         VideoShortProjection video = await _videoService.GetItemByIdAsync(id, ct);
         
         var videoDto = _mapper.Map<VideoPageShortResponse>(video);
         
-        _logger.LogInformation($"Service: VideoControllerService Method: GetItemByIdAsync with id: {id} ended at {DateTime.UtcNow}");
-
         return videoDto;
     }
     
     public async Task<PaginationResponse<VideoPageShortResponse>> GetForPageAsync(int page, int pageSize, CancellationToken ct, params object[] args)
     {
-        _logger.LogInformation($"Service: VideoControllerService Method: GetForPageAsync with page: {page} started at {DateTime.UtcNow}");
-        
         string type = (string)args[0];
         
         PaginationResult<VideoShortProjection> paginationResult = await _videoService.GetForPageAsync(page, pageSize, ct, type);
@@ -50,8 +44,6 @@ public class VideoControllerService(
             Items = videosDto
         };
         
-        _logger.LogInformation($"Service: VideoControllerService Method: GetForPageAsync with page: {page} ended at {DateTime.UtcNow}");
-
         return paginationResponse;
     }
 }

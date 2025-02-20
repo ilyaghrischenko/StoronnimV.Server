@@ -20,23 +20,15 @@ public class MemberService(IMemberRepository memberRepository,
     
     public async Task<IEnumerable<MemberShortProjection>> GetAllAsync(CancellationToken ct)
     {
-        _logger.LogInformation($"Service: MemberService Method: GetAllAsync started at {DateTime.UtcNow}");
-        
         var members = await _memberRepository.GetAllAsNoTrackingAsync(ct);
         
-        _logger.LogInformation($"Service: MemberService Method: GetAllAsync ended at {DateTime.UtcNow}");
-
         return members ?? new List<MemberShortProjection>();
     }
 
     public async Task<MemberFullProjection> GetItemByIdAsync(long id, CancellationToken ct)
     {
-        _logger.LogInformation($"Service: MemberService Method: GetItemByIdAsync with id: {id} started at {DateTime.UtcNow}");
-        
         MemberFullProjection member = await _memberRepository.GetByIdAsNoTrackingAsync(id, ct)
                                       ?? throw new EntityNotFoundException($"Member with id: {id} was not found");
-
-        _logger.LogInformation($"Service: MemberService Method: GetItemByIdAsync with id: {id} ended at {DateTime.UtcNow}");
 
         return member;
     }

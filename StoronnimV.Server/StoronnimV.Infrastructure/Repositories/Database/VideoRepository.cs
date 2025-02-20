@@ -24,9 +24,6 @@ public class VideoRepository(
 
     public async Task<VideoShortProjection?> GetByIdAsNoTrackingAsync(long id, CancellationToken ct)
     {
-        _logger.LogInformation(
-            $"Repository: VideoRepository Method: GetByIdAsNoTrackingAsync with id: {id} started at {DateTime.UtcNow}");
-
         await using StoronnimVContext context = await _contextFactory.CreateDbContextAsync(ct);
 
         VideoShortProjection? video = await context.Videos
@@ -39,16 +36,11 @@ public class VideoRepository(
             })
             .FirstOrDefaultAsync(x => x.Id == id, ct);
 
-        _logger.LogInformation(
-            $"Repository: VideoRepository Method: GetByIdAsNoTrackingAsync with id: {id} ended at {DateTime.UtcNow}");
-
         return video;
     }
 
     public async Task<VideoShortProjection?> GetPromotionVideoForHomePageAsync(CancellationToken ct)
     {
-        _logger.LogInformation($"Repository: VideoRepository Method: GetPromotionVideoForHomePageAsync started at {DateTime.UtcNow}");
-        
         await using StoronnimVContext context = await _contextFactory.CreateDbContextAsync(ct);
 
         VideoShortProjection? promotionVideo = await context.Videos
@@ -62,16 +54,12 @@ public class VideoRepository(
             })
             .FirstOrDefaultAsync(ct);
         
-        _logger.LogInformation($"Repository: VideoRepository Method: GetPromotionVideoForHomePageAsync ended at {DateTime.UtcNow}");
-
         return promotionVideo;
     }
 
 
     public async Task<IEnumerable<VideoShortProjection>?> GetForPageAsync(int page, CancellationToken ct, int pageSize = 10, params object[] args)
     {
-        _logger.LogInformation($"Repository: VideoRepository Method: GetForPageAsync with [page: {page}, pageSize: {pageSize}] started at {DateTime.UtcNow}");
-
         string type = (string)args[0];
         var typeEnum = Enum.Parse<VideoType>(type);
         
@@ -90,15 +78,11 @@ public class VideoRepository(
             })
             .ToListAsync(ct);
         
-        _logger.LogInformation($"Repository: VideoRepository Method: GetVideoByType with type: {type} ended at {DateTime.UtcNow}");
-
         return videos;
     }
 
     public async Task<int> GetTotalCountAsync(CancellationToken ct, params object[] args)
     {
-        _logger.LogInformation($"Repository: VideoRepository Method: GetTotalCountAsync started at {DateTime.UtcNow}");
-        
         string type = (string)args[0];
         var typeEnum = Enum.Parse<VideoType>(type);
         
@@ -109,8 +93,6 @@ public class VideoRepository(
             .Where(video => video.Type == typeEnum)
             .CountAsync(ct);
         
-        _logger.LogInformation($"Repository: VideoRepository Method: GetTotalCountAsync ended at {DateTime.UtcNow}");
-
         return count;
     }
 }

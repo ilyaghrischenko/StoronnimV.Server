@@ -21,14 +21,8 @@ public class NewsService(
 
     public async Task<NewsFullProjection> GetItemByIdAsync(long id, CancellationToken ct)
     {
-        _logger.LogInformation(
-            $"Service: NewsService Method: GetItemByIdAsync with id: {id} started at {DateTime.UtcNow}");
-
         NewsFullProjection newsItem = await _newsRepository.GetByIdAsNoTrackingAsync(id, ct)
                                       ?? throw new EntityNotFoundException($"News with id: {id} was not found");
-
-        _logger.LogInformation(
-            $"Service: NewsService Method: GetItemByIdAsync with id: {id} ended at {DateTime.UtcNow}");
 
         return newsItem;
     }
@@ -36,9 +30,6 @@ public class NewsService(
     public async Task<PaginationResult<NewsPaginationProjection>> GetForPageAsync(int page, int pageSize, CancellationToken ct,
         params object[] args)
     {
-        _logger.LogInformation(
-            $"Service: NewsService Method: GetForPageAsync with [page: {page}, pageSize: {pageSize}] started at {DateTime.UtcNow}");
-
         if (page <= 0)
         {
             throw new PaginationException("invalid page number");
@@ -82,10 +73,6 @@ public class NewsService(
                 TotalItems = 0,
                 Items = []
             };
-        }
-        finally
-        {
-            _logger.LogInformation($"Service: NewsService Method: GetForPageAsync with [page: {page}, pageSize: {pageSize}] ended at {DateTime.UtcNow}");
         }
     }
 }

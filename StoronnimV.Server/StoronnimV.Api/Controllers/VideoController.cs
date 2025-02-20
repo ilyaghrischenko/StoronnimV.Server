@@ -26,13 +26,7 @@ namespace StoronnimV.Api.Controllers
         [HttpGet("{id:long}")]
         public async Task<ActionResult<VideoPageShortResponse>> GetVideo([FromRoute] long id, CancellationToken ct)
         {
-            _logger.LogInformation(
-                $"Controller: VideoController Method: GetVideo with id: {id} started at {DateTime.UtcNow}");
-
             VideoPageShortResponse video = await _videoControllerService.GetItemByIdAsync(id, ct);
-
-            _logger.LogInformation(
-                $"Controller: VideoController Method: GetVideo with id: {id} ended at {DateTime.UtcNow}");
 
             return Ok(video);
         }
@@ -41,11 +35,7 @@ namespace StoronnimV.Api.Controllers
         public async Task<ActionResult<PaginationResponse<VideoPageShortResponse>>> GetVideosForPage
             ([FromRoute] int page, [FromRoute] string type, CancellationToken ct, [FromQuery] int pageSize = 5)
         {
-            _logger.LogInformation($"Controller: NewsController Method: GetNewsForPage with page: {page} started at {DateTime.UtcNow}");
-            
             var videosPaginationResponse = await _videoControllerService.GetForPageAsync(page, pageSize, ct, type);
-            
-            _logger.LogInformation($"Controller: NewsController Method: GetNewsForPage with page: {page} ended at {DateTime.UtcNow}");
             
             return Ok(videosPaginationResponse);
         }

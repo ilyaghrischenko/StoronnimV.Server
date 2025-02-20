@@ -20,11 +20,7 @@ namespace StoronnimV.Api.Controllers
         [HttpGet]
         public async Task<ActionResult<GroupPageFullInfoResponse>> GetGroupPageInfo(CancellationToken ct)
         {
-            _logger.LogInformation($"Controller: GroupPageController Method: GetGroupPageInfoAsync started at {DateTime.UtcNow}");
-            
             GroupPageFullInfoResponse groupPage = await _groupPageControllerService.GetGroupPageInfoAsync(ct);
-            
-            _logger.LogInformation($"Controller: GroupPageController Method: GetGroupPageInfoAsync ended at {DateTime.UtcNow}");
             
             return Ok(groupPage);
             
@@ -33,11 +29,7 @@ namespace StoronnimV.Api.Controllers
         [HttpGet("member/{memberId:long}")]
         public async Task<ActionResult<MemberFullInfoResponse>> GetMember([FromRoute] long memberId, CancellationToken ct)
         {
-            _logger.LogInformation($"Controller: GroupPageController Method: GetMemberInfoAsync started at {DateTime.UtcNow}");
-            
             MemberFullInfoResponse member = await _groupPageControllerService.GetMemberAsync(memberId, ct);
-            
-            _logger.LogInformation($"Controller: GroupPageController Method: GetMemberInfoAsync ended at {DateTime.UtcNow}");
             
             return Ok(member);
         }

@@ -23,9 +23,6 @@ public class ScheduleRepository(
 
     public async Task<ScheduleFullProjection?> GetByIdAsNoTrackingAsync(long id, CancellationToken ct)
     {
-        _logger.LogInformation(
-            $"Repository: ScheduleRepository Method: GetByIdAsNoTrackingAsync with id: {id} started at {DateTime.UtcNow}");
-
         await using StoronnimVContext context = await _contextFactory.CreateDbContextAsync(ct);
         var dbSet = context.Schedules;
         var query = ApplyIncludes(dbSet);
@@ -44,16 +41,11 @@ public class ScheduleRepository(
             })
             .FirstOrDefaultAsync(schedule => schedule.Id == id, ct);
 
-        _logger.LogInformation(
-            $"Repository: ScheduleRepository Method: GetByIdAsNoTrackingAsync with id: {id} ended at {DateTime.UtcNow}");
-
         return result;
     }
 
     public async Task<IEnumerable<ScheduleShortProjection>?> GetAllAsNoTrackingAsync(CancellationToken ct)
     {
-        _logger.LogInformation($"Repository: ScheduleRepository Method: GetAllAsync started at {DateTime.UtcNow}");
-
         await using StoronnimVContext context = await _contextFactory.CreateDbContextAsync(ct);
         var dbSet = context.Schedules;
         var query = ApplyIncludes(dbSet);
@@ -72,33 +64,22 @@ public class ScheduleRepository(
             })
             .ToListAsync(ct);
 
-        _logger.LogInformation($"Repository: ScheduleRepository Method: GetAllAsync ended at {DateTime.UtcNow}");
-
         return result;
     }
 
     public async Task<IEnumerable<Schedule>?> GetAllSchedulesAsync(CancellationToken ct)
     {
-        _logger.LogInformation(
-            $"Repository: ScheduleRepository Method: GetAllSchedulesAsync started at {DateTime.UtcNow}");
-
         await using StoronnimVContext context = await _contextFactory.CreateDbContextAsync(ct);
         var dbSet = context.Schedules;
         var query = ApplyIncludes(dbSet);
 
         var result = await dbSet.ToListAsync(ct);
 
-        _logger.LogInformation(
-            $"Repository: ScheduleRepository Method: GetAllSchedulesAsync ended at {DateTime.UtcNow}");
-
         return result;
     }
 
     public async Task<ScheduleShortProjection?> GetNearestScheduleForHomePageAsync(CancellationToken ct)
     {
-        _logger.LogInformation(
-            $"Repository: ScheduleRepository Method: GetScheduleForHomePageAsync started at {DateTime.UtcNow}");
-
         await using StoronnimVContext context = await _contextFactory.CreateDbContextAsync(ct);
         var dbSet = context.Schedules;
         var query = ApplyIncludes(dbSet);
@@ -116,9 +97,6 @@ public class ScheduleRepository(
                 Location = schedule.Location
             })
             .FirstOrDefaultAsync(ct);
-
-        _logger.LogInformation(
-            $"Repository: ScheduleRepository Method: GetScheduleForHomePageAsync ended at {DateTime.UtcNow}");
 
         return result;
     }

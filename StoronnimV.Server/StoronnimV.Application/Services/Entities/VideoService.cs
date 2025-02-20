@@ -18,23 +18,14 @@ public class VideoService(
 
     public async Task<VideoShortProjection> GetItemByIdAsync(long id, CancellationToken ct)
     {
-        _logger.LogInformation(
-            $"Service: VideoService Method: GetItemByIdAsync with id: {id} started at {DateTime.UtcNow}");
-
         VideoShortProjection video = await _videoRepository.GetByIdAsNoTrackingAsync(id, ct)
                                      ?? throw new EntityNotFoundException($"Video with id: {id} was not found");
-
-        _logger.LogInformation(
-            $"Service: VideoService Method: GetItemByIdAsync with id: {id} ended at {DateTime.UtcNow}");
 
         return video;
     }
 
     public async Task<PaginationResult<VideoShortProjection>> GetForPageAsync(int page, int pageSize, CancellationToken ct, params object[] args)
     {
-        _logger.LogInformation(
-            $"Service: VideoService Method: GetForPageAsync with [page: {page}, pageSize: {pageSize}] started at {DateTime.UtcNow}");
-
         string type = (string)args[0];
         
         if (page <= 0)
@@ -80,10 +71,6 @@ public class VideoService(
                 TotalItems = 0,
                 Items = []
             };
-        }
-        finally
-        {
-            _logger.LogInformation($"Service: VideoService Method: GetForPageAsync with [page: {page}, pageSize: {pageSize}] ended at {DateTime.UtcNow}");
         }
     }
 }

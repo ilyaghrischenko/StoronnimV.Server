@@ -21,8 +21,6 @@ public class GroupPageRepository(IDbContextFactory<StoronnimVContext> contextFac
 
     public async Task<GroupPageProjection?> GetByIdAsNoTrackingAsync(long id, CancellationToken ct)
     {
-        _logger.LogInformation($"Repository: GroupPageRepository Method: GetByIdAsNoTrackingAsync with id: {id} started at {DateTime.UtcNow}");
-        
         await using StoronnimVContext context = await _contextFactory.CreateDbContextAsync(ct);
         var dbSet = context.GroupPages;
         var query = ApplyIncludes(dbSet);
@@ -37,15 +35,11 @@ public class GroupPageRepository(IDbContextFactory<StoronnimVContext> contextFac
             })
             .FirstOrDefaultAsync(x => x.Id == id, ct);
         
-        _logger.LogInformation($"Repository: GroupPageRepository Method: GetByIdAsNoTrackingAsync with id: {id} ended at {DateTime.UtcNow}");
-
         return result;
     }
 
     public async Task<IEnumerable<GroupPageProjection>?> GetAllAsNoTrackingAsync(CancellationToken ct)
     {
-        _logger.LogInformation($"Repository: GroupPageRepository Method: GetAllAsync started at {DateTime.UtcNow}");
-        
         await using StoronnimVContext context = await _contextFactory.CreateDbContextAsync(ct);
         var dbSet = context.GroupPages;
         var query = ApplyIncludes(dbSet);
@@ -60,15 +54,11 @@ public class GroupPageRepository(IDbContextFactory<StoronnimVContext> contextFac
             })
             .ToListAsync(ct);
         
-        _logger.LogInformation($"Repository: GroupPageRepository Method: GetAllAsync ended at {DateTime.UtcNow}");
-
         return result;
     }
     
     public async Task<GroupPageProjection?> GetFirstGroupPageAsync(CancellationToken ct)
     {
-        _logger.LogInformation($"Repository: GroupPageRepository Method: GetFirstGroupPageAsync started at {DateTime.UtcNow}");
-        
         await using StoronnimVContext context = await _contextFactory.CreateDbContextAsync(ct);
         var dbSet = context.GroupPages;
         var query = ApplyIncludes(dbSet);
@@ -83,8 +73,6 @@ public class GroupPageRepository(IDbContextFactory<StoronnimVContext> contextFac
             })
             .FirstOrDefaultAsync(ct);
         
-        _logger.LogInformation($"Repository: GroupPageRepository Method: GetFirstGroupPageAsync ended at {DateTime.UtcNow}");
-
         return result;
     }
 }

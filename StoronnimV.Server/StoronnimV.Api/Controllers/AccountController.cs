@@ -17,11 +17,7 @@ namespace StoronnimV.Api.Controllers
         [HttpPost("login")]
         public async Task<ActionResult<string>> LogIn([FromBody] LogInRequest request, CancellationToken ct)
         {
-            _logger.LogInformation($"Controller: AccountController Method: LogIn with [login: {request.Login}, password: {request.Password}] started at {DateTime.UtcNow}");
-            
             string token = await _accountControllerService.LogInAsync(request, ct);
-            
-            _logger.LogInformation($"Controller: AccountController Method: LogIn with [login: {request.Login}, password: {request.Password}] ended at {DateTime.UtcNow}");
             
             return Ok(token);
         }

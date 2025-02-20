@@ -19,13 +19,9 @@ public class SocialService(ISocialRepository socialRepository,
     
     public async Task<SocialProjection> GetItemByIdAsync(long id, CancellationToken ct)
     {
-        _logger.LogInformation($"Service: SocialService Method: GetItemByIdAsync with id: {id} started at {DateTime.UtcNow}");
-        
         SocialProjection social = await _socialRepository.GetByIdAsNoTrackingAsync(id, ct)
                                        ?? throw new EntityNotFoundException($"Social with id: {id} was not found");
         
-        _logger.LogInformation($"Service: SocialService Method: GetItemByIdAsync with id: {id} ended at {DateTime.UtcNow}");
-
         return social;
     }
 }

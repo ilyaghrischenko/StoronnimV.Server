@@ -19,14 +19,10 @@ public class AccountControllerService(
 
     public async Task<string> LogInAsync(LogInRequest request, CancellationToken ct)
     {
-        _logger.LogInformation($"Service: AccountControllerService Method: LogInAsync with [login: {request.Login}, password: {request.Password}] started at {DateTime.UtcNow}");
-
         Admin admin = await _adminService.LogInAsync(request, ct);
         
         ClaimsIdentity identity = _jwtBearerService.GetIdentity(admin);
         string token = _jwtBearerService.GetToken(identity);
-        
-        _logger.LogInformation($"Service: AccountControllerService Method: LogInAsync with [login: {request.Login}, password: {request.Password}] ended at {DateTime.UtcNow}");
 
         return token;
     }

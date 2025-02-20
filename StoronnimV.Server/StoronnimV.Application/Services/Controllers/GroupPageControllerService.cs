@@ -32,8 +32,6 @@ public class GroupPageControllerService(
     
     public async Task<GroupPageFullInfoResponse> GetGroupPageInfoAsync(CancellationToken ct)
     {
-        _logger.LogInformation($"Service: GroupPageControllerService Method: GetGroupPageInfoAsync started at {DateTime.UtcNow}");
-        
         var groupPageTask = _groupPageService.GetFirstGroupPageAsync(ct);
         var membersTask = _memberService.GetAllAsync(ct);
         
@@ -51,15 +49,11 @@ public class GroupPageControllerService(
             Members = membersShort
         };
         
-        _logger.LogInformation($"Service: GroupPageControllerService Method: GetGroupPageInfoAsync ended at {DateTime.UtcNow}");
-        
         return groupPageFullInfoDto;
     }
 
     public async Task<MemberFullInfoResponse> GetMemberAsync(long memberId, CancellationToken ct)
     {
-        _logger.LogInformation($"Service: GroupPageControllerService Method: GetMemberInfoAsync with memberId: {memberId} started at {DateTime.UtcNow}");
-        
         var member = await _memberService.GetItemByIdAsync(memberId, ct);
         
         var memberDto = _mapper.Map<MemberResponse>(member);
@@ -74,8 +68,6 @@ public class GroupPageControllerService(
             Role = memberDto.Role,
             Socials = socialsDto
         };
-        
-        _logger.LogInformation($"Service: GroupPageControllerService Method: GetMemberInfoAsync with memberId: {memberId} ended at {DateTime.UtcNow}");
         
         return memberFullInfoDto;
     }

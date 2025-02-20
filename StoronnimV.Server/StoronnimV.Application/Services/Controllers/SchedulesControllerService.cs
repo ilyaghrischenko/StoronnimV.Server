@@ -23,27 +23,19 @@ public class SchedulesControllerService(
     
     public async Task<ScheduleResponse> GetItemByIdAsync(long id, CancellationToken ct)
     {
-        _logger.LogInformation($"Service: SchedulesControllerService Method: GetItemByIdAsync with id: {id} started at {DateTime.UtcNow}");
-        
         ScheduleFullProjection schedule = await _scheduleService.GetItemByIdAsync(id, ct);
         
         var scheduleDto = _mapper.Map<ScheduleResponse>(schedule);
-        
-        _logger.LogInformation($"Service: SchedulesControllerService Method: GetItemByIdAsync with id: {id} ended at {DateTime.UtcNow}");
         
         return scheduleDto;
     }
 
     public async Task<IEnumerable<ScheduleShortResponse>> GetAllAsync(CancellationToken ct)
     {
-        _logger.LogInformation($"Service: SchedulesControllerService Method: GetAllAsync started at {DateTime.UtcNow}");
-        
         var schedules = await _scheduleService.GetAllAsync(ct);
         
         var schedulesDto = _mapper.Map<IEnumerable<ScheduleShortResponse>>(schedules);
         
-        _logger.LogInformation($"Service: SchedulesControllerService Method: GetAllAsync ended at {DateTime.UtcNow}");
-
         return schedulesDto;
     }
 }

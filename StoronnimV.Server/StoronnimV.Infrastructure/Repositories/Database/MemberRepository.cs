@@ -27,8 +27,6 @@ public class MemberRepository(IDbContextFactory<StoronnimVContext> contextFactor
 
     public async Task<MemberFullProjection?> GetByIdAsNoTrackingAsync(long id, CancellationToken ct)
     {
-        _logger.LogInformation($"Repository: MemberRepository Method: GetByIdAsNoTrackingAsync with id: {id} started at {DateTime.UtcNow}");
-        
         await using StoronnimVContext context = await _contextFactory.CreateDbContextAsync(ct);
         var dbSet = context.Members;
         var query = ApplyIncludes(dbSet);
@@ -51,15 +49,11 @@ public class MemberRepository(IDbContextFactory<StoronnimVContext> contextFactor
             })
             .FirstOrDefaultAsync(x => x.Id == id, ct);
         
-        _logger.LogInformation($"Repository: MemberRepository Method: GetByIdAsNoTrackingAsync with id: {id} ended at {DateTime.UtcNow}");
-
         return result;
     }
 
     public async Task<IEnumerable<MemberShortProjection>?> GetAllAsNoTrackingAsync(CancellationToken ct)
     {
-        _logger.LogInformation($"Repository: MemberRepository Method: GetAllAsync started at {DateTime.UtcNow}");
-        
         await using StoronnimVContext context = await _contextFactory.CreateDbContextAsync(ct);
         
         var result = await context.Members
@@ -73,8 +67,6 @@ public class MemberRepository(IDbContextFactory<StoronnimVContext> contextFactor
             })
             .ToListAsync(ct);
         
-        _logger.LogInformation($"Repository: MemberRepository Method: GetAllAsync ended at {DateTime.UtcNow}");
-
         return result;
     }
 }

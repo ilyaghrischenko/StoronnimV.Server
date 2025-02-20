@@ -26,8 +26,6 @@ public class SocialRepository(IDbContextFactory<StoronnimVContext> contextFactor
 
     public async Task<SocialProjection?> GetByIdAsNoTrackingAsync(long id, CancellationToken ct)
     {
-        _logger.LogInformation($"Repository: SocialRepository Method: GetByIdAsNoTrackingAsync with id: {id} started at {DateTime.UtcNow}");
-        
         await using StoronnimVContext context = await _contextFactory.CreateDbContextAsync(ct);
         var dbSet = context.Socials;
         var query = ApplyIncludes(dbSet);
@@ -42,8 +40,6 @@ public class SocialRepository(IDbContextFactory<StoronnimVContext> contextFactor
             })
             .FirstOrDefaultAsync(x => x.Id == id, ct);
         
-        _logger.LogInformation($"Repository: SocialRepository Method: GetByIdAsNoTrackingAsync with id: {id} ended at {DateTime.UtcNow}");
-
         return result;
     }
 }

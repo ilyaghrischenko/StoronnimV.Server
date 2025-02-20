@@ -21,11 +21,7 @@ namespace StoronnimV.Api.Controllers
         [HttpGet("{id:long}")]
         public async Task<ActionResult<ScheduleResponse>> GetSchedule([FromRoute] long id, CancellationToken ct)
         {
-            _logger.LogInformation($"Controller: SchedulesController Method: GetSchedule with id: {id} started at {DateTime.UtcNow}");
-            
             ScheduleResponse schedule = await _schedulesControllerService.GetItemByIdAsync(id, ct);
-            
-            _logger.LogInformation($"Controller: SchedulesController Method: GetSchedule with id: {id} ended at {DateTime.UtcNow}");
             
             return Ok(schedule);
         }
@@ -33,11 +29,7 @@ namespace StoronnimV.Api.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<ScheduleShortResponse>>> GetSchedules(CancellationToken ct)
         {
-            _logger.LogInformation($"Controller: SchedulesController Method: GetSchedules started at {DateTime.UtcNow}");
-            
             var schedules = await _schedulesControllerService.GetAllAsync(ct);
-            
-            _logger.LogInformation($"Controller: SchedulesController Method: GetSchedules ended at {DateTime.UtcNow}");
             
             return Ok(schedules);
         }

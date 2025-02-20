@@ -20,39 +20,27 @@ public class HomeControllerService(
 
     public async Task<IEnumerable<NewsHomeResponse>> GetMainNewsAsync(int count, CancellationToken ct)
     {
-        _logger.LogInformation($"Service: HomeControllerService Method: GetNewsAsync with count: {count} started at {DateTime.UtcNow}");
-
         var news = await _homeService.GetMainNewsForHomePageAsync(count, ct);
 
         var newsDto = _mapper.Map<IEnumerable<NewsHomeResponse>>(news);
-        
-        _logger.LogInformation($"Service: HomeControllerService Method: GetNewsAsync with count: {count} ended at {DateTime.UtcNow}");
         
         return newsDto;
     }
 
     public async Task<ScheduleHomeResponse> GetNearestScheduleAsync(CancellationToken ct)
     {
-        _logger.LogInformation($"Service: HomeControllerService Method: GetScheduleAsync started at {DateTime.UtcNow}");
-
         ScheduleShortProjection? schedule = await _homeService.GetNearestScheduleForHomePageAsync(ct);
         
         var scheduleDto = _mapper.Map<ScheduleHomeResponse>(schedule);
         
-        _logger.LogInformation($"Service: HomeControllerService Method: GetScheduleAsync ended at {DateTime.UtcNow}");
-
         return scheduleDto;
     }
 
     public async Task<VideoPageShortResponse> GetPromotionVideoAsync(CancellationToken ct)
     {
-        _logger.LogInformation($"Service: HomeControllerService Method: GetVideoAsync started at {DateTime.UtcNow}");
-
         VideoShortProjection? promotionVideo = await _homeService.GetPromotionVideoForHomePageAsync(ct);
         
         var promotionVideoDto = _mapper.Map<VideoPageShortResponse>(promotionVideo);
-        
-        _logger.LogInformation($"Service: HomeControllerService Method: GetVideoAsync ended at {DateTime.UtcNow}");
         
         return promotionVideoDto;
     }

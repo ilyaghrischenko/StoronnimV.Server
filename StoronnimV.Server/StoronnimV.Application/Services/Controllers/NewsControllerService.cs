@@ -25,21 +25,15 @@ public class NewsControllerService(
 
     public async Task<NewsResponse> GetItemByIdAsync(long id, CancellationToken ct)
     {
-        _logger.LogInformation($"Service: NewsControllerService Method: GetItemByIdAsync with id: {id} started at {DateTime.UtcNow}");
-        
         NewsFullProjection newsItem = await _newsService.GetItemByIdAsync(id, ct);
 
         var newsItemDto = _mapper.Map<NewsResponse>(newsItem);
-        
-        _logger.LogInformation($"Service: NewsControllerService Method: GetItemByIdAsync with id: {id} ended at {DateTime.UtcNow}");
         
         return newsItemDto;
     }
 
     public async Task<PaginationResponse<NewsShortResponse>> GetForPageAsync(int page, int pageSize, CancellationToken ct, params object[] args)
     {
-        _logger.LogInformation($"Service: NewsControllerService Method: GetForPageAsync with page: {page} started at {DateTime.UtcNow}");
-        
         PaginationResult<NewsPaginationProjection> paginationResult = await _newsService.GetForPageAsync(page, pageSize, ct);
         
         var newsDto = _mapper.Map<IEnumerable<NewsShortResponse>>(paginationResult.Items);
@@ -52,8 +46,6 @@ public class NewsControllerService(
             Items = newsDto
         };
         
-        _logger.LogInformation($"Service: NewsControllerService Method: GetForPageAsync with page: {page} ended at {DateTime.UtcNow}");
-
         return response;
     }
 }

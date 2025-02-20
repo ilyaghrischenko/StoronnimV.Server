@@ -16,11 +16,7 @@ namespace StoronnimV.Api.Controllers
         [HttpGet("{id:long}")]
         public async Task<ActionResult<MusicResponse>> GetMusicPlatform([FromRoute] long id, CancellationToken ct)
         {
-            _logger.LogInformation($"Controller: MusicController Method: GetMusicPlatform with id: {id} started at {DateTime.UtcNow}");
-
             MusicResponse musicPlatform = await _musicControllerService.GetItemByIdAsync(id, ct);
-            
-            _logger.LogInformation($"Controller: MusicController Method: GetMusicPlatform with id: {id} ended at {DateTime.UtcNow}");
 
             return Ok(musicPlatform);
         }
@@ -28,11 +24,7 @@ namespace StoronnimV.Api.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<MusicResponse>>> GetMusicPlatforms(CancellationToken ct)
         {
-            _logger.LogInformation($"Controller: MusicController Method: GetMusicPlatforms started at {DateTime.UtcNow}");
-
             var musicPlatforms = await _musicControllerService.GetAllAsync(ct);
-            
-            _logger.LogInformation($"Controller: MusicController Method: GetMusicPlatforms ended at {DateTime.UtcNow}");
             
             return Ok(musicPlatforms);
         }

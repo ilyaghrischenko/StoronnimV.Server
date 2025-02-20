@@ -28,8 +28,6 @@ public class NewsRepository(
 
     public async Task<NewsFullProjection?> GetByIdAsNoTrackingAsync(long id, CancellationToken ct)
     {
-        _logger.LogInformation($"Repository: NewsRepository Method: GetByIdAsNoTrackingAsync with id: {id} started at {DateTime.UtcNow}");
-        
         await using StoronnimVContext context = await _contextFactory.CreateDbContextAsync(ct);
         var dbSet = context.NewsItems;
         var query = ApplyIncludes(dbSet);
@@ -48,15 +46,11 @@ public class NewsRepository(
             })
             .FirstOrDefaultAsync(x => x.Id == id, ct);
         
-        _logger.LogInformation($"Repository: NewsRepository Method: GetByIdAsNoTrackingAsync with id: {id} ended at {DateTime.UtcNow}");
-
         return result;
     }
 
     public async Task<IEnumerable<NewsPaginationProjection>?> GetForPageAsync(int page, CancellationToken ct, int pageSize, params object[] args)
     {
-        _logger.LogInformation($"Repository: NewsRepository Method: GetForPageAsync with [page: {page}, pageSize: {pageSize}] started at {DateTime.UtcNow}");
-        
         await using StoronnimVContext context = await _contextFactory.CreateDbContextAsync(ct);
         var dbSet = context.NewsItems;
         var query = ApplyIncludes(dbSet);
@@ -76,28 +70,20 @@ public class NewsRepository(
             })
             .ToListAsync(ct);
         
-        _logger.LogInformation($"Repository: NewsRepository Method: GetForPageAsync with [page: {page}, pageSize: {pageSize}] ended at {DateTime.UtcNow}");
-
         return result;
     }
 
     public async Task<int> GetTotalCountAsync(CancellationToken ct, params object[] args)
     {
-        _logger.LogInformation($"Repository: NewsRepository Method: GetTotalCountAsync started at {DateTime.UtcNow}");
-        
         await using StoronnimVContext context = await _contextFactory.CreateDbContextAsync(ct);
         
         int result = await context.NewsItems.CountAsync(ct);
         
-        _logger.LogInformation($"Repository: NewsRepository Method: GetTotalCountAsync ended at {DateTime.UtcNow}");
-
         return result;
     }
     
     public async Task<IEnumerable<NewsHomeProjection>?> GetMainNewsForHomePageAsync(int count, CancellationToken ct)
     {
-        _logger.LogInformation($"Repository: NewsRepository Method: GetNewsForHomePageAsync with count: {count} started at {DateTime.UtcNow}");
-        
         await using StoronnimVContext context = await _contextFactory.CreateDbContextAsync(ct);
         var dbSet = context.NewsItems;
         var query = ApplyIncludes(dbSet);
@@ -115,8 +101,6 @@ public class NewsRepository(
             })
             .ToListAsync(ct);
         
-        _logger.LogInformation($"Repository: NewsRepository Method: GetNewsForHomePageAsync with count: {count} ended at {DateTime.UtcNow}");
-
         return result;
     }
 }

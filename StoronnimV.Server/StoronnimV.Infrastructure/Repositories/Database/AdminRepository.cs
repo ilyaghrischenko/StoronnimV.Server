@@ -18,9 +18,6 @@ public class AdminRepository(
 
     public async Task<AdminProjection?> GetByIdAsNoTrackingAsync(long id, CancellationToken ct)
     {
-        _logger.LogInformation(
-            $"Repository: AdminRepository Method: GetByIdAsNoTrackingAsync with id: {id} started at {DateTime.UtcNow}");
-
         await using StoronnimVContext context = await _contextFactory.CreateDbContextAsync(ct);
         var dbSet = context.Admins;
         var query = ApplyIncludes(dbSet);
@@ -35,16 +32,11 @@ public class AdminRepository(
             })
             .FirstOrDefaultAsync(admin => admin.Id == id, ct);
 
-        _logger.LogInformation(
-            $"Repository: AdminRepository Method: GetByIdAsNoTrackingAsync with id: {id} ended at {DateTime.UtcNow}");
-
         return result;
     }
 
     public async Task<IEnumerable<AdminProjection>?> GetAllAsNoTrackingAsync(CancellationToken ct)
     {
-        _logger.LogInformation($"Repository: AdminRepository Method: GetAllAsync started at {DateTime.UtcNow}");
-
         await using StoronnimVContext context = await _contextFactory.CreateDbContextAsync(ct);
         var dbSet = context.Admins;
         var query = ApplyIncludes(dbSet);
@@ -59,15 +51,11 @@ public class AdminRepository(
             })
             .ToListAsync(ct);
 
-        _logger.LogInformation($"Repository: AdminRepository Method: GetAllAsync ended at {DateTime.UtcNow}");
-
         return result;
     }
 
     public async Task<Admin?> GetByLoginAsync(string login, CancellationToken ct)
     {
-        _logger.LogInformation($"Repository: AdminRepository Method: GetByLoginAsync started at {DateTime.UtcNow}");
-
         await using StoronnimVContext context = await _contextFactory.CreateDbContextAsync(ct);
         var dbSet = context.Admins;
         var query = ApplyIncludes(dbSet);
@@ -75,8 +63,6 @@ public class AdminRepository(
         Admin? result = await query
             .AsNoTracking()
             .FirstOrDefaultAsync(admin => admin.Login == login, ct);
-
-        _logger.LogInformation($"Repository: AdminRepository Method: GetByLoginAsync ended at {DateTime.UtcNow}");
 
         return result;
     }

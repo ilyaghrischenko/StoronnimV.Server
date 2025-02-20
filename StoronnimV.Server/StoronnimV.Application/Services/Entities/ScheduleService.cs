@@ -20,20 +20,14 @@ public class ScheduleService(IScheduleRepository scheduleRepository,
     
     public async Task<ScheduleFullProjection> GetItemByIdAsync(long id, CancellationToken ct)
     {
-        _logger.LogInformation($"Service: ScheduleService Method: GetItemByIdAsync with id: {id} started at {DateTime.UtcNow}");
-        
         ScheduleFullProjection schedule = await _scheduleRepository.GetByIdAsNoTrackingAsync(id, ct)
                                           ?? throw new EntityNotFoundException($"Schedule with id: {id} was not found");
         
-        _logger.LogInformation($"Service: ScheduleService Method: GetItemByIdAsync with id: {id} ended at {DateTime.UtcNow}");
-
         return schedule;
     }
 
     public async Task<IEnumerable<ScheduleShortProjection>> GetAllAsync(CancellationToken ct)
     {
-        _logger.LogInformation($"Service: ScheduleService Method: GetAllAsync started at {DateTime.UtcNow}");
-        
         var allSchedules = await _scheduleRepository.GetAllAsNoTrackingAsync(ct);
         if (allSchedules is null)
         {
@@ -42,15 +36,11 @@ public class ScheduleService(IScheduleRepository scheduleRepository,
 
         var result = allSchedules.ToList();
         
-        _logger.LogInformation($"Service: ScheduleService Method: GetAllAsync ended at {DateTime.UtcNow}");
-
         return result;
     }
 
     public async Task UpdateStatusesAsync(CancellationToken ct)
     {
-        _logger.LogInformation($"Service: ScheduleService Method: UpdateStatusesAsync started at {DateTime.UtcNow}");
-        
         var allSchedules = await _scheduleRepository
             .GetAllSchedulesAsync(ct);
         
@@ -69,7 +59,5 @@ public class ScheduleService(IScheduleRepository scheduleRepository,
         );
         
         await Task.WhenAll(updateTasks);
-        
-        _logger.LogInformation($"Service: ScheduleService Method: UpdateStatusesAsync ended at {DateTime.UtcNow}");
     }
 }
