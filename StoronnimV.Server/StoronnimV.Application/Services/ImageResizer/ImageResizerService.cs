@@ -11,7 +11,7 @@ public class ImageResizerService : IImageResizerService
 {
     private const int Quality = 85;
 
-    public async Task<byte[]> ResizeImageIfNecessaryAsync(IFormFile photo, int width, int height,
+    public async Task<byte[]> ResizeImageByCompressIfNecessaryAsync(IFormFile photo, int width, int height,
         CancellationToken ct)
     {
         if (photo == null || photo.Length == 0)
@@ -39,7 +39,7 @@ public class ImageResizerService : IImageResizerService
         return await ConvertImageToByteArrayAsync(image, ct);
     }
 
-    public async Task<byte[]> ResizeImageMaxIfNecessaryAsync(IFormFile photo, int width, int height,
+    public async Task<byte[]> ResizeImageByCroppingIfNecessaryAsync(IFormFile photo, int width, int height,
         CancellationToken ct)
     {
         if (photo == null || photo.Length == 0)
