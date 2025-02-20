@@ -25,6 +25,12 @@ public class ExceptionMiddleware : IExceptionMiddleware
         {
             await _next(context);
         }
+        catch (OperationCanceledException ex)
+        {
+            await HandleExceptionAsync(context,
+                499,
+                ex);
+        }
         catch (EntityNotFoundException ex)
         {
             await HandleExceptionAsync(context,
@@ -43,10 +49,10 @@ public class ExceptionMiddleware : IExceptionMiddleware
                 HttpStatusCode.Unauthorized,
                 ex);
         }
-        catch (OperationCanceledException ex)
+        catch (PhotoResizingException ex)
         {
             await HandleExceptionAsync(context,
-                499,
+                HttpStatusCode.UnsupportedMediaType,
                 ex);
         }
         catch (Exception ex)
