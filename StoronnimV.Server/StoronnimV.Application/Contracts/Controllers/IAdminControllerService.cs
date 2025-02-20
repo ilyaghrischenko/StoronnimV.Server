@@ -8,4 +8,10 @@ namespace StoronnimV.Application.Contracts.Controllers;
 public interface IAdminControllerService
 {
     Task DeleteNewsItemAsync(long id, CancellationToken ct);
+    Task DeleteScheduleAsync(long id, CancellationToken ct);
+    Task DeleteVideoAsync(long id, CancellationToken ct);
+    Task DeleteGroupPageAsync(long id, CancellationToken ct);
+    Task DeleteMemberAsync(long id, CancellationToken ct);
+    Task DeleteMusicPlatformAsync(long id, CancellationToken ct);
+    Task DeleteSocialAsync(long id, CancellationToken ct);
 }
