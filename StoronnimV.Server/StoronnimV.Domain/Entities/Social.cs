@@ -12,5 +12,5 @@ public class Social : BaseEntity
     public required string Url { get; set; } = string.Empty;
     public required SocialType Type { get; set; } = SocialType.Other;
 
-    private Social() {}
+    public Social() {}
 }

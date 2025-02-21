@@ -13,6 +13,7 @@ public interface IAdminService : IGetByIdService<AdminProjection>
     Task<IEnumerable<BasicAdminProjection>> GetAllBasicAdminsAsync(CancellationToken ct);
 
     Task DeleteBasicAdminAsync(long id, CancellationToken ct);
+    Task AddBasicAdminAsync(string login, string unhashedPassword, CancellationToken ct);
     
     Task DeleteNewsItemAsync(long id, CancellationToken ct);
     Task DeleteScheduleAsync(long id, CancellationToken ct);

@@ -1,3 +1,4 @@
+using StoronnimV.Application.DTO.Requests.Entities.Admin;
 using StoronnimV.Application.DTO.Responses.Admin;
 using StoronnimV.Application.DTO.Responses.GroupPage;
 using StoronnimV.Application.DTO.Responses.NewsPage;
@@ -11,6 +12,7 @@ public interface IAdminControllerService
     Task<IEnumerable<BasicAdminResponse>> GetAllBasicAdminsAsync(CancellationToken ct);
     
     Task DeleteBasicAdminAsync(long id, CancellationToken ct);
+    Task AddBasicAdminAsync(CreateBasicAdminRequest request, CancellationToken ct);
     
     Task DeleteNewsItemAsync(long id, CancellationToken ct);
     Task DeleteScheduleAsync(long id, CancellationToken ct);

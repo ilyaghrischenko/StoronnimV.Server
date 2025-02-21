@@ -14,5 +14,5 @@ public class Member : BaseEntity
     
     public virtual IEnumerable<Social> Socials { get; set; } = new List<Social>();
     
-    private Member() {}
+    public Member() {}
 }

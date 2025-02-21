@@ -10,5 +10,5 @@ public class Admin : BaseEntity
     
     public AdminType Type { get; set; } = AdminType.Basic;
     
-    private Admin() {}
+    public Admin() {}
 }

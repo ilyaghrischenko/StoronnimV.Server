@@ -10,5 +10,5 @@ public class GroupPage : BaseEntity
     public required string PhotoUrl { get; set; } = string.Empty;
     public required string Description { get; set; } = string.Empty;
     
-    private GroupPage() {}
+    public GroupPage() {}
 }

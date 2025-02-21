@@ -2,6 +2,7 @@ using AutoMapper;
 using Microsoft.Extensions.Logging;
 using StoronnimV.Application.Contracts.Controllers;
 using StoronnimV.Application.Contracts.Entities;
+using StoronnimV.Application.DTO.Requests.Entities.Admin;
 using StoronnimV.Application.DTO.Responses.Admin;
 using StoronnimV.Application.DTO.Responses.GroupPage;
 using StoronnimV.Application.DTO.Responses.GroupPage.ShortGroupPage;
@@ -37,6 +38,14 @@ public class AdminControllerService(
     public async Task DeleteBasicAdminAsync(long id, CancellationToken ct)
     {
         await _adminService.DeleteBasicAdminAsync(id, ct);
+    }
+
+    public async Task AddBasicAdminAsync(CreateBasicAdminRequest request, CancellationToken ct)
+    {
+        string login = request.Login;
+        string unhashedPassword = request.Password;
+        
+        await _adminService.AddBasicAdminAsync(login, unhashedPassword, ct);
     }
 
     public async Task DeleteNewsItemAsync(long id, CancellationToken ct)

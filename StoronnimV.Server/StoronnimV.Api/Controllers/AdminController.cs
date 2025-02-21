@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using StoronnimV.Application.Contracts.Controllers;
+using StoronnimV.Application.DTO.Requests.Entities.Admin;
 using StoronnimV.Application.DTO.Responses.Admin;
 
 namespace StoronnimV.Api.Controllers
@@ -36,6 +37,15 @@ namespace StoronnimV.Api.Controllers
             await _adminControllerService.DeleteBasicAdminAsync(id, ct);
 
             return NoContent();
+        }
+
+        [Authorize(Policy = "SuperAdminOnly")]
+        [HttpPost("/basic-admin")]
+        public async Task<IActionResult> CreateBasicAdmin([FromBody] CreateBasicAdminRequest request, CancellationToken ct)
+        {
+            await _adminControllerService.AddBasicAdminAsync(request, ct);
+
+            return Created();
         }
 
         [HttpDelete("news/{id:long}")]

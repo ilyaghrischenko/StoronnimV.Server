@@ -85,6 +85,19 @@ public class AdminService(
         await _adminRepository.DeleteAsync(basicAdmin, ct);
     }
 
+    public async Task AddBasicAdminAsync(string login, string unhashedPassword, CancellationToken ct)
+    {
+        string hashedPassword = _passwordHasher.HashPassword(null! ,unhashedPassword);
+
+        Admin newBasicAdmin = new()
+        {
+            Login = login,
+            Password = hashedPassword
+        };
+        
+        await _adminRepository.AddAsync(newBasicAdmin, ct);
+    }
+
     public async Task DeleteNewsItemAsync(long id, CancellationToken ct)
     {
         News? newsItem = await _newsRepository.GetByIdAsync(id, ct);
