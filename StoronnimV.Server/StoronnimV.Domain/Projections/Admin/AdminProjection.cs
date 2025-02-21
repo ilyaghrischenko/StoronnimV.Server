@@ -1,6 +1,6 @@
 using StoronnimV.Domain.Projections.Shared;
 
-namespace StoronnimV.Domain.Projections;
+namespace StoronnimV.Domain.Projections.Admin;
 
 public class AdminProjection : BaseProjection
 {

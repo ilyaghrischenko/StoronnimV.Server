@@ -3,6 +3,7 @@ using Hangfire;
 using Microsoft.EntityFrameworkCore;
 using StoronnimV.Api.Extensions;
 using StoronnimV.Api.Middlewares;
+using StoronnimV.Application.Mapping.Admin;
 using StoronnimV.Application.Mapping.Group;
 using StoronnimV.Application.Mapping.Home;
 using StoronnimV.Application.Mapping.News;
@@ -46,6 +47,10 @@ MapperConfiguration mapperConfig = new(cfg =>
     #region Home
     cfg.AddProfile<HomeNewsMappingProfile>();
     cfg.AddProfile<HomeScheduleMappingProfile>();
+    #endregion
+    
+    #region Admin
+    cfg.AddProfile<BasicAdminMappingProfile>();
     #endregion
 });
 

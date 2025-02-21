@@ -2,6 +2,7 @@ using AutoMapper;
 using Microsoft.Extensions.Logging;
 using StoronnimV.Application.Contracts.Controllers;
 using StoronnimV.Application.Contracts.Entities;
+using StoronnimV.Application.DTO.Responses.Admin;
 using StoronnimV.Application.DTO.Responses.GroupPage;
 using StoronnimV.Application.DTO.Responses.GroupPage.ShortGroupPage;
 using StoronnimV.Application.DTO.Responses.GroupPage.ShortMember;
@@ -18,10 +19,25 @@ namespace StoronnimV.Application.Services.Controllers;
 
 public class AdminControllerService(
     IAdminService adminService,
+    IMapper mapper,
     ILogger<AdminControllerService> logger) : IAdminControllerService
 {
     private readonly IAdminService _adminService = adminService;
+    private readonly IMapper _mapper = mapper;
     private readonly ILogger<AdminControllerService> _logger = logger;
+
+    public async Task<IEnumerable<BasicAdminResponse>> GetAllBasicAdminsAsync(CancellationToken ct)
+    {
+        var basicAdminProjections = await _adminService.GetAllBasicAdminsAsync(ct);
+
+        var basicAdminDtos = _mapper.Map<IEnumerable<BasicAdminResponse>>(basicAdminProjections);
+        return basicAdminDtos;
+    }
+
+    public async Task DeleteBasicAdminAsync(long id, CancellationToken ct)
+    {
+        await _adminService.DeleteBasicAdminAsync(id, ct);
+    }
 
     public async Task DeleteNewsItemAsync(long id, CancellationToken ct)
     {

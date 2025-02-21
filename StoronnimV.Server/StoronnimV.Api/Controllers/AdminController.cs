@@ -2,11 +2,13 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using StoronnimV.Application.Contracts.Controllers;
+using StoronnimV.Application.DTO.Responses.Admin;
 
 namespace StoronnimV.Api.Controllers
 {
     /// <summary>
-    /// Контроллер для админа, он позволяет управлять данными, которые отображаются на страницых (Удалять, изменять)
+    /// Контроллер для админа, он позволяет управлять данными, которые отображаются на страницых (Удалять, изменять),
+    /// а так же управлять данными обычного адмниа (логин и пароль)
     /// </summary>
     [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
     [Route("api/admin")]
@@ -17,6 +19,24 @@ namespace StoronnimV.Api.Controllers
     {
         private readonly IAdminControllerService _adminControllerService = adminControllerService;
         private readonly ILogger<AdminController> _logger = logger;
+
+        [Authorize(Policy = "SuperAdminOnly")]
+        [HttpGet("all")]
+        public async Task<ActionResult<IEnumerable<BasicAdminResponse>>> GetAllBasicAdmins(CancellationToken ct)
+        {
+            var admins = await _adminControllerService.GetAllBasicAdminsAsync(ct);
+
+            return Ok(admins);
+        }
+
+        [Authorize(Policy = "SuperAdminOnly")]
+        [HttpDelete("/{id:long}")]
+        public async Task<IActionResult> DeleteBasicAdmin([FromRoute] long id, CancellationToken ct)
+        {
+            await _adminControllerService.DeleteBasicAdminAsync(id, ct);
+
+            return NoContent();
+        }
 
         [HttpDelete("news/{id:long}")]
         public async Task<IActionResult> DeleteNewsItem([FromRoute] long id, CancellationToken ct)

@@ -8,6 +8,7 @@ using StoronnimV.Domain.Contracts.AzureBlobStorage;
 using StoronnimV.Domain.Contracts.Database;
 using StoronnimV.Domain.Entities;
 using StoronnimV.Domain.Projections;
+using StoronnimV.Domain.Projections.Admin;
 
 namespace StoronnimV.Application.Services.Entities;
 
@@ -21,7 +22,6 @@ public class AdminService(
     IMusicPlatformRepository musicPlatformRepository,
     ISocialRepository socialRepository,
     IBlobRepository blobRepository,
-    ILogger<AdminService> logger,
     IPasswordHasher<Admin> passwordHasher) : IAdminService
 {
     private readonly IAdminRepository _adminRepository = adminRepository;
@@ -33,7 +33,6 @@ public class AdminService(
     private readonly IMusicPlatformRepository _musicPlatformRepository = musicPlatformRepository;
     private readonly ISocialRepository _socialRepository = socialRepository;
     private readonly IBlobRepository _blobRepository = blobRepository;
-    private readonly ILogger<AdminService> _logger = logger;
     private readonly IPasswordHasher<Admin> _passwordHasher = passwordHasher;
     
     public async Task<AdminProjection> GetItemByIdAsync(long id, CancellationToken ct)
@@ -46,18 +45,6 @@ public class AdminService(
         }
         
         return admin;
-    }
-
-    public async Task<IEnumerable<AdminProjection>> GetAllAsync(CancellationToken ct)
-    {
-        var admins = await _adminRepository.GetAllAsNoTrackingAsync(ct);
-
-        if (admins is null || !admins.Any())
-        {
-            return new List<AdminProjection>();
-        }
-        
-        return admins;
     }
 
     public async Task<Admin> LogInAsync(LogInRequest request, CancellationToken ct)
@@ -77,6 +64,25 @@ public class AdminService(
         }
         
         return admin;
+    }
+
+    public async Task<IEnumerable<BasicAdminProjection>> GetAllBasicAdminsAsync(CancellationToken ct)
+    {
+        var basicAdmins = await _adminRepository.GetAllBasicAdminsAsync(ct);
+
+        return basicAdmins ?? new List<BasicAdminProjection>();
+    }
+
+    public async Task DeleteBasicAdminAsync(long id, CancellationToken ct)
+    {
+        Admin? basicAdmin = await _adminRepository.GetByIdAsync(id, ct);
+
+        if (basicAdmin is null)
+        {
+            throw new EntityNotFoundException($"Basic Admin with id: {id} was not found");
+        }
+        
+        await _adminRepository.DeleteAsync(basicAdmin, ct);
     }
 
     public async Task DeleteNewsItemAsync(long id, CancellationToken ct)

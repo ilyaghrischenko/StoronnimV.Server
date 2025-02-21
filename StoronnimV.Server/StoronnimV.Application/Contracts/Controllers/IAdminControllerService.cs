@@ -1,3 +1,4 @@
+using StoronnimV.Application.DTO.Responses.Admin;
 using StoronnimV.Application.DTO.Responses.GroupPage;
 using StoronnimV.Application.DTO.Responses.NewsPage;
 using StoronnimV.Application.DTO.Responses.Shared;
@@ -7,6 +8,10 @@ namespace StoronnimV.Application.Contracts.Controllers;
 
 public interface IAdminControllerService
 {
+    Task<IEnumerable<BasicAdminResponse>> GetAllBasicAdminsAsync(CancellationToken ct);
+    
+    Task DeleteBasicAdminAsync(long id, CancellationToken ct);
+    
     Task DeleteNewsItemAsync(long id, CancellationToken ct);
     Task DeleteScheduleAsync(long id, CancellationToken ct);
     Task DeleteVideoAsync(long id, CancellationToken ct);

@@ -189,6 +189,11 @@ public static class WebApplicationBuilderExtensions
                     IssuerSigningKey = jwtOptions.GetKey()
                 };
             });
+
+        builder.Services.AddAuthorizationBuilder()
+            .AddPolicy("SuperAdminOnly", policy =>
+                policy.RequireRole("SuperAdmin"));
+        
         builder.Services.AddSwaggerGen(options =>
         {
             options.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme()
