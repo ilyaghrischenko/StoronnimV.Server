@@ -48,6 +48,15 @@ namespace StoronnimV.Api.Controllers
             return Created();
         }
 
+        [Authorize(Policy = "SuperAdminOnly")]
+        [HttpPut("/basic-admin")]
+        public async Task<IActionResult> EditBasicAdmin([FromBody] EditBasicAdminRequest request, CancellationToken ct)
+        {
+            
+
+            return Ok();
+        }
+
         [HttpDelete("news/{id:long}")]
         public async Task<IActionResult> DeleteNewsItem([FromRoute] long id, CancellationToken ct)
         {

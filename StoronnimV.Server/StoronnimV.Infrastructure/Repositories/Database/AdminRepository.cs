@@ -17,7 +17,7 @@ public class AdminRepository(
 {
     private readonly IDbContextFactory<StoronnimVContext> _contextFactory = contextFactory;
     private readonly ILogger<AdminRepository> _logger = logger;
-
+    
     public async Task<AdminProjection?> GetByIdAsNoTrackingAsync(long id, CancellationToken ct)
     {
         await using StoronnimVContext context = await _contextFactory.CreateDbContextAsync(ct);
