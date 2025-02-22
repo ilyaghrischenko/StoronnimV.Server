@@ -48,6 +48,7 @@ public static class WebApplicationBuilderExtensions
         builder.Services.AddScoped<IMusicPlatformService, MusicPlatformService>();
         builder.Services.AddScoped<IVideoService, VideoService>();
         builder.Services.AddScoped<IAdminService, AdminService>();
+        builder.Services.AddScoped<ISuperAdminService, SuperAdminService>();
         
         builder.Services.AddScoped<INewsControllerService, NewsControllerService>();
         builder.Services.AddScoped<ISchedulesControllerService, SchedulesControllerService>();
