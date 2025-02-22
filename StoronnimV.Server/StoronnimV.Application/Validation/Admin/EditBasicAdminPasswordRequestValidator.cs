@@ -7,9 +7,6 @@ public class EditBasicAdminPasswordRequestValidator : AbstractValidator<EditBasi
 {
     public EditBasicAdminPasswordRequestValidator()
     {
-        RuleFor(x => x.Id)
-            .NotEmpty();
-        
         RuleFor(x => x.OldPassword)
             .NotEmpty().WithMessage("Old password is required")
             .MinimumLength(10).WithMessage("Old password must be at least 10 characters")

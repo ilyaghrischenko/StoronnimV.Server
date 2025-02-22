@@ -8,14 +8,14 @@ using StoronnimV.Application.DTO.Responses.Admin;
 namespace StoronnimV.Api.Controllers
 {
     [Authorize(Policy = "SuperAdminOnly")]
-    [Route("api/super-admin/basic-admin")]
+    [Route("api/super-admin/basic-admins")]
     [ApiController]
     public class SuperAdminController(ISuperAdminControllerService superAdminControllerService)
         : ControllerBase
     {
         private readonly ISuperAdminControllerService _superAdminControllerService = superAdminControllerService;
         
-        [HttpGet("all")]
+        [HttpGet]
         public async Task<ActionResult<IEnumerable<BasicAdminResponse>>> GetAllBasicAdmins(CancellationToken ct)
         {
             var admins = await _superAdminControllerService.GetAllAsync(ct);
@@ -39,18 +39,20 @@ namespace StoronnimV.Api.Controllers
             return Created();
         }
         
-        [HttpPatch("login")]
-        public async Task<IActionResult> EditBasicAdminLogin([FromBody] EditBasicAdminLoginRequest loginRequest, CancellationToken ct)
+        [HttpPatch("{id:long}/login")]
+        public async Task<IActionResult> EditBasicAdminLogin([FromRoute] long id,
+            [FromBody] EditBasicAdminLoginRequest loginRequest, CancellationToken ct)
         {
-            await _superAdminControllerService.EditBasicAdminLoginAsync(loginRequest, ct);
+            await _superAdminControllerService.EditBasicAdminLoginAsync(id, loginRequest, ct);
 
             return Ok();
         }
 
-        [HttpPatch("password")]
-        public async Task<IActionResult> EditBasicAdminPassword([FromBody] EditBasicAdminPasswordRequest passwordRequest, CancellationToken ct)
+        [HttpPatch("{id:long}/password")]
+        public async Task<IActionResult> EditBasicAdminPassword([FromRoute] long id,
+            [FromBody] EditBasicAdminPasswordRequest passwordRequest, CancellationToken ct)
         {
-            await _superAdminControllerService.EditBasicAdminPasswordAsync(passwordRequest, ct);
+            await _superAdminControllerService.EditBasicAdminPasswordAsync(id, passwordRequest, ct);
 
             return Ok();
         }

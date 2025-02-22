@@ -34,18 +34,16 @@ public class SuperAdminControllerService(
         await _superAdminService.AddBasicAdminAsync(login, unhashedPassword, ct);
     }
 
-    public async Task EditBasicAdminPasswordAsync(EditBasicAdminPasswordRequest passwordRequest, CancellationToken ct)
+    public async Task EditBasicAdminPasswordAsync(long id, EditBasicAdminPasswordRequest passwordRequest, CancellationToken ct)
     {
-        long id = passwordRequest.Id;
         string oldPassword = passwordRequest.OldPassword;
         string newPassword = passwordRequest.NewPassword;
         
         await _superAdminService.EditBasicAdminPasswordAsync(id, oldPassword, newPassword, ct);
     }
 
-    public async Task EditBasicAdminLoginAsync(EditBasicAdminLoginRequest loginRequest, CancellationToken ct)
+    public async Task EditBasicAdminLoginAsync(long id, EditBasicAdminLoginRequest loginRequest, CancellationToken ct)
     {
-        long id = loginRequest.Id;
         string newLogin = loginRequest.NewLogin;
         
         await _superAdminService.EditBasicAdminLoginAsync(id, newLogin, ct);

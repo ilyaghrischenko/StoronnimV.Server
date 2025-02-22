@@ -38,14 +38,7 @@ public class SuperAdminService(
         var allBasicAdmins = (await _adminRepository.GetAllBasicAdminsAsync(ct))
             ?.ToList();
 
-        if (allBasicAdmins?.Count != 0)
-        {
-            BasicAdminProjection? adminWithTheSameLogin = allBasicAdmins?.FirstOrDefault(x => x.Login == login);
-            if (adminWithTheSameLogin != null)
-            {
-                throw new ArgumentException($"Admin with login: {login} already exists");
-            }
-        }
+        ThrowExceptionIfLoginAlreadyExists(login, allBasicAdmins);
         
         string hashedPassword = _passwordHasher.HashPassword(null! ,unhashedPassword);
 
@@ -58,19 +51,35 @@ public class SuperAdminService(
         await _adminRepository.AddAsync(newBasicAdmin, ct);
     }
 
-    public async Task EditBasicAdminLoginAsync(long id, string newlogin, CancellationToken ct)
+    public async Task EditBasicAdminLoginAsync(long id, string newLogin, CancellationToken ct)
     {
         Admin? adminToChange = await _adminRepository.GetByIdAsync(id, ct);
-
+        
         if (adminToChange is null)
         {
             throw new EntityNotFoundException($"Admin with id: {id} was not found");
         }
 
+        var allBasicAdmins = (await _adminRepository.GetAllBasicAdminsAsync(ct))
+            ?.ToList();
+
+        ThrowExceptionIfLoginAlreadyExists(newLogin, allBasicAdmins);
+
         await _adminRepository.UpdateAsync(adminToChange, () =>
         {
-            adminToChange.Login = newlogin;
+            adminToChange.Login = newLogin;
         }, ct);
+    }
+
+    private void ThrowExceptionIfLoginAlreadyExists(string login, List<BasicAdminProjection>? basicAdmins)
+    {
+        if (basicAdmins?.Count == 0) return;
+        
+        BasicAdminProjection? adminWithTheSameLogin = basicAdmins?.FirstOrDefault(x => x.Login == login);
+        if (adminWithTheSameLogin != null)
+        {
+            throw new ArgumentException($"Admin with login: {login} already exists");
+        }
     }
 
     public async Task EditBasicAdminPasswordAsync(long id, string oldPassword, string newUnhashedPassword, CancellationToken ct)

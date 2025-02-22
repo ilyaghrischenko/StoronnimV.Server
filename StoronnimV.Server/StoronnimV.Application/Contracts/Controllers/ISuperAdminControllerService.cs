@@ -8,6 +8,6 @@ public interface ISuperAdminControllerService : IGetAllControllerService<BasicAd
 {
     Task DeleteBasicAdminAsync(long id, CancellationToken ct);
     Task AddBasicAdminAsync(CreateBasicAdminRequest request, CancellationToken ct);
-    Task EditBasicAdminPasswordAsync(EditBasicAdminPasswordRequest passwordRequest, CancellationToken ct);
-    Task EditBasicAdminLoginAsync(EditBasicAdminLoginRequest request, CancellationToken ct);
+    Task EditBasicAdminPasswordAsync(long id, EditBasicAdminPasswordRequest passwordRequest, CancellationToken ct);
+    Task EditBasicAdminLoginAsync(long id, EditBasicAdminLoginRequest request, CancellationToken ct);
 }

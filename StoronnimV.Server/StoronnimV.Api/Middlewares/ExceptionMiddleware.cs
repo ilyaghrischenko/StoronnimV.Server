@@ -31,6 +31,12 @@ public class ExceptionMiddleware : IExceptionMiddleware
                 499,
                 ex);
         }
+        catch (ArgumentException ex)
+        {
+            await HandleExceptionAsync(context,
+                HttpStatusCode.BadRequest,
+                ex);
+        }
         catch (EntityNotFoundException ex)
         {
             await HandleExceptionAsync(context,

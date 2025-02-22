@@ -7,9 +7,6 @@ public class EditBasicAdminLoginRequestValidator : AbstractValidator<EditBasicAd
 {
     public EditBasicAdminLoginRequestValidator()
     {
-        RuleFor(x => x.Id)
-            .NotEmpty();
-
         RuleFor(x => x.NewLogin)
             .NotEmpty().WithMessage("Login is required")
             .MinimumLength(4).WithMessage("Login must be at least 4 characters long")
