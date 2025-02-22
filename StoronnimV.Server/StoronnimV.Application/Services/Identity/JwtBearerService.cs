@@ -3,10 +3,10 @@ using System.Security.Claims;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using StoronnimV.Application.AutentificationOptions;
-using StoronnimV.Application.Contracts.Jwt;
+using StoronnimV.Application.Contracts.Identity;
 using StoronnimV.Domain.Entities;
 
-namespace StoronnimV.Application.Services.Jwt;
+namespace StoronnimV.Application.Services.Identity;
 
 public class JwtBearerService(IOptions<JwtOptions> jwtOptions) : IJwtBearerService
 {

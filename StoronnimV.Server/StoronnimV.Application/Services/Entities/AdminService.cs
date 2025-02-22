@@ -47,25 +47,6 @@ public class AdminService(
         return admin;
     }
 
-    public async Task<Admin> LogInAsync(LogInRequest request, CancellationToken ct)
-    {
-        Admin? admin = await _adminRepository.GetByLoginAsync(request.Login, ct);
-
-        if (admin is null)
-        {
-            throw new LogInException($"Admin with login: {request.Login} was not found");
-        }
-        
-        PasswordVerificationResult verificationResult = _passwordHasher.VerifyHashedPassword(admin, admin.Password, request.Password);
-
-        if (verificationResult == PasswordVerificationResult.Failed)
-        {
-            throw new LogInException("Wrong password");
-        }
-        
-        return admin;
-    }
-
     public async Task<IEnumerable<BasicAdminProjection>> GetAllBasicAdminsAsync(CancellationToken ct)
     {
         var basicAdmins = await _adminRepository.GetAllBasicAdminsAsync(ct);

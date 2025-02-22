@@ -1,6 +1,6 @@
 using StoronnimV.Application.Contracts.Entities;
 
-namespace StoronnimV.Application.Services.Hangfire;
+namespace StoronnimV.Application.Services.Background;
 
 /// <summary>
 /// Сервис для обновления эллементов с таблицы "Афиша", которые активны, но уже вышел срок

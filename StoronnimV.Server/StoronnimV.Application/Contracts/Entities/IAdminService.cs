@@ -8,8 +8,6 @@ namespace StoronnimV.Application.Contracts.Entities;
 
 public interface IAdminService : IGetByIdService<AdminProjection>
 {
-    Task<Admin> LogInAsync(LogInRequest request, CancellationToken ct);
-    
     Task<IEnumerable<BasicAdminProjection>> GetAllBasicAdminsAsync(CancellationToken ct);
 
     Task DeleteBasicAdminAsync(long id, CancellationToken ct);

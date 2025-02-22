@@ -12,18 +12,18 @@ using StoronnimV.Application.AutentificationOptions;
 using StoronnimV.Application.Contracts.Controllers;
 using StoronnimV.Application.Contracts.Entities;
 using StoronnimV.Application.Contracts.Home;
-using StoronnimV.Application.Contracts.ImageResizer;
-using StoronnimV.Application.Contracts.Jwt;
+using StoronnimV.Application.Contracts.Identity;
+using StoronnimV.Application.Contracts.Utils;
 using StoronnimV.Application.Mapping.Group;
 using StoronnimV.Application.Mapping.Home;
 using StoronnimV.Application.Mapping.News;
 using StoronnimV.Application.Mapping.Schedule;
+using StoronnimV.Application.Services.Background;
 using StoronnimV.Application.Services.Controllers;
 using StoronnimV.Application.Services.Entities;
-using StoronnimV.Application.Services.Hangfire;
 using StoronnimV.Application.Services.Home;
-using StoronnimV.Application.Services.ImageResizer;
-using StoronnimV.Application.Services.Jwt;
+using StoronnimV.Application.Services.Identity;
+using StoronnimV.Application.Services.Utils;
 using StoronnimV.Application.Validation.Admin;
 using StoronnimV.Infrastructure;
 using StoronnimV.Domain.Contracts.AzureBlobStorage;
@@ -62,6 +62,7 @@ public static class WebApplicationBuilderExtensions
         builder.Services.AddScoped<IHomeService, HomeService>();
         builder.Services.AddScoped<IJwtBearerService, JwtBearerService>();
         builder.Services.AddScoped<IImageResizerService, ImageResizerService>();
+        builder.Services.AddScoped<IAccountService, AccountService>();
         
         return builder;
     }

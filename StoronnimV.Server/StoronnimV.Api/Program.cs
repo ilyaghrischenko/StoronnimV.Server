@@ -9,7 +9,7 @@ using StoronnimV.Application.Mapping.Group;
 using StoronnimV.Application.Mapping.Home;
 using StoronnimV.Application.Mapping.News;
 using StoronnimV.Application.Mapping.Schedule;
-using StoronnimV.Application.Services.Hangfire;
+using StoronnimV.Application.Services.Background;
 using StoronnimV.Application.Validation.Admin;
 using StoronnimV.Infrastructure;
 
