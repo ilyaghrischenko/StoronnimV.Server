@@ -98,6 +98,45 @@ public class AdminService(
         await _adminRepository.AddAsync(newBasicAdmin, ct);
     }
 
+    public async Task EditBasicAdminLoginAsync(long id, string newlogin, CancellationToken ct)
+    {
+        Admin? adminToChange = await _adminRepository.GetByIdAsync(id, ct);
+
+        if (adminToChange is null)
+        {
+            throw new EntityNotFoundException($"Admin with id: {id} was not found");
+        }
+
+        await _adminRepository.UpdateAsync(adminToChange, () =>
+        {
+            adminToChange.Login = newlogin;
+        }, ct);
+    }
+
+    public async Task EditBasicAdminPasswordAsync(long id, string oldPassword, string newUnhashedPassword, CancellationToken ct)
+    {
+        Admin? adminToChange = await _adminRepository.GetByIdAsync(id, ct);
+        
+        if (adminToChange is null)
+        {
+            throw new EntityNotFoundException($"Admin with id: {id} was not found");
+        }
+        
+        PasswordVerificationResult verificationResult = _passwordHasher.VerifyHashedPassword(adminToChange, adminToChange.Password, oldPassword);
+
+        if (verificationResult == PasswordVerificationResult.Failed)
+        {
+            throw new ArgumentException("passwords do not match");
+        }
+        
+        string newHashedPassword = _passwordHasher.HashPassword(null!, newUnhashedPassword);
+
+        await _adminRepository.UpdateAsync(adminToChange, () =>
+        {
+            adminToChange.Password = newHashedPassword;
+        }, ct);
+    }
+
     public async Task DeleteNewsItemAsync(long id, CancellationToken ct)
     {
         News? newsItem = await _newsRepository.GetByIdAsync(id, ct);

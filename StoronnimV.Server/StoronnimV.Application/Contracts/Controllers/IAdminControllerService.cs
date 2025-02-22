@@ -13,6 +13,8 @@ public interface IAdminControllerService
     
     Task DeleteBasicAdminAsync(long id, CancellationToken ct);
     Task AddBasicAdminAsync(CreateBasicAdminRequest request, CancellationToken ct);
+    Task EditBasicAdminPasswordAsync(EditBasicAdminPasswordRequest passwordRequest, CancellationToken ct);
+    Task EditBasicAdminLoginAsync(EditBasicAdminLoginRequest request, CancellationToken ct);
     
     Task DeleteNewsItemAsync(long id, CancellationToken ct);
     Task DeleteScheduleAsync(long id, CancellationToken ct);

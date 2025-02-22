@@ -1,7 +1,10 @@
+using FluentValidation;
+using FluentValidation.AspNetCore;
 using Hangfire;
 using Hangfire.PostgreSql;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
 using Serilog;
@@ -21,6 +24,7 @@ using StoronnimV.Application.Services.Hangfire;
 using StoronnimV.Application.Services.Home;
 using StoronnimV.Application.Services.ImageResizer;
 using StoronnimV.Application.Services.Jwt;
+using StoronnimV.Application.Validation.Admin;
 using StoronnimV.Infrastructure;
 using StoronnimV.Domain.Contracts.AzureBlobStorage;
 using StoronnimV.Domain.Contracts.Database;
@@ -91,6 +95,16 @@ public static class WebApplicationBuilderExtensions
         
         builder.Services.AddPooledDbContextFactory<StoronnimVContext>(options =>
             options.UseNpgsql(connectionString));
+        
+        return builder;
+    }
+
+    public static WebApplicationBuilder AddFluentValidation(this WebApplicationBuilder builder)
+    {
+        builder.Services.AddFluentValidationAutoValidation();
+        builder.Services.AddValidatorsFromAssemblyContaining<LogInRequestValidator>();
+        builder.Services.AddValidatorsFromAssemblyContaining<EditBasicAdminLoginRequestValidator>();
+        builder.Services.AddValidatorsFromAssemblyContaining<EditBasicAdminPasswordRequestValidator>();
         
         return builder;
     }

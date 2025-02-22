@@ -14,6 +14,8 @@ public interface IAdminService : IGetByIdService<AdminProjection>
 
     Task DeleteBasicAdminAsync(long id, CancellationToken ct);
     Task AddBasicAdminAsync(string login, string unhashedPassword, CancellationToken ct);
+    Task EditBasicAdminLoginAsync(long id, string newlogin, CancellationToken ct);
+    Task EditBasicAdminPasswordAsync(long id, string oldPassword, string newUnhashedPassword, CancellationToken ct);
     
     Task DeleteNewsItemAsync(long id, CancellationToken ct);
     Task DeleteScheduleAsync(long id, CancellationToken ct);

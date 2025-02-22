@@ -1,4 +1,5 @@
 using AutoMapper;
+using FluentValidation.AspNetCore;
 using Hangfire;
 using Microsoft.EntityFrameworkCore;
 using StoronnimV.Api.Extensions;
@@ -9,11 +10,13 @@ using StoronnimV.Application.Mapping.Home;
 using StoronnimV.Application.Mapping.News;
 using StoronnimV.Application.Mapping.Schedule;
 using StoronnimV.Application.Services.Hangfire;
+using StoronnimV.Application.Validation.Admin;
 using StoronnimV.Infrastructure;
 
 WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 
 builder
+    .AddFluentValidation()
     .AddSerilogLogger()
     .AddAutoMapper()
     .AddCors()

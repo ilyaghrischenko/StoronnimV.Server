@@ -48,6 +48,23 @@ public class AdminControllerService(
         await _adminService.AddBasicAdminAsync(login, unhashedPassword, ct);
     }
 
+    public async Task EditBasicAdminPasswordAsync(EditBasicAdminPasswordRequest passwordRequest, CancellationToken ct)
+    {
+        long id = passwordRequest.Id;
+        string oldPassword = passwordRequest.OldPassword;
+        string newPassword = passwordRequest.NewPassword;
+        
+        await _adminService.EditBasicAdminPasswordAsync(id, oldPassword, newPassword, ct);
+    }
+
+    public async Task EditBasicAdminLoginAsync(EditBasicAdminLoginRequest loginRequest, CancellationToken ct)
+    {
+        long id = loginRequest.Id;
+        string newLogin = loginRequest.NewLogin;
+        
+        await _adminService.EditBasicAdminLoginAsync(id, newLogin, ct);
+    }
+
     public async Task DeleteNewsItemAsync(long id, CancellationToken ct)
     {
         await _adminService.DeleteNewsItemAsync(id, ct);

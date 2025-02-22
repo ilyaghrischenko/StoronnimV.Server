@@ -47,12 +47,21 @@ namespace StoronnimV.Api.Controllers
 
             return Created();
         }
+        
+        [Authorize(Policy = "SuperAdminOnly")]
+        [HttpPatch("/basic-admin/login")]
+        public async Task<IActionResult> EditBasicAdminLogin([FromBody] EditBasicAdminLoginRequest loginRequest, CancellationToken ct)
+        {
+            await _adminControllerService.EditBasicAdminLoginAsync(loginRequest, ct);
+
+            return Ok();
+        }
 
         [Authorize(Policy = "SuperAdminOnly")]
-        [HttpPut("/basic-admin")]
-        public async Task<IActionResult> EditBasicAdmin([FromBody] EditBasicAdminRequest request, CancellationToken ct)
+        [HttpPatch("/basic-admin/password")]
+        public async Task<IActionResult> EditBasicAdminPassword([FromBody] EditBasicAdminPasswordRequest passwordRequest, CancellationToken ct)
         {
-            
+            await _adminControllerService.EditBasicAdminPasswordAsync(passwordRequest, ct);
 
             return Ok();
         }
