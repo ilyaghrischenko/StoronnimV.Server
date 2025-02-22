@@ -35,3 +35,4 @@ Npgsql.PostgresException (0x80004005): 53300: remaining connection slots are res
     Routine: InitPostgres
 2025-02-22 11:24:15.301 +02:00 [ERR] EXCEPTION - MoveNext: Admin with login:  was not found (Method: StoronnimV.Application.Services.Entities.AdminService+<LogInAsync>d__12.MoveNext)
 2025-02-22 16:15:25.970 +02:00 [ERR] EXCEPTION - MoveNext: Wrong password (Method: StoronnimV.Application.Services.Account.AccountService+<LogInAsync>d__3.MoveNext)
+2025-02-22 17:01:42.623 +02:00 [ERR] EXCEPTION - MoveNext: Admin with login: SECOND_LOGIN4 already exists (Method: StoronnimV.Application.Services.Entities.SuperAdminService+<AddBasicAdminAsync>d__5.MoveNext)

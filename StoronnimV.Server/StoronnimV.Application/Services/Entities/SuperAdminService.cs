@@ -35,6 +35,18 @@ public class SuperAdminService(
 
     public async Task AddBasicAdminAsync(string login, string unhashedPassword, CancellationToken ct)
     {
+        var allBasicAdmins = (await _adminRepository.GetAllBasicAdminsAsync(ct))
+            ?.ToList();
+
+        if (allBasicAdmins?.Count != 0)
+        {
+            BasicAdminProjection? adminWithTheSameLogin = allBasicAdmins?.FirstOrDefault(x => x.Login == login);
+            if (adminWithTheSameLogin != null)
+            {
+                throw new ArgumentException($"Admin with login: {login} already exists");
+            }
+        }
+        
         string hashedPassword = _passwordHasher.HashPassword(null! ,unhashedPassword);
 
         Admin newBasicAdmin = new()
