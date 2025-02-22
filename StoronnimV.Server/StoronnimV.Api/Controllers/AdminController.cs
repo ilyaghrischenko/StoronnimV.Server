@@ -19,51 +19,6 @@ namespace StoronnimV.Api.Controllers
     {
         private readonly IAdminControllerService _adminControllerService = adminControllerService;
 
-        [Authorize(Policy = "SuperAdminOnly")]
-        [HttpGet("all")]
-        public async Task<ActionResult<IEnumerable<BasicAdminResponse>>> GetAllBasicAdmins(CancellationToken ct)
-        {
-            var admins = await _adminControllerService.GetAllBasicAdminsAsync(ct);
-
-            return Ok(admins);
-        }
-
-        [Authorize(Policy = "SuperAdminOnly")]
-        [HttpDelete("/{id:long}")]
-        public async Task<IActionResult> DeleteBasicAdmin([FromRoute] long id, CancellationToken ct)
-        {
-            await _adminControllerService.DeleteBasicAdminAsync(id, ct);
-
-            return NoContent();
-        }
-
-        [Authorize(Policy = "SuperAdminOnly")]
-        [HttpPost("/basic-admin")]
-        public async Task<IActionResult> CreateBasicAdmin([FromBody] CreateBasicAdminRequest request, CancellationToken ct)
-        {
-            await _adminControllerService.AddBasicAdminAsync(request, ct);
-
-            return Created();
-        }
-        
-        [Authorize(Policy = "SuperAdminOnly")]
-        [HttpPatch("/basic-admin/login")]
-        public async Task<IActionResult> EditBasicAdminLogin([FromBody] EditBasicAdminLoginRequest loginRequest, CancellationToken ct)
-        {
-            await _adminControllerService.EditBasicAdminLoginAsync(loginRequest, ct);
-
-            return Ok();
-        }
-
-        [Authorize(Policy = "SuperAdminOnly")]
-        [HttpPatch("/basic-admin/password")]
-        public async Task<IActionResult> EditBasicAdminPassword([FromBody] EditBasicAdminPasswordRequest passwordRequest, CancellationToken ct)
-        {
-            await _adminControllerService.EditBasicAdminPasswordAsync(passwordRequest, ct);
-
-            return Ok();
-        }
-
         [HttpDelete("news/{id:long}")]
         public async Task<IActionResult> DeleteNewsItem([FromRoute] long id, CancellationToken ct)
         {

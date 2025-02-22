@@ -57,6 +57,7 @@ public static class WebApplicationBuilderExtensions
         builder.Services.AddScoped<IHomeControllerService, HomeControllerService>();
         builder.Services.AddScoped<IAccountControllerService, AccountControllerService>();
         builder.Services.AddScoped<IAdminControllerService, AdminControllerService>();
+        builder.Services.AddScoped<ISuperAdminControllerService, SuperAdminControllerService>();
 
         builder.Services.AddScoped<IHomeService, HomeService>();
         builder.Services.AddScoped<IJwtBearerService, JwtBearerService>();
