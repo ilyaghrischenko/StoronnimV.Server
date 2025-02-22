@@ -13,11 +13,9 @@ namespace StoronnimV.Application.Services.Entities;
 /// </summary>
 /// <param name="newsRepository"></param>
 public class NewsService(
-    INewsRepository newsRepository,
-    ILogger<NewsService> logger) : INewsService
+    INewsRepository newsRepository) : INewsService
 {
     private readonly INewsRepository _newsRepository = newsRepository;
-    private readonly ILogger<NewsService> _logger = logger;
 
     public async Task<NewsFullProjection> GetItemByIdAsync(long id, CancellationToken ct)
     {

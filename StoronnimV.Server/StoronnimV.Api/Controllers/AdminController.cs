@@ -15,11 +15,9 @@ namespace StoronnimV.Api.Controllers
     [Route("api/admin")]
     [ApiController]
     public class AdminController(
-        IAdminControllerService adminControllerService,
-        ILogger<AdminController> logger) : ControllerBase
+        IAdminControllerService adminControllerService) : ControllerBase
     {
         private readonly IAdminControllerService _adminControllerService = adminControllerService;
-        private readonly ILogger<AdminController> _logger = logger;
 
         [Authorize(Policy = "SuperAdminOnly")]
         [HttpGet("all")]

@@ -12,11 +12,9 @@ namespace StoronnimV.Application.Services.Entities;
 /// Сервис для проверки полученных данных, полученых с репозитория
 /// </summary>
 /// <param name="groupPageRepository"></param>
-public class GroupPageService(IGroupPageRepository groupPageRepository,
-    ILogger<GroupPageService> logger) : IGroupPageService
+public class GroupPageService(IGroupPageRepository groupPageRepository) : IGroupPageService
 {
     private readonly IGroupPageRepository _groupPageRepository = groupPageRepository;
-    private readonly ILogger<GroupPageService> _logger = logger;
     
     public async Task<GroupPageProjection> GetItemByIdAsync(long id, CancellationToken ct)
     {

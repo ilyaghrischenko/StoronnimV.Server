@@ -10,12 +10,10 @@ namespace StoronnimV.Application.Services.Controllers;
 
 public class MusicControllerService(
     IMusicPlatformService musicPlatformService,
-    IMapper mapper,
-    ILogger<MusicControllerService> logger) : IMusicControllerService
+    IMapper mapper) : IMusicControllerService
 {
     private readonly IMusicPlatformService _musicPlatformService = musicPlatformService;
     private readonly IMapper _mapper = mapper;
-    private readonly ILogger<MusicControllerService> _logger = logger;
     
     public async Task<MusicResponse> GetItemByIdAsync(long id, CancellationToken ct)
     {

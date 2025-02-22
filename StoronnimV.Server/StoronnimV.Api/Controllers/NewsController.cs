@@ -11,11 +11,9 @@ namespace StoronnimV.Api.Controllers
     /// <param name="newsControllerService"></param>
     [Route("api/news")]
     [ApiController]
-    public class NewsController(INewsControllerService newsControllerService,
-        ILogger<NewsController> logger) : ControllerBase
+    public class NewsController(INewsControllerService newsControllerService) : ControllerBase
     {
         private readonly INewsControllerService _newsControllerService = newsControllerService;
-        private readonly ILogger<NewsController> _logger = logger;
 
         [HttpGet("{id:long}")]
         public async Task<ActionResult<NewsResponse>> GetNewsItem([FromRoute] long id, CancellationToken ct)

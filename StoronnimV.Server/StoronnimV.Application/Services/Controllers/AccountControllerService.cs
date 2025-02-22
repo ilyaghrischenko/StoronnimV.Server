@@ -10,12 +10,10 @@ namespace StoronnimV.Application.Services.Controllers;
 
 public class AccountControllerService(
     IAdminService adminService,
-    IJwtBearerService jwtBearerService,
-    ILogger<AccountControllerService> logger) : IAccountControllerService
+    IJwtBearerService jwtBearerService) : IAccountControllerService
 {
     private readonly IAdminService _adminService = adminService;
     private readonly IJwtBearerService _jwtBearerService = jwtBearerService;
-    private readonly ILogger<AccountControllerService> _logger = logger;
 
     public async Task<string> LogInAsync(LogInRequest request, CancellationToken ct)
     {

@@ -12,12 +12,10 @@ namespace StoronnimV.Infrastructure.Repositories.Database;
 /// Репозиторий для получения данных напрямую с бд
 /// </summary>
 /// <param name="contextFactory"></param>
-public class GroupPageRepository(IDbContextFactory<StoronnimVContext> contextFactory,
-    ILogger<GroupPageRepository> logger) : 
+public class GroupPageRepository(IDbContextFactory<StoronnimVContext> contextFactory) : 
     Repository<GroupPage>(contextFactory), IGroupPageRepository
 {
     private readonly IDbContextFactory<StoronnimVContext> _contextFactory = contextFactory;
-    private readonly ILogger<GroupPageRepository> _logger = logger;
 
     public async Task<GroupPageProjection?> GetByIdAsNoTrackingAsync(long id, CancellationToken ct)
     {

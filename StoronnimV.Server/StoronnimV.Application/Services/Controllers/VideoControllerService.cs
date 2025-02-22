@@ -11,12 +11,10 @@ namespace StoronnimV.Application.Services.Controllers;
 
 public class VideoControllerService(
     IVideoService videoService,
-    ILogger<VideoControllerService> logger,
     IMapper mapper)
     : IVideoControllerService
 {
     private readonly IVideoService _videoService = videoService;
-    private readonly ILogger<VideoControllerService> _logger = logger;
     private readonly IMapper _mapper = mapper;
     
     public async Task<VideoPageShortResponse> GetItemByIdAsync(long id, CancellationToken ct)

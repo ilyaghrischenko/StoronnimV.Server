@@ -11,11 +11,9 @@ namespace StoronnimV.Application.Services.Entities;
 /// Сервис для проверки полученных данных, полученых с репозитория
 /// </summary>
 /// <param name="socialRepository"></param>
-public class SocialService(ISocialRepository socialRepository,
-    ILogger<SocialService> logger) : ISocialService
+public class SocialService(ISocialRepository socialRepository) : ISocialService
 {
     private readonly ISocialRepository _socialRepository = socialRepository;
-    private readonly ILogger<SocialService> _logger = logger;
     
     public async Task<SocialProjection> GetItemByIdAsync(long id, CancellationToken ct)
     {

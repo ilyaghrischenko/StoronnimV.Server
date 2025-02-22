@@ -11,12 +11,10 @@ using StoronnimV.Infrastructure.Repositories.Database.Shared;
 namespace StoronnimV.Infrastructure.Repositories.Database;
 
 public class AdminRepository(
-    IDbContextFactory<StoronnimVContext> contextFactory,
-    ILogger<AdminRepository> logger)
+    IDbContextFactory<StoronnimVContext> contextFactory)
     : Repository<Admin>(contextFactory), IAdminRepository
 {
     private readonly IDbContextFactory<StoronnimVContext> _contextFactory = contextFactory;
-    private readonly ILogger<AdminRepository> _logger = logger;
     
     public async Task<AdminProjection?> GetByIdAsNoTrackingAsync(long id, CancellationToken ct)
     {

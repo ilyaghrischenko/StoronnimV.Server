@@ -14,13 +14,10 @@ namespace StoronnimV.Infrastructure.Repositories.Database;
 /// </summary>
 /// <param name="contextFactory"></param>
 /// <param name="logger"></param>
-public class VideoRepository(
-    IDbContextFactory<StoronnimVContext> contextFactory,
-    ILogger<VideoRepository> logger)
+public class VideoRepository(IDbContextFactory<StoronnimVContext> contextFactory)
     : Repository<Video>(contextFactory), IVideoRepository
 {
     private readonly IDbContextFactory<StoronnimVContext> _contextFactory = contextFactory;
-    private readonly ILogger<VideoRepository> _logger = logger;
 
     public async Task<VideoShortProjection?> GetByIdAsNoTrackingAsync(long id, CancellationToken ct)
     {

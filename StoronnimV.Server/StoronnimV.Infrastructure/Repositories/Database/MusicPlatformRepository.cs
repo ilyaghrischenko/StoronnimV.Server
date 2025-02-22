@@ -8,12 +8,10 @@ using StoronnimV.Infrastructure.Repositories.Database.Shared;
 
 namespace StoronnimV.Infrastructure.Repositories.Database;
 
-public class MusicPlatformRepository(IDbContextFactory<StoronnimVContext> contextFactory,
-    ILogger<MusicPlatformRepository> logger)
+public class MusicPlatformRepository(IDbContextFactory<StoronnimVContext> contextFactory)
     : Repository<MusicPlatform>(contextFactory), IMusicPlatformRepository
 {
     private readonly IDbContextFactory<StoronnimVContext> _contextFactory = contextFactory;
-    private readonly ILogger<MusicPlatformRepository> _logger = logger;
     
     public async Task<MusicPlatformProjection?> GetByIdAsNoTrackingAsync(long id, CancellationToken ct)
     {

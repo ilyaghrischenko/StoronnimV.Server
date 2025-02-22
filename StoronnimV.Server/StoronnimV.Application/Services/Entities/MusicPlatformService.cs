@@ -7,11 +7,9 @@ using StoronnimV.Domain.Projections;
 
 namespace StoronnimV.Application.Services.Entities;
 
-public class MusicPlatformService(IMusicPlatformRepository musicPlatformRepository,
-    ILogger<MusicPlatformService> logger) : IMusicPlatformService
+public class MusicPlatformService(IMusicPlatformRepository musicPlatformRepository) : IMusicPlatformService
 {
     private readonly IMusicPlatformRepository _musicPlatformRepository = musicPlatformRepository;
-    private readonly ILogger<MusicPlatformService> _logger = logger;
 
     public async Task<MusicPlatformProjection> GetItemByIdAsync(long id, CancellationToken ct)
     {

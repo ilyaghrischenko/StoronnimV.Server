@@ -10,11 +10,9 @@ using StoronnimV.Domain.Projections.Video;
 namespace StoronnimV.Application.Services.Entities;
 
 public class VideoService(
-    IVideoRepository videoRepository,
-    ILogger<VideoService> logger) : IVideoService
+    IVideoRepository videoRepository) : IVideoService
 {
     private readonly IVideoRepository _videoRepository = videoRepository;
-    private readonly ILogger<VideoService> _logger = logger;
 
     public async Task<VideoShortProjection> GetItemByIdAsync(long id, CancellationToken ct)
     {

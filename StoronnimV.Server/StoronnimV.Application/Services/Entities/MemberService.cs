@@ -12,11 +12,9 @@ namespace StoronnimV.Application.Services.Entities;
 /// Сервис для проверки полученных данных, полученых с репозитория
 /// </summary>
 /// <param name="memberRepository"></param>
-public class MemberService(IMemberRepository memberRepository,
-    ILogger<MemberService> logger) : IMemberService
+public class MemberService(IMemberRepository memberRepository) : IMemberService
 {
     private readonly IMemberRepository _memberRepository = memberRepository;
-    private readonly ILogger<MemberService> _logger = logger;
     
     public async Task<IEnumerable<MemberShortProjection>> GetAllAsync(CancellationToken ct)
     {

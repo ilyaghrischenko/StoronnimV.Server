@@ -21,14 +21,12 @@ public class GroupPageControllerService(
     IGroupPageService groupPageService,
     IMemberService memberService,
     ISocialService socialService,
-    IMapper mapper,
-    ILogger<GroupPageControllerService> logger) : IGroupPageControllerService
+    IMapper mapper) : IGroupPageControllerService
 {
     private readonly IGroupPageService _groupPageService = groupPageService;
     private readonly IMemberService _memberService = memberService;
     private readonly ISocialService _socialService = socialService;
     private readonly IMapper _mapper = mapper;
-    private readonly ILogger<GroupPageControllerService> _logger = logger;
     
     public async Task<GroupPageFullInfoResponse> GetGroupPageInfoAsync(CancellationToken ct)
     {

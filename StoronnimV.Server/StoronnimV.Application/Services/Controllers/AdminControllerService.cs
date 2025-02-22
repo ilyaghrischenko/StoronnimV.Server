@@ -20,12 +20,10 @@ namespace StoronnimV.Application.Services.Controllers;
 
 public class AdminControllerService(
     IAdminService adminService,
-    IMapper mapper,
-    ILogger<AdminControllerService> logger) : IAdminControllerService
+    IMapper mapper) : IAdminControllerService
 {
     private readonly IAdminService _adminService = adminService;
     private readonly IMapper _mapper = mapper;
-    private readonly ILogger<AdminControllerService> _logger = logger;
 
     public async Task<IEnumerable<BasicAdminResponse>> GetAllBasicAdminsAsync(CancellationToken ct)
     {

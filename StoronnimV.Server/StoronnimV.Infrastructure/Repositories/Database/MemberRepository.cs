@@ -13,12 +13,10 @@ namespace StoronnimV.Infrastructure.Repositories.Database;
 /// Репозиторий для получения данных напрямую с бд
 /// </summary>
 /// <param name="contextFactory"></param>
-public class MemberRepository(IDbContextFactory<StoronnimVContext> contextFactory,
-    ILogger<MemberRepository> logger) : 
-    Repository<Member>(contextFactory), IMemberRepository
+public class MemberRepository(IDbContextFactory<StoronnimVContext> contextFactory)
+    : Repository<Member>(contextFactory), IMemberRepository
 {
     private readonly IDbContextFactory<StoronnimVContext> _contextFactory = contextFactory;
-    private readonly ILogger<MemberRepository> _logger = logger;
 
     protected override IQueryable<Member> ApplyIncludes(IQueryable<Member> dbSet)
     {

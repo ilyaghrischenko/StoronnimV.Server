@@ -11,13 +11,11 @@ namespace StoronnimV.Application.Services.Home;
 public class HomeService(
     INewsRepository newsRepository,
     IScheduleRepository scheduleRepository,
-    IVideoRepository videoRepository,
-    ILogger<HomeService> logger) : IHomeService
+    IVideoRepository videoRepository) : IHomeService
 {
     private readonly INewsRepository _newsRepository = newsRepository;
     private readonly IScheduleRepository _scheduleRepository = scheduleRepository;
     private readonly IVideoRepository _videoRepository = videoRepository;
-    private readonly ILogger<HomeService> _logger = logger;
     
     public async Task<IEnumerable<NewsHomeProjection>> GetMainNewsForHomePageAsync(int count, CancellationToken ct)
     {

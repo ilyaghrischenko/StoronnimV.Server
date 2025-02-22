@@ -8,11 +8,9 @@ namespace StoronnimV.Api.Controllers
     [Route("api/account")]
     [ApiController]
     public class AccountController(
-        IAccountControllerService accountControllerService,
-        ILogger<AccountController> logger) : ControllerBase
+        IAccountControllerService accountControllerService) : ControllerBase
     {
         private readonly IAccountControllerService _accountControllerService = accountControllerService;
-        private readonly ILogger<AccountController> _logger = logger;
         
         [HttpPost("login")]
         public async Task<ActionResult<string>> LogIn([FromBody] LogInRequest request, CancellationToken ct)
