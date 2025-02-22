@@ -18,7 +18,7 @@ public class SocialService(ISocialRepository socialRepository) : ISocialService
     public async Task<SocialProjection> GetItemByIdAsync(long id, CancellationToken ct)
     {
         SocialProjection social = await _socialRepository.GetByIdAsNoTrackingAsync(id, ct)
-                                       ?? throw new EntityNotFoundException($"Social with id: {id} was not found");
+                                       ?? throw new EntityNotFoundException($"Social with {nameof(id)}: {id} was not found");
         
         return social;
     }

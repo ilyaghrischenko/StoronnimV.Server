@@ -20,7 +20,7 @@ public class AccountService(
 
         if (admin is null)
         {
-            throw new LogInException($"Admin with login: {login} was not found");
+            throw new LogInException($"Admin with {nameof(login)}: {login} was not found");
         }
         
         PasswordVerificationResult verificationResult = _passwordHasher.VerifyHashedPassword(admin, admin.Password, password);

@@ -41,7 +41,7 @@ public class AdminService(
 
         if (admin is null)
         {
-            throw new EntityNotFoundException($"Admin with id: {id} was not found");
+            throw new EntityNotFoundException($"Admin with {nameof(id)}: {id} was not found");
         }
         
         return admin;
@@ -53,7 +53,7 @@ public class AdminService(
 
         if (newsItem is null)
         {
-            throw new EntityNotFoundException($"NewsItem with id: {id} was not found");
+            throw new EntityNotFoundException($"NewsItem with {nameof(id)}: {id} was not found");
         }
         
         await _newsRepository.DeleteAsync(newsItem, ct);
@@ -76,7 +76,7 @@ public class AdminService(
 
         if (schedule is null)
         {
-            throw new EntityNotFoundException($"Schedule with id: {id} was not found");
+            throw new EntityNotFoundException($"Schedule with {nameof(id)}: {id} was not found");
         }
         
         await _scheduleRepository.DeleteAsync(schedule, ct);
@@ -93,7 +93,7 @@ public class AdminService(
 
         if (video is null)
         {
-            throw new EntityNotFoundException($"Video with id: {id} was not found");
+            throw new EntityNotFoundException($"Video with {nameof(id)}: {id} was not found");
         }
         
         await _videoRepository.DeleteAsync(video, ct);
@@ -107,7 +107,7 @@ public class AdminService(
 
         if (groupPage is null)
         {
-            throw new EntityNotFoundException($"Group page with id: {id} was not found");
+            throw new EntityNotFoundException($"Group page with {nameof(id)}: {id} was not found");
         }
         
         await _groupPageRepository.DeleteAsync(groupPage, ct);
@@ -121,7 +121,7 @@ public class AdminService(
 
         if (member is null)
         {
-            throw new EntityNotFoundException($"Member with id: {id} was not found");
+            throw new EntityNotFoundException($"Member with {nameof(id)}: {id} was not found");
         }
         
         await _memberRepository.DeleteAsync(member, ct);
@@ -135,7 +135,7 @@ public class AdminService(
 
         if (musicPlatform is null)
         {
-            throw new EntityNotFoundException($"Music platform with id: {id} was not found");
+            throw new EntityNotFoundException($"Music platform with {nameof(id)}: {id} was not found");
         }
         
         await _musicPlatformRepository.DeleteAsync(musicPlatform, ct);
@@ -149,7 +149,7 @@ public class AdminService(
 
         if (social is null)
         {
-            throw new EntityNotFoundException($"Social with id: {id} was not found");
+            throw new EntityNotFoundException($"Social with {nameof(id)}: {id} was not found");
         }
 
         await _socialRepository.DeleteAsync(social, ct);

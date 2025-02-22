@@ -20,7 +20,7 @@ public class NewsService(
     public async Task<NewsFullProjection> GetItemByIdAsync(long id, CancellationToken ct)
     {
         NewsFullProjection newsItem = await _newsRepository.GetByIdAsNoTrackingAsync(id, ct)
-                                      ?? throw new EntityNotFoundException($"News with id: {id} was not found");
+                                      ?? throw new EntityNotFoundException($"News with {nameof(id)}: {id} was not found");
 
         return newsItem;
     }
@@ -30,7 +30,7 @@ public class NewsService(
     {
         if (page <= 0)
         {
-            throw new PaginationException("invalid page number");
+            throw new PaginationException("Invalid page number");
         }
 
         int totalCount = await _newsRepository.GetTotalCountAsync(ct);

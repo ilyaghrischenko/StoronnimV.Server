@@ -26,7 +26,7 @@ public class MemberService(IMemberRepository memberRepository) : IMemberService
     public async Task<MemberFullProjection> GetItemByIdAsync(long id, CancellationToken ct)
     {
         MemberFullProjection member = await _memberRepository.GetByIdAsNoTrackingAsync(id, ct)
-                                      ?? throw new EntityNotFoundException($"Member with id: {id} was not found");
+                                      ?? throw new EntityNotFoundException($"Member with {nameof(id)}: {id} was not found");
 
         return member;
     }

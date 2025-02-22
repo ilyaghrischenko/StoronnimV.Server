@@ -19,7 +19,7 @@ public class GroupPageService(IGroupPageRepository groupPageRepository) : IGroup
     public async Task<GroupPageProjection> GetItemByIdAsync(long id, CancellationToken ct)
     {
         GroupPageProjection groupPage = await _groupPageRepository.GetByIdAsNoTrackingAsync(id, ct)
-                                        ?? throw new EntityNotFoundException($"GroupPage with id: {id} was not found");
+                                        ?? throw new EntityNotFoundException($"GroupPage with {nameof(id)}: {id} was not found");
         
         return groupPage;
     }

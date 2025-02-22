@@ -19,7 +19,7 @@ public class ScheduleService(IScheduleRepository scheduleRepository) : ISchedule
     public async Task<ScheduleFullProjection> GetItemByIdAsync(long id, CancellationToken ct)
     {
         ScheduleFullProjection schedule = await _scheduleRepository.GetByIdAsNoTrackingAsync(id, ct)
-                                          ?? throw new EntityNotFoundException($"Schedule with id: {id} was not found");
+                                          ?? throw new EntityNotFoundException($"Schedule with {nameof(id)}: {id} was not found");
         
         return schedule;
     }

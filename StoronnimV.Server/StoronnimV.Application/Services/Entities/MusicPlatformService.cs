@@ -14,7 +14,7 @@ public class MusicPlatformService(IMusicPlatformRepository musicPlatformReposito
     public async Task<MusicPlatformProjection> GetItemByIdAsync(long id, CancellationToken ct)
     {
         MusicPlatformProjection musicPlatform = await _musicPlatformRepository.GetByIdAsNoTrackingAsync(id, ct)
-                                                ?? throw new EntityNotFoundException($"Music Platform with id: {id} was not found");
+                                                ?? throw new EntityNotFoundException($"Music Platform with {nameof(id)}: {id} was not found");
         
         return musicPlatform;
     }

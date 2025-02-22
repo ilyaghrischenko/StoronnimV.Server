@@ -17,7 +17,7 @@ public class VideoService(
     public async Task<VideoShortProjection> GetItemByIdAsync(long id, CancellationToken ct)
     {
         VideoShortProjection video = await _videoRepository.GetByIdAsNoTrackingAsync(id, ct)
-                                     ?? throw new EntityNotFoundException($"Video with id: {id} was not found");
+                                     ?? throw new EntityNotFoundException($"Video with {nameof(id)}: {id} was not found");
 
         return video;
     }

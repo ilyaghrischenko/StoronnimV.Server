@@ -27,7 +27,7 @@ public class SuperAdminService(
 
         if (basicAdmin is null)
         {
-            throw new EntityNotFoundException($"Basic Admin with id: {id} was not found");
+            throw new EntityNotFoundException($"Basic Admin with {nameof(id)}: {id} was not found");
         }
         
         await _adminRepository.DeleteAsync(basicAdmin, ct);
@@ -57,7 +57,7 @@ public class SuperAdminService(
         
         if (adminToChange is null)
         {
-            throw new EntityNotFoundException($"Admin with id: {id} was not found");
+            throw new EntityNotFoundException($"Admin with {nameof(id)}: {id} was not found");
         }
 
         var allBasicAdmins = (await _adminRepository.GetAllBasicAdminsAsync(ct))
@@ -78,7 +78,7 @@ public class SuperAdminService(
         BasicAdminProjection? adminWithTheSameLogin = basicAdmins?.FirstOrDefault(x => x.Login == login);
         if (adminWithTheSameLogin != null)
         {
-            throw new ArgumentException($"Admin with login: {login} already exists");
+            throw new ArgumentException($"Admin with {nameof(login)}: {login} already exists");
         }
     }
 
@@ -88,7 +88,7 @@ public class SuperAdminService(
         
         if (adminToChange is null)
         {
-            throw new EntityNotFoundException($"Admin with id: {id} was not found");
+            throw new EntityNotFoundException($"Admin with {nameof(id)}: {id} was not found");
         }
         
         PasswordVerificationResult verificationResult = _passwordHasher.VerifyHashedPassword(adminToChange, adminToChange.Password, oldPassword);
