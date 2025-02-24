@@ -2,6 +2,7 @@ using AutoMapper;
 using Microsoft.Extensions.Logging;
 using StoronnimV.Application.Contracts.Controllers;
 using StoronnimV.Application.Contracts.Entities;
+using StoronnimV.Application.DTO.Requests.Entities.Pages.Addition;
 using StoronnimV.Application.DTO.Responses.GroupPage;
 using StoronnimV.Application.DTO.Responses.GroupPage.ShortGroupPage;
 using StoronnimV.Application.DTO.Responses.GroupPage.ShortMember;
@@ -9,6 +10,9 @@ using StoronnimV.Application.DTO.Responses.NewsPage;
 using StoronnimV.Application.DTO.Responses.Shared;
 using StoronnimV.Application.DTO.Responses.Video;
 using StoronnimV.Application.Models;
+using StoronnimV.Domain.Contracts.AzureBlobStorage;
+using StoronnimV.Domain.Entities;
+using StoronnimV.Domain.Enums;
 using StoronnimV.Domain.Projections;
 using StoronnimV.Domain.Projections.Member;
 using StoronnimV.Domain.Projections.News;
@@ -18,10 +22,10 @@ namespace StoronnimV.Application.Services.Controllers;
 
 public class AdminControllerService(
     IAdminService adminService,
-    ILogger<AdminControllerService> logger) : IAdminControllerService
+    IBlobRepository blobRepository) : IAdminControllerService
 {
     private readonly IAdminService _adminService = adminService;
-    private readonly ILogger<AdminControllerService> _logger = logger;
+    private readonly IBlobRepository _blobRepository = blobRepository;
 
     public async Task DeleteNewsItemAsync(long id, CancellationToken ct)
     {
@@ -57,4 +61,13 @@ public class AdminControllerService(
     {
         await _adminService.DeleteSocialAsync(id, ct);
     }
+
+
+    //TODO: Доделать методы для добавления страниц о группе, участниках, афишах, видео, новостей, платформы музыки и социальных сетей
+    //TODO: Add methods in interface
+    public async Task AddNewsItemAsync(NewsItemAdditionRequest request, CancellationToken ct)
+    {
+        await _adminService.AddNewsItemAsync(request, ct);
+    }
 }
+

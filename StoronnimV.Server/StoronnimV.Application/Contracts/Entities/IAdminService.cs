@@ -1,5 +1,6 @@
 using StoronnimV.Application.Contracts.Entities.Shared;
 using StoronnimV.Application.DTO.Requests.Account;
+using StoronnimV.Application.DTO.Requests.Entities.Pages.Addition;
 using StoronnimV.Domain.Entities;
 using StoronnimV.Domain.Projections;
 
@@ -16,4 +17,7 @@ public interface IAdminService : IGetByIdService<AdminProjection>, IGetAllServic
     public Task DeleteMemberAsync(long id, CancellationToken ct);
     public Task DeleteMusicPlatformAsync(long id, CancellationToken ct);
     public Task DeleteSocialAsync(long id, CancellationToken ct);
+    
+    
+    public Task AddNewsItemAsync(NewsItemAdditionRequest request, CancellationToken ct);
 }

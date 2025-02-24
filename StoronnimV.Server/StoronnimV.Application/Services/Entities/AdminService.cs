@@ -2,11 +2,13 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Logging;
 using StoronnimV.Application.Contracts.Entities;
 using StoronnimV.Application.DTO.Requests.Account;
+using StoronnimV.Application.DTO.Requests.Entities.Pages.Addition;
 using StoronnimV.Application.Exceptions;
 using StoronnimV.Domain.Contracts;
 using StoronnimV.Domain.Contracts.AzureBlobStorage;
 using StoronnimV.Domain.Contracts.Database;
 using StoronnimV.Domain.Entities;
+using StoronnimV.Domain.Enums;
 using StoronnimV.Domain.Projections;
 
 namespace StoronnimV.Application.Services.Entities;
@@ -35,7 +37,7 @@ public class AdminService(
     private readonly IBlobRepository _blobRepository = blobRepository;
     private readonly ILogger<AdminService> _logger = logger;
     private readonly IPasswordHasher<Admin> _passwordHasher = passwordHasher;
-    
+
     public async Task<AdminProjection> GetItemByIdAsync(long id, CancellationToken ct)
     {
         AdminProjection? admin = await _adminRepository.GetByIdAsNoTrackingAsync(id, ct);
@@ -44,7 +46,7 @@ public class AdminService(
         {
             throw new EntityNotFoundException($"Admin with id: {id} was not found");
         }
-        
+
         return admin;
     }
 
@@ -56,7 +58,7 @@ public class AdminService(
         {
             return new List<AdminProjection>();
         }
-        
+
         return admins;
     }
 
@@ -68,16 +70,19 @@ public class AdminService(
         {
             throw new LogInException($"Admin with login: {request.Login} was not found");
         }
-        
-        PasswordVerificationResult verificationResult = _passwordHasher.VerifyHashedPassword(admin, admin.Password, request.Password);
+
+        PasswordVerificationResult verificationResult =
+            _passwordHasher.VerifyHashedPassword(admin, admin.Password, request.Password);
 
         if (verificationResult == PasswordVerificationResult.Failed)
         {
             throw new LogInException("Wrong password");
         }
-        
+
         return admin;
     }
+
+    #region DELETING ENTITIES
 
     public async Task DeleteNewsItemAsync(long id, CancellationToken ct)
     {
@@ -87,7 +92,7 @@ public class AdminService(
         {
             throw new EntityNotFoundException($"NewsItem with id: {id} was not found");
         }
-        
+
         await _newsRepository.DeleteAsync(newsItem, ct);
 
         if (newsItem.Photo != null)
@@ -110,7 +115,7 @@ public class AdminService(
         {
             throw new EntityNotFoundException($"Schedule with id: {id} was not found");
         }
-        
+
         await _scheduleRepository.DeleteAsync(schedule, ct);
 
         if (schedule.Photo != null)
@@ -127,7 +132,7 @@ public class AdminService(
         {
             throw new EntityNotFoundException($"Video with id: {id} was not found");
         }
-        
+
         await _videoRepository.DeleteAsync(video, ct);
 
         await _blobRepository.DeleteFileAsync("storonnimv-video", $"video-{id}", ct);
@@ -141,9 +146,9 @@ public class AdminService(
         {
             throw new EntityNotFoundException($"Group page with id: {id} was not found");
         }
-        
+
         await _groupPageRepository.DeleteAsync(groupPage, ct);
-        
+
         await _blobRepository.DeleteAllFilesByNameAsync("storonnimv-photo", $"group-page-{id}", ct);
     }
 
@@ -155,9 +160,9 @@ public class AdminService(
         {
             throw new EntityNotFoundException($"Member with id: {id} was not found");
         }
-        
+
         await _memberRepository.DeleteAsync(member, ct);
-        
+
         await _blobRepository.DeleteAllFilesByNameAsync("storonnimv-photo", $"member-{id}", ct);
     }
 
@@ -169,7 +174,7 @@ public class AdminService(
         {
             throw new EntityNotFoundException($"Music platform with id: {id} was not found");
         }
-        
+
         await _musicPlatformRepository.DeleteAsync(musicPlatform, ct);
 
         await _blobRepository.DeleteAllFilesByNameAsync("storonnimv-photo", $"music-platform-{id}", ct);
@@ -186,4 +191,38 @@ public class AdminService(
 
         await _socialRepository.DeleteAsync(social, ct);
     }
+
+    #endregion
+
+    #region ADDING ENTITIES
+
+    public async Task AddNewsItemAsync(NewsItemAdditionRequest request, CancellationToken ct)
+    {
+        Video? newsVideo = null;
+        if (request.VideoId != null)
+        {
+            newsVideo = await _videoRepository.GetByIdAsync(request.VideoId.Value, ct);
+        }
+
+        News newsItem = new News
+        {
+            Title = request.Title,
+            Description = request.Description,
+            Video = newsVideo,
+            Priority = Enum.Parse<NewsPriority>(request.Priority),
+            Date = DateOnly.TryParseExact(request.Date, "dd.MM.yyyy", out DateOnly date)
+                ? date
+                : DateOnly.FromDateTime(DateTime.UtcNow),
+        };
+        
+        _newsRepository.AddAsync(newsItem, ct);
+        
+        if (request.Photo != null)
+        {
+            string photoUrl = await _blobRepository.AddFileAsync("storonnimv-photo", $"news-{newsItem.Id}", request.Photo.OpenReadStream(), ct);
+            _newsRepository.UpdateAsync(newsItem, () => newsItem.Photo = photoUrl, ct);
+        }
+    }
+
+    #endregion
 }

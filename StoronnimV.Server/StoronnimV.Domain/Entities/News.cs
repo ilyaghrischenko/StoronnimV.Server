@@ -16,5 +16,5 @@ public class News : BaseEntity
     public NewsPriority Priority { get; set; } = NewsPriority.Secondary;
     public DateOnly Date { get; set; } = DateOnly.FromDateTime(DateTime.UtcNow);
     
-    private News() {}
+    public News() {}
 }
