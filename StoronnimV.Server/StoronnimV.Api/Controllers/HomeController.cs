@@ -9,11 +9,9 @@ namespace StoronnimV.Api.Controllers
     [Route("api/home")]
     [ApiController]
     public class HomeController(
-        IHomeControllerService homeControllerService,
-        ILogger<HomeController> logger) : ControllerBase
+        IHomeControllerService homeControllerService) : ControllerBase
     {
         private readonly IHomeControllerService _homeControllerService = homeControllerService;
-        private readonly ILogger<HomeController> _logger = logger;
 
         [HttpGet("news/{count:int}")]
         public async Task<ActionResult<IEnumerable<NewsHomeResponse>>> GetMainNews([FromRoute] int count, CancellationToken ct)

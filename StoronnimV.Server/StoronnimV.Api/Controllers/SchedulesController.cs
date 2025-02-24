@@ -12,11 +12,9 @@ namespace StoronnimV.Api.Controllers
     /// <param name="schedulesControllerService"></param>
     [Route("api/schedules")]
     [ApiController]
-    public class SchedulesController(ISchedulesControllerService schedulesControllerService,
-        ILogger<SchedulesController> logger) : ControllerBase
+    public class SchedulesController(ISchedulesControllerService schedulesControllerService) : ControllerBase
     {
         private readonly ISchedulesControllerService _schedulesControllerService = schedulesControllerService;
-        private readonly ILogger<SchedulesController> _logger = logger;
 
         [HttpGet("{id:long}")]
         public async Task<ActionResult<ScheduleResponse>> GetSchedule([FromRoute] long id, CancellationToken ct)

@@ -13,13 +13,10 @@ namespace StoronnimV.Infrastructure.Repositories.Database;
 /// Репозиторий для получения данных напрямую с бд
 /// </summary>
 /// <param name="contextFactory"></param>
-public class ScheduleRepository(
-    IDbContextFactory<StoronnimVContext> contextFactory,
-    ILogger<ScheduleRepository> logger)
+public class ScheduleRepository(IDbContextFactory<StoronnimVContext> contextFactory)
     : Repository<Schedule>(contextFactory), IScheduleRepository
 {
     private readonly IDbContextFactory<StoronnimVContext> _contextFactory = contextFactory;
-    private readonly ILogger<ScheduleRepository> _logger = logger;
 
     public async Task<ScheduleFullProjection?> GetByIdAsNoTrackingAsync(long id, CancellationToken ct)
     {

@@ -12,11 +12,9 @@ namespace StoronnimV.Application.Services.Entities;
 /// Сервис для проверки полученных данных, полученых с репозитория
 /// </summary>
 /// <param name="memberRepository"></param>
-public class MemberService(IMemberRepository memberRepository,
-    ILogger<MemberService> logger) : IMemberService
+public class MemberService(IMemberRepository memberRepository) : IMemberService
 {
     private readonly IMemberRepository _memberRepository = memberRepository;
-    private readonly ILogger<MemberService> _logger = logger;
     
     public async Task<IEnumerable<MemberShortProjection>> GetAllAsync(CancellationToken ct)
     {
@@ -28,7 +26,7 @@ public class MemberService(IMemberRepository memberRepository,
     public async Task<MemberFullProjection> GetItemByIdAsync(long id, CancellationToken ct)
     {
         MemberFullProjection member = await _memberRepository.GetByIdAsNoTrackingAsync(id, ct)
-                                      ?? throw new EntityNotFoundException($"Member with id: {id} was not found");
+                                      ?? throw new EntityNotFoundException($"Member with {nameof(id)}: {id} was not found");
 
         return member;
     }

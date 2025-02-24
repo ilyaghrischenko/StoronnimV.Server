@@ -16,12 +16,10 @@ namespace StoronnimV.Application.Services.Controllers;
 /// <param name="mapper"></param>
 public class NewsControllerService(
     INewsService newsService,
-    IMapper mapper,
-    ILogger<NewsControllerService> logger) : INewsControllerService
+    IMapper mapper) : INewsControllerService
 {
     private readonly INewsService _newsService = newsService;
     private readonly IMapper _mapper = mapper;
-    private readonly ILogger<NewsControllerService> _logger = logger;
 
     public async Task<NewsResponse> GetItemByIdAsync(long id, CancellationToken ct)
     {

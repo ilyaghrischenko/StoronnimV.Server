@@ -13,13 +13,10 @@ namespace StoronnimV.Infrastructure.Repositories.Database;
 /// Репозиторий для конкретной сущности, нужен для описания метода с инклудами, а так же для специальных селект методов
 /// </summary>
 /// <param name="contextFactory"></param>
-public class NewsRepository(
-    IDbContextFactory<StoronnimVContext> contextFactory,
-    ILogger<NewsRepository> logger
-    ) : Repository<News>(contextFactory), INewsRepository
+public class NewsRepository(IDbContextFactory<StoronnimVContext> contextFactory)
+    : Repository<News>(contextFactory), INewsRepository
 {
     private readonly IDbContextFactory<StoronnimVContext> _contextFactory = contextFactory;
-    private readonly ILogger<NewsRepository> _logger = logger;
 
     protected override IQueryable<News> ApplyIncludes(IQueryable<News> dbSet)
     {

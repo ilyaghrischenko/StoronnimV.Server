@@ -14,12 +14,10 @@ namespace StoronnimV.Application.Services.Controllers;
 /// <param name="mapper"></param>
 public class SchedulesControllerService(
     IScheduleService scheduleService,
-    IMapper mapper,
-    ILogger<SchedulesControllerService> logger) : ISchedulesControllerService
+    IMapper mapper) : ISchedulesControllerService
 {
     private readonly IScheduleService _scheduleService = scheduleService;
     private readonly IMapper _mapper = mapper;
-    private readonly ILogger<SchedulesControllerService> _logger = logger;
     
     public async Task<ScheduleResponse> GetItemByIdAsync(long id, CancellationToken ct)
     {

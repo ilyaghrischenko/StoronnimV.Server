@@ -7,11 +7,9 @@ namespace StoronnimV.Api.Controllers
 {
     [Route("api/music")]
     [ApiController]
-    public class MusicController(IMusicControllerService musicControllerService,
-        ILogger<MusicController> logger) : ControllerBase
+    public class MusicController(IMusicControllerService musicControllerService) : ControllerBase
     {
         private readonly IMusicControllerService _musicControllerService = musicControllerService;
-        private readonly ILogger<MusicController> _logger = logger;
 
         [HttpGet("{id:long}")]
         public async Task<ActionResult<MusicResponse>> GetMusicPlatform([FromRoute] long id, CancellationToken ct)

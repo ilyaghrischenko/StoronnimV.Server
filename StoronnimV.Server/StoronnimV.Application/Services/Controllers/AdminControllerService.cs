@@ -2,7 +2,6 @@ using AutoMapper;
 using Microsoft.Extensions.Logging;
 using StoronnimV.Application.Contracts.Controllers;
 using StoronnimV.Application.Contracts.Entities;
-using StoronnimV.Application.DTO.Requests.Entities.Pages.Addition;
 using StoronnimV.Application.DTO.Responses.GroupPage;
 using StoronnimV.Application.DTO.Responses.GroupPage.ShortGroupPage;
 using StoronnimV.Application.DTO.Responses.GroupPage.ShortMember;
@@ -10,9 +9,6 @@ using StoronnimV.Application.DTO.Responses.NewsPage;
 using StoronnimV.Application.DTO.Responses.Shared;
 using StoronnimV.Application.DTO.Responses.Video;
 using StoronnimV.Application.Models;
-using StoronnimV.Domain.Contracts.AzureBlobStorage;
-using StoronnimV.Domain.Entities;
-using StoronnimV.Domain.Enums;
 using StoronnimV.Domain.Projections;
 using StoronnimV.Domain.Projections.Member;
 using StoronnimV.Domain.Projections.News;
@@ -21,11 +17,9 @@ using StoronnimV.Domain.Projections.Video;
 namespace StoronnimV.Application.Services.Controllers;
 
 public class AdminControllerService(
-    IAdminService adminService,
-    IBlobRepository blobRepository) : IAdminControllerService
+    IAdminService adminService) : IAdminControllerService
 {
     private readonly IAdminService _adminService = adminService;
-    private readonly IBlobRepository _blobRepository = blobRepository;
 
     public async Task DeleteNewsItemAsync(long id, CancellationToken ct)
     {
@@ -70,4 +64,3 @@ public class AdminControllerService(
         await _adminService.AddNewsItemAsync(request, ct);
     }
 }
-

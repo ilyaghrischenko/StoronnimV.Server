@@ -2,21 +2,22 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using StoronnimV.Application.Contracts.Controllers;
+using StoronnimV.Application.DTO.Requests.Entities.Admin;
+using StoronnimV.Application.DTO.Responses.Admin;
 
 namespace StoronnimV.Api.Controllers
 {
     /// <summary>
-    /// Контроллер для админа, он позволяет управлять данными, которые отображаются на страницых (Удалять, изменять)
+    /// Контроллер для админа, он позволяет управлять данными, которые отображаются на страницых (Удалять, изменять),
+    /// а так же управлять данными обычного адмниа (логин и пароль)
     /// </summary>
     [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
     [Route("api/admin")]
     [ApiController]
     public class AdminController(
-        IAdminControllerService adminControllerService,
-        ILogger<AdminController> logger) : ControllerBase
+        IAdminControllerService adminControllerService) : ControllerBase
     {
         private readonly IAdminControllerService _adminControllerService = adminControllerService;
-        private readonly ILogger<AdminController> _logger = logger;
 
         [HttpDelete("news/{id:long}")]
         public async Task<IActionResult> DeleteNewsItem([FromRoute] long id, CancellationToken ct)

@@ -7,5 +7,5 @@ public class MusicPlatform : BaseEntity
     public required string BgImageUrl { get; set; } = string.Empty;
     public required string PlatformUrl { get; set; } = string.Empty;
     
-    private MusicPlatform() {}
+    public MusicPlatform() {}
 }

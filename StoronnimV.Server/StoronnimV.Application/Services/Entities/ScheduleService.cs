@@ -12,16 +12,14 @@ namespace StoronnimV.Application.Services.Entities;
 /// Сервис для проверки полученных данных, полученых с репозитория
 /// </summary>
 /// <param name="scheduleRepository"></param>
-public class ScheduleService(IScheduleRepository scheduleRepository,
-    ILogger<ScheduleService> logger) : IScheduleService
+public class ScheduleService(IScheduleRepository scheduleRepository) : IScheduleService
 {
     private readonly IScheduleRepository _scheduleRepository = scheduleRepository;
-    private readonly ILogger<ScheduleService> _logger = logger;
     
     public async Task<ScheduleFullProjection> GetItemByIdAsync(long id, CancellationToken ct)
     {
         ScheduleFullProjection schedule = await _scheduleRepository.GetByIdAsNoTrackingAsync(id, ct)
-                                          ?? throw new EntityNotFoundException($"Schedule with id: {id} was not found");
+                                          ?? throw new EntityNotFoundException($"Schedule with {nameof(id)}: {id} was not found");
         
         return schedule;
     }

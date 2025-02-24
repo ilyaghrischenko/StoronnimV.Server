@@ -2,10 +2,10 @@ using Microsoft.AspNetCore.Http;
 using SixLabors.ImageSharp;
 using SixLabors.ImageSharp.Formats.Jpeg;
 using SixLabors.ImageSharp.Processing;
-using StoronnimV.Application.Contracts.ImageResizer;
+using StoronnimV.Application.Contracts.Utils;
 using StoronnimV.Application.Exceptions;
 
-namespace StoronnimV.Application.Services.ImageResizer;
+namespace StoronnimV.Application.Services.Utils;
 
 public class ImageResizerService : IImageResizerService
 {

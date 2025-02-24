@@ -12,12 +12,10 @@ namespace StoronnimV.Infrastructure.Repositories.Database;
 /// Репозиторий для получения данных напрямую с бд
 /// </summary>
 /// <param name="contextFactory"></param>
-public class SocialRepository(IDbContextFactory<StoronnimVContext> contextFactory,
-    ILogger<SocialRepository> logger) : 
-    Repository<Social>(contextFactory), ISocialRepository
+public class SocialRepository(IDbContextFactory<StoronnimVContext> contextFactory)
+    : Repository<Social>(contextFactory), ISocialRepository
 {
     private readonly IDbContextFactory<StoronnimVContext> _contextFactory = contextFactory;
-    private readonly ILogger<SocialRepository> _logger = logger;
 
     protected override IQueryable<Social> ApplyIncludes(IQueryable<Social> dbSet)
     {

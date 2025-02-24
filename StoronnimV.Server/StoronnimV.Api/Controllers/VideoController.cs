@@ -16,12 +16,10 @@ namespace StoronnimV.Api.Controllers
     [Route("api/videos")]
     [ApiController]
     public class VideoController(
-        IVideoControllerService videoControllerService,
-        ILogger<VideoController> logger)
+        IVideoControllerService videoControllerService)
         : ControllerBase
     {
         private readonly IVideoControllerService _videoControllerService = videoControllerService;
-        private readonly ILogger<VideoController> _logger = logger;
 
         [HttpGet("{id:long}")]
         public async Task<ActionResult<VideoPageShortResponse>> GetVideo([FromRoute] long id, CancellationToken ct)

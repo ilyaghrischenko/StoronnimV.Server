@@ -11,11 +11,9 @@ namespace StoronnimV.Api.Controllers
     /// <param name="groupPageControllerService"></param>
     [Route("api/group")]
     [ApiController]
-    public class GroupPageController(IGroupPageControllerService groupPageControllerService,
-        ILogger<GroupPageController> logger) : ControllerBase
+    public class GroupPageController(IGroupPageControllerService groupPageControllerService) : ControllerBase
     {
         private readonly IGroupPageControllerService _groupPageControllerService = groupPageControllerService;
-        private readonly ILogger<GroupPageController> _logger = logger;
         
         [HttpGet]
         public async Task<ActionResult<GroupPageFullInfoResponse>> GetGroupPageInfo(CancellationToken ct)

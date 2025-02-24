@@ -10,6 +10,7 @@ using StoronnimV.Domain.Contracts.Database;
 using StoronnimV.Domain.Entities;
 using StoronnimV.Domain.Enums;
 using StoronnimV.Domain.Projections;
+using StoronnimV.Domain.Projections.Admin;
 
 namespace StoronnimV.Application.Services.Entities;
 
@@ -37,48 +38,16 @@ public class AdminService(
     private readonly IBlobRepository _blobRepository = blobRepository;
     private readonly ILogger<AdminService> _logger = logger;
     private readonly IPasswordHasher<Admin> _passwordHasher = passwordHasher;
-
+    
     public async Task<AdminProjection> GetItemByIdAsync(long id, CancellationToken ct)
     {
         AdminProjection? admin = await _adminRepository.GetByIdAsNoTrackingAsync(id, ct);
 
         if (admin is null)
         {
-            throw new EntityNotFoundException($"Admin with id: {id} was not found");
+            throw new EntityNotFoundException($"Admin with {nameof(id)}: {id} was not found");
         }
-
-        return admin;
-    }
-
-    public async Task<IEnumerable<AdminProjection>> GetAllAsync(CancellationToken ct)
-    {
-        var admins = await _adminRepository.GetAllAsNoTrackingAsync(ct);
-
-        if (admins is null || !admins.Any())
-        {
-            return new List<AdminProjection>();
-        }
-
-        return admins;
-    }
-
-    public async Task<Admin> LogInAsync(LogInRequest request, CancellationToken ct)
-    {
-        Admin? admin = await _adminRepository.GetByLoginAsync(request.Login, ct);
-
-        if (admin is null)
-        {
-            throw new LogInException($"Admin with login: {request.Login} was not found");
-        }
-
-        PasswordVerificationResult verificationResult =
-            _passwordHasher.VerifyHashedPassword(admin, admin.Password, request.Password);
-
-        if (verificationResult == PasswordVerificationResult.Failed)
-        {
-            throw new LogInException("Wrong password");
-        }
-
+        
         return admin;
     }
 
@@ -90,9 +59,9 @@ public class AdminService(
 
         if (newsItem is null)
         {
-            throw new EntityNotFoundException($"NewsItem with id: {id} was not found");
+            throw new EntityNotFoundException($"NewsItem with {nameof(id)}: {id} was not found");
         }
-
+        
         await _newsRepository.DeleteAsync(newsItem, ct);
 
         if (newsItem.Photo != null)
@@ -113,9 +82,9 @@ public class AdminService(
 
         if (schedule is null)
         {
-            throw new EntityNotFoundException($"Schedule with id: {id} was not found");
+            throw new EntityNotFoundException($"Schedule with {nameof(id)}: {id} was not found");
         }
-
+        
         await _scheduleRepository.DeleteAsync(schedule, ct);
 
         if (schedule.Photo != null)
@@ -130,9 +99,9 @@ public class AdminService(
 
         if (video is null)
         {
-            throw new EntityNotFoundException($"Video with id: {id} was not found");
+            throw new EntityNotFoundException($"Video with {nameof(id)}: {id} was not found");
         }
-
+        
         await _videoRepository.DeleteAsync(video, ct);
 
         await _blobRepository.DeleteFileAsync("storonnimv-video", $"video-{id}", ct);
@@ -144,11 +113,11 @@ public class AdminService(
 
         if (groupPage is null)
         {
-            throw new EntityNotFoundException($"Group page with id: {id} was not found");
+            throw new EntityNotFoundException($"Group page with {nameof(id)}: {id} was not found");
         }
-
+        
         await _groupPageRepository.DeleteAsync(groupPage, ct);
-
+        
         await _blobRepository.DeleteAllFilesByNameAsync("storonnimv-photo", $"group-page-{id}", ct);
     }
 
@@ -158,11 +127,11 @@ public class AdminService(
 
         if (member is null)
         {
-            throw new EntityNotFoundException($"Member with id: {id} was not found");
+            throw new EntityNotFoundException($"Member with {nameof(id)}: {id} was not found");
         }
-
+        
         await _memberRepository.DeleteAsync(member, ct);
-
+        
         await _blobRepository.DeleteAllFilesByNameAsync("storonnimv-photo", $"member-{id}", ct);
     }
 
@@ -172,9 +141,9 @@ public class AdminService(
 
         if (musicPlatform is null)
         {
-            throw new EntityNotFoundException($"Music platform with id: {id} was not found");
+            throw new EntityNotFoundException($"Music platform with {nameof(id)}: {id} was not found");
         }
-
+        
         await _musicPlatformRepository.DeleteAsync(musicPlatform, ct);
 
         await _blobRepository.DeleteAllFilesByNameAsync("storonnimv-photo", $"music-platform-{id}", ct);
@@ -186,7 +155,7 @@ public class AdminService(
 
         if (social is null)
         {
-            throw new EntityNotFoundException($"Social with id: {id} was not found");
+            throw new EntityNotFoundException($"Social with {nameof(id)}: {id} was not found");
         }
 
         await _socialRepository.DeleteAsync(social, ct);

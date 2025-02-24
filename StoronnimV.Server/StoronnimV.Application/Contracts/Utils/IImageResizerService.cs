@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.Http;
 
-namespace StoronnimV.Application.Contracts.ImageResizer;
+namespace StoronnimV.Application.Contracts.Utils;
 
 public interface IImageResizerService
 {

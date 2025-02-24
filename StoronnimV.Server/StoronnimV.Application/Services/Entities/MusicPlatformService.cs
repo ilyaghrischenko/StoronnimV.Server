@@ -7,16 +7,14 @@ using StoronnimV.Domain.Projections;
 
 namespace StoronnimV.Application.Services.Entities;
 
-public class MusicPlatformService(IMusicPlatformRepository musicPlatformRepository,
-    ILogger<MusicPlatformService> logger) : IMusicPlatformService
+public class MusicPlatformService(IMusicPlatformRepository musicPlatformRepository) : IMusicPlatformService
 {
     private readonly IMusicPlatformRepository _musicPlatformRepository = musicPlatformRepository;
-    private readonly ILogger<MusicPlatformService> _logger = logger;
 
     public async Task<MusicPlatformProjection> GetItemByIdAsync(long id, CancellationToken ct)
     {
         MusicPlatformProjection musicPlatform = await _musicPlatformRepository.GetByIdAsNoTrackingAsync(id, ct)
-                                                ?? throw new EntityNotFoundException($"Music Platform with id: {id} was not found");
+                                                ?? throw new EntityNotFoundException($"Music Platform with {nameof(id)}: {id} was not found");
         
         return musicPlatform;
     }

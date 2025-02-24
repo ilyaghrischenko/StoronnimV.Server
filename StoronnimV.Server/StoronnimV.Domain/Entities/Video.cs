@@ -9,5 +9,5 @@ public class Video : BaseEntity
     public required string Title { get; set; } = string.Empty;
     public required VideoType Type { get; set; } = VideoType.Performance;
     
-    private Video() {}
+    public Video() {}
 }

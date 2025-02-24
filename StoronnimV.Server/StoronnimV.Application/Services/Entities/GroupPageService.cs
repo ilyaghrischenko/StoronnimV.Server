@@ -12,16 +12,14 @@ namespace StoronnimV.Application.Services.Entities;
 /// Сервис для проверки полученных данных, полученых с репозитория
 /// </summary>
 /// <param name="groupPageRepository"></param>
-public class GroupPageService(IGroupPageRepository groupPageRepository,
-    ILogger<GroupPageService> logger) : IGroupPageService
+public class GroupPageService(IGroupPageRepository groupPageRepository) : IGroupPageService
 {
     private readonly IGroupPageRepository _groupPageRepository = groupPageRepository;
-    private readonly ILogger<GroupPageService> _logger = logger;
     
     public async Task<GroupPageProjection> GetItemByIdAsync(long id, CancellationToken ct)
     {
         GroupPageProjection groupPage = await _groupPageRepository.GetByIdAsNoTrackingAsync(id, ct)
-                                        ?? throw new EntityNotFoundException($"GroupPage with id: {id} was not found");
+                                        ?? throw new EntityNotFoundException($"GroupPage with {nameof(id)}: {id} was not found");
         
         return groupPage;
     }

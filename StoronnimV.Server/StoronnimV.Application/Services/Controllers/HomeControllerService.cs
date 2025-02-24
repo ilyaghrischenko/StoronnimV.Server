@@ -11,11 +11,9 @@ namespace StoronnimV.Application.Services.Controllers;
 
 public class HomeControllerService(
     IHomeService homeService,
-    ILogger<HomeControllerService> logger,
     IMapper mapper) : IHomeControllerService
 {
     private readonly IHomeService _homeService = homeService;
-    private readonly ILogger<HomeControllerService> _logger = logger;
     private readonly IMapper _mapper = mapper;
 
     public async Task<IEnumerable<NewsHomeResponse>> GetMainNewsAsync(int count, CancellationToken ct)

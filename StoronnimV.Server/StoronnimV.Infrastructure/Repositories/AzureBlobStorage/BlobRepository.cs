@@ -15,7 +15,8 @@ public class BlobRepository : IBlobRepository
         _blobServiceClient = new BlobServiceClient(connectionString);
     }
     
-    public async Task<string> AddFileAsync(string containerName, string fileName, Stream fileStream, CancellationToken ct)
+    public async Task<string> AddFileAndGetUrlAsync(string containerName, string fileName, Stream fileStream,
+        CancellationToken ct)
     {
         BlobContainerClient? container = _blobServiceClient.GetBlobContainerClient(containerName);
         await container.CreateIfNotExistsAsync(cancellationToken: ct);
