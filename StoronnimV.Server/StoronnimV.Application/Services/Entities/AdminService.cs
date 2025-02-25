@@ -62,12 +62,6 @@ public class AdminService(
         {
             await _blobRepository.DeleteAllFilesByNameAsync("storonnimv-photo", $"news-{id}", ct);
         }
-
-        //TODO!! удалять ли видео с блоба для каждой новости? или просто в методе удаления самого видео удалять с блоба
-        if (newsItem.Video != null)
-        {
-            await _blobRepository.DeleteFileAsync("storonnimv-video", $"video-{newsItem.Video.Id}", ct);
-        }
     }
 
     public async Task DeleteScheduleAsync(long id, CancellationToken ct)
