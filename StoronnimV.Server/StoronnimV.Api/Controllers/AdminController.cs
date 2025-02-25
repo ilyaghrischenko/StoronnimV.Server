@@ -8,8 +8,7 @@ using StoronnimV.Application.DTO.Responses.Admin;
 namespace StoronnimV.Api.Controllers
 {
     /// <summary>
-    /// Контроллер для админа, он позволяет управлять данными, которые отображаются на страницых (Удалять, изменять),
-    /// а так же управлять данными обычного адмниа (логин и пароль)
+    /// Контроллер для админа, он позволяет управлять данными, которые отображаются на страницых (Удалять, изменять)
     /// </summary>
     [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
     [Route("api/admin")]
