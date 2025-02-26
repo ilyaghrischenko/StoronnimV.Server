@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using StoronnimV.Application.Contracts.Controllers;
 using StoronnimV.Application.DTO.Requests.Entities.Admin;
+using StoronnimV.Application.DTO.Requests.Entities.Pages.Addition;
 using StoronnimV.Application.DTO.Responses.Admin;
 
 namespace StoronnimV.Api.Controllers
@@ -71,6 +72,14 @@ namespace StoronnimV.Api.Controllers
         public async Task<IActionResult> DeleteSocial([FromRoute] long id, CancellationToken ct)
         {
             await _adminControllerService.DeleteSocialAsync(id, ct);
+            
+            return NoContent();
+        }
+        
+        [HttpPost("news")]
+        public async Task<IActionResult> AddNewsItem([FromBody] NewsItemAdditionRequest request, CancellationToken ct)
+        {
+            await _adminControllerService.AddNewsItemAsync(request, ct);
             
             return NoContent();
         }

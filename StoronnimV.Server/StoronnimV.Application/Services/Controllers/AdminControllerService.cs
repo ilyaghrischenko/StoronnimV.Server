@@ -2,6 +2,7 @@ using AutoMapper;
 using Microsoft.Extensions.Logging;
 using StoronnimV.Application.Contracts.Controllers;
 using StoronnimV.Application.Contracts.Entities;
+using StoronnimV.Application.DTO.Requests.Entities.Pages.Addition;
 using StoronnimV.Application.DTO.Responses.GroupPage;
 using StoronnimV.Application.DTO.Responses.GroupPage.ShortGroupPage;
 using StoronnimV.Application.DTO.Responses.GroupPage.ShortMember;

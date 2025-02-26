@@ -7,15 +7,5 @@ using StoronnimV.Domain.Projections.Admin;
 
 namespace StoronnimV.Application.Contracts.Entities;
 
-public interface IAdminService : IGetByIdService<AdminProjection>, IGetAllService<AdminProjection>
-{
-    Task DeleteNewsItemAsync(long id, CancellationToken ct);
-    Task DeleteScheduleAsync(long id, CancellationToken ct);
-    Task DeleteVideoAsync(long id, CancellationToken ct);
-    Task DeleteGroupPageAsync(long id, CancellationToken ct);
-    Task DeleteMemberAsync(long id, CancellationToken ct);
-    Task DeleteMusicPlatformAsync(long id, CancellationToken ct);
-    Task DeleteSocialAsync(long id, CancellationToken ct);
-    
-    public Task AddNewsItemAsync(NewsItemAdditionRequest request, CancellationToken ct);
-}
+public interface IAdminService : IGetByIdService<AdminProjection>
+{ }

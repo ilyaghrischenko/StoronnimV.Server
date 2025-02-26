@@ -1,19 +1,23 @@
 using Microsoft.Extensions.Logging;
 using StoronnimV.Application.Contracts.Entities;
+using StoronnimV.Application.DTO.Requests.Entities.Pages.Addition;
 using StoronnimV.Application.Exceptions;
 using StoronnimV.Application.Models;
 using StoronnimV.Domain.Contracts;
+using StoronnimV.Domain.Contracts.AzureBlobStorage;
 using StoronnimV.Domain.Contracts.Database;
+using StoronnimV.Domain.Entities;
 using StoronnimV.Domain.Enums;
 using StoronnimV.Domain.Projections.Video;
 
 namespace StoronnimV.Application.Services.Entities;
 
 public class VideoService(
-    IVideoRepository videoRepository) : IVideoService
+    IVideoRepository videoRepository,
+    IBlobRepository blobRepository) : IVideoService
 {
     private readonly IVideoRepository _videoRepository = videoRepository;
-
+    private readonly IBlobRepository _blobRepository = blobRepository;
     public async Task<VideoShortProjection> GetItemByIdAsync(long id, CancellationToken ct)
     {
         VideoShortProjection video = await _videoRepository.GetByIdAsNoTrackingAsync(id, ct)
@@ -71,4 +75,47 @@ public class VideoService(
             };
         }
     }
+    
+    /// <summary>
+    /// Video addition to database
+    /// </summary>
+    /// <param name="request">VideoAdditionRequest</param>
+    /// <param name="ct">CancellationToken</param>
+    public async Task AddVideoAsync(VideoAdditionRequest request, CancellationToken ct)
+    {
+        string videoBlobName = $"video-{Guid.NewGuid()}";
+        string videoUrl = await _blobRepository.AddFileAndGetUrlAsync("storonnimv-video", videoBlobName, request.Url.OpenReadStream(), ct);
+        
+        Video video = new()
+        {
+            Title = request.Title,
+            Url = videoUrl,
+            BlobName = videoBlobName,
+            Type = Enum.Parse<VideoType>(request.Type)
+        };
+        
+        await _videoRepository.AddAsync(video, ct);
+    }
+    
+    
+    /// <summary>
+    /// Video deletion from database
+    /// </summary>
+    /// <param name="id">long</param>
+    /// <param name="ct">CancellationToken</param>
+    /// <exception cref="EntityNotFoundException">EntityNotFoundException</exception>
+    public async Task DeleteVideoAsync(long id, CancellationToken ct)
+    {
+        Video? video = await _videoRepository.GetByIdAsync(id, ct);
+
+        if (video is null)
+        {
+            throw new EntityNotFoundException($"Video with {nameof(id)}: {id} was not found");
+        }
+
+        await _videoRepository.DeleteAsync(video, ct);
+
+        await _blobRepository.DeleteFileAsync("storonnimv-video", $"video-{id}", ct);
+    }
+    
 }
