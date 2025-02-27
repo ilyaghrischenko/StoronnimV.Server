@@ -12,15 +12,12 @@ public class AccountControllerService(
     IAccountService accountService,
     IJwtBearerService jwtBearerService) : IAccountControllerService
 {
-    private readonly IAccountService _accountService = accountService;
-    private readonly IJwtBearerService _jwtBearerService = jwtBearerService;
-
     public async Task<string> LogInAsync(LogInRequest request, CancellationToken ct)
     {
-        Admin admin = await _accountService.LogInAsync(request.Login, request.Password, ct);
+        Admin admin = await accountService.LogInAsync(request.Login, request.Password, ct);
         
-        ClaimsIdentity identity = _jwtBearerService.GetIdentity(admin);
-        string token = _jwtBearerService.GetToken(identity);
+        ClaimsIdentity identity = jwtBearerService.GetIdentity(admin);
+        string token = jwtBearerService.GetToken(identity);
 
         return token;
     }

@@ -13,12 +13,10 @@ namespace StoronnimV.Api.Controllers
     [ApiController]
     public class GroupPageController(IGroupPageControllerService groupPageControllerService) : ControllerBase
     {
-        private readonly IGroupPageControllerService _groupPageControllerService = groupPageControllerService;
-        
         [HttpGet]
         public async Task<ActionResult<GroupPageFullInfoResponse>> GetGroupPageInfo(CancellationToken ct)
         {
-            GroupPageFullInfoResponse groupPage = await _groupPageControllerService.GetGroupPageInfoAsync(ct);
+            GroupPageFullInfoResponse groupPage = await groupPageControllerService.GetGroupPageInfoAsync(ct);
             
             return Ok(groupPage);
             
@@ -27,7 +25,7 @@ namespace StoronnimV.Api.Controllers
         [HttpGet("member/{memberId:long}")]
         public async Task<ActionResult<MemberFullInfoResponse>> GetMember([FromRoute] long memberId, CancellationToken ct)
         {
-            MemberFullInfoResponse member = await _groupPageControllerService.GetMemberAsync(memberId, ct);
+            MemberFullInfoResponse member = await groupPageControllerService.GetMemberAsync(memberId, ct);
             
             return Ok(member);
         }

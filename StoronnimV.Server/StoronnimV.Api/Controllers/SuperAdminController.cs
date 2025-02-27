@@ -13,12 +13,10 @@ namespace StoronnimV.Api.Controllers
     public class SuperAdminController(ISuperAdminControllerService superAdminControllerService)
         : ControllerBase
     {
-        private readonly ISuperAdminControllerService _superAdminControllerService = superAdminControllerService;
-        
         [HttpGet]
         public async Task<ActionResult<IEnumerable<BasicAdminResponse>>> GetAllBasicAdmins(CancellationToken ct)
         {
-            var admins = await _superAdminControllerService.GetAllAsync(ct);
+            var admins = await superAdminControllerService.GetAllAsync(ct);
 
             return Ok(admins);
         }
@@ -26,7 +24,7 @@ namespace StoronnimV.Api.Controllers
         [HttpDelete("{id:long}")]
         public async Task<IActionResult> DeleteBasicAdmin([FromRoute] long id, CancellationToken ct)
         {
-            await _superAdminControllerService.DeleteBasicAdminAsync(id, ct);
+            await superAdminControllerService.DeleteBasicAdminAsync(id, ct);
 
             return NoContent();
         }
@@ -34,7 +32,7 @@ namespace StoronnimV.Api.Controllers
         [HttpPost]
         public async Task<IActionResult> CreateBasicAdmin([FromBody] CreateBasicAdminRequest request, CancellationToken ct)
         {
-            await _superAdminControllerService.AddBasicAdminAsync(request, ct);
+            await superAdminControllerService.AddBasicAdminAsync(request, ct);
 
             return Created();
         }
@@ -43,7 +41,7 @@ namespace StoronnimV.Api.Controllers
         public async Task<IActionResult> EditBasicAdminLogin([FromRoute] long id,
             [FromBody] EditBasicAdminLoginRequest loginRequest, CancellationToken ct)
         {
-            await _superAdminControllerService.EditBasicAdminLoginAsync(id, loginRequest, ct);
+            await superAdminControllerService.EditBasicAdminLoginAsync(id, loginRequest, ct);
 
             return Ok();
         }
@@ -52,7 +50,7 @@ namespace StoronnimV.Api.Controllers
         public async Task<IActionResult> EditBasicAdminPassword([FromRoute] long id,
             [FromBody] EditBasicAdminPasswordRequest passwordRequest, CancellationToken ct)
         {
-            await _superAdminControllerService.EditBasicAdminPasswordAsync(id, passwordRequest, ct);
+            await superAdminControllerService.EditBasicAdminPasswordAsync(id, passwordRequest, ct);
 
             return Ok();
         }

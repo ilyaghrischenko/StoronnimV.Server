@@ -18,23 +18,20 @@ public class NewsControllerService(
     INewsService newsService,
     IMapper mapper) : INewsControllerService
 {
-    private readonly INewsService _newsService = newsService;
-    private readonly IMapper _mapper = mapper;
-
     public async Task<NewsResponse> GetItemByIdAsync(long id, CancellationToken ct)
     {
-        NewsFullProjection newsItem = await _newsService.GetItemByIdAsync(id, ct);
+        NewsFullProjection newsItem = await newsService.GetItemByIdAsync(id, ct);
 
-        var newsItemDto = _mapper.Map<NewsResponse>(newsItem);
+        var newsItemDto = mapper.Map<NewsResponse>(newsItem);
         
         return newsItemDto;
     }
 
     public async Task<PaginationResponse<NewsShortResponse>> GetForPageAsync(int page, int pageSize, CancellationToken ct, params object[] args)
     {
-        PaginationResult<NewsPaginationProjection> paginationResult = await _newsService.GetForPageAsync(page, pageSize, ct);
+        PaginationResult<NewsPaginationProjection> paginationResult = await newsService.GetForPageAsync(page, pageSize, ct);
         
-        var newsDto = _mapper.Map<IEnumerable<NewsShortResponse>>(paginationResult.Items);
+        var newsDto = mapper.Map<IEnumerable<NewsShortResponse>>(paginationResult.Items);
         
         var response = new PaginationResponse<NewsShortResponse>
         {

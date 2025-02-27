@@ -19,12 +19,10 @@ namespace StoronnimV.Api.Controllers
         IVideoControllerService videoControllerService)
         : ControllerBase
     {
-        private readonly IVideoControllerService _videoControllerService = videoControllerService;
-
         [HttpGet("{id:long}")]
         public async Task<ActionResult<VideoPageShortResponse>> GetVideo([FromRoute] long id, CancellationToken ct)
         {
-            VideoPageShortResponse video = await _videoControllerService.GetItemByIdAsync(id, ct);
+            VideoPageShortResponse video = await videoControllerService.GetItemByIdAsync(id, ct);
 
             return Ok(video);
         }
@@ -33,7 +31,7 @@ namespace StoronnimV.Api.Controllers
         public async Task<ActionResult<PaginationResponse<VideoPageShortResponse>>> GetVideosForPage
             ([FromRoute] int page, [FromRoute] string type, CancellationToken ct, [FromQuery] int pageSize = 5)
         {
-            var videosPaginationResponse = await _videoControllerService.GetForPageAsync(page, pageSize, ct, type);
+            var videosPaginationResponse = await videoControllerService.GetForPageAsync(page, pageSize, ct, type);
             
             return Ok(videosPaginationResponse);
         }

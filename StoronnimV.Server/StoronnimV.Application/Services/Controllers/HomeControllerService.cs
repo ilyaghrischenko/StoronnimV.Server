@@ -13,32 +13,29 @@ public class HomeControllerService(
     IHomeService homeService,
     IMapper mapper) : IHomeControllerService
 {
-    private readonly IHomeService _homeService = homeService;
-    private readonly IMapper _mapper = mapper;
-
     public async Task<IEnumerable<NewsHomeResponse>> GetMainNewsAsync(int count, CancellationToken ct)
     {
-        var news = await _homeService.GetMainNewsForHomePageAsync(count, ct);
+        var news = await homeService.GetMainNewsForHomePageAsync(count, ct);
 
-        var newsDto = _mapper.Map<IEnumerable<NewsHomeResponse>>(news);
+        var newsDto = mapper.Map<IEnumerable<NewsHomeResponse>>(news);
         
         return newsDto;
     }
 
     public async Task<ScheduleHomeResponse> GetNearestScheduleAsync(CancellationToken ct)
     {
-        ScheduleShortProjection? schedule = await _homeService.GetNearestScheduleForHomePageAsync(ct);
+        ScheduleShortProjection? schedule = await homeService.GetNearestScheduleForHomePageAsync(ct);
         
-        var scheduleDto = _mapper.Map<ScheduleHomeResponse>(schedule);
+        var scheduleDto = mapper.Map<ScheduleHomeResponse>(schedule);
         
         return scheduleDto;
     }
 
     public async Task<VideoPageShortResponse> GetPromotionVideoAsync(CancellationToken ct)
     {
-        VideoShortProjection? promotionVideo = await _homeService.GetPromotionVideoForHomePageAsync(ct);
+        VideoShortProjection? promotionVideo = await homeService.GetPromotionVideoForHomePageAsync(ct);
         
-        var promotionVideoDto = _mapper.Map<VideoPageShortResponse>(promotionVideo);
+        var promotionVideoDto = mapper.Map<VideoPageShortResponse>(promotionVideo);
         
         return promotionVideoDto;
     }

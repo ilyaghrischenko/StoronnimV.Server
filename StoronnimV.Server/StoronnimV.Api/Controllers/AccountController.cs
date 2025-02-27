@@ -10,12 +10,10 @@ namespace StoronnimV.Api.Controllers
     public class AccountController(
         IAccountControllerService accountControllerService) : ControllerBase
     {
-        private readonly IAccountControllerService _accountControllerService = accountControllerService;
-        
         [HttpPost("login")]
         public async Task<ActionResult<string>> LogIn([FromBody] LogInRequest request, CancellationToken ct)
         {
-            string token = await _accountControllerService.LogInAsync(request, ct);
+            string token = await accountControllerService.LogInAsync(request, ct);
             
             return Ok(token);
         }

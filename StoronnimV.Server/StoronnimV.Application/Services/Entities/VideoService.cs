@@ -16,11 +16,9 @@ public class VideoService(
     IVideoRepository videoRepository,
     IBlobRepository blobRepository) : IVideoService
 {
-    private readonly IVideoRepository _videoRepository = videoRepository;
-    private readonly IBlobRepository _blobRepository = blobRepository;
     public async Task<VideoShortProjection> GetItemByIdAsync(long id, CancellationToken ct)
     {
-        VideoShortProjection video = await _videoRepository.GetByIdAsNoTrackingAsync(id, ct)
+        VideoShortProjection video = await videoRepository.GetByIdAsNoTrackingAsync(id, ct)
                                      ?? throw new EntityNotFoundException($"Video with {nameof(id)}: {id} was not found");
 
         return video;
@@ -35,7 +33,7 @@ public class VideoService(
             throw new PaginationException("invalid page number");
         }
 
-        int totalCount = await _videoRepository.GetTotalCountAsync(ct, type);
+        int totalCount = await videoRepository.GetTotalCountAsync(ct, type);
 
         try
         {
@@ -45,7 +43,7 @@ public class VideoService(
             }
 
             int totalPages = (int)Math.Ceiling((double)totalCount / pageSize);
-            var items = await _videoRepository.GetForPageAsync(page, ct, pageSize, type);
+            var items = await videoRepository.GetForPageAsync(page, ct, pageSize, type);
 
             if (items is null || !items.Any())
             {
@@ -84,7 +82,7 @@ public class VideoService(
     public async Task AddVideoAsync(VideoAdditionRequest request, CancellationToken ct)
     {
         string videoBlobName = $"video-{Guid.NewGuid()}";
-        string videoUrl = await _blobRepository.AddFileAndGetUrlAsync("storonnimv-video", videoBlobName, request.Url.OpenReadStream(), ct);
+        string videoUrl = await blobRepository.AddFileAndGetUrlAsync("storonnimv-video", videoBlobName, request.Url.OpenReadStream(), ct);
         
         Video video = new()
         {
@@ -94,7 +92,7 @@ public class VideoService(
             Type = Enum.Parse<VideoType>(request.Type)
         };
         
-        await _videoRepository.AddAsync(video, ct);
+        await videoRepository.AddAsync(video, ct);
     }
     
     
@@ -106,16 +104,16 @@ public class VideoService(
     /// <exception cref="EntityNotFoundException">EntityNotFoundException</exception>
     public async Task DeleteVideoAsync(long id, CancellationToken ct)
     {
-        Video? video = await _videoRepository.GetByIdAsync(id, ct);
+        Video? video = await videoRepository.GetByIdAsync(id, ct);
 
         if (video is null)
         {
             throw new EntityNotFoundException($"Video with {nameof(id)}: {id} was not found");
         }
 
-        await _videoRepository.DeleteAsync(video, ct);
+        await videoRepository.DeleteAsync(video, ct);
 
-        await _blobRepository.DeleteFileAsync("storonnimv-video", $"video-{id}", ct);
+        await blobRepository.DeleteFileAsync("storonnimv-video", $"video-{id}", ct);
     }
     
 }

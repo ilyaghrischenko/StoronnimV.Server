@@ -13,13 +13,9 @@ public class HomeService(
     IScheduleRepository scheduleRepository,
     IVideoRepository videoRepository) : IHomeService
 {
-    private readonly INewsRepository _newsRepository = newsRepository;
-    private readonly IScheduleRepository _scheduleRepository = scheduleRepository;
-    private readonly IVideoRepository _videoRepository = videoRepository;
-    
     public async Task<IEnumerable<NewsHomeProjection>> GetMainNewsForHomePageAsync(int count, CancellationToken ct)
     {
-        var newsForHomePage = await _newsRepository.GetMainNewsForHomePageAsync(count, ct);
+        var newsForHomePage = await newsRepository.GetMainNewsForHomePageAsync(count, ct);
         if (newsForHomePage is null || !newsForHomePage.Any())
         {
             return new List<NewsHomeProjection>();
@@ -31,14 +27,14 @@ public class HomeService(
 
     public async Task<ScheduleShortProjection?> GetNearestScheduleForHomePageAsync(CancellationToken ct)
     {
-        ScheduleShortProjection? schedule = await _scheduleRepository.GetNearestScheduleForHomePageAsync(ct);
+        ScheduleShortProjection? schedule = await scheduleRepository.GetNearestScheduleForHomePageAsync(ct);
         
         return schedule;
     }
 
     public async Task<VideoShortProjection?> GetPromotionVideoForHomePageAsync(CancellationToken ct)
     {
-        VideoShortProjection? promotionVideo = await _videoRepository.GetPromotionVideoForHomePageAsync(ct);
+        VideoShortProjection? promotionVideo = await videoRepository.GetPromotionVideoForHomePageAsync(ct);
         
         return promotionVideo;
     }

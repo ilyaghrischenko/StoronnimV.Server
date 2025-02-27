@@ -18,23 +18,20 @@ public class SchedulesControllerService(
     IScheduleService scheduleService,
     IMapper mapper) : ISchedulesControllerService
 {
-    private readonly IScheduleService _scheduleService = scheduleService;
-    private readonly IMapper _mapper = mapper;
-    
     public async Task<ScheduleResponse> GetItemByIdAsync(long id, CancellationToken ct)
     {
-        ScheduleFullProjection schedule = await _scheduleService.GetItemByIdAsync(id, ct);
+        ScheduleFullProjection schedule = await scheduleService.GetItemByIdAsync(id, ct);
         
-        var scheduleDto = _mapper.Map<ScheduleResponse>(schedule);
+        var scheduleDto = mapper.Map<ScheduleResponse>(schedule);
         
         return scheduleDto;
     }
 
     public async Task<PaginationResponse<ScheduleShortResponse>> GetForPageAsync(int page, int pageSize, CancellationToken ct, params object[] args)
     {
-        PaginationResult<ScheduleShortProjection> paginationResult = await _scheduleService.GetForPageAsync(page, pageSize, ct);
+        PaginationResult<ScheduleShortProjection> paginationResult = await scheduleService.GetForPageAsync(page, pageSize, ct);
 
-        var schedulesDto = _mapper.Map<IEnumerable<ScheduleShortResponse>>(paginationResult.Items);
+        var schedulesDto = mapper.Map<IEnumerable<ScheduleShortResponse>>(paginationResult.Items);
 
         var response = new PaginationResponse<ScheduleShortResponse>
         {

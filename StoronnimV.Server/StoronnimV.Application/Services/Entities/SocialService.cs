@@ -18,12 +18,9 @@ public class SocialService(
     ISocialRepository socialRepository,
     IMemberRepository memberRepository) : ISocialService
 {
-    private readonly ISocialRepository _socialRepository = socialRepository;
-    private readonly IMemberRepository _memberRepository = memberRepository;
-    
     public async Task<SocialProjection> GetItemByIdAsync(long id, CancellationToken ct)
     {
-        SocialProjection social = await _socialRepository.GetByIdAsNoTrackingAsync(id, ct)
+        SocialProjection social = await socialRepository.GetByIdAsNoTrackingAsync(id, ct)
                                        ?? throw new EntityNotFoundException($"Social with {nameof(id)}: {id} was not found");
         
         return social;
@@ -36,7 +33,7 @@ public class SocialService(
     /// <param name="ct"></param>
     public async Task AddSocialAsync(SocialAdditionRequest request, CancellationToken ct)
     {
-        Member? member = await _memberRepository.GetByIdAsync(request.MemberId, ct);
+        Member? member = await memberRepository.GetByIdAsync(request.MemberId, ct);
         
         if (member is null)
         {
@@ -50,7 +47,7 @@ public class SocialService(
             Type = Enum.Parse<SocialType>(request.Type)
         };
         
-        await _socialRepository.AddAsync(social, ct);
+        await socialRepository.AddAsync(social, ct);
     }
     
     /// <summary>
@@ -61,13 +58,13 @@ public class SocialService(
     /// <exception cref="EntityNotFoundException"></exception>
     public async Task DeleteSocialAsync(long id, CancellationToken ct)
     {
-        Social? social = await _socialRepository.GetByIdAsync(id, ct);
+        Social? social = await socialRepository.GetByIdAsync(id, ct);
 
         if (social is null)
         {
             throw new EntityNotFoundException($"Social with {nameof(id)}: {id} was not found");
         }
 
-        await _socialRepository.DeleteAsync(social, ct);
+        await socialRepository.DeleteAsync(social, ct);
     }
 }

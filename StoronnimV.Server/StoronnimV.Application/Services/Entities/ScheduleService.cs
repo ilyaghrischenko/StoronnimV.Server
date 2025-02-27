@@ -21,11 +21,9 @@ public class ScheduleService(
     IScheduleRepository scheduleRepository,
     IBlobRepository blobRepository) : IScheduleService
 {
-    private readonly IScheduleRepository _scheduleRepository = scheduleRepository;
-    private readonly IBlobRepository _blobRepository = blobRepository;
     public async Task<ScheduleFullProjection> GetItemByIdAsync(long id, CancellationToken ct)
     {
-        ScheduleFullProjection schedule = await _scheduleRepository.GetByIdAsNoTrackingAsync(id, ct)
+        ScheduleFullProjection schedule = await scheduleRepository.GetByIdAsNoTrackingAsync(id, ct)
                                           ?? throw new EntityNotFoundException($"Schedule with {nameof(id)}: {id} was not found");
         
         return schedule;
@@ -33,7 +31,7 @@ public class ScheduleService(
 
     public async Task UpdateStatusesAsync(CancellationToken ct)
     {
-        var allSchedules = await _scheduleRepository
+        var allSchedules = await scheduleRepository
             .GetAllSchedulesAsync(ct);
 
         if (allSchedules == null || !allSchedules.Any())
@@ -49,7 +47,7 @@ public class ScheduleService(
             .ToList();
         
         var updateTasks = schedulesToChange.Select(schedule =>
-            _scheduleRepository.UpdateAsync(schedule, () =>
+            scheduleRepository.UpdateAsync(schedule, () =>
             {
                 schedule.Status = ScheduleStatus.Passed;
             }, ct)
@@ -65,7 +63,7 @@ public class ScheduleService(
             throw new PaginationException("Invalid page number");
         }
 
-        int totalCount = await _scheduleRepository.GetTotalCountAsync(ct);
+        int totalCount = await scheduleRepository.GetTotalCountAsync(ct);
 
         try
         {
@@ -75,7 +73,7 @@ public class ScheduleService(
             }
 
             int totalPages = (int)Math.Ceiling((double)totalCount / pageSize);
-            var items = await _scheduleRepository.GetForPageAsync(page, ct, pageSize);
+            var items = await scheduleRepository.GetForPageAsync(page, ct, pageSize);
             
             if (items is null || !items.Any())
             {
@@ -121,12 +119,12 @@ public class ScheduleService(
             Status = Enum.Parse<ScheduleStatus>(request.Status)
         };
         
-        await _scheduleRepository.AddAsync(schedule, ct);
+        await scheduleRepository.AddAsync(schedule, ct);
         
         if (request.Photo != null)
         {
-            string photoUrl = await _blobRepository.AddFileAndGetUrlAsync("storonnimv-photo", $"schedule-{schedule.Id}", request.Photo.OpenReadStream(), ct);
-            await _scheduleRepository.UpdateAsync(schedule, () => schedule.Photo = photoUrl, ct);
+            string photoUrl = await blobRepository.AddFileAndGetUrlAsync("storonnimv-photo", $"schedule-{schedule.Id}", request.Photo.OpenReadStream(), ct);
+            await scheduleRepository.UpdateAsync(schedule, () => schedule.Photo = photoUrl, ct);
         }
     }
     
@@ -138,18 +136,18 @@ public class ScheduleService(
     /// <exception cref="EntityNotFoundException"></exception>
     public async Task DeleteScheduleAsync(long id, CancellationToken ct)
     {
-        Schedule? schedule = await _scheduleRepository.GetByIdAsync(id, ct);
+        Schedule? schedule = await scheduleRepository.GetByIdAsync(id, ct);
 
         if (schedule is null)
         {
             throw new EntityNotFoundException($"Schedule with {nameof(id)}: {id} was not found");
         }
 
-        await _scheduleRepository.DeleteAsync(schedule, ct);
+        await scheduleRepository.DeleteAsync(schedule, ct);
 
         if (schedule.Photo != null)
         {
-            await _blobRepository.DeleteAllFilesByNameAsync("storonnimv-photo", $"schedule-{id}", ct);
+            await blobRepository.DeleteAllFilesByNameAsync("storonnimv-photo", $"schedule-{id}", ct);
         }
     }
     

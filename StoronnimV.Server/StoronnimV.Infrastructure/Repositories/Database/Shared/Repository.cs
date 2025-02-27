@@ -12,8 +12,6 @@ namespace StoronnimV.Infrastructure.Repositories.Database.Shared;
 public class Repository<T>(IDbContextFactory<StoronnimVContext> contextFactory)
     : IRepository<T> where T : BaseEntity
 {
-    private readonly IDbContextFactory<StoronnimVContext> _contextFactory = contextFactory;
-
     protected virtual IQueryable<T> ApplyIncludes(IQueryable<T> dbSet)
     {
         return dbSet;
@@ -21,7 +19,7 @@ public class Repository<T>(IDbContextFactory<StoronnimVContext> contextFactory)
     
     public async Task<T?> GetByIdAsync(long id, CancellationToken ct)
     {
-        await using StoronnimVContext context = await _contextFactory.CreateDbContextAsync(ct);
+        await using StoronnimVContext context = await contextFactory.CreateDbContextAsync(ct);
         var dbSet = context.Set<T>();
         var query = ApplyIncludes(dbSet);
 
@@ -31,7 +29,7 @@ public class Repository<T>(IDbContextFactory<StoronnimVContext> contextFactory)
 
     public async Task AddAsync(T entity, CancellationToken ct)
     {
-        await using StoronnimVContext context = await _contextFactory.CreateDbContextAsync(ct);
+        await using StoronnimVContext context = await contextFactory.CreateDbContextAsync(ct);
         var dbSet = context.Set<T>();
         
         await dbSet.AddAsync(entity, ct);
@@ -40,7 +38,7 @@ public class Repository<T>(IDbContextFactory<StoronnimVContext> contextFactory)
 
     public async Task UpdateAsync(T entity, Action updateAction, CancellationToken ct)
     {
-        await using StoronnimVContext context = await _contextFactory.CreateDbContextAsync(ct);
+        await using StoronnimVContext context = await contextFactory.CreateDbContextAsync(ct);
         var dbSet = context.Set<T>();
 
         dbSet.Update(entity);
@@ -51,7 +49,7 @@ public class Repository<T>(IDbContextFactory<StoronnimVContext> contextFactory)
 
     public async Task DeleteAsync(T entity, CancellationToken ct)
     {
-        await using StoronnimVContext context = await _contextFactory.CreateDbContextAsync(ct);
+        await using StoronnimVContext context = await contextFactory.CreateDbContextAsync(ct);
         var dbSet = context.Set<T>();
         
         dbSet.Remove(entity);

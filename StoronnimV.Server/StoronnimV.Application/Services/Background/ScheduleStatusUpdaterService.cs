@@ -8,10 +8,8 @@ namespace StoronnimV.Application.Services.Background;
 /// <param name="scheduleService"></param>
 public class ScheduleStatusUpdaterService(IScheduleService scheduleService)
 {
-    private readonly IScheduleService _scheduleService = scheduleService;
-
     public async Task UpdateScheduleStatusesAsync(CancellationToken ct)
     {
-        await _scheduleService.UpdateStatusesAsync(ct);
+        await scheduleService.UpdateStatusesAsync(ct);
     }
 }

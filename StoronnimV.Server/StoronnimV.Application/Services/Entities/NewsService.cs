@@ -22,13 +22,9 @@ public class NewsService(
     IVideoRepository videoRepository,
     IBlobRepository blobRepository) : INewsService
 {
-    private readonly INewsRepository _newsRepository = newsRepository;
-    private readonly IVideoRepository _videoRepository = videoRepository;
-    private readonly IBlobRepository _blobRepository = blobRepository;
-    
     public async Task<NewsFullProjection> GetItemByIdAsync(long id, CancellationToken ct)
     {
-        NewsFullProjection newsItem = await _newsRepository.GetByIdAsNoTrackingAsync(id, ct)
+        NewsFullProjection newsItem = await newsRepository.GetByIdAsNoTrackingAsync(id, ct)
                                       ?? throw new EntityNotFoundException($"News with {nameof(id)}: {id} was not found");
 
         return newsItem;
@@ -42,7 +38,7 @@ public class NewsService(
             throw new PaginationException("Invalid page number");
         }
 
-        int totalCount = await _newsRepository.GetTotalCountAsync(ct);
+        int totalCount = await newsRepository.GetTotalCountAsync(ct);
 
         try
         {
@@ -52,7 +48,7 @@ public class NewsService(
             }
 
             int totalPages = (int)Math.Ceiling((double)totalCount / pageSize);
-            var items = await _newsRepository.GetForPageAsync(page, ct, pageSize);
+            var items = await newsRepository.GetForPageAsync(page, ct, pageSize);
 
             if (items is null || !items.Any())
             {
@@ -93,7 +89,7 @@ public class NewsService(
         Video? newsVideo = null;
         if (request.VideoId != null)
         {
-            newsVideo = await _videoRepository.GetByIdAsync(request.VideoId.Value, ct);
+            newsVideo = await videoRepository.GetByIdAsync(request.VideoId.Value, ct);
         }
 
         News newsItem = new News
@@ -107,13 +103,13 @@ public class NewsService(
                 : DateOnly.FromDateTime(DateTime.UtcNow),
         };
 
-        await _newsRepository.AddAsync(newsItem, ct);
+        await newsRepository.AddAsync(newsItem, ct);
 
         if (request.Photo != null)
         {
-            string photoUrl = await _blobRepository.AddFileAndGetUrlAsync("storonnimv-photo", $"news-{newsItem.Id}",
+            string photoUrl = await blobRepository.AddFileAndGetUrlAsync("storonnimv-photo", $"news-{newsItem.Id}",
                 request.Photo.OpenReadStream(), ct);
-            await _newsRepository.UpdateAsync(newsItem, () => newsItem.Photo = photoUrl, ct);
+            await newsRepository.UpdateAsync(newsItem, () => newsItem.Photo = photoUrl, ct);
         }          
     }
     
@@ -125,18 +121,18 @@ public class NewsService(
     /// <exception cref="EntityNotFoundException"></exception>
     public async Task DeleteNewsItemAsync(long id, CancellationToken ct)
     {
-        News? newsItem = await _newsRepository.GetByIdAsync(id, ct);
+        News? newsItem = await newsRepository.GetByIdAsync(id, ct);
 
         if (newsItem is null)
         {
             throw new EntityNotFoundException($"NewsItem with {nameof(id)}: {id} was not found");
         }
 
-        await _newsRepository.DeleteAsync(newsItem, ct);
+        await newsRepository.DeleteAsync(newsItem, ct);
 
         if (newsItem.Photo != null)
         {
-            await _blobRepository.DeleteAllFilesByNameAsync("storonnimv-photo", $"news-{id}", ct);
+            await blobRepository.DeleteAllFilesByNameAsync("storonnimv-photo", $"news-{id}", ct);
         }
     }
     

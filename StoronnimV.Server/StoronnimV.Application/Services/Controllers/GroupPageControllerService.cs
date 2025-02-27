@@ -23,23 +23,20 @@ public class GroupPageControllerService(
     ISocialService socialService,
     IMapper mapper) : IGroupPageControllerService
 {
-    private readonly IGroupPageService _groupPageService = groupPageService;
-    private readonly IMemberService _memberService = memberService;
     private readonly ISocialService _socialService = socialService;
-    private readonly IMapper _mapper = mapper;
-    
+
     public async Task<GroupPageFullInfoResponse> GetGroupPageInfoAsync(CancellationToken ct)
     {
-        var groupPageTask = _groupPageService.GetFirstGroupPageAsync(ct);
-        var membersTask = _memberService.GetAllAsync(ct);
+        var groupPageTask = groupPageService.GetFirstGroupPageAsync(ct);
+        var membersTask = memberService.GetAllAsync(ct);
         
         await Task.WhenAll(groupPageTask, membersTask);
         
         GroupPageProjection groupPage = await groupPageTask;
         var members = await membersTask;
         
-        var groupPageDto = _mapper.Map<GroupPageResponse>(groupPage);
-        var membersShort = _mapper.Map<IEnumerable<MemberShortResponse>>(members);
+        var groupPageDto = mapper.Map<GroupPageResponse>(groupPage);
+        var membersShort = mapper.Map<IEnumerable<MemberShortResponse>>(members);
 
         GroupPageFullInfoResponse groupPageFullInfoDto = new()
         {
@@ -52,10 +49,10 @@ public class GroupPageControllerService(
 
     public async Task<MemberFullInfoResponse> GetMemberAsync(long memberId, CancellationToken ct)
     {
-        var member = await _memberService.GetItemByIdAsync(memberId, ct);
+        var member = await memberService.GetItemByIdAsync(memberId, ct);
         
-        var memberDto = _mapper.Map<MemberResponse>(member);
-        var socialsDto = _mapper.Map<IEnumerable<SocialResponse>>(member.Socials);
+        var memberDto = mapper.Map<MemberResponse>(member);
+        var socialsDto = mapper.Map<IEnumerable<SocialResponse>>(member.Socials);
         
         MemberFullInfoResponse memberFullInfoDto = new()
         {

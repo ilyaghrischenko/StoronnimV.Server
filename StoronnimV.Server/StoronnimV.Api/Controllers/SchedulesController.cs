@@ -15,12 +15,10 @@ namespace StoronnimV.Api.Controllers
     [ApiController]
     public class SchedulesController(ISchedulesControllerService schedulesControllerService) : ControllerBase
     {
-        private readonly ISchedulesControllerService _schedulesControllerService = schedulesControllerService;
-
         [HttpGet("{id:long}")]
         public async Task<ActionResult<ScheduleResponse>> GetSchedule([FromRoute] long id, CancellationToken ct)
         {
-            ScheduleResponse schedule = await _schedulesControllerService.GetItemByIdAsync(id, ct);
+            ScheduleResponse schedule = await schedulesControllerService.GetItemByIdAsync(id, ct);
             
             return Ok(schedule);
         }
@@ -29,7 +27,7 @@ namespace StoronnimV.Api.Controllers
         public async Task<ActionResult<PaginationResponse<ScheduleShortResponse>>> GetSchedulesForPage(
             [FromRoute] int page, CancellationToken ct, [FromQuery] int pageSize = 5)
         {
-            var schedulesPaginationResponse = await _schedulesControllerService.GetForPageAsync(page, pageSize, ct);
+            var schedulesPaginationResponse = await schedulesControllerService.GetForPageAsync(page, pageSize, ct);
 
             return Ok(schedulesPaginationResponse);
         }

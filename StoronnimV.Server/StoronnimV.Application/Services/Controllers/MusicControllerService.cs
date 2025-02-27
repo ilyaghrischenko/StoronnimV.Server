@@ -12,23 +12,20 @@ public class MusicControllerService(
     IMusicPlatformService musicPlatformService,
     IMapper mapper) : IMusicControllerService
 {
-    private readonly IMusicPlatformService _musicPlatformService = musicPlatformService;
-    private readonly IMapper _mapper = mapper;
-    
     public async Task<MusicResponse> GetItemByIdAsync(long id, CancellationToken ct)
     {
-        MusicPlatformProjection musicPlatformItem = await _musicPlatformService.GetItemByIdAsync(id, ct);
+        MusicPlatformProjection musicPlatformItem = await musicPlatformService.GetItemByIdAsync(id, ct);
 
-        var musicPlatformDto = _mapper.Map<MusicResponse>(musicPlatformItem);
+        var musicPlatformDto = mapper.Map<MusicResponse>(musicPlatformItem);
         
         return musicPlatformDto;
     }
 
     public async Task<IEnumerable<MusicResponse>> GetAllAsync(CancellationToken ct)
     {
-        var musicPlatforms = await _musicPlatformService.GetAllAsync(ct);
+        var musicPlatforms = await musicPlatformService.GetAllAsync(ct);
 
-        var musicPlatformsDto = _mapper.Map<IEnumerable<MusicResponse>>(musicPlatforms);
+        var musicPlatformsDto = mapper.Map<IEnumerable<MusicResponse>>(musicPlatforms);
         
         return musicPlatformsDto;
     }

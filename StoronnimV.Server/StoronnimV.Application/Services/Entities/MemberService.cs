@@ -18,19 +18,16 @@ public class MemberService(
     IMemberRepository memberRepository,
     IBlobRepository blobRepository) : IMemberService
 {
-    private readonly IMemberRepository _memberRepository = memberRepository;
-    private readonly IBlobRepository _blobRepository = blobRepository;
-    
     public async Task<IEnumerable<MemberShortProjection>> GetAllAsync(CancellationToken ct)
     {
-        var members = await _memberRepository.GetAllAsNoTrackingAsync(ct);
+        var members = await memberRepository.GetAllAsNoTrackingAsync(ct);
         
         return members ?? new List<MemberShortProjection>();
     }
 
     public async Task<MemberFullProjection> GetItemByIdAsync(long id, CancellationToken ct)
     {
-        MemberFullProjection member = await _memberRepository.GetByIdAsNoTrackingAsync(id, ct)
+        MemberFullProjection member = await memberRepository.GetByIdAsNoTrackingAsync(id, ct)
                                       ?? throw new EntityNotFoundException($"Member with {nameof(id)}: {id} was not found");
 
         return member;
@@ -51,13 +48,13 @@ public class MemberService(
             Role = request.Role
         };
 
-        await _memberRepository.AddAsync(member, ct);
+        await memberRepository.AddAsync(member, ct);
         
         string memberPhotoBlobName = $"member-{member.Id}";
-        string memberPhotoUrl = await _blobRepository
+        string memberPhotoUrl = await blobRepository
             .AddFileAndGetUrlAsync("storonnimv-photo", memberPhotoBlobName, request.PhotoUrl.OpenReadStream(), ct);
         
-        await _memberRepository.UpdateAsync(member, () => member.PhotoUrl = memberPhotoUrl, ct);
+        await memberRepository.UpdateAsync(member, () => member.PhotoUrl = memberPhotoUrl, ct);
     }
     
     /// <summary>
@@ -68,15 +65,15 @@ public class MemberService(
     /// <exception cref="EntityNotFoundException"></exception>
     public async Task DeleteMemberAsync(long id, CancellationToken ct)
     {
-        Member? member = await _memberRepository.GetByIdAsync(id, ct);
+        Member? member = await memberRepository.GetByIdAsync(id, ct);
 
         if (member is null)
         {
             throw new EntityNotFoundException($"Member with {nameof(id)}: {id} was not found");
         }
 
-        await _memberRepository.DeleteAsync(member, ct);
+        await memberRepository.DeleteAsync(member, ct);
 
-        await _blobRepository.DeleteAllFilesByNameAsync("storonnimv-photo", $"member-{id}", ct);
+        await blobRepository.DeleteAllFilesByNameAsync("storonnimv-photo", $"member-{id}", ct);
     }
 }

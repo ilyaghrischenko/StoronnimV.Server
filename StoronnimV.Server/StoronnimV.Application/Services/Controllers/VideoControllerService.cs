@@ -14,14 +14,11 @@ public class VideoControllerService(
     IMapper mapper)
     : IVideoControllerService
 {
-    private readonly IVideoService _videoService = videoService;
-    private readonly IMapper _mapper = mapper;
-    
     public async Task<VideoPageShortResponse> GetItemByIdAsync(long id, CancellationToken ct)
     {
-        VideoShortProjection video = await _videoService.GetItemByIdAsync(id, ct);
+        VideoShortProjection video = await videoService.GetItemByIdAsync(id, ct);
         
-        var videoDto = _mapper.Map<VideoPageShortResponse>(video);
+        var videoDto = mapper.Map<VideoPageShortResponse>(video);
         
         return videoDto;
     }
@@ -30,9 +27,9 @@ public class VideoControllerService(
     {
         string type = (string)args[0];
         
-        PaginationResult<VideoShortProjection> paginationResult = await _videoService.GetForPageAsync(page, pageSize, ct, type);
+        PaginationResult<VideoShortProjection> paginationResult = await videoService.GetForPageAsync(page, pageSize, ct, type);
         
-        var videosDto = _mapper.Map<IEnumerable<VideoPageShortResponse>>(paginationResult.Items);
+        var videosDto = mapper.Map<IEnumerable<VideoPageShortResponse>>(paginationResult.Items);
         
         var paginationResponse = new PaginationResponse<VideoPageShortResponse>
         {

@@ -11,19 +11,16 @@ public class AccountService(
     IAdminRepository adminRepository,
     IPasswordHasher<Admin> passwordHasher) : IAccountService
 {
-    private readonly IAdminRepository _adminRepository = adminRepository;
-    private readonly IPasswordHasher<Admin> _passwordHasher = passwordHasher;
-    
     public async Task<Admin> LogInAsync(string login, string password, CancellationToken ct)
     {
-        Admin? admin = await _adminRepository.GetByLoginAsync(login, ct);
+        Admin? admin = await adminRepository.GetByLoginAsync(login, ct);
 
         if (admin is null)
         {
             throw new LogInException($"Admin with {nameof(login)}: {login} was not found");
         }
         
-        PasswordVerificationResult verificationResult = _passwordHasher.VerifyHashedPassword(admin, admin.Password, password);
+        PasswordVerificationResult verificationResult = passwordHasher.VerifyHashedPassword(admin, admin.Password, password);
 
         if (verificationResult == PasswordVerificationResult.Failed)
         {

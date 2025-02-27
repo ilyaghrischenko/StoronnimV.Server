@@ -11,12 +11,10 @@ namespace StoronnimV.Api.Controllers
     public class HomeController(
         IHomeControllerService homeControllerService) : ControllerBase
     {
-        private readonly IHomeControllerService _homeControllerService = homeControllerService;
-
         [HttpGet("news/{count:int}")]
         public async Task<ActionResult<IEnumerable<NewsHomeResponse>>> GetMainNews([FromRoute] int count, CancellationToken ct)
         {
-            var newsDto = await _homeControllerService.GetMainNewsAsync(count, ct);
+            var newsDto = await homeControllerService.GetMainNewsAsync(count, ct);
 
             return Ok(newsDto);
         }
@@ -24,7 +22,7 @@ namespace StoronnimV.Api.Controllers
         [HttpGet("schedule")]
         public async Task<ActionResult<ScheduleHomeResponse>> GetNearestSchedule(CancellationToken ct)
         {
-            ScheduleHomeResponse scheduleDto = await _homeControllerService.GetNearestScheduleAsync(ct);
+            ScheduleHomeResponse scheduleDto = await homeControllerService.GetNearestScheduleAsync(ct);
 
             return Ok(scheduleDto);
         }
@@ -32,7 +30,7 @@ namespace StoronnimV.Api.Controllers
         [HttpGet("video")]
         public async Task<ActionResult<VideoPageShortResponse>> GetPromotionVideo(CancellationToken ct)
         {
-            VideoPageShortResponse videoDto = await _homeControllerService.GetPromotionVideoAsync(ct);
+            VideoPageShortResponse videoDto = await homeControllerService.GetPromotionVideoAsync(ct);
 
             return Ok(videoDto);
         }

@@ -18,11 +18,9 @@ namespace StoronnimV.Application.Services.Entities;
 public class AdminService(
     IAdminRepository adminRepository) : IAdminService
 {
-    private readonly IAdminRepository _adminRepository = adminRepository;
-
     public async Task<AdminProjection> GetItemByIdAsync(long id, CancellationToken ct)
     {
-        AdminProjection? admin = await _adminRepository.GetByIdAsNoTrackingAsync(id, ct);
+        AdminProjection? admin = await adminRepository.GetByIdAsNoTrackingAsync(id, ct);
 
         if (admin is null)
         {
