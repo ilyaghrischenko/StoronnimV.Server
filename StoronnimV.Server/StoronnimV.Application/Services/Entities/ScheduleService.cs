@@ -29,6 +29,11 @@ public class ScheduleService(IScheduleRepository scheduleRepository) : ISchedule
     {
         var allSchedules = await _scheduleRepository
             .GetAllSchedulesAsync(ct);
+
+        if (allSchedules == null || !allSchedules.Any())
+        {
+            return;
+        }
         
         DateTime today = DateTime.UtcNow.Date;
         
@@ -47,7 +52,7 @@ public class ScheduleService(IScheduleRepository scheduleRepository) : ISchedule
         await Task.WhenAll(updateTasks);
     }
 
-    public async Task<PaginationResult<ScheduleShortProjection>>GetForPageAsync(int page, int pageSize, CancellationToken ct, params object[] args)
+    public async Task<PaginationResult<ScheduleShortProjection>> GetForPageAsync(int page, int pageSize, CancellationToken ct, params object[] args)
     {
         if (page <= 0)
         {
