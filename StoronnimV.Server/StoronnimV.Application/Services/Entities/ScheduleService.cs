@@ -1,6 +1,7 @@
 using Microsoft.Extensions.Logging;
 using StoronnimV.Application.Contracts.Entities;
 using StoronnimV.Application.Exceptions;
+using StoronnimV.Application.Models;
 using StoronnimV.Domain.Contracts;
 using StoronnimV.Domain.Contracts.Database;
 using StoronnimV.Domain.Enums;
@@ -24,19 +25,6 @@ public class ScheduleService(IScheduleRepository scheduleRepository) : ISchedule
         return schedule;
     }
 
-    public async Task<IEnumerable<ScheduleShortProjection>> GetAllAsync(CancellationToken ct)
-    {
-        var allSchedules = await _scheduleRepository.GetAllAsNoTrackingAsync(ct);
-        if (allSchedules is null)
-        {
-            return new List<ScheduleShortProjection>();
-        }
-
-        var result = allSchedules.ToList();
-        
-        return result;
-    }
-
     public async Task UpdateStatusesAsync(CancellationToken ct)
     {
         var allSchedules = await _scheduleRepository
@@ -57,5 +45,51 @@ public class ScheduleService(IScheduleRepository scheduleRepository) : ISchedule
         );
         
         await Task.WhenAll(updateTasks);
+    }
+
+    public async Task<PaginationResult<ScheduleShortProjection>>GetForPageAsync(int page, int pageSize, CancellationToken ct, params object[] args)
+    {
+        if (page <= 0)
+        {
+            throw new PaginationException("Invalid page number");
+        }
+
+        int totalCount = await _scheduleRepository.GetTotalCountAsync(ct);
+
+        try
+        {
+            if (totalCount == 0)
+            {
+                throw new PaginationException(string.Empty);
+            }
+
+            int totalPages = (int)Math.Ceiling((double)totalCount / pageSize);
+            var items = await _scheduleRepository.GetForPageAsync(page, ct, pageSize);
+            
+            if (items is null || !items.Any())
+            {
+                throw new PaginationException(string.Empty);
+            }
+
+            PaginationResult<ScheduleShortProjection> respone = new()
+            {
+                CurrentPage = page,
+                TotalPages = totalPages,
+                TotalItems = totalCount,
+                Items = items.ToList()
+            };
+
+            return respone;
+        }
+        catch (PaginationException)
+        {
+            return new PaginationResult<ScheduleShortProjection>
+            {
+                CurrentPage = page,
+                TotalPages = 0,
+                TotalItems = 0,
+                Items = []
+            };
+        }
     }
 }

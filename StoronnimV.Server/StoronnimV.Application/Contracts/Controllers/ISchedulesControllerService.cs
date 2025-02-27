@@ -4,7 +4,7 @@ using StoronnimV.Application.DTO.Responses.SchedulePage;
 namespace StoronnimV.Application.Contracts.Controllers;
 
 public interface ISchedulesControllerService
-    : IGetByIdControllerService<ScheduleResponse>, IGetAllControllerService<ScheduleShortResponse>
+    : IGetByIdControllerService<ScheduleResponse>, IPaginationControllerService<ScheduleShortResponse>
 {
     
 }

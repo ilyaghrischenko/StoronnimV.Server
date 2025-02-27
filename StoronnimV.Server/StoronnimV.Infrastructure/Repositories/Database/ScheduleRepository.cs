@@ -41,29 +41,6 @@ public class ScheduleRepository(IDbContextFactory<StoronnimVContext> contextFact
         return result;
     }
 
-    public async Task<IEnumerable<ScheduleShortProjection>?> GetAllAsNoTrackingAsync(CancellationToken ct)
-    {
-        await using StoronnimVContext context = await _contextFactory.CreateDbContextAsync(ct);
-        var dbSet = context.Schedules;
-        var query = ApplyIncludes(dbSet);
-
-        var result = await query
-            .AsNoTracking()
-            .Where(schedule => schedule.Status == ScheduleStatus.Active)
-            .OrderBy(schedule => schedule.PerformanceDateTime)
-            .Select(schedule => new ScheduleShortProjection
-            {
-                Id = schedule.Id,
-                Photo = schedule.Photo,
-                Title = schedule.Title,
-                PerformanceDateTime = schedule.PerformanceDateTime,
-                Location = schedule.Location,
-            })
-            .ToListAsync(ct);
-
-        return result;
-    }
-
     public async Task<IEnumerable<Schedule>?> GetAllSchedulesAsync(CancellationToken ct)
     {
         await using StoronnimVContext context = await _contextFactory.CreateDbContextAsync(ct);
@@ -96,5 +73,39 @@ public class ScheduleRepository(IDbContextFactory<StoronnimVContext> contextFact
             .FirstOrDefaultAsync(ct);
 
         return result;
+    }
+
+    public async Task<IEnumerable<ScheduleShortProjection>?> GetForPageAsync(int page, CancellationToken ct, int pageSize = 10, params object[] args)
+    {
+        await using StoronnimVContext context = await _contextFactory.CreateDbContextAsync(ct);
+        var dbSet = context.Schedules;
+        var query = ApplyIncludes(dbSet);
+
+        var result = await query
+            .AsNoTracking()
+            .Where(schedule => schedule.Status == ScheduleStatus.Active)
+            .OrderBy(schedule => schedule.PerformanceDateTime)
+            .Skip((page - 1) * pageSize)
+            .Take(pageSize)
+            .Select(schedule => new ScheduleShortProjection
+            {
+                Id = schedule.Id,
+                Location = schedule.Location,
+                PerformanceDateTime = schedule.PerformanceDateTime,
+                Title = schedule.Title,
+                Photo = schedule.Photo
+            })
+            .ToListAsync(ct);
+
+        return result;
+    }
+
+    public async Task<int> GetTotalCountAsync(CancellationToken ct, params object[] args)
+    {
+        await using StoronnimVContext context = await _contextFactory.CreateDbContextAsync(ct);
+
+        int count = await context.Schedules.CountAsync(ct);
+
+        return count;
     }
 }

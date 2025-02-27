@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using StoronnimV.Application.Contracts.Controllers;
 using StoronnimV.Application.DTO.Responses.SchedulePage;
+using StoronnimV.Application.DTO.Responses.Shared;
 using StoronnimV.Domain.Entities;
 
 namespace StoronnimV.Api.Controllers
@@ -24,12 +25,13 @@ namespace StoronnimV.Api.Controllers
             return Ok(schedule);
         }
 
-        [HttpGet]
-        public async Task<ActionResult<IEnumerable<ScheduleShortResponse>>> GetSchedules(CancellationToken ct)
+        [HttpGet("page/{page:int}")]
+        public async Task<ActionResult<PaginationResponse<ScheduleShortResponse>>> GetSchedulesForPage(
+            [FromRoute] int page, CancellationToken ct, [FromQuery] int pageSize = 5)
         {
-            var schedules = await _schedulesControllerService.GetAllAsync(ct);
-            
-            return Ok(schedules);
+            var schedulesPaginationResponse = await _schedulesControllerService.GetForPageAsync(page, pageSize, ct);
+
+            return Ok(schedulesPaginationResponse);
         }
     }
 }

@@ -3,6 +3,8 @@ using Microsoft.Extensions.Logging;
 using StoronnimV.Application.Contracts.Controllers;
 using StoronnimV.Application.Contracts.Entities;
 using StoronnimV.Application.DTO.Responses.SchedulePage;
+using StoronnimV.Application.DTO.Responses.Shared;
+using StoronnimV.Application.Models;
 using StoronnimV.Domain.Projections.Schedule;
 
 namespace StoronnimV.Application.Services.Controllers;
@@ -28,12 +30,20 @@ public class SchedulesControllerService(
         return scheduleDto;
     }
 
-    public async Task<IEnumerable<ScheduleShortResponse>> GetAllAsync(CancellationToken ct)
+    public async Task<PaginationResponse<ScheduleShortResponse>> GetForPageAsync(int page, int pageSize, CancellationToken ct, params object[] args)
     {
-        var schedules = await _scheduleService.GetAllAsync(ct);
+        PaginationResult<ScheduleShortProjection> paginationResult = await _scheduleService.GetForPageAsync(page, pageSize, ct);
+
+        var schedulesDto = _mapper.Map<IEnumerable<ScheduleShortResponse>>(paginationResult.Items);
+
+        var response = new PaginationResponse<ScheduleShortResponse>
+        {
+            CurrentPage = paginationResult.CurrentPage,
+            TotalPages = paginationResult.TotalPages,
+            TotalItems = paginationResult.TotalItems,
+            Items = schedulesDto
+        };
         
-        var schedulesDto = _mapper.Map<IEnumerable<ScheduleShortResponse>>(schedules);
-        
-        return schedulesDto;
+        return response;
     }
 }
