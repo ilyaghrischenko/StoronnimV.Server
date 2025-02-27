@@ -5,6 +5,7 @@ using Hangfire.PostgreSql;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.ResponseCompression;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
 using Serilog;
@@ -253,6 +254,18 @@ public static class WebApplicationBuilderExtensions
             });
         });
 
+        return builder;
+    }
+    
+    public static WebApplicationBuilder AddResponseCompression(this WebApplicationBuilder builder)
+    {
+        builder.Services.AddResponseCompression(options =>
+        {
+            options.EnableForHttps = true;
+            options.Providers.Add<GzipCompressionProvider>();
+            options.Providers.Add<BrotliCompressionProvider>();
+        });
+            
         return builder;
     }
 }
