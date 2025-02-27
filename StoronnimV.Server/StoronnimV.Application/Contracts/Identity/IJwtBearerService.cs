@@ -1,4 +1,5 @@
 using System.Security.Claims;
+using Microsoft.AspNetCore.Http;
 using StoronnimV.Domain.Entities;
 
 namespace StoronnimV.Application.Contracts.Identity;
@@ -7,4 +8,5 @@ public interface IJwtBearerService
 {
     ClaimsIdentity GetIdentity(Admin admin);
     string GetToken(ClaimsIdentity identity);
+    void SetTokenCookie(HttpResponse response, string token);
 }

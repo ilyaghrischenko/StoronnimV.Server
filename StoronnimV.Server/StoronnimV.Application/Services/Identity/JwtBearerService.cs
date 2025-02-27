@@ -1,5 +1,6 @@
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
+using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using StoronnimV.Application.AutentificationOptions;
@@ -38,5 +39,18 @@ public class JwtBearerService(IOptions<JwtOptions> jwtOptions) : IJwtBearerServi
             signingCredentials: new SigningCredentials(_jwtOptions.GetKey(), SecurityAlgorithms.HmacSha256)
         );
         return new JwtSecurityTokenHandler().WriteToken(jwt);
+    }
+
+    public void SetTokenCookie(HttpResponse response, string token)
+    {
+        var cookieOptions = new CookieOptions
+        {
+            HttpOnly = true,     // Означает, что cookie доступен только через HTTP(S)
+            Secure = true,       // Означает, что cookie будет передаваться только через HTTPS
+            SameSite = SameSiteMode.Lax, // Защита от CSRF атак
+            Expires = DateTime.UtcNow.AddHours(2) // Время жизни cookie (например, 2 часа)
+        };
+
+        response.Cookies.Append("Token", token, cookieOptions);
     }
 }

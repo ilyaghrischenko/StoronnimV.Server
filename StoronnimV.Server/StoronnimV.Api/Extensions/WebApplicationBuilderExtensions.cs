@@ -205,6 +205,20 @@ public static class WebApplicationBuilderExtensions
                     ValidateIssuerSigningKey = true,
                     IssuerSigningKey = jwtOptions.GetKey()
                 };
+
+                options.Events = new JwtBearerEvents
+                {
+                    OnMessageReceived = context =>
+                    {
+                        string? token = context.Request.Cookies["Token"];
+                        if (!string.IsNullOrEmpty(token))
+                        {
+                            context.Token = token;
+                        }
+                        
+                        return Task.CompletedTask;
+                    }
+                };
             });
 
         builder.Services.AddAuthorizationBuilder()

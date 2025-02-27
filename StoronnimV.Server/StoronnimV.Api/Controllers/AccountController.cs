@@ -1,4 +1,3 @@
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using StoronnimV.Application.Contracts.Controllers;
 using StoronnimV.Application.DTO.Requests.Account;
@@ -11,11 +10,11 @@ namespace StoronnimV.Api.Controllers
         IAccountControllerService accountControllerService) : ControllerBase
     {
         [HttpPost("login")]
-        public async Task<ActionResult<string>> LogIn([FromBody] LogInRequest request, CancellationToken ct)
+        public async Task<IActionResult> LogIn([FromBody] LogInRequest request, CancellationToken ct)
         {
-            string token = await accountControllerService.LogInAsync(request, ct);
+            await accountControllerService.LogInAsync(Response, request, ct);
             
-            return Ok(token);
+            return Ok();
         }
     }
 }
