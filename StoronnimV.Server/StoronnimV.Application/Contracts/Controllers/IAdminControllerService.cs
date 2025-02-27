@@ -19,4 +19,10 @@ public interface IAdminControllerService
     Task DeleteSocialAsync(long id, CancellationToken ct);
     
     Task AddNewsItemAsync(NewsItemAdditionRequest request, CancellationToken ct);
+    Task AddScheduleAsync(ScheduleAdditionRequest request, CancellationToken ct);
+    Task AddVideoAsync(VideoAdditionRequest request, CancellationToken ct);
+    Task AddGroupPageAsync(GroupPageAdditionRequest request, CancellationToken ct);
+    Task AddMemberAsync(MemberAdditionRequest request, CancellationToken ct);
+    Task AddMusicPlatformAsync(MusicPlatformAdditionRequest request, CancellationToken ct);
+    Task AddSocialAsync(SocialAdditionRequest request, CancellationToken ct);
 }

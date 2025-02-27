@@ -18,50 +18,86 @@ using StoronnimV.Domain.Projections.Video;
 namespace StoronnimV.Application.Services.Controllers;
 
 public class AdminControllerService(
-    IAdminService adminService) : IAdminControllerService
+    IAdminService adminService,
+    INewsService newsService,
+    IVideoService videoService,
+    IGroupPageService groupPageService,
+    IMemberService memberService,
+    IMusicPlatformService musicPlatformService,
+    ISocialService socialService,
+    IScheduleService scheduleService
+    ) : IAdminControllerService
 {
     private readonly IAdminService _adminService = adminService;
 
     public async Task DeleteNewsItemAsync(long id, CancellationToken ct)
     {
-        await _adminService.DeleteNewsItemAsync(id, ct);
+        await newsService.DeleteNewsItemAsync(id, ct);
     }
 
     public async Task DeleteScheduleAsync(long id, CancellationToken ct)
     {
-        await _adminService.DeleteScheduleAsync(id, ct);
+        await scheduleService.DeleteScheduleAsync(id, ct);
     }
 
     public async Task DeleteVideoAsync(long id, CancellationToken ct)
     {
-        await _adminService.DeleteVideoAsync(id, ct);
+        await videoService.DeleteVideoAsync(id, ct);
     }
 
     public async Task DeleteGroupPageAsync(long id, CancellationToken ct)
     {
-        await _adminService.DeleteGroupPageAsync(id, ct);
+        await groupPageService.DeleteGroupPageAsync(id, ct);
     }
 
     public async Task DeleteMemberAsync(long id, CancellationToken ct)
     {
-        await _adminService.DeleteMemberAsync(id, ct);
+        await memberService.DeleteMemberAsync(id, ct);
     }
 
     public async Task DeleteMusicPlatformAsync(long id, CancellationToken ct)
     {
-        await _adminService.DeleteMusicPlatformAsync(id, ct);
+        await musicPlatformService.DeleteMusicPlatformAsync(id, ct);
     }
 
     public async Task DeleteSocialAsync(long id, CancellationToken ct)
     {
-        await _adminService.DeleteSocialAsync(id, ct);
+        await socialService.DeleteSocialAsync(id, ct);
     }
 
 
-    //TODO: Доделать методы для добавления страниц о группе, участниках, афишах, видео, новостей, платформы музыки и социальных сетей
-    //TODO: Add methods in interface
     public async Task AddNewsItemAsync(NewsItemAdditionRequest request, CancellationToken ct)
     {
-        await _adminService.AddNewsItemAsync(request, ct);
+        await newsService.AddNewsItemAsync(request, ct);
+    }
+
+    public async Task AddScheduleAsync(ScheduleAdditionRequest request, CancellationToken ct)
+    {
+        await scheduleService.AddScheduleAsync(request, ct);
+    }
+
+    public async Task AddVideoAsync(VideoAdditionRequest request, CancellationToken ct)
+    {
+        await videoService.AddVideoAsync(request, ct);
+    }
+
+    public async Task AddGroupPageAsync(GroupPageAdditionRequest request, CancellationToken ct)
+    {
+        await groupPageService.AddGroupPageAsync(request, ct);
+    }
+
+    public async Task AddMemberAsync(MemberAdditionRequest request, CancellationToken ct)
+    {
+        await memberService.AddMemberAsync(request, ct);
+    }
+
+    public async Task AddMusicPlatformAsync(MusicPlatformAdditionRequest request, CancellationToken ct)
+    {
+        await musicPlatformService.AddMusicPlatformAsync(request, ct);
+    }
+
+    public async Task AddSocialAsync(SocialAdditionRequest request, CancellationToken ct)
+    {
+        await socialService.AddSocialAsync(request, ct);
     }
 }

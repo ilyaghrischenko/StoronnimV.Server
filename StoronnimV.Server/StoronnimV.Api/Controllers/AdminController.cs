@@ -83,5 +83,53 @@ namespace StoronnimV.Api.Controllers
             
             return NoContent();
         }
+        
+        [HttpPost("schedules")]
+        public async Task<IActionResult> AddSchedule([FromBody] ScheduleAdditionRequest request, CancellationToken ct)
+        {
+            await _adminControllerService.AddScheduleAsync(request, ct);
+            
+            return NoContent();
+        }
+
+        [HttpPost("videos")]
+        public async Task<IActionResult> AddVideo([FromBody] VideoAdditionRequest request, CancellationToken ct)
+        {
+            await _adminControllerService.AddVideoAsync(request, ct);
+            
+            return NoContent();
+        }
+
+        [HttpPost("group")]
+        public async Task<IActionResult> AddGroup([FromBody] GroupPageAdditionRequest request, CancellationToken ct)
+        {
+            await _adminControllerService.AddGroupPageAsync(request, ct);
+            
+            return NoContent();
+        }
+
+        [HttpPost("group/members")]
+        public async Task<IActionResult> AddMember([FromBody] MemberAdditionRequest request, CancellationToken ct)
+        {
+            await _adminControllerService.AddMemberAsync(request, ct);
+            
+            return NoContent();
+        }
+
+        [HttpPost("music")]
+        public async Task<IActionResult> AddMusicPlatform([FromBody] MusicPlatformAdditionRequest request, CancellationToken ct)
+        {
+            await _adminControllerService.AddMusicPlatformAsync(request, ct);
+            
+            return NoContent();
+        }
+
+        [HttpPost("socials")]
+        public async Task<IActionResult> AddSocial([FromBody] SocialAdditionRequest request, CancellationToken ct)
+        {
+            await _adminControllerService.AddSocialAsync(request, ct);
+            
+            return NoContent();
+        }
     }
 }
