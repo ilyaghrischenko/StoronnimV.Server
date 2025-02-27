@@ -1,8 +1,11 @@
 using Microsoft.Extensions.Logging;
 using StoronnimV.Application.Contracts.Entities;
+using StoronnimV.Application.DTO.Requests.Entities.Pages.Addition;
 using StoronnimV.Application.Exceptions;
 using StoronnimV.Domain.Contracts;
 using StoronnimV.Domain.Contracts.Database;
+using StoronnimV.Domain.Entities;
+using StoronnimV.Domain.Enums;
 using StoronnimV.Domain.Projections;
 
 namespace StoronnimV.Application.Services.Entities;
@@ -11,9 +14,12 @@ namespace StoronnimV.Application.Services.Entities;
 /// Сервис для проверки полученных данных, полученых с репозитория
 /// </summary>
 /// <param name="socialRepository"></param>
-public class SocialService(ISocialRepository socialRepository) : ISocialService
+public class SocialService(
+    ISocialRepository socialRepository,
+    IMemberRepository memberRepository) : ISocialService
 {
     private readonly ISocialRepository _socialRepository = socialRepository;
+    private readonly IMemberRepository _memberRepository = memberRepository;
     
     public async Task<SocialProjection> GetItemByIdAsync(long id, CancellationToken ct)
     {
@@ -21,5 +27,47 @@ public class SocialService(ISocialRepository socialRepository) : ISocialService
                                        ?? throw new EntityNotFoundException($"Social with {nameof(id)}: {id} was not found");
         
         return social;
+    }
+
+    /// <summary>
+    /// Social addition to database
+    /// </summary>
+    /// <param name="request"></param>
+    /// <param name="ct"></param>
+    public async Task AddSocialAsync(SocialAdditionRequest request, CancellationToken ct)
+    {
+        Member? member = await _memberRepository.GetByIdAsync(request.MemberId, ct);
+        
+        if (member is null)
+        {
+            throw new EntityNotFoundException($"Member with {nameof(request.MemberId)}: {request.MemberId} was not found");
+        }
+        
+        Social social = new()
+        {
+            Member = member,
+            Url = request.Url,
+            Type = Enum.Parse<SocialType>(request.Type)
+        };
+        
+        await _socialRepository.AddAsync(social, ct);
+    }
+    
+    /// <summary>
+    /// Social deletion from database
+    /// </summary>
+    /// <param name="id"></param>
+    /// <param name="ct"></param>
+    /// <exception cref="EntityNotFoundException"></exception>
+    public async Task DeleteSocialAsync(long id, CancellationToken ct)
+    {
+        Social? social = await _socialRepository.GetByIdAsync(id, ct);
+
+        if (social is null)
+        {
+            throw new EntityNotFoundException($"Social with {nameof(id)}: {id} was not found");
+        }
+
+        await _socialRepository.DeleteAsync(social, ct);
     }
 }

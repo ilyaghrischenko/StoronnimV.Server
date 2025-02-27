@@ -1,4 +1,5 @@
 using StoronnimV.Application.DTO.Requests.Entities.Admin;
+using StoronnimV.Application.DTO.Requests.Entities.Pages.Addition;
 using StoronnimV.Application.DTO.Responses.Admin;
 using StoronnimV.Application.DTO.Responses.GroupPage;
 using StoronnimV.Application.DTO.Responses.NewsPage;
@@ -16,4 +17,12 @@ public interface IAdminControllerService
     Task DeleteMemberAsync(long id, CancellationToken ct);
     Task DeleteMusicPlatformAsync(long id, CancellationToken ct);
     Task DeleteSocialAsync(long id, CancellationToken ct);
+    
+    Task AddNewsItemAsync(NewsItemAdditionRequest request, CancellationToken ct);
+    Task AddScheduleAsync(ScheduleAdditionRequest request, CancellationToken ct);
+    Task AddVideoAsync(VideoAdditionRequest request, CancellationToken ct);
+    Task AddGroupPageAsync(GroupPageAdditionRequest request, CancellationToken ct);
+    Task AddMemberAsync(MemberAdditionRequest request, CancellationToken ct);
+    Task AddMusicPlatformAsync(MusicPlatformAdditionRequest request, CancellationToken ct);
+    Task AddSocialAsync(SocialAdditionRequest request, CancellationToken ct);
 }

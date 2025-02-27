@@ -1,40 +1,25 @@
+using System.Globalization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Logging;
 using StoronnimV.Application.Contracts.Entities;
 using StoronnimV.Application.DTO.Requests.Account;
+using StoronnimV.Application.DTO.Requests.Entities.Pages.Addition;
 using StoronnimV.Application.Exceptions;
 using StoronnimV.Domain.Contracts;
 using StoronnimV.Domain.Contracts.AzureBlobStorage;
 using StoronnimV.Domain.Contracts.Database;
 using StoronnimV.Domain.Entities;
+using StoronnimV.Domain.Enums;
 using StoronnimV.Domain.Projections;
 using StoronnimV.Domain.Projections.Admin;
 
 namespace StoronnimV.Application.Services.Entities;
 
 public class AdminService(
-    IAdminRepository adminRepository,
-    INewsRepository newsRepository,
-    IScheduleRepository scheduleRepository,
-    IVideoRepository videoRepository,
-    IGroupPageRepository groupPageRepository,
-    IMemberRepository memberRepository,
-    IMusicPlatformRepository musicPlatformRepository,
-    ISocialRepository socialRepository,
-    IBlobRepository blobRepository,
-    IPasswordHasher<Admin> passwordHasher) : IAdminService
+    IAdminRepository adminRepository) : IAdminService
 {
     private readonly IAdminRepository _adminRepository = adminRepository;
-    private readonly INewsRepository _newsRepository = newsRepository;
-    private readonly IScheduleRepository _scheduleRepository = scheduleRepository;
-    private readonly IVideoRepository _videoRepository = videoRepository;
-    private readonly IGroupPageRepository _groupPageRepository = groupPageRepository;
-    private readonly IMemberRepository _memberRepository = memberRepository;
-    private readonly IMusicPlatformRepository _musicPlatformRepository = musicPlatformRepository;
-    private readonly ISocialRepository _socialRepository = socialRepository;
-    private readonly IBlobRepository _blobRepository = blobRepository;
-    private readonly IPasswordHasher<Admin> _passwordHasher = passwordHasher;
-    
+
     public async Task<AdminProjection> GetItemByIdAsync(long id, CancellationToken ct)
     {
         AdminProjection? admin = await _adminRepository.GetByIdAsNoTrackingAsync(id, ct);
@@ -43,109 +28,7 @@ public class AdminService(
         {
             throw new EntityNotFoundException($"Admin with {nameof(id)}: {id} was not found");
         }
-        
+
         return admin;
-    }
-
-    public async Task DeleteNewsItemAsync(long id, CancellationToken ct)
-    {
-        News? newsItem = await _newsRepository.GetByIdAsync(id, ct);
-
-        if (newsItem is null)
-        {
-            throw new EntityNotFoundException($"NewsItem with {nameof(id)}: {id} was not found");
-        }
-        
-        await _newsRepository.DeleteAsync(newsItem, ct);
-
-        if (newsItem.Photo != null)
-        {
-            await _blobRepository.DeleteAllFilesByNameAsync("storonnimv-photo", $"news-{id}", ct);
-        }
-    }
-
-    public async Task DeleteScheduleAsync(long id, CancellationToken ct)
-    {
-        Schedule? schedule = await _scheduleRepository.GetByIdAsync(id, ct);
-
-        if (schedule is null)
-        {
-            throw new EntityNotFoundException($"Schedule with {nameof(id)}: {id} was not found");
-        }
-        
-        await _scheduleRepository.DeleteAsync(schedule, ct);
-
-        if (schedule.Photo != null)
-        {
-            await _blobRepository.DeleteAllFilesByNameAsync("storonnimv-photo", $"schedule-{id}", ct);
-        }
-    }
-
-    public async Task DeleteVideoAsync(long id, CancellationToken ct)
-    {
-        Video? video = await _videoRepository.GetByIdAsync(id, ct);
-
-        if (video is null)
-        {
-            throw new EntityNotFoundException($"Video with {nameof(id)}: {id} was not found");
-        }
-        
-        await _videoRepository.DeleteAsync(video, ct);
-
-        await _blobRepository.DeleteFileAsync("storonnimv-video", $"video-{id}", ct);
-    }
-
-    public async Task DeleteGroupPageAsync(long id, CancellationToken ct)
-    {
-        GroupPage? groupPage = await _groupPageRepository.GetByIdAsync(id, ct);
-
-        if (groupPage is null)
-        {
-            throw new EntityNotFoundException($"Group page with {nameof(id)}: {id} was not found");
-        }
-        
-        await _groupPageRepository.DeleteAsync(groupPage, ct);
-        
-        await _blobRepository.DeleteAllFilesByNameAsync("storonnimv-photo", $"group-page-{id}", ct);
-    }
-
-    public async Task DeleteMemberAsync(long id, CancellationToken ct)
-    {
-        Member? member = await _memberRepository.GetByIdAsync(id, ct);
-
-        if (member is null)
-        {
-            throw new EntityNotFoundException($"Member with {nameof(id)}: {id} was not found");
-        }
-        
-        await _memberRepository.DeleteAsync(member, ct);
-        
-        await _blobRepository.DeleteAllFilesByNameAsync("storonnimv-photo", $"member-{id}", ct);
-    }
-
-    public async Task DeleteMusicPlatformAsync(long id, CancellationToken ct)
-    {
-        MusicPlatform? musicPlatform = await _musicPlatformRepository.GetByIdAsync(id, ct);
-
-        if (musicPlatform is null)
-        {
-            throw new EntityNotFoundException($"Music platform with {nameof(id)}: {id} was not found");
-        }
-        
-        await _musicPlatformRepository.DeleteAsync(musicPlatform, ct);
-
-        await _blobRepository.DeleteAllFilesByNameAsync("storonnimv-photo", $"music-platform-{id}", ct);
-    }
-
-    public async Task DeleteSocialAsync(long id, CancellationToken ct)
-    {
-        Social? social = await _socialRepository.GetByIdAsync(id, ct);
-
-        if (social is null)
-        {
-            throw new EntityNotFoundException($"Social with {nameof(id)}: {id} was not found");
-        }
-
-        await _socialRepository.DeleteAsync(social, ct);
     }
 }

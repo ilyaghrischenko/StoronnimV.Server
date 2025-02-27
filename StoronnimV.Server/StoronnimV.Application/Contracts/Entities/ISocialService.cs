@@ -1,9 +1,11 @@
 using StoronnimV.Application.Contracts.Entities.Shared;
+using StoronnimV.Application.DTO.Requests.Entities.Pages.Addition;
 using StoronnimV.Domain.Projections;
 
 namespace StoronnimV.Application.Contracts.Entities;
 
 public interface ISocialService : IGetByIdService<SocialProjection>
 {
-    // public Task<IEnumerable<SocialProjection>> GetAllForMemberAsync(long memberId, CancellationToken ct);
+    Task AddSocialAsync(SocialAdditionRequest request, CancellationToken ct);
+    Task DeleteSocialAsync(long id, CancellationToken ct);
 }

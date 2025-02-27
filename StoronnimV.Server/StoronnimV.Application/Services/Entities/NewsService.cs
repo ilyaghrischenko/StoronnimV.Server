@@ -1,9 +1,14 @@
+using System.Globalization;
 using Microsoft.Extensions.Logging;
 using StoronnimV.Application.Contracts.Entities;
+using StoronnimV.Application.DTO.Requests.Entities.Pages.Addition;
 using StoronnimV.Application.Exceptions;
 using StoronnimV.Application.Models;
 using StoronnimV.Domain.Contracts;
+using StoronnimV.Domain.Contracts.AzureBlobStorage;
 using StoronnimV.Domain.Contracts.Database;
+using StoronnimV.Domain.Entities;
+using StoronnimV.Domain.Enums;
 using StoronnimV.Domain.Projections.News;
 
 namespace StoronnimV.Application.Services.Entities;
@@ -13,10 +18,14 @@ namespace StoronnimV.Application.Services.Entities;
 /// </summary>
 /// <param name="newsRepository"></param>
 public class NewsService(
-    INewsRepository newsRepository) : INewsService
+    INewsRepository newsRepository,
+    IVideoRepository videoRepository,
+    IBlobRepository blobRepository) : INewsService
 {
     private readonly INewsRepository _newsRepository = newsRepository;
-
+    private readonly IVideoRepository _videoRepository = videoRepository;
+    private readonly IBlobRepository _blobRepository = blobRepository;
+    
     public async Task<NewsFullProjection> GetItemByIdAsync(long id, CancellationToken ct)
     {
         NewsFullProjection newsItem = await _newsRepository.GetByIdAsNoTrackingAsync(id, ct)
@@ -73,4 +82,64 @@ public class NewsService(
             };
         }
     }
+
+    /// <summary>
+    /// News item addition to the database
+    /// </summary>
+    /// <param name="request"></param>
+    /// <param name="ct"></param>
+    public async Task AddNewsItemAsync(NewsItemAdditionRequest request, CancellationToken ct)
+    {
+        Video? newsVideo = null;
+        if (request.VideoId != null)
+        {
+            newsVideo = await _videoRepository.GetByIdAsync(request.VideoId.Value, ct);
+        }
+
+        News newsItem = new News
+        {
+            Title = request.Title,
+            Description = request.Description,
+            Video = newsVideo,
+            Priority = Enum.Parse<NewsPriority>(request.Priority),
+            Date = DateOnly.TryParseExact(request.Date, "dd.MM.yyyy", CultureInfo.InvariantCulture, DateTimeStyles.None, out DateOnly date)
+                ? date
+                : DateOnly.FromDateTime(DateTime.UtcNow),
+        };
+
+        await _newsRepository.AddAsync(newsItem, ct);
+
+        if (request.Photo != null)
+        {
+            string photoUrl = await _blobRepository.AddFileAndGetUrlAsync("storonnimv-photo", $"news-{newsItem.Id}",
+                request.Photo.OpenReadStream(), ct);
+            await _newsRepository.UpdateAsync(newsItem, () => newsItem.Photo = photoUrl, ct);
+        }          
+    }
+    
+    /// <summary>
+    /// News item deletion from the database
+    /// </summary>
+    /// <param name="id"></param>
+    /// <param name="ct"></param>
+    /// <exception cref="EntityNotFoundException"></exception>
+    public async Task DeleteNewsItemAsync(long id, CancellationToken ct)
+    {
+        News? newsItem = await _newsRepository.GetByIdAsync(id, ct);
+
+        if (newsItem is null)
+        {
+            throw new EntityNotFoundException($"NewsItem with {nameof(id)}: {id} was not found");
+        }
+
+        await _newsRepository.DeleteAsync(newsItem, ct);
+
+        if (newsItem.Photo != null)
+        {
+            await _blobRepository.DeleteAllFilesByNameAsync("storonnimv-photo", $"news-{id}", ct);
+        }
+    }
+    
+    //todo: update news item
+    // public async Task UpdateNewsItemAsync(NewsItemAdditionRequest request, CancellationToken ct)
 }
