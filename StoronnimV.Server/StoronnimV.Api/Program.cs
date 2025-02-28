@@ -26,7 +26,8 @@ builder
     .AddHangfire()
     .AddPooledDbContextFactory()
     .AddJwtBearer()
-    .AddResponseCompression();
+    .AddResponseCompression()
+    .AddRateLimiter();
     
 #region AutoMapper
 MapperConfiguration mapperConfig = new(cfg =>
@@ -92,6 +93,8 @@ app.UseHangfireDashboard();
 app.MapHangfireDashboard();
 
 app.UseResponseCompression();
+
+app.UseRateLimiter();
 
 #region DatabaseInitializer
 using (var scope = app.Services.CreateScope())

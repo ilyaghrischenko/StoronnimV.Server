@@ -1,3 +1,5 @@
+using System.Net;
+using System.Threading.RateLimiting;
 using FluentValidation;
 using FluentValidation.AspNetCore;
 using Hangfire;
@@ -5,6 +7,7 @@ using Hangfire.PostgreSql;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.RateLimiting;
 using Microsoft.AspNetCore.ResponseCompression;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
@@ -50,7 +53,7 @@ public static class WebApplicationBuilderExtensions
         builder.Services.AddScoped<IVideoService, VideoService>();
         builder.Services.AddScoped<IAdminService, AdminService>();
         builder.Services.AddScoped<ISuperAdminService, SuperAdminService>();
-        
+
         builder.Services.AddScoped<INewsControllerService, NewsControllerService>();
         builder.Services.AddScoped<ISchedulesControllerService, SchedulesControllerService>();
         builder.Services.AddScoped<IGroupPageControllerService, GroupPageControllerService>();
@@ -65,7 +68,7 @@ public static class WebApplicationBuilderExtensions
         builder.Services.AddScoped<IJwtBearerService, JwtBearerService>();
         builder.Services.AddScoped<IImageResizerService, ImageResizerService>();
         builder.Services.AddScoped<IAccountService, AccountService>();
-        
+
         return builder;
     }
 
@@ -73,7 +76,7 @@ public static class WebApplicationBuilderExtensions
     {
         builder.Services.AddScoped<ScheduleStatusUpdaterService>();
         builder.Services.AddTransient<IPasswordHasher<Admin>, PasswordHasher<Admin>>();
-        
+
         return builder;
     }
 
@@ -89,17 +92,17 @@ public static class WebApplicationBuilderExtensions
         builder.Services.AddScoped<IVideoRepository, VideoRepository>();
         builder.Services.AddScoped<IAdminRepository, AdminRepository>();
         builder.Services.AddScoped<IBlobRepository, BlobRepository>();
-        
+
         return builder;
     }
 
     public static WebApplicationBuilder AddPooledDbContextFactory(this WebApplicationBuilder builder)
     {
         string? connectionString = builder.Configuration.GetConnectionString("CloudConnection");
-        
+
         builder.Services.AddPooledDbContextFactory<StoronnimVContext>(options =>
             options.UseNpgsql(connectionString));
-        
+
         return builder;
     }
 
@@ -109,7 +112,7 @@ public static class WebApplicationBuilderExtensions
         builder.Services.AddValidatorsFromAssemblyContaining<LogInRequestValidator>();
         builder.Services.AddValidatorsFromAssemblyContaining<EditBasicAdminLoginRequestValidator>();
         builder.Services.AddValidatorsFromAssemblyContaining<EditBasicAdminPasswordRequestValidator>();
-        
+
         return builder;
     }
 
@@ -124,7 +127,7 @@ public static class WebApplicationBuilderExtensions
 
         builder.Host.UseSerilog();
         builder.Services.AddLogging();
-        
+
         return builder;
     }
 
@@ -132,10 +135,10 @@ public static class WebApplicationBuilderExtensions
     {
         builder.Services.AddAutoMapper(typeof(NewsMappingProfile).Assembly);
         builder.Services.AddAutoMapper(typeof(NewsShortMappingProfile).Assembly);
-        
+
         builder.Services.AddAutoMapper(typeof(ScheduleMappingProfile).Assembly);
         builder.Services.AddAutoMapper(typeof(ScheduleShortMappingProfile).Assembly);
-        
+
         builder.Services.AddAutoMapper(typeof(GroupPageMappingProfile).Assembly);
         builder.Services.AddAutoMapper(typeof(MemberShortMappingProfile).Assembly);
         builder.Services.AddAutoMapper(typeof(MemberMappingProfile).Assembly);
@@ -143,7 +146,7 @@ public static class WebApplicationBuilderExtensions
 
         builder.Services.AddAutoMapper(typeof(HomeNewsMappingProfile).Assembly);
         builder.Services.AddAutoMapper(typeof(HomeScheduleMappingProfile).Assembly);
-        
+
         return builder;
     }
 
@@ -159,22 +162,19 @@ public static class WebApplicationBuilderExtensions
                         .AllowAnyMethod();
                 });
         });
-        
+
         return builder;
     }
 
     public static WebApplicationBuilder AddHangfire(this WebApplicationBuilder builder)
     {
         string? connectionString = builder.Configuration.GetConnectionString("CloudConnection");
-        
+
         builder.Services.AddHangfire(config => config
-            .UsePostgreSqlStorage(options =>
-            {
-                options.UseNpgsqlConnection(connectionString);
-            }));
+            .UsePostgreSqlStorage(options => { options.UseNpgsqlConnection(connectionString); }));
 
         builder.Services.AddHangfireServer();
-        
+
         return builder;
     }
 
@@ -186,9 +186,9 @@ public static class WebApplicationBuilderExtensions
         {
             throw new KeyNotFoundException("JwtOptions are not configured correctly.");
         }
-        
+
         builder.Services.Configure<JwtOptions>(builder.Configuration.GetSection("JwtOptions"));
-        
+
         builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
             .AddJwtBearer(options =>
             {
@@ -216,7 +216,7 @@ public static class WebApplicationBuilderExtensions
                         {
                             context.Token = token;
                         }
-                        
+
                         return Task.CompletedTask;
                     }
                 };
@@ -225,7 +225,7 @@ public static class WebApplicationBuilderExtensions
         builder.Services.AddAuthorizationBuilder()
             .AddPolicy("SuperAdminOnly", policy =>
                 policy.RequireRole("SuperAdmin"));
-        
+
         builder.Services.AddSwaggerGen(options =>
         {
             options.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme()
@@ -256,7 +256,7 @@ public static class WebApplicationBuilderExtensions
 
         return builder;
     }
-    
+
     public static WebApplicationBuilder AddResponseCompression(this WebApplicationBuilder builder)
     {
         builder.Services.AddResponseCompression(options =>
@@ -265,7 +265,31 @@ public static class WebApplicationBuilderExtensions
             options.Providers.Add<GzipCompressionProvider>();
             options.Providers.Add<BrotliCompressionProvider>();
         });
-            
+
         return builder;
+    }
+
+    public static WebApplicationBuilder AddRateLimiter(this WebApplicationBuilder builder)
+    {
+        builder.Services.AddRateLimiter(options =>
+        {
+            AddLimiterPolicy(options, "UserLimit", 100, TimeSpan.FromMinutes(1));
+            AddLimiterPolicy(options, "AdminLimit", 300, TimeSpan.FromMinutes(1));
+
+            options.RejectionStatusCode = StatusCodes.Status429TooManyRequests;
+        });
+
+        return builder;
+    }
+
+    private static void AddLimiterPolicy(RateLimiterOptions options, string policyName, int limit, TimeSpan expiration)
+    {
+        options.AddPolicy(policyName, httpContext =>
+            RateLimitPartition.GetFixedWindowLimiter(policyName, _ => new FixedWindowRateLimiterOptions
+            {
+                PermitLimit = limit,
+                Window = expiration
+            })
+        );
     }
 }

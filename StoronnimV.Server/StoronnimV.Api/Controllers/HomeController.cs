@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.RateLimiting;
 using StoronnimV.Application.Contracts.Controllers;
 using StoronnimV.Application.DTO.Responses.HomePage;
 using StoronnimV.Application.DTO.Responses.Video;
@@ -11,6 +12,7 @@ namespace StoronnimV.Api.Controllers
     public class HomeController(
         IHomeControllerService homeControllerService) : ControllerBase
     {
+        [EnableRateLimiting("UserLimit")]
         [HttpGet("news/{count:int}")]
         public async Task<ActionResult<IEnumerable<NewsHomeResponse>>> GetMainNews([FromRoute] int count, CancellationToken ct)
         {
