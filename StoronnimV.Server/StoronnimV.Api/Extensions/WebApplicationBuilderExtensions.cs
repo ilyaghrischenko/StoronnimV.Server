@@ -273,7 +273,7 @@ public static class WebApplicationBuilderExtensions
     public static WebApplicationBuilder AddRateLimiter(this WebApplicationBuilder builder)
     {
         var rateLimiterOptions = builder.Configuration.GetSection("RateLimiterOptions")
-            .Get<Options.RateLimiterOptions>();
+            .Get<Options.RateLimiter.RateLimiterOptions>();
 
         if (rateLimiterOptions == null)
         {

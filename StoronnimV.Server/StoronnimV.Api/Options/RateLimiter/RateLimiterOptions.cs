@@ -1,4 +1,4 @@
-namespace StoronnimV.Api.Options;
+namespace StoronnimV.Api.Options.RateLimiter;
 
 public class RateLimiterOptions
 {
