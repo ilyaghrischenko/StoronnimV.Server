@@ -105,8 +105,8 @@ public class ScheduleService(
     /// <summary>
     /// Schedule addition to database
     /// </summary>
-    /// <param name="request"></param>
-    /// <param name="ct"></param>
+    /// <param name="request">ScheduleAdditionRequest</param>
+    /// <param name="ct">CancellationToken</param>
     public async Task AddScheduleAsync(ScheduleAdditionRequest request, CancellationToken ct)
     {
         Schedule schedule = new()
@@ -131,8 +131,8 @@ public class ScheduleService(
     /// <summary>
     /// Schedule deletion from database
     /// </summary>
-    /// <param name="id"></param>
-    /// <param name="ct"></param>
+    /// <param name="id">long</param>
+    /// <param name="ct">CancellationToken</param>
     /// <exception cref="EntityNotFoundException"></exception>
     public async Task DeleteScheduleAsync(long id, CancellationToken ct)
     {

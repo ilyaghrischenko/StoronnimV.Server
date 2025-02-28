@@ -1,7 +1,10 @@
 using System.Globalization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
 using StoronnimV.Application.Contracts.Entities;
 using StoronnimV.Application.DTO.Requests.Entities.Pages.Addition;
+using StoronnimV.Application.DTO.Requests.Entities.Pages.Editing;
+using StoronnimV.Application.DTO.Requests.Entities.Pages.Editing.Media;
 using StoronnimV.Application.Exceptions;
 using StoronnimV.Application.Models;
 using StoronnimV.Domain.Contracts;
@@ -137,5 +140,81 @@ public class NewsService(
     }
     
     //todo: update news item
-    // public async Task UpdateNewsItemAsync(NewsItemAdditionRequest request, CancellationToken ct)
+    public async Task EditNewsItemAsync(NewsItemEditRequest request, CancellationToken ct)
+    {
+        News? newsItem = await newsRepository.GetByIdAsync(request.Id, ct);
+
+        if (newsItem is null)
+        {
+            throw new EntityNotFoundException($"NewsItem with {nameof(request.Id)}: {request.Id} was not found");
+        }
+
+        await newsRepository.UpdateAsync(newsItem, () =>
+        {
+            newsItem.Title = request.Title;
+            newsItem.Description = request.Description;
+            newsItem.Priority = Enum.Parse<NewsPriority>(request.Priority);
+            newsItem.Date = DateOnly.ParseExact(request.Date, "dd.MM.yyyy", CultureInfo.InvariantCulture);
+        }, ct);
+    }
+
+    public async Task EditNewsItemPhotoAsync(PhotoEditRequest photoEditRequest, CancellationToken ct)
+    {
+        News? newsItem = await newsRepository.GetByIdAsync(photoEditRequest.Id, ct);
+
+        if (newsItem is null)
+        {
+            throw new EntityNotFoundException($"NewsItem with {nameof(photoEditRequest.Id)}: {photoEditRequest.Id} was not found");
+        }
+
+        await blobRepository.DeleteAllFilesByNameAsync("storonnimv-photo", $"news-{photoEditRequest.Id}", ct);
+        
+        string photoUrl = await blobRepository.AddFileAndGetUrlAsync("storonnimv-photo", $"news-{newsItem.Id}",
+            photoEditRequest.Photo.OpenReadStream(), ct);
+        await newsRepository.UpdateAsync(newsItem, () => newsItem.Photo = photoUrl, ct);
+    }
+
+    public async Task EditNewsItemVideoAsync(EntityVideoEditRequest videoEditRequest, CancellationToken ct)
+    {
+        News? newsItem = await newsRepository.GetByIdAsync(videoEditRequest.Id, ct);
+
+        if (newsItem is null)
+        {
+            throw new EntityNotFoundException($"NewsItem with {nameof(videoEditRequest.Id)}: {videoEditRequest.Id} was not found");
+        }
+        
+        Video? video = await videoRepository.GetByIdAsync(videoEditRequest.VideoId.Value, ct);
+
+        if (video is null)
+        {
+            throw new EntityNotFoundException($"Video with {nameof(videoEditRequest.VideoId)}: {videoEditRequest.VideoId} was not found");
+        }
+
+        await newsRepository.UpdateAsync(newsItem, () => newsItem.Video = video, ct);
+    }
+    
+    public async Task DeleteNewsItemPhotoAsync(long id, CancellationToken ct)
+    {
+        News? newsItem = await newsRepository.GetByIdAsync(id, ct);
+
+        if (newsItem is null)
+        {
+            throw new EntityNotFoundException($"NewsItem with {nameof(id)}: {id} was not found");
+        }
+        
+        await blobRepository.DeleteAllFilesByNameAsync("storonnimv-photo", $"news-{id}", ct);
+        await newsRepository.UpdateAsync(newsItem, () => newsItem.Photo = null, ct);
+    }
+
+    public async Task DeleteNewsItemVideoAsync(long id, CancellationToken ct)
+    {
+        News? newsItem = await newsRepository.GetByIdAsync(id, ct);
+
+        if (newsItem is null)
+        {
+            throw new EntityNotFoundException($"NewsItem with {nameof(id)}: {id} was not found");
+        }
+        
+        await newsRepository.UpdateAsync(newsItem, () => newsItem.Video = null, ct);
+    }
 }
