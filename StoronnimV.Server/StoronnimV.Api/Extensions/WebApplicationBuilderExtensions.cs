@@ -10,9 +10,9 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.RateLimiting;
 using Microsoft.AspNetCore.ResponseCompression;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Options;
 using Microsoft.OpenApi.Models;
 using Serilog;
-using StoronnimV.Application.AutentificationOptions;
 using StoronnimV.Application.Contracts.Controllers;
 using StoronnimV.Application.Contracts.Entities;
 using StoronnimV.Application.Contracts.Home;
@@ -22,6 +22,7 @@ using StoronnimV.Application.Mapping.Group;
 using StoronnimV.Application.Mapping.Home;
 using StoronnimV.Application.Mapping.News;
 using StoronnimV.Application.Mapping.Schedule;
+using StoronnimV.Application.Options;
 using StoronnimV.Application.Services.Background;
 using StoronnimV.Application.Services.Controllers;
 using StoronnimV.Application.Services.Entities;
@@ -262,8 +263,8 @@ public static class WebApplicationBuilderExtensions
         builder.Services.AddResponseCompression(options =>
         {
             options.EnableForHttps = true;
-            options.Providers.Add<GzipCompressionProvider>();
             options.Providers.Add<BrotliCompressionProvider>();
+            options.Providers.Add<GzipCompressionProvider>();
         });
 
         return builder;
@@ -271,12 +272,22 @@ public static class WebApplicationBuilderExtensions
 
     public static WebApplicationBuilder AddRateLimiter(this WebApplicationBuilder builder)
     {
+        var rateLimiterOptions = builder.Configuration.GetSection("RateLimiterOptions")
+            .Get<Options.RateLimiterOptions>();
+
+        if (rateLimiterOptions == null)
+        {
+            throw new KeyNotFoundException("RateLimiterOptions are not configured correctly.");
+        }
+        
         builder.Services.AddRateLimiter(options =>
         {
-            AddLimiterPolicy(options, "UserLimit", 100, TimeSpan.FromMinutes(1));
-            AddLimiterPolicy(options, "AdminLimit", 300, TimeSpan.FromMinutes(1));
-
-            options.RejectionStatusCode = StatusCodes.Status429TooManyRequests;
+            rateLimiterOptions.Policies.ForEach(policy =>
+            {
+                AddLimiterPolicy(options, policy.PolicyName, policy.Limit, policy.Expiration);
+            });
+            
+            options.RejectionStatusCode = rateLimiterOptions.StatusCode;
         });
 
         return builder;

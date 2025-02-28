@@ -1,7 +1,7 @@
 using System.Text;
 using Microsoft.IdentityModel.Tokens;
 
-namespace StoronnimV.Application.AutentificationOptions;
+namespace StoronnimV.Application.Options;
 
 public class JwtOptions
 {
