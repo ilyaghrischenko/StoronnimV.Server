@@ -23,7 +23,6 @@
 
     <ItemGroup>
       <Folder Include="Contracts\" />
-      <Folder Include="Options\Hangfire\" />
     </ItemGroup>
 
     <ItemGroup>
