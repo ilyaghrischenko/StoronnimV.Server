@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.RateLimiting;
 using StoronnimV.Application.Contracts.Controllers;
 using StoronnimV.Application.DTO.Requests.Entities.Admin;
 using StoronnimV.Application.DTO.Requests.Entities.Pages.Addition;
@@ -12,6 +13,7 @@ namespace StoronnimV.Api.Controllers
     /// Контроллер для админа, он позволяет управлять данными, которые отображаются на страницых (Удалять, изменять)
     /// </summary>
     [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+    [EnableRateLimiting("AdminLimit")]
     [Route("api/admin")]
     [ApiController]
     public class AdminController(

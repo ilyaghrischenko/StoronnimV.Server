@@ -1,10 +1,12 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.RateLimiting;
 using StoronnimV.Application.Contracts.Controllers;
 using StoronnimV.Application.DTO.Responses.MusicPage;
 
 namespace StoronnimV.Api.Controllers
 {
+    [EnableRateLimiting("UserLimit")]
     [Route("api/music")]
     [ApiController]
     public class MusicController(IMusicControllerService musicControllerService) : ControllerBase

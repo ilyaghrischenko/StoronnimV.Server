@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.RateLimiting;
 using StoronnimV.Application.Contracts.Controllers;
 using StoronnimV.Application.DTO.Responses.NewsPage;
 using StoronnimV.Application.DTO.Responses.Shared;
@@ -9,6 +10,7 @@ namespace StoronnimV.Api.Controllers
     /// Контроллер для страницы 'Новости', он позволяет доставать нужные данные для отображения
     /// </summary>
     /// <param name="newsControllerService"></param>
+    [EnableRateLimiting("UserLimit")]
     [Route("api/news")]
     [ApiController]
     public class NewsController(INewsControllerService newsControllerService) : ControllerBase

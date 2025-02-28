@@ -7,12 +7,12 @@ using StoronnimV.Application.DTO.Responses.Video;
 
 namespace StoronnimV.Api.Controllers
 {
+    [EnableRateLimiting("UserLimit")]
     [Route("api/home")]
     [ApiController]
     public class HomeController(
         IHomeControllerService homeControllerService) : ControllerBase
     {
-        [EnableRateLimiting("UserLimit")]
         [HttpGet("news/{count:int}")]
         public async Task<ActionResult<IEnumerable<NewsHomeResponse>>> GetMainNews([FromRoute] int count, CancellationToken ct)
         {

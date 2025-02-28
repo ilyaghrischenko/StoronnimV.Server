@@ -1,9 +1,11 @@
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.RateLimiting;
 using StoronnimV.Application.Contracts.Controllers;
 using StoronnimV.Application.DTO.Requests.Account;
 
 namespace StoronnimV.Api.Controllers
 {
+    [EnableRateLimiting("AdminLimit")]
     [Route("api/account")]
     [ApiController]
     public class AccountController(

@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.RateLimiting;
 using StoronnimV.Application.Contracts.Controllers;
 using StoronnimV.Application.DTO.Responses.SchedulePage;
 using StoronnimV.Application.DTO.Responses.Shared;
@@ -11,6 +12,7 @@ namespace StoronnimV.Api.Controllers
     /// Контроллер для страницы 'Афиша', он позволяет доставать нужные данные для отображения
     /// </summary>
     /// <param name="schedulesControllerService"></param>
+    [EnableRateLimiting("UserLimit")]
     [Route("api/schedules")]
     [ApiController]
     public class SchedulesController(ISchedulesControllerService schedulesControllerService) : ControllerBase

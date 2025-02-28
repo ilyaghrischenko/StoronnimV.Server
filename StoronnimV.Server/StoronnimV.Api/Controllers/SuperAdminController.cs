@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.RateLimiting;
 using StoronnimV.Application.Contracts.Controllers;
 using StoronnimV.Application.DTO.Requests.Entities.Admin;
 using StoronnimV.Application.DTO.Responses.Admin;
@@ -8,6 +9,7 @@ using StoronnimV.Application.DTO.Responses.Admin;
 namespace StoronnimV.Api.Controllers
 {
     [Authorize(Policy = "SuperAdminOnly")]
+    [EnableRateLimiting("AdminLimit")]
     [Route("api/super-admin/basic-admins")]
     [ApiController]
     public class SuperAdminController(ISuperAdminControllerService superAdminControllerService)

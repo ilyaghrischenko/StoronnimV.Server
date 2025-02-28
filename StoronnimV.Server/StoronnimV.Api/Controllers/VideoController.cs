@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.RateLimiting;
 using StoronnimV.Application.Contracts.Controllers;
 using StoronnimV.Application.DTO.Responses.SchedulePage;
 using StoronnimV.Application.DTO.Responses.Shared;
@@ -13,6 +14,7 @@ namespace StoronnimV.Api.Controllers
     /// </summary>
     /// <param name="videoControllerService"></param>
     /// <param name="logger"></param>
+    [EnableRateLimiting("UserLimit")]
     [Route("api/videos")]
     [ApiController]
     public class VideoController(

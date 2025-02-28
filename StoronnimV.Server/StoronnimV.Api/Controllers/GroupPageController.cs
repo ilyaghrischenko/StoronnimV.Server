@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.RateLimiting;
 using StoronnimV.Application.Contracts.Controllers;
 using StoronnimV.Application.DTO.Responses.GroupPage;
 
@@ -9,6 +10,7 @@ namespace StoronnimV.Api.Controllers
     /// Контроллер для страницы 'Группа', он позволяет доставать нужные данные для отображения
     /// </summary>
     /// <param name="groupPageControllerService"></param>
+    [EnableRateLimiting("UserLimit")]
     [Route("api/group")]
     [ApiController]
     public class GroupPageController(IGroupPageControllerService groupPageControllerService) : ControllerBase
