@@ -14,9 +14,9 @@ namespace StoronnimV.Application.Services.Controllers;
 public class AccountControllerService(
     IAccountService accountService,
     IJwtBearerService jwtBearerService,
-    IOptions<CookieSettings> cookieSettings) : IAccountControllerService
+    IOptionsMonitor<CookieSettings> cookieSettings) : IAccountControllerService
 {
-    private readonly CookieSettings _cookieSettings = cookieSettings.Value;
+    private readonly CookieSettings _cookieSettings = cookieSettings.CurrentValue;
     
     public async Task LogInAsync(HttpResponse response, LogInRequest request, CancellationToken ct)
     {

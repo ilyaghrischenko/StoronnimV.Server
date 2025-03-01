@@ -101,7 +101,7 @@ public static class WebApplicationBuilderExtensions
     {
         builder.Services.Configure<JwtOptions>(builder.Configuration.GetSection("JwtOptions"));
         builder.Services.Configure<CookieSettings>(builder.Configuration.GetSection("CookieOptions"));
-
+        
         return builder;
     }
 
