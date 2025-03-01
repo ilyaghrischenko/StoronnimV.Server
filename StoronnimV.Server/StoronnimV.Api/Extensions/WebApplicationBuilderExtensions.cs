@@ -97,6 +97,14 @@ public static class WebApplicationBuilderExtensions
         return builder;
     }
 
+    public static WebApplicationBuilder AddOptions(this WebApplicationBuilder builder)
+    {
+        builder.Services.Configure<JwtOptions>(builder.Configuration.GetSection("JwtOptions"));
+        builder.Services.Configure<CookieSettings>(builder.Configuration.GetSection("CookieOptions"));
+
+        return builder;
+    }
+
     public static WebApplicationBuilder AddPooledDbContextFactory(this WebApplicationBuilder builder)
     {
         string? connectionString = builder.Configuration.GetConnectionString("CloudConnection");
@@ -187,8 +195,6 @@ public static class WebApplicationBuilderExtensions
         {
             throw new KeyNotFoundException("JwtOptions are not configured correctly.");
         }
-
-        builder.Services.Configure<JwtOptions>(builder.Configuration.GetSection("JwtOptions"));
 
         builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
             .AddJwtBearer(options =>

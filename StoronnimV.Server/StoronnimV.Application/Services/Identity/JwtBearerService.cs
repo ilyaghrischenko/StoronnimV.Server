@@ -40,17 +40,4 @@ public class JwtBearerService(IOptions<JwtOptions> jwtOptions) : IJwtBearerServi
         );
         return new JwtSecurityTokenHandler().WriteToken(jwt);
     }
-
-    public void SetTokenCookie(HttpResponse response, string token)
-    {
-        var cookieOptions = new CookieOptions
-        {
-            HttpOnly = true,     // Означает, что cookie доступен только через HTTP(S)
-            Secure = true,       // Означает, что cookie будет передаваться только через HTTPS
-            SameSite = SameSiteMode.Lax, // Защита от CSRF атак
-            Expires = DateTime.UtcNow.AddHours(2) // Время жизни cookie (например, 2 часа)
-        };
-
-        response.Cookies.Append("Token", token, cookieOptions);
-    }
 }

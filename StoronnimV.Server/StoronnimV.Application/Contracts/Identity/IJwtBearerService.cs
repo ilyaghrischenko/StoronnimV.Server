@@ -8,5 +8,4 @@ public interface IJwtBearerService
 {
     ClaimsIdentity GetIdentity(Admin admin);
     string GetToken(ClaimsIdentity identity);
-    void SetTokenCookie(HttpResponse response, string token);
 }

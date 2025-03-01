@@ -16,13 +16,14 @@ using StoronnimV.Infrastructure;
 WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 
 builder
+    .AddRepositories()
+    .AddApplicationServices()
+    .AddIntegrationServices()
+    .AddOptions()
     .AddFluentValidation()
     .AddSerilogLogger()
     .AddAutoMapper()
     .AddCors()
-    .AddRepositories()
-    .AddApplicationServices()
-    .AddIntegrationServices()
     .AddHangfire()
     .AddPooledDbContextFactory()
     .AddJwtBearer()
