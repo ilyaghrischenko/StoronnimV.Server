@@ -1,6 +1,8 @@
 using Microsoft.Extensions.Logging;
 using StoronnimV.Application.Contracts.Entities;
 using StoronnimV.Application.DTO.Requests.Entities.Pages.Addition;
+using StoronnimV.Application.DTO.Requests.Entities.Pages.Editing;
+using StoronnimV.Application.DTO.Requests.Entities.Pages.Editing.Media;
 using StoronnimV.Application.Exceptions;
 using StoronnimV.Domain.Contracts;
 using StoronnimV.Domain.Contracts.Database;
@@ -66,5 +68,21 @@ public class SocialService(
         }
 
         await socialRepository.DeleteAsync(social, ct);
+    }
+    
+    public async Task UpdateSocialAsync(SocialEditRequest request, CancellationToken ct)
+    {
+        Social? social = await socialRepository.GetByIdAsync(request.Id, ct);
+        
+        if (social is null)
+        {
+            throw new EntityNotFoundException($"Social with {nameof(request.Id)}: {request.Id} was not found");
+        }
+        
+        await socialRepository.UpdateAsync(social, () =>
+        {
+            social.Url = request.Url;
+            social.Type = Enum.Parse<SocialType>(request.Type);
+        }, ct);
     }
 }

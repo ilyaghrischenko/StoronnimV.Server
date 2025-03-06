@@ -5,6 +5,8 @@ using Microsoft.AspNetCore.RateLimiting;
 using StoronnimV.Application.Contracts.Controllers;
 using StoronnimV.Application.DTO.Requests.Entities.Admin;
 using StoronnimV.Application.DTO.Requests.Entities.Pages.Addition;
+using StoronnimV.Application.DTO.Requests.Entities.Pages.Editing;
+using StoronnimV.Application.DTO.Requests.Entities.Pages.Editing.Media;
 using StoronnimV.Application.DTO.Responses.Admin;
 
 namespace StoronnimV.Api.Controllers
@@ -19,6 +21,7 @@ namespace StoronnimV.Api.Controllers
     public class AdminController(
         IAdminControllerService adminControllerService) : ControllerBase
     {
+        //Delete methods
         [HttpDelete("news/{id:long}")]
         public async Task<IActionResult> DeleteNewsItem([FromRoute] long id, CancellationToken ct)
         {
@@ -75,6 +78,7 @@ namespace StoronnimV.Api.Controllers
             return NoContent();
         }
         
+        //Add methods
         [HttpPost("news")]
         public async Task<IActionResult> AddNewsItem([FromBody] NewsItemAdditionRequest request, CancellationToken ct)
         {
@@ -127,6 +131,105 @@ namespace StoronnimV.Api.Controllers
         public async Task<IActionResult> AddSocial([FromBody] SocialAdditionRequest request, CancellationToken ct)
         {
             await adminControllerService.AddSocialAsync(request, ct);
+            
+            return NoContent();
+        }
+        
+        //Update methods
+        [HttpPatch("news")]
+        public async Task<IActionResult> UpdateNewsItem([FromBody] NewsItemEditRequest request, CancellationToken ct)
+        {
+            await adminControllerService.UpdateNewsItemAsync(request, ct);
+            
+            return NoContent();
+        }
+
+        [HttpPatch("schedules")]
+        public async Task<IActionResult> UpdateSchedule([FromBody] ScheduleEditRequest request, CancellationToken ct)
+        {
+            await adminControllerService.UpdateScheduleAsync(request, ct);
+            
+            return NoContent();
+        }
+
+        [HttpPatch("videos")]
+        public async Task<IActionResult> UpdateVideo([FromBody] VideoEditRequest request, CancellationToken ct)
+        {
+            await adminControllerService.UpdateVideoAsync(request, ct);
+            
+            return NoContent();
+        }
+
+        [HttpPatch("group-pages")]
+        public async Task<IActionResult> UpdateGroupPage([FromBody] GroupPageEditRequest request, CancellationToken ct)
+        {
+            await adminControllerService.UpdateGroupPageAsync(request, ct);
+            
+            return NoContent();
+        }
+        
+        [HttpPatch("group-pages/members")]
+        public async Task<IActionResult> UpdateMember([FromBody] MemberEditRequest request, CancellationToken ct)
+        {
+            await adminControllerService.UpdateMemberAsync(request, ct);
+            
+            return NoContent();
+        }
+
+        [HttpPatch("music-platforms")]
+        public async Task<IActionResult> UpdateMusicPlatform([FromBody] MusicPlatformEditRequest request, CancellationToken ct)
+        {
+            await adminControllerService.UpdateMusicPlatformAsync(request, ct);
+            
+            return NoContent();
+        }
+
+        [HttpPatch("socials")]
+        public async Task<IActionResult> UpdateSocial([FromBody] SocialEditRequest request, CancellationToken ct)
+        {
+            await adminControllerService.UpdateSocialAsync(request, ct);
+            
+            return NoContent();
+        }
+        
+        //Update photo methods
+        [HttpPatch("news/photo")]
+        public async Task<IActionResult> UpdateNewsItemPhoto([FromBody] PhotoEditRequest request, CancellationToken ct)
+        {
+            await adminControllerService.UpdateNewsItemPhotoAsync(request, ct);
+            
+            return NoContent();
+        }
+
+        [HttpPatch("schedules/photo")]
+        public async Task<IActionResult> UpdateSchedulePhoto([FromBody] PhotoEditRequest request, CancellationToken ct)
+        {
+            await adminControllerService.UpdateSchedulePhotoAsync(request, ct);
+            
+            return NoContent();
+        }
+        
+        [HttpPatch("group-page/members/photo")]
+        public async Task<IActionResult> UpdateMemberPhoto([FromBody] PhotoEditRequest request, CancellationToken ct)
+        {
+            await adminControllerService.UpdateMemberPhotoAsync(request, ct);
+            
+            return NoContent();
+        }
+
+        [HttpPatch("music-platforms/photo")]
+        public async Task<IActionResult> UpdateMusicPlatformPhoto([FromBody] PhotoEditRequest request, CancellationToken ct)
+        {
+            await adminControllerService.UpdateMusicPlatformPhotoAsync(request, ct);
+            
+            return NoContent();
+        }
+        
+        //Update video methods
+        [HttpPatch("news/video")]
+        public async Task<IActionResult> UpdateNewsItemVideo([FromBody] EntityVideoEditRequest request, CancellationToken ct)
+        {
+            await adminControllerService.UpdateNewsItemVideoAsync(request, ct);
             
             return NoContent();
         }

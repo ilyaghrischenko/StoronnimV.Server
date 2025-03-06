@@ -1,5 +1,7 @@
 using StoronnimV.Application.DTO.Requests.Entities.Admin;
 using StoronnimV.Application.DTO.Requests.Entities.Pages.Addition;
+using StoronnimV.Application.DTO.Requests.Entities.Pages.Editing;
+using StoronnimV.Application.DTO.Requests.Entities.Pages.Editing.Media;
 using StoronnimV.Application.DTO.Responses.Admin;
 using StoronnimV.Application.DTO.Responses.GroupPage;
 using StoronnimV.Application.DTO.Responses.NewsPage;
@@ -10,6 +12,8 @@ namespace StoronnimV.Application.Contracts.Controllers;
 
 public interface IAdminControllerService
 {
+    
+    //Delete methods
     Task DeleteNewsItemAsync(long id, CancellationToken ct);
     Task DeleteScheduleAsync(long id, CancellationToken ct);
     Task DeleteVideoAsync(long id, CancellationToken ct);
@@ -18,6 +22,7 @@ public interface IAdminControllerService
     Task DeleteMusicPlatformAsync(long id, CancellationToken ct);
     Task DeleteSocialAsync(long id, CancellationToken ct);
     
+    //Add methods
     Task AddNewsItemAsync(NewsItemAdditionRequest request, CancellationToken ct);
     Task AddScheduleAsync(ScheduleAdditionRequest request, CancellationToken ct);
     Task AddVideoAsync(VideoAdditionRequest request, CancellationToken ct);
@@ -25,4 +30,23 @@ public interface IAdminControllerService
     Task AddMemberAsync(MemberAdditionRequest request, CancellationToken ct);
     Task AddMusicPlatformAsync(MusicPlatformAdditionRequest request, CancellationToken ct);
     Task AddSocialAsync(SocialAdditionRequest request, CancellationToken ct);
+    
+    //Update methods
+    Task UpdateNewsItemAsync(NewsItemEditRequest request, CancellationToken ct);
+    Task UpdateScheduleAsync(ScheduleEditRequest request, CancellationToken ct);
+    Task UpdateVideoAsync(VideoEditRequest request, CancellationToken ct);
+    Task UpdateGroupPageAsync(GroupPageEditRequest request, CancellationToken ct);
+    Task UpdateMemberAsync(MemberEditRequest request, CancellationToken ct);
+    Task UpdateMusicPlatformAsync(MusicPlatformEditRequest request, CancellationToken ct);
+    Task UpdateSocialAsync(SocialEditRequest request, CancellationToken ct);
+    
+    //Update photo methods
+    Task UpdateNewsItemPhotoAsync(PhotoEditRequest request, CancellationToken ct);
+    Task UpdateSchedulePhotoAsync(PhotoEditRequest request, CancellationToken ct);
+    Task UpdateGroupPagePhotoAsync(PhotoEditRequest request, CancellationToken ct);
+    Task UpdateMemberPhotoAsync(PhotoEditRequest request, CancellationToken ct);
+    Task UpdateMusicPlatformPhotoAsync(PhotoEditRequest request, CancellationToken ct);
+    
+    //Update video methods
+    Task UpdateNewsItemVideoAsync(EntityVideoEditRequest request, CancellationToken ct);
 }
