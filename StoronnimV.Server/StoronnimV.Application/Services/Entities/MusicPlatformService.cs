@@ -1,6 +1,8 @@
 using Microsoft.Extensions.Logging;
 using StoronnimV.Application.Contracts.Entities;
 using StoronnimV.Application.DTO.Requests.Entities.Pages.Addition;
+using StoronnimV.Application.DTO.Requests.Entities.Pages.Editing;
+using StoronnimV.Application.DTO.Requests.Entities.Pages.Editing.Media;
 using StoronnimV.Application.Exceptions;
 using StoronnimV.Domain.Contracts;
 using StoronnimV.Domain.Contracts.AzureBlobStorage;
@@ -74,5 +76,36 @@ public class MusicPlatformService(
         await musicPlatformRepository.DeleteAsync(musicPlatform, ct);
 
         await blobRepository.DeleteAllFilesByNameAsync("storonnimv-photo", $"music-platform-{id}", ct);
+    }
+
+    public async Task UpdateMusicPlatformAsync(MusicPlatformEditRequest request, CancellationToken ct)
+    {
+        MusicPlatform? musicPlatform = await musicPlatformRepository.GetByIdAsync(request.Id, ct);
+        
+        if (musicPlatform is null)
+        {
+            throw new EntityNotFoundException($"Music Platform with {nameof(request.Id)}: {request.Id} was not found");
+        }
+        
+        await musicPlatformRepository.UpdateAsync(musicPlatform, () => musicPlatform.PlatformUrl = request.PlatformUrl, ct);
+    }
+
+    public async Task UpdateMusicPlatformPhotoAsync(PhotoEditRequest request, CancellationToken ct)
+    {
+        MusicPlatform? musicPlatform = await musicPlatformRepository.GetByIdAsync(request.Id, ct);
+        
+        if (musicPlatform is null)
+        {
+            throw new EntityNotFoundException($"Music Platform with {nameof(request.Id)}: {request.Id} was not found");
+        }
+        
+        string musicPlatformBlobName = $"music-platform-{musicPlatform.Id}";
+        
+        await blobRepository.DeleteAllFilesByNameAsync("storonnimv-photo", musicPlatformBlobName, ct);
+        
+        string musicPlatformPhotoUrl = await blobRepository.AddFileAndGetUrlAsync
+            ("storonnimv-photo", musicPlatformBlobName, request.Photo.OpenReadStream(), ct);
+        
+        await musicPlatformRepository.UpdateAsync(musicPlatform, () => musicPlatform.BgImageUrl = musicPlatformPhotoUrl, ct);
     }
 }

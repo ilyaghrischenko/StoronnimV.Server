@@ -1,6 +1,8 @@
 using Microsoft.Extensions.Logging;
 using StoronnimV.Application.Contracts.Entities;
 using StoronnimV.Application.DTO.Requests.Entities.Pages.Addition;
+using StoronnimV.Application.DTO.Requests.Entities.Pages.Editing;
+using StoronnimV.Application.DTO.Requests.Entities.Pages.Editing.Media;
 using StoronnimV.Application.Exceptions;
 using StoronnimV.Domain.Contracts;
 using StoronnimV.Domain.Contracts.AzureBlobStorage;
@@ -21,14 +23,15 @@ public class MemberService(
     public async Task<IEnumerable<MemberShortProjection>> GetAllAsync(CancellationToken ct)
     {
         var members = await memberRepository.GetAllAsNoTrackingAsync(ct);
-        
+
         return members ?? new List<MemberShortProjection>();
     }
 
     public async Task<MemberFullProjection> GetItemByIdAsync(long id, CancellationToken ct)
     {
         MemberFullProjection member = await memberRepository.GetByIdAsNoTrackingAsync(id, ct)
-                                      ?? throw new EntityNotFoundException($"Member with {nameof(id)}: {id} was not found");
+                                      ?? throw new EntityNotFoundException(
+                                          $"Member with {nameof(id)}: {id} was not found");
 
         return member;
     }
@@ -49,14 +52,14 @@ public class MemberService(
         };
 
         await memberRepository.AddAsync(member, ct);
-        
+
         string memberPhotoBlobName = $"member-{member.Id}";
         string memberPhotoUrl = await blobRepository
             .AddFileAndGetUrlAsync("storonnimv-photo", memberPhotoBlobName, request.PhotoUrl.OpenReadStream(), ct);
-        
+
         await memberRepository.UpdateAsync(member, () => member.PhotoUrl = memberPhotoUrl, ct);
     }
-    
+
     /// <summary>
     /// Member deleting from database
     /// </summary>
@@ -75,5 +78,42 @@ public class MemberService(
         await memberRepository.DeleteAsync(member, ct);
 
         await blobRepository.DeleteAllFilesByNameAsync("storonnimv-photo", $"member-{id}", ct);
+    }
+
+    public async Task UpdateMemberAsync(MemberEditRequest request, CancellationToken ct)
+    {
+        Member? member = await memberRepository.GetByIdAsync(request.Id, ct);
+
+        if (member is null)
+        {
+            throw new EntityNotFoundException($"Member with {nameof(request.Id)}: {request.Id} was not found");
+        }
+
+        await memberRepository.UpdateAsync(member,
+            () =>
+            {
+                member.FullName = request.FullName;
+                member.Description = request.Description;
+                member.Role = request.Role;
+            }, ct);
+    }
+
+    public async Task UpdateMemberPhotoAsync(PhotoEditRequest request, CancellationToken ct)
+    {
+        Member? member = await memberRepository.GetByIdAsync(request.Id, ct);
+
+        if (member is null)
+        {
+            throw new EntityNotFoundException($"Member with {nameof(request.Id)}: {request.Id} was not found");
+        }
+
+        string memberPhotoBlobName = $"member-{member.Id}";
+
+        await blobRepository.DeleteAllFilesByNameAsync("storonnimv-photo", memberPhotoBlobName, ct);
+
+        string memberPhotoUrl = await blobRepository.AddFileAndGetUrlAsync
+            ("storonnimv-photo", memberPhotoBlobName, request.Photo.OpenReadStream(), ct);
+
+        await memberRepository.UpdateAsync(member, () => member.PhotoUrl = memberPhotoUrl, ct);
     }
 }

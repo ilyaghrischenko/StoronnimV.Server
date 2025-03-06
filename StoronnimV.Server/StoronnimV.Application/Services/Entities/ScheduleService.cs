@@ -2,6 +2,8 @@ using System.Globalization;
 using Microsoft.Extensions.Logging;
 using StoronnimV.Application.Contracts.Entities;
 using StoronnimV.Application.DTO.Requests.Entities.Pages.Addition;
+using StoronnimV.Application.DTO.Requests.Entities.Pages.Editing;
+using StoronnimV.Application.DTO.Requests.Entities.Pages.Editing.Media;
 using StoronnimV.Application.Exceptions;
 using StoronnimV.Application.Models;
 using StoronnimV.Domain.Contracts;
@@ -24,8 +26,9 @@ public class ScheduleService(
     public async Task<ScheduleFullProjection> GetItemByIdAsync(long id, CancellationToken ct)
     {
         ScheduleFullProjection schedule = await scheduleRepository.GetByIdAsNoTrackingAsync(id, ct)
-                                          ?? throw new EntityNotFoundException($"Schedule with {nameof(id)}: {id} was not found");
-        
+                                          ?? throw new EntityNotFoundException(
+                                              $"Schedule with {nameof(id)}: {id} was not found");
+
         return schedule;
     }
 
@@ -38,25 +41,23 @@ public class ScheduleService(
         {
             return;
         }
-        
+
         DateTime today = DateTime.UtcNow.Date;
-        
+
         var schedulesToChange = allSchedules
-            .Where(schedule =>schedule.Status == ScheduleStatus.Active
-            && schedule.PerformanceDateTime < today)
+            .Where(schedule => schedule.Status == ScheduleStatus.Active
+                               && schedule.PerformanceDateTime < today)
             .ToList();
-        
+
         var updateTasks = schedulesToChange.Select(schedule =>
-            scheduleRepository.UpdateAsync(schedule, () =>
-            {
-                schedule.Status = ScheduleStatus.Passed;
-            }, ct)
+            scheduleRepository.UpdateAsync(schedule, () => { schedule.Status = ScheduleStatus.Passed; }, ct)
         );
-        
+
         await Task.WhenAll(updateTasks);
     }
 
-    public async Task<PaginationResult<ScheduleShortProjection>> GetForPageAsync(int page, int pageSize, CancellationToken ct, params object[] args)
+    public async Task<PaginationResult<ScheduleShortProjection>> GetForPageAsync(int page, int pageSize,
+        CancellationToken ct, params object[] args)
     {
         if (page <= 0)
         {
@@ -74,7 +75,7 @@ public class ScheduleService(
 
             int totalPages = (int)Math.Ceiling((double)totalCount / pageSize);
             var items = await scheduleRepository.GetForPageAsync(page, ct, pageSize);
-            
+
             if (items is null || !items.Any())
             {
                 throw new PaginationException(string.Empty);
@@ -101,7 +102,7 @@ public class ScheduleService(
             };
         }
     }
-    
+
     /// <summary>
     /// Schedule addition to database
     /// </summary>
@@ -112,22 +113,24 @@ public class ScheduleService(
         Schedule schedule = new()
         {
             Title = request.Title,
-            PerformanceDateTime = DateTime.ParseExact(request.PerformanceDateTime, "dd.MM.yyyy HH.mm", CultureInfo.InvariantCulture),
+            PerformanceDateTime = DateTime.ParseExact(request.PerformanceDateTime, "dd.MM.yyyy HH.mm",
+                CultureInfo.InvariantCulture),
             Description = request.Description,
             Location = request.Location,
             Photo = null,
             Status = Enum.Parse<ScheduleStatus>(request.Status)
         };
-        
+
         await scheduleRepository.AddAsync(schedule, ct);
-        
+
         if (request.Photo != null)
         {
-            string photoUrl = await blobRepository.AddFileAndGetUrlAsync("storonnimv-photo", $"schedule-{schedule.Id}", request.Photo.OpenReadStream(), ct);
+            string photoUrl = await blobRepository.AddFileAndGetUrlAsync("storonnimv-photo", $"schedule-{schedule.Id}",
+                request.Photo.OpenReadStream(), ct);
             await scheduleRepository.UpdateAsync(schedule, () => schedule.Photo = photoUrl, ct);
         }
     }
-    
+
     /// <summary>
     /// Schedule deletion from database
     /// </summary>
@@ -150,7 +153,42 @@ public class ScheduleService(
             await blobRepository.DeleteAllFilesByNameAsync("storonnimv-photo", $"schedule-{id}", ct);
         }
     }
-    
-    //todo: update schedule
-    // public async Task UpdateScheduleAsync(ScheduleUpdateRequest request, CancellationToken ct)
+
+    public async Task UpdateScheduleAsync(ScheduleEditRequest request, CancellationToken ct)
+    {
+        Schedule? schedule = await scheduleRepository.GetByIdAsync(request.Id, ct);
+
+        if (schedule is null)
+        {
+            throw new EntityNotFoundException($"Schedule with {nameof(request.Id)}: {request.Id} was not found");
+        }
+
+        await scheduleRepository.UpdateAsync(schedule, () =>
+        {
+            schedule.Title = request.Title;
+            schedule.PerformanceDateTime = DateTime.ParseExact(request.PerformanceDateTime, "dd.MM.yyyy HH.mm",
+                CultureInfo.InvariantCulture);
+            schedule.Description = request.Description;
+            schedule.Location = request.Location;
+        }, ct);
+    }
+
+    public async Task UpdateSchedulePhotoAsync(PhotoEditRequest request, CancellationToken ct)
+    {
+        Schedule? schedule = await scheduleRepository.GetByIdAsync(request.Id, ct);
+
+        if (schedule is null)
+        {
+            throw new EntityNotFoundException($"Schedule with {nameof(request.Id)}: {request.Id} was not found");
+        }
+
+        string scheduleBlobName = $"schedule-{schedule.Id}";
+
+        await blobRepository.DeleteAllFilesByNameAsync("storonnimv-photo", scheduleBlobName, ct);
+
+        string schedulePhotoUrl = await blobRepository.AddFileAndGetUrlAsync
+            ("storonnimv-photo", scheduleBlobName, request.Photo.OpenReadStream(), ct);
+
+        await scheduleRepository.UpdateAsync(schedule, () => schedule.Photo = schedulePhotoUrl, ct);
+    }
 }

@@ -2,6 +2,8 @@ using Microsoft.Extensions.Logging;
 using StoronnimV.Application.Contracts.Entities;
 using StoronnimV.Application.Contracts.Entities.Shared;
 using StoronnimV.Application.DTO.Requests.Entities.Pages.Addition;
+using StoronnimV.Application.DTO.Requests.Entities.Pages.Editing;
+using StoronnimV.Application.DTO.Requests.Entities.Pages.Editing.Media;
 using StoronnimV.Application.Exceptions;
 using StoronnimV.Domain.Contracts;
 using StoronnimV.Domain.Contracts.AzureBlobStorage;
@@ -82,7 +84,42 @@ public class GroupPageService(
 
         await blobRepository.DeleteAllFilesByNameAsync("storonnimv-photo", $"group-page-{id}", ct);
     }
-    
-    //todo: update group page
-    // public async Task UpdateGroupPageAsync(GroupPageUpdateRequest request, CancellationToken ct)
+
+    public async Task UpdateGroupPageAsync(GroupPageEditRequest request, CancellationToken ct)
+    {
+        GroupPage? groupPage = await groupPageRepository.GetByIdAsync(request.Id, ct);
+        
+        if (groupPage is null)
+        {
+            throw new EntityNotFoundException($"GroupPage with {nameof(request.Id)}: {request.Id} was not found");
+        }
+        
+        if (string.IsNullOrEmpty(request.Description))
+        {
+            throw new ArgumentException("Description is required");
+        }
+        
+        await groupPageRepository.UpdateAsync(groupPage, () => groupPage.Description = request.Description, ct);
+    }
+
+    public async Task UpdateGroupPagePhotoAsync(PhotoEditRequest request, CancellationToken ct)
+    {
+        GroupPage? groupPage = await groupPageRepository.GetByIdAsync(request.Id, ct);
+        
+        if (groupPage is null)
+        {
+            throw new EntityNotFoundException($"GroupPage with {nameof(request.Id)}: {request.Id} was not found");
+        }
+        
+        if (request.Photo is null)
+        {
+            throw new ArgumentException("Photo is required");
+        }
+        
+        string groupPageBlobName = $"group-page-{groupPage.Id}";
+        await blobRepository.DeleteAllFilesByNameAsync("storonnimv-photo", groupPageBlobName, ct);
+        string groupPagePhotoUrl = await blobRepository.AddFileAndGetUrlAsync("storonnimv-photo", groupPageBlobName, request.Photo.OpenReadStream(), ct);
+        
+        await groupPageRepository.UpdateAsync(groupPage, () => groupPage.PhotoUrl = groupPagePhotoUrl, ct);
+    }
 }

@@ -1,6 +1,7 @@
 using Microsoft.Extensions.Logging;
 using StoronnimV.Application.Contracts.Entities;
 using StoronnimV.Application.DTO.Requests.Entities.Pages.Addition;
+using StoronnimV.Application.DTO.Requests.Entities.Pages.Editing;
 using StoronnimV.Application.Exceptions;
 using StoronnimV.Application.Models;
 using StoronnimV.Domain.Contracts;
@@ -115,5 +116,20 @@ public class VideoService(
 
         await blobRepository.DeleteFileAsync("storonnimv-video", $"video-{id}", ct);
     }
-    
+
+    public async Task UpdateVideoAsync(VideoEditRequest request, CancellationToken ct)
+    {
+        Video? video = await videoRepository.GetByIdAsync(request.Id, ct);
+        
+        if (video is null)
+        {
+            throw new EntityNotFoundException($"Video with {nameof(request.Id)}: {request.Id} was not found");
+        }
+        
+        await videoRepository.UpdateAsync(video, () =>
+        {
+            video.Title = request.Title;
+            video.Type = Enum.Parse<VideoType>(request.Type);
+        }, ct);
+    }
 }

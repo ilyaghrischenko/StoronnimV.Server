@@ -3,6 +3,8 @@ using Microsoft.Extensions.Logging;
 using StoronnimV.Application.Contracts.Controllers;
 using StoronnimV.Application.Contracts.Entities;
 using StoronnimV.Application.DTO.Requests.Entities.Pages.Addition;
+using StoronnimV.Application.DTO.Requests.Entities.Pages.Editing;
+using StoronnimV.Application.DTO.Requests.Entities.Pages.Editing.Media;
 using StoronnimV.Application.DTO.Responses.GroupPage;
 using StoronnimV.Application.DTO.Responses.GroupPage.ShortGroupPage;
 using StoronnimV.Application.DTO.Responses.GroupPage.ShortMember;
@@ -26,10 +28,11 @@ public class AdminControllerService(
     IMusicPlatformService musicPlatformService,
     ISocialService socialService,
     IScheduleService scheduleService
-    ) : IAdminControllerService
+) : IAdminControllerService
 {
     private readonly IAdminService _adminService = adminService;
 
+    //Delete methods
     public async Task DeleteNewsItemAsync(long id, CancellationToken ct)
     {
         await newsService.DeleteNewsItemAsync(id, ct);
@@ -65,7 +68,7 @@ public class AdminControllerService(
         await socialService.DeleteSocialAsync(id, ct);
     }
 
-
+    //Add methods
     public async Task AddNewsItemAsync(NewsItemAdditionRequest request, CancellationToken ct)
     {
         await newsService.AddNewsItemAsync(request, ct);
@@ -99,5 +102,73 @@ public class AdminControllerService(
     public async Task AddSocialAsync(SocialAdditionRequest request, CancellationToken ct)
     {
         await socialService.AddSocialAsync(request, ct);
+    }
+    
+    //Update methods
+    public async Task UpdateNewsItemAsync(NewsItemEditRequest request, CancellationToken ct)
+    {
+        await newsService.EditNewsItemAsync(request, ct);
+    }
+
+    public async Task UpdateScheduleAsync(ScheduleEditRequest request, CancellationToken ct)
+    {
+        await scheduleService.UpdateScheduleAsync(request, ct);
+    }
+
+    public async Task UpdateVideoAsync(VideoEditRequest request, CancellationToken ct)
+    {
+        await videoService.UpdateVideoAsync(request, ct);
+    }
+
+    public async Task UpdateGroupPageAsync(GroupPageEditRequest request, CancellationToken ct)
+    {
+        await groupPageService.UpdateGroupPageAsync(request, ct);
+    }
+
+    public async Task UpdateMemberAsync(MemberEditRequest request, CancellationToken ct)
+    {
+        await memberService.UpdateMemberAsync(request, ct);
+    }
+
+    public async Task UpdateMusicPlatformAsync(MusicPlatformEditRequest request, CancellationToken ct)
+    {
+        await musicPlatformService.UpdateMusicPlatformAsync(request, ct);
+    }
+
+    public async Task UpdateSocialAsync(SocialEditRequest request, CancellationToken ct)
+    {
+        await socialService.UpdateSocialAsync(request, ct);
+    }
+    
+    //Update photo methods
+    public async Task UpdateNewsItemPhotoAsync(PhotoEditRequest request, CancellationToken ct)
+    {
+        await newsService.EditNewsItemPhotoAsync(request, ct);
+    }
+
+    public async Task UpdateSchedulePhotoAsync(PhotoEditRequest request, CancellationToken ct)
+    {
+        await scheduleService.UpdateSchedulePhotoAsync(request, ct);
+    }
+
+    public async Task UpdateGroupPagePhotoAsync(PhotoEditRequest request, CancellationToken ct)
+    {
+        await groupPageService.UpdateGroupPagePhotoAsync(request, ct);
+    }
+
+    public async Task UpdateMemberPhotoAsync(PhotoEditRequest request, CancellationToken ct)
+    {
+        await memberService.UpdateMemberPhotoAsync(request, ct);
+    }
+
+    public async Task UpdateMusicPlatformPhotoAsync(PhotoEditRequest request, CancellationToken ct)
+    {
+        await musicPlatformService.UpdateMusicPlatformPhotoAsync(request, ct);
+    }
+    
+    //Update video methods
+    public async Task UpdateNewsItemVideoAsync(EntityVideoEditRequest request, CancellationToken ct)
+    {
+        await newsService.EditNewsItemVideoAsync(request, ct);
     }
 }
