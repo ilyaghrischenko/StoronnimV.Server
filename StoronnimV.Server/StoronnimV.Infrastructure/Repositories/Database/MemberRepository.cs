@@ -25,6 +25,8 @@ public class MemberRepository(IDbContextFactory<StoronnimVContext> contextFactor
 
     public async Task<MemberFullProjection?> GetByIdAsNoTrackingAsync(long id, CancellationToken ct)
     {
+        ct.ThrowIfCancellationRequested();
+
         await using StoronnimVContext context = await _contextFactory.CreateDbContextAsync(ct);
         var dbSet = context.Members;
         var query = ApplyIncludes(dbSet);
@@ -52,6 +54,8 @@ public class MemberRepository(IDbContextFactory<StoronnimVContext> contextFactor
 
     public async Task<IEnumerable<MemberShortProjection>?> GetAllAsNoTrackingAsync(CancellationToken ct)
     {
+        ct.ThrowIfCancellationRequested();
+
         await using StoronnimVContext context = await _contextFactory.CreateDbContextAsync(ct);
         
         var result = await context.Members

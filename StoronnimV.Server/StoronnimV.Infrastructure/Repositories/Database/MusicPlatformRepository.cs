@@ -15,6 +15,8 @@ public class MusicPlatformRepository(IDbContextFactory<StoronnimVContext> contex
     
     public async Task<MusicPlatformProjection?> GetByIdAsNoTrackingAsync(long id, CancellationToken ct)
     {
+        ct.ThrowIfCancellationRequested();
+
         await using StoronnimVContext context = await _contextFactory.CreateDbContextAsync(ct);
         var dbSet = context.MusicPlatforms;
         var query = ApplyIncludes(dbSet);
@@ -34,6 +36,8 @@ public class MusicPlatformRepository(IDbContextFactory<StoronnimVContext> contex
 
     public async Task<IEnumerable<MusicPlatformProjection>?> GetAllAsNoTrackingAsync(CancellationToken ct)
     {
+        ct.ThrowIfCancellationRequested();
+
         await using StoronnimVContext context = await _contextFactory.CreateDbContextAsync(ct);
         var dbSet = context.MusicPlatforms;
         var query = ApplyIncludes(dbSet);

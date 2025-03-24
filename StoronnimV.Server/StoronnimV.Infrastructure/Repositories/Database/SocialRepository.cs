@@ -24,6 +24,8 @@ public class SocialRepository(IDbContextFactory<StoronnimVContext> contextFactor
 
     public async Task<SocialProjection?> GetByIdAsNoTrackingAsync(long id, CancellationToken ct)
     {
+        ct.ThrowIfCancellationRequested();
+
         await using StoronnimVContext context = await _contextFactory.CreateDbContextAsync(ct);
         var dbSet = context.Socials;
         var query = ApplyIncludes(dbSet);

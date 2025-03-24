@@ -18,6 +18,8 @@ public class AdminRepository(
     
     public async Task<AdminProjection?> GetByIdAsNoTrackingAsync(long id, CancellationToken ct)
     {
+        ct.ThrowIfCancellationRequested();
+        
         await using StoronnimVContext context = await _contextFactory.CreateDbContextAsync(ct);
         var dbSet = context.Admins;
         var query = ApplyIncludes(dbSet);
@@ -37,6 +39,8 @@ public class AdminRepository(
 
     public async Task<Admin?> GetByLoginAsync(string login, CancellationToken ct)
     {
+        ct.ThrowIfCancellationRequested();
+
         await using StoronnimVContext context = await _contextFactory.CreateDbContextAsync(ct);
         var dbSet = context.Admins;
         var query = ApplyIncludes(dbSet);
@@ -50,6 +54,8 @@ public class AdminRepository(
 
     public async Task<IEnumerable<BasicAdminProjection>?> GetAllBasicAdminsAsync(CancellationToken ct)
     {
+        ct.ThrowIfCancellationRequested();
+
         await using StoronnimVContext context = await _contextFactory.CreateDbContextAsync(ct);
         var dbSet = context.Admins;
         var query = ApplyIncludes(dbSet);

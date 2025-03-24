@@ -25,6 +25,8 @@ public class NewsRepository(IDbContextFactory<StoronnimVContext> contextFactory)
 
     public async Task<NewsFullProjection?> GetByIdAsNoTrackingAsync(long id, CancellationToken ct)
     {
+        ct.ThrowIfCancellationRequested();
+
         await using StoronnimVContext context = await _contextFactory.CreateDbContextAsync(ct);
         var dbSet = context.NewsItems;
         var query = ApplyIncludes(dbSet);
@@ -48,6 +50,8 @@ public class NewsRepository(IDbContextFactory<StoronnimVContext> contextFactory)
 
     public async Task<IEnumerable<NewsPaginationProjection>?> GetForPageAsync(int page, CancellationToken ct, int pageSize, params object[] args)
     {
+        ct.ThrowIfCancellationRequested();
+
         await using StoronnimVContext context = await _contextFactory.CreateDbContextAsync(ct);
         var dbSet = context.NewsItems;
         var query = ApplyIncludes(dbSet);
@@ -72,6 +76,8 @@ public class NewsRepository(IDbContextFactory<StoronnimVContext> contextFactory)
 
     public async Task<int> GetTotalCountAsync(CancellationToken ct, params object[] args)
     {
+        ct.ThrowIfCancellationRequested();
+
         await using StoronnimVContext context = await _contextFactory.CreateDbContextAsync(ct);
         
         int result = await context.NewsItems.CountAsync(ct);
@@ -81,6 +87,8 @@ public class NewsRepository(IDbContextFactory<StoronnimVContext> contextFactory)
     
     public async Task<IEnumerable<NewsHomeProjection>?> GetMainNewsForHomePageAsync(int count, CancellationToken ct)
     {
+        ct.ThrowIfCancellationRequested();
+
         await using StoronnimVContext context = await _contextFactory.CreateDbContextAsync(ct);
         var dbSet = context.NewsItems;
         var query = ApplyIncludes(dbSet);

@@ -19,6 +19,8 @@ public class Repository<T>(IDbContextFactory<StoronnimVContext> contextFactory)
     
     public async Task<T?> GetByIdAsync(long id, CancellationToken ct)
     {
+        ct.ThrowIfCancellationRequested();
+
         await using StoronnimVContext context = await contextFactory.CreateDbContextAsync(ct);
         var dbSet = context.Set<T>();
         var query = ApplyIncludes(dbSet);
@@ -29,6 +31,8 @@ public class Repository<T>(IDbContextFactory<StoronnimVContext> contextFactory)
 
     public async Task AddAsync(T entity, CancellationToken ct)
     {
+        ct.ThrowIfCancellationRequested();
+
         await using StoronnimVContext context = await contextFactory.CreateDbContextAsync(ct);
         var dbSet = context.Set<T>();
         
@@ -38,6 +42,8 @@ public class Repository<T>(IDbContextFactory<StoronnimVContext> contextFactory)
 
     public async Task UpdateAsync(T entity, Action updateAction, CancellationToken ct)
     {
+        ct.ThrowIfCancellationRequested();
+
         await using StoronnimVContext context = await contextFactory.CreateDbContextAsync(ct);
         var dbSet = context.Set<T>();
 
@@ -49,6 +55,8 @@ public class Repository<T>(IDbContextFactory<StoronnimVContext> contextFactory)
 
     public async Task DeleteAsync(T entity, CancellationToken ct)
     {
+        ct.ThrowIfCancellationRequested();
+
         await using StoronnimVContext context = await contextFactory.CreateDbContextAsync(ct);
         var dbSet = context.Set<T>();
         

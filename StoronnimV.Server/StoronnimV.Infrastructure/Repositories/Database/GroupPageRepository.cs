@@ -19,6 +19,8 @@ public class GroupPageRepository(IDbContextFactory<StoronnimVContext> contextFac
 
     public async Task<GroupPageProjection?> GetByIdAsNoTrackingAsync(long id, CancellationToken ct)
     {
+        ct.ThrowIfCancellationRequested();
+
         await using StoronnimVContext context = await _contextFactory.CreateDbContextAsync(ct);
         var dbSet = context.GroupPages;
         var query = ApplyIncludes(dbSet);
@@ -38,6 +40,8 @@ public class GroupPageRepository(IDbContextFactory<StoronnimVContext> contextFac
 
     public async Task<IEnumerable<GroupPageProjection>?> GetAllAsNoTrackingAsync(CancellationToken ct)
     {
+        ct.ThrowIfCancellationRequested();
+
         await using StoronnimVContext context = await _contextFactory.CreateDbContextAsync(ct);
         var dbSet = context.GroupPages;
         var query = ApplyIncludes(dbSet);
@@ -57,6 +61,8 @@ public class GroupPageRepository(IDbContextFactory<StoronnimVContext> contextFac
     
     public async Task<GroupPageProjection?> GetFirstGroupPageAsync(CancellationToken ct)
     {
+        ct.ThrowIfCancellationRequested();
+
         await using StoronnimVContext context = await _contextFactory.CreateDbContextAsync(ct);
         var dbSet = context.GroupPages;
         var query = ApplyIncludes(dbSet);

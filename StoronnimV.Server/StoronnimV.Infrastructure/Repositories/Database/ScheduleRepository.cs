@@ -20,6 +20,8 @@ public class ScheduleRepository(IDbContextFactory<StoronnimVContext> contextFact
 
     public async Task<ScheduleFullProjection?> GetByIdAsNoTrackingAsync(long id, CancellationToken ct)
     {
+        ct.ThrowIfCancellationRequested();
+
         await using StoronnimVContext context = await _contextFactory.CreateDbContextAsync(ct);
         var dbSet = context.Schedules;
         var query = ApplyIncludes(dbSet);
@@ -43,6 +45,8 @@ public class ScheduleRepository(IDbContextFactory<StoronnimVContext> contextFact
 
     public async Task<IEnumerable<Schedule>?> GetAllSchedulesAsync(CancellationToken ct)
     {
+        ct.ThrowIfCancellationRequested();
+
         await using StoronnimVContext context = await _contextFactory.CreateDbContextAsync(ct);
         var dbSet = context.Schedules;
         var query = ApplyIncludes(dbSet);
@@ -54,6 +58,8 @@ public class ScheduleRepository(IDbContextFactory<StoronnimVContext> contextFact
 
     public async Task<ScheduleShortProjection?> GetNearestScheduleForHomePageAsync(CancellationToken ct)
     {
+        ct.ThrowIfCancellationRequested();
+
         await using StoronnimVContext context = await _contextFactory.CreateDbContextAsync(ct);
         var dbSet = context.Schedules;
         var query = ApplyIncludes(dbSet);
@@ -77,6 +83,8 @@ public class ScheduleRepository(IDbContextFactory<StoronnimVContext> contextFact
 
     public async Task<IEnumerable<ScheduleShortProjection>?> GetForPageAsync(int page, CancellationToken ct, int pageSize = 10, params object[] args)
     {
+        ct.ThrowIfCancellationRequested();
+
         await using StoronnimVContext context = await _contextFactory.CreateDbContextAsync(ct);
         var dbSet = context.Schedules;
         var query = ApplyIncludes(dbSet);
@@ -102,6 +110,8 @@ public class ScheduleRepository(IDbContextFactory<StoronnimVContext> contextFact
 
     public async Task<int> GetTotalCountAsync(CancellationToken ct, params object[] args)
     {
+        ct.ThrowIfCancellationRequested();
+
         await using StoronnimVContext context = await _contextFactory.CreateDbContextAsync(ct);
 
         int count = await context.Schedules.CountAsync(ct);

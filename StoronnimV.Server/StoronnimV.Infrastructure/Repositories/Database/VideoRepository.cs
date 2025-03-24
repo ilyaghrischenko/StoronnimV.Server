@@ -21,6 +21,8 @@ public class VideoRepository(IDbContextFactory<StoronnimVContext> contextFactory
 
     public async Task<VideoShortProjection?> GetByIdAsNoTrackingAsync(long id, CancellationToken ct)
     {
+        ct.ThrowIfCancellationRequested();
+
         await using StoronnimVContext context = await _contextFactory.CreateDbContextAsync(ct);
 
         VideoShortProjection? video = await context.Videos
@@ -38,6 +40,8 @@ public class VideoRepository(IDbContextFactory<StoronnimVContext> contextFactory
 
     public async Task<VideoShortProjection?> GetPromotionVideoForHomePageAsync(CancellationToken ct)
     {
+        ct.ThrowIfCancellationRequested();
+
         await using StoronnimVContext context = await _contextFactory.CreateDbContextAsync(ct);
 
         VideoShortProjection? promotionVideo = await context.Videos
@@ -57,6 +61,8 @@ public class VideoRepository(IDbContextFactory<StoronnimVContext> contextFactory
 
     public async Task<IEnumerable<VideoShortProjection>?> GetForPageAsync(int page, CancellationToken ct, int pageSize = 10, params object[] args)
     {
+        ct.ThrowIfCancellationRequested();
+
         string type = (string)args[0];
         var typeEnum = Enum.Parse<VideoType>(type);
         
@@ -80,6 +86,8 @@ public class VideoRepository(IDbContextFactory<StoronnimVContext> contextFactory
 
     public async Task<int> GetTotalCountAsync(CancellationToken ct, params object[] args)
     {
+        ct.ThrowIfCancellationRequested();
+
         string type = (string)args[0];
         var typeEnum = Enum.Parse<VideoType>(type);
         
