@@ -12,7 +12,7 @@ public class Member : BaseEntity
     public required string Description { get; set; } = string.Empty;
     public required string Role { get; set; } = string.Empty;
     
-    public virtual IEnumerable<Social> Socials { get; set; } = new List<Social>();
+    public IEnumerable<Social> Socials { get; set; } = new List<Social>();
     
     public Member() {}
 }

@@ -14,12 +14,12 @@ public class StoronnimVContext : DbContext
     public StoronnimVContext(DbContextOptions<StoronnimVContext> options)
         : base(options) { }
 
-    public virtual DbSet<News> NewsItems { get; set; }
-    public virtual DbSet<GroupPage> GroupPages { get; set; }
-    public virtual DbSet<Member> Members { get; set; }
-    public virtual DbSet<Social> Socials { get; set; }
-    public virtual DbSet<Schedule> Schedules { get; set; }
-    public virtual DbSet<MusicPlatform> MusicPlatforms { get; set; }
-    public virtual DbSet<Video> Videos { get; set; }
-    public virtual DbSet<Admin> Admins { get; set; }
+    public DbSet<News> NewsItems { get; set; }
+    public DbSet<GroupPage> GroupPages { get; set; }
+    public DbSet<Member> Members { get; set; }
+    public DbSet<Social> Socials { get; set; }
+    public DbSet<Schedule> Schedules { get; set; }
+    public DbSet<MusicPlatform> MusicPlatforms { get; set; }
+    public DbSet<Video> Videos { get; set; }
+    public DbSet<Admin> Admins { get; set; }
 }
