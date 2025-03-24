@@ -5,5 +5,5 @@ namespace StoronnimV.Application.Contracts.Controllers;
 
 public interface IAccountControllerService
 {
-    Task LogInAsync(HttpResponse response, LogInRequest request, CancellationToken ct);
+    Task<string> LogInAsync(HttpResponse response, LogInRequest request, CancellationToken ct);
 }

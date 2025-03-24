@@ -18,7 +18,7 @@ public class AccountControllerService(
 {
     private readonly CookieSettings _cookieSettings = cookieSettings.CurrentValue;
     
-    public async Task LogInAsync(HttpResponse response, LogInRequest request, CancellationToken ct)
+    public async Task<string> LogInAsync(HttpResponse response, LogInRequest request, CancellationToken ct)
     {
         Admin admin = await accountService.LogInAsync(request.Login, request.Password, ct);
         
@@ -34,5 +34,7 @@ public class AccountControllerService(
         };
         
         response.Cookies.Append("Token", token, cookieOptions);
+
+        return admin.Type.ToString();
     }
 }

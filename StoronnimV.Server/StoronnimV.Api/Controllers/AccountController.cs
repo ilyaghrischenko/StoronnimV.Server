@@ -14,9 +14,9 @@ namespace StoronnimV.Api.Controllers
         [HttpPost("login")]
         public async Task<IActionResult> LogIn([FromBody] LogInRequest request, CancellationToken ct)
         {
-            await accountControllerService.LogInAsync(Response, request, ct);
+            string adminRole = await accountControllerService.LogInAsync(Response, request, ct);
             
-            return Ok();
+            return Ok(adminRole);
         }
     }
 }
