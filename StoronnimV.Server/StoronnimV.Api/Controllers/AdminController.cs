@@ -21,7 +21,7 @@ namespace StoronnimV.Api.Controllers
     public class AdminController(
         IAdminControllerService adminControllerService) : ControllerBase
     {
-        //Delete methods
+        #region DELETE Methods
         [HttpDelete("news/{id:long}")]
         public async Task<IActionResult> DeleteNewsItem([FromRoute] long id, CancellationToken ct)
         {
@@ -77,8 +77,9 @@ namespace StoronnimV.Api.Controllers
             
             return NoContent();
         }
+        #endregion
         
-        //Add methods
+        #region ADD methods
         [HttpPost("news")]
         public async Task<IActionResult> AddNewsItem([FromBody] NewsItemAdditionRequest request, CancellationToken ct)
         {
@@ -134,8 +135,9 @@ namespace StoronnimV.Api.Controllers
             
             return NoContent();
         }
+        #endregion
         
-        //Update methods
+        #region UPDATE methods
         [HttpPatch("news")]
         public async Task<IActionResult> UpdateNewsItem([FromBody] NewsItemEditRequest request, CancellationToken ct)
         {
@@ -191,8 +193,9 @@ namespace StoronnimV.Api.Controllers
             
             return NoContent();
         }
+        #endregion
         
-        //Update photo methods
+        #region UPDATE PHOTO methods
         [HttpPatch("news/photo")]
         public async Task<IActionResult> UpdateNewsItemPhoto([FromBody] PhotoEditRequest request, CancellationToken ct)
         {
@@ -224,8 +227,9 @@ namespace StoronnimV.Api.Controllers
             
             return NoContent();
         }
+        #endregion
         
-        //Update video methods
+        #region UPDATE VIDEO methods
         [HttpPatch("news/video")]
         public async Task<IActionResult> UpdateNewsItemVideo([FromBody] EntityVideoEditRequest request, CancellationToken ct)
         {
@@ -233,5 +237,6 @@ namespace StoronnimV.Api.Controllers
             
             return NoContent();
         }
+        #endregion
     }
 }
