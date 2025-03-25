@@ -167,6 +167,7 @@ public static class WebApplicationBuilderExtensions
                 policy =>
                 {
                     policy.WithOrigins("http://localhost:5173")
+                        .AllowCredentials()
                         .AllowAnyHeader()
                         .AllowAnyMethod();
                 });
