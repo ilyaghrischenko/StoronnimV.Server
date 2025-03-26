@@ -1,3 +1,4 @@
+using System.ComponentModel.DataAnnotations;
 using System.Text;
 using Microsoft.IdentityModel.Tokens;
 
@@ -5,10 +6,17 @@ namespace StoronnimV.Application.Options;
 
 public class JwtOptions
 {
-    public required string ISSUER {get; init;} = string.Empty;
-    public required string AUDIENCE {get; init;} = string.Empty;
-    public required string KEY {get; init;} = string.Empty;
-    public required int LIFETIME {get; init;} = 1;
+    [Required]
+    public string ISSUER {get; init;}
+    
+    [Required]
+    public string AUDIENCE {get; init;}
+    
+    [Required]
+    public string KEY {get; init;}
+    
+    [Required]
+    public int LIFETIME {get; init;}
 
     public SymmetricSecurityKey GetKey()
     {

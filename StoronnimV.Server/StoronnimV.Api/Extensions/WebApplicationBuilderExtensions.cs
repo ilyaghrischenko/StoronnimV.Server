@@ -100,8 +100,15 @@ public static class WebApplicationBuilderExtensions
 
     public static WebApplicationBuilder AddOptions(this WebApplicationBuilder builder)
     {
-        builder.Services.Configure<JwtOptions>(builder.Configuration.GetSection("JwtOptions"));
-        builder.Services.Configure<CookieSettings>(builder.Configuration.GetSection("CookieOptions"));
+        builder.Services.AddOptions<JwtOptions>()
+            .Bind(builder.Configuration.GetSection("JwtOptions"))
+            .ValidateDataAnnotations()
+            .ValidateOnStart();
+
+        builder.Services.AddOptions<CookieSettings>()
+            .Bind(builder.Configuration.GetSection("CookieOptions"))
+            .ValidateDataAnnotations()
+            .ValidateOnStart();
         
         return builder;
     }
