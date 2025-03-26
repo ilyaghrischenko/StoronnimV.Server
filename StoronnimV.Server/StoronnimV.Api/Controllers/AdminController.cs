@@ -18,9 +18,14 @@ namespace StoronnimV.Api.Controllers
     [EnableRateLimiting("AdminLimit")]
     [Route("api/admin")]
     [ApiController]
-    public class AdminController(
-        IAdminControllerService adminControllerService) : ControllerBase
+    public class AdminController(IAdminControllerService adminControllerService) : ControllerBase
     {
+        [HttpGet("isAdmin")]
+        public ActionResult<bool> IsAdmin()
+        {
+            return Ok(true);
+        }
+        
         #region DELETE Methods
         [HttpDelete("news/{id:long}")]
         public async Task<IActionResult> DeleteNewsItem([FromRoute] long id, CancellationToken ct)
