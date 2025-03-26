@@ -114,7 +114,9 @@ public class ScheduleRepository(IDbContextFactory<StoronnimVContext> contextFact
 
         await using StoronnimVContext context = await _contextFactory.CreateDbContextAsync(ct);
 
-        int count = await context.Schedules.CountAsync(ct);
+        int count = await context.Schedules
+            .Where(schedule => schedule.Status == ScheduleStatus.Active)
+            .CountAsync(ct);
 
         return count;
     }
