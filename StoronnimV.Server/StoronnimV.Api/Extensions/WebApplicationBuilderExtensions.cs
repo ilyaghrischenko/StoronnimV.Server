@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.RateLimiting;
 using Microsoft.AspNetCore.ResponseCompression;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Diagnostics.HealthChecks;
 using Microsoft.Extensions.Options;
 using Microsoft.OpenApi.Models;
 using Serilog;
@@ -309,5 +310,18 @@ public static class WebApplicationBuilderExtensions
                 Window = expiration
             })
         );
+    }
+
+    public static WebApplicationBuilder AddHealthChecks(this WebApplicationBuilder builder)
+    {
+        string connectionString = builder.Configuration.GetConnectionString("CloudConnection")!;
+        
+        builder.Services.AddHealthChecks()
+            .AddCheck("API",
+                () => HealthCheckResult.Healthy("API is alive"),
+                tags: ["api"])
+            .AddNpgSql(connectionString, name: "PostgresSQL", tags: ["database"]);
+        
+        return builder;
     }
 }

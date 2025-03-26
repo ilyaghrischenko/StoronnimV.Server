@@ -1,6 +1,8 @@
 using AutoMapper;
 using FluentValidation.AspNetCore;
 using Hangfire;
+using HealthChecks.UI.Client;
+using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using Microsoft.EntityFrameworkCore;
 using StoronnimV.Api.Extensions;
 using StoronnimV.Api.Middlewares;
@@ -28,7 +30,8 @@ builder
     .AddPooledDbContextFactory()
     .AddJwtBearer()
     .AddResponseCompression()
-    .AddRateLimiter();
+    .AddRateLimiter()
+    .AddHealthChecks();
     
 #region AutoMapper
 MapperConfiguration mapperConfig = new(cfg =>
@@ -94,8 +97,11 @@ app.UseHangfireDashboard();
 app.MapHangfireDashboard();
 
 app.UseResponseCompression();
-
 app.UseRateLimiter();
+app.UseHealthChecks("/health", new HealthCheckOptions
+{
+    ResponseWriter = UIResponseWriter.WriteHealthCheckUIResponse
+});
 
 #region DatabaseInitializer
 using (var scope = app.Services.CreateScope())
