@@ -10,6 +10,4 @@ public class VideoAdditionRequest
     public required IFormFile Url { get; init; }
     public required string Title { get; init; }
     public required string Type { get; init; }
-    
-    private VideoAdditionRequest() { }
 }

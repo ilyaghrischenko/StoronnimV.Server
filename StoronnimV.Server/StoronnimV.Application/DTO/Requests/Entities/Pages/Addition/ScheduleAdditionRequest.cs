@@ -13,6 +13,4 @@ public class ScheduleAdditionRequest
     public required string Location { get; init; }
     public IFormFile? Photo { get; init; }
     public required string Status { get; init; }
-    
-    public ScheduleAdditionRequest() { }
 }

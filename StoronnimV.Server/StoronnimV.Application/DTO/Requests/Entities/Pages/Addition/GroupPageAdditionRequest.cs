@@ -9,6 +9,4 @@ public class GroupPageAdditionRequest
 {
     public required IFormFile PhotoUrl { get; init; }
     public required string Description { get; init; }
-    
-    private GroupPageAdditionRequest() { }
 }

@@ -86,7 +86,7 @@ namespace StoronnimV.Api.Controllers
         
         #region ADD methods
         [HttpPost("news")]
-        public async Task<IActionResult> AddNewsItem([FromBody] NewsItemAdditionRequest request, CancellationToken ct)
+        public async Task<IActionResult> AddNewsItem([FromForm] NewsItemAdditionRequest request, CancellationToken ct)
         {
             await adminControllerService.AddNewsItemAsync(request, ct);
             
@@ -102,7 +102,7 @@ namespace StoronnimV.Api.Controllers
         }
 
         [HttpPost("videos")]
-        public async Task<IActionResult> AddVideo([FromBody] VideoAdditionRequest request, CancellationToken ct)
+        public async Task<IActionResult> AddVideo([FromForm] VideoAdditionRequest request, CancellationToken ct)
         {
             await adminControllerService.AddVideoAsync(request, ct);
             
@@ -110,7 +110,7 @@ namespace StoronnimV.Api.Controllers
         }
 
         [HttpPost("group")]
-        public async Task<IActionResult> AddGroup([FromBody] GroupPageAdditionRequest request, CancellationToken ct)
+        public async Task<IActionResult> AddGroup([FromForm] GroupPageAdditionRequest request, CancellationToken ct)
         {
             await adminControllerService.AddGroupPageAsync(request, ct);
             
@@ -118,7 +118,7 @@ namespace StoronnimV.Api.Controllers
         }
 
         [HttpPost("group/members")]
-        public async Task<IActionResult> AddMember([FromBody] MemberAdditionRequest request, CancellationToken ct)
+        public async Task<IActionResult> AddMember([FromForm] MemberAdditionRequest request, CancellationToken ct)
         {
             await adminControllerService.AddMemberAsync(request, ct);
             
@@ -126,7 +126,7 @@ namespace StoronnimV.Api.Controllers
         }
 
         [HttpPost("music")]
-        public async Task<IActionResult> AddMusicPlatform([FromBody] MusicPlatformAdditionRequest request, CancellationToken ct)
+        public async Task<IActionResult> AddMusicPlatform([FromForm] MusicPlatformAdditionRequest request, CancellationToken ct)
         {
             await adminControllerService.AddMusicPlatformAsync(request, ct);
             

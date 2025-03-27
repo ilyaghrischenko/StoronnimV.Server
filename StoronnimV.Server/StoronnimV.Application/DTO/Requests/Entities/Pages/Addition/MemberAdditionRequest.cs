@@ -11,6 +11,4 @@ public class MemberAdditionRequest
     public required string FullName { get; init; }
     public required string Description { get; init; }
     public required string Role { get; init; }
-    
-    private MemberAdditionRequest() { }
 }

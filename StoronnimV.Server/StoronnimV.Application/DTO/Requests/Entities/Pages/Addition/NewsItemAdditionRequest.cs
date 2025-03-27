@@ -13,6 +13,4 @@ public class NewsItemAdditionRequest
     public long? VideoId { get; init; }
     public required string Priority { get; init; }
     public string? Date { get; init; }
-
-    private NewsItemAdditionRequest() { }
 }

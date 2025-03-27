@@ -95,7 +95,7 @@ public class NewsService(
             newsVideo = await videoRepository.GetByIdAsync(request.VideoId.Value, ct);
         }
 
-        News newsItem = new News
+        News newsItem = new()
         {
             Title = request.Title,
             Description = request.Description,
