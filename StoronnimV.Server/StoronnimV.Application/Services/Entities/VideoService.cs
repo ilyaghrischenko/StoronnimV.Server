@@ -82,15 +82,18 @@ public class VideoService(
     /// <param name="ct">CancellationToken</param>
     public async Task AddVideoAsync(VideoAdditionRequest request, CancellationToken ct)
     {
-        string videoBlobName = $"video-{Guid.NewGuid()}";
+        string videoBlobName = $"video-{Guid.NewGuid()}.mp4";
         string videoUrl = await blobRepository.AddFileAndGetUrlAsync("storonnimv-video", videoBlobName, request.Url.OpenReadStream(), ct);
+        
+        if(!Enum.TryParse<VideoType>(request.Type, out VideoType type))
+            throw new ArgumentException("Invalid video type");
         
         Video video = new()
         {
             Title = request.Title,
             Url = videoUrl,
             BlobName = videoBlobName,
-            Type = Enum.Parse<VideoType>(request.Type)
+            Type = type
         };
         
         await videoRepository.AddAsync(video, ct);
