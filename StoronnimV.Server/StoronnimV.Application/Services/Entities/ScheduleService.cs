@@ -113,11 +113,12 @@ public class ScheduleService(
         Schedule schedule = new()
         {
             Title = request.Title,
-            PerformanceDateTime = DateTime.ParseExact(request.PerformanceDateTime, "dd.MM.yyyy HH.mm",
-                CultureInfo.InvariantCulture),
+            PerformanceDateTime = DateTime.SpecifyKind(
+                DateTime.Parse(request.PerformanceDateTime, CultureInfo.InvariantCulture),
+                DateTimeKind.Utc),
             Description = request.Description,
             Location = request.Location,
-            Photo = null,
+            Photo = string.Empty,
             Status = Enum.Parse<ScheduleStatus>(request.Status)
         };
 

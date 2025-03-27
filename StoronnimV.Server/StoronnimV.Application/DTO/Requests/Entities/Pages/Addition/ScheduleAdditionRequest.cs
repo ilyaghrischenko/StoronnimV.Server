@@ -14,5 +14,5 @@ public class ScheduleAdditionRequest
     public IFormFile? Photo { get; init; }
     public required string Status { get; init; }
     
-    private ScheduleAdditionRequest() { }
+    public ScheduleAdditionRequest() { }
 }

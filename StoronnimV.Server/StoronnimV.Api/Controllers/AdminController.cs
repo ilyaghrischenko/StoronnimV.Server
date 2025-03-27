@@ -14,7 +14,7 @@ namespace StoronnimV.Api.Controllers
     /// <summary>
     /// Контроллер для админа, он позволяет управлять данными, которые отображаются на страницых (Удалять, изменять)
     /// </summary>
-    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+    // [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
     [EnableRateLimiting("AdminLimit")]
     [Route("api/admin")]
     [ApiController]
@@ -94,7 +94,7 @@ namespace StoronnimV.Api.Controllers
         }
         
         [HttpPost("schedules")]
-        public async Task<IActionResult> AddSchedule([FromBody] ScheduleAdditionRequest request, CancellationToken ct)
+        public async Task<IActionResult> AddSchedule([FromForm] ScheduleAdditionRequest request, CancellationToken ct)
         {
             await adminControllerService.AddScheduleAsync(request, ct);
             

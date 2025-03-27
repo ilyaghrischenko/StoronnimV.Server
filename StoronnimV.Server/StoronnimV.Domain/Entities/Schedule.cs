@@ -13,7 +13,7 @@ public class Schedule : BaseEntity
     public required string Description { get; set; } = string.Empty;
     public required string Location { get; set; } = string.Empty;
     
-    public string? Photo { get; set; } = null;
+    public string? Photo { get; set; }
     public ScheduleStatus Status { get; set; } = ScheduleStatus.Active;
     
     public Schedule() {}
