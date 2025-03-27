@@ -3,18 +3,16 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.RateLimiting;
 using StoronnimV.Application.Contracts.Controllers;
-using StoronnimV.Application.DTO.Requests.Entities.Admin;
 using StoronnimV.Application.DTO.Requests.Entities.Pages.Addition;
 using StoronnimV.Application.DTO.Requests.Entities.Pages.Editing;
 using StoronnimV.Application.DTO.Requests.Entities.Pages.Editing.Media;
-using StoronnimV.Application.DTO.Responses.Admin;
 
 namespace StoronnimV.Api.Controllers
 {
     /// <summary>
     /// Контроллер для админа, он позволяет управлять данными, которые отображаются на страницых (Удалять, изменять)
     /// </summary>
-    // [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
     [EnableRateLimiting("AdminLimit")]
     [Route("api/admin")]
     [ApiController]
@@ -90,7 +88,7 @@ namespace StoronnimV.Api.Controllers
         {
             await adminControllerService.AddNewsItemAsync(request, ct);
             
-            return NoContent();
+            return Created();
         }
         
         [HttpPost("schedules")]
@@ -98,7 +96,7 @@ namespace StoronnimV.Api.Controllers
         {
             await adminControllerService.AddScheduleAsync(request, ct);
             
-            return NoContent();
+            return Created();
         }
 
         [HttpPost("videos")]
@@ -106,7 +104,7 @@ namespace StoronnimV.Api.Controllers
         {
             await adminControllerService.AddVideoAsync(request, ct);
             
-            return NoContent();
+            return Created();
         }
 
         [HttpPost("group")]
@@ -114,7 +112,7 @@ namespace StoronnimV.Api.Controllers
         {
             await adminControllerService.AddGroupPageAsync(request, ct);
             
-            return NoContent();
+            return Created();
         }
 
         [HttpPost("group/members")]
@@ -122,7 +120,7 @@ namespace StoronnimV.Api.Controllers
         {
             await adminControllerService.AddMemberAsync(request, ct);
             
-            return NoContent();
+            return Created();
         }
 
         [HttpPost("music")]
@@ -130,7 +128,7 @@ namespace StoronnimV.Api.Controllers
         {
             await adminControllerService.AddMusicPlatformAsync(request, ct);
             
-            return NoContent();
+            return Created();
         }
 
         [HttpPost("socials")]
@@ -138,7 +136,7 @@ namespace StoronnimV.Api.Controllers
         {
             await adminControllerService.AddSocialAsync(request, ct);
             
-            return NoContent();
+            return Created();
         }
         #endregion
         

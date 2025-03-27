@@ -5,7 +5,7 @@ namespace StoronnimV.Domain.Entities.Shared;
 /// </summary>
 public abstract class BaseEntity
 {
-    public long Id { get; private set; }
+    public long Id { get; set; }
     public DateTime CreatedAt { get; init; } = DateTime.UtcNow;
     public DateTime UpdatedAt { get; init; } = DateTime.UtcNow;
 }

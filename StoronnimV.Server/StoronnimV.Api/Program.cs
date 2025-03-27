@@ -82,8 +82,6 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-Console.WriteLine(DateTime.UtcNow);
-
 app.MapControllers();
 app.UseHttpsRedirection();
 app.UseRouting();
