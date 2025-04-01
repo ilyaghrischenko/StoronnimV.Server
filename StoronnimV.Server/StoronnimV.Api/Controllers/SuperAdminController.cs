@@ -34,7 +34,7 @@ public class SuperAdminController(ISuperAdminControllerService superAdminControl
     [HttpPost]
     public async Task<ActionResult<BasicAdminResponse>> CreateBasicAdmin([FromBody] CreateBasicAdminRequest request, CancellationToken ct)
     {
-        BasicAdminResponse createdAdmin =await superAdminControllerService.AddBasicAdminAsync(request, ct);
+        BasicAdminResponse createdAdmin = await superAdminControllerService.AddBasicAdminAsync(request, ct);
 
         return Ok(createdAdmin);
     }
