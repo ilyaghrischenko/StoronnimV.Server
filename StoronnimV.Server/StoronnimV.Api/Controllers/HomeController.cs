@@ -30,9 +30,9 @@ namespace StoronnimV.Api.Controllers
         }
 
         [HttpGet("video")]
-        public async Task<ActionResult<VideoPageShortResponse>> GetPromotionVideo(CancellationToken ct)
+        public async Task<ActionResult<VideoPageResponse>> GetPromotionVideo(CancellationToken ct)
         {
-            VideoPageShortResponse videoDto = await homeControllerService.GetPromotionVideoAsync(ct);
+            VideoPageResponse videoDto = await homeControllerService.GetPromotionVideoAsync(ct);
 
             return Ok(videoDto);
         }

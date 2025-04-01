@@ -4,7 +4,7 @@ using StoronnimV.Application.DTO.Responses.Video;
 namespace StoronnimV.Application.Contracts.Controllers;
 
 public interface IVideoControllerService
-    : IGetByIdControllerService<VideoPageShortResponse>, IPaginationControllerService<VideoPageShortResponse>
+    : IGetByIdControllerService<VideoPageResponse>, IPaginationControllerService<VideoPageResponse>
 {
     
 }

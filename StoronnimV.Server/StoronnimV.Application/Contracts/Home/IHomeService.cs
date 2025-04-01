@@ -8,5 +8,5 @@ public interface IHomeService
 {
     Task<IEnumerable<NewsHomeProjection>> GetMainNewsForHomePageAsync(int count, CancellationToken ct);
     Task<ScheduleShortProjection?> GetNearestScheduleForHomePageAsync(CancellationToken ct);
-    Task<VideoShortProjection?> GetPromotionVideoForHomePageAsync(CancellationToken ct);
+    Task<VideoFullProjection?> GetPromotionVideoForHomePageAsync(CancellationToken ct);
 }

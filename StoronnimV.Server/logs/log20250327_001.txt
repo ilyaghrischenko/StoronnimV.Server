@@ -379,3 +379,85 @@ DETAIL: Detail redacted as it may contain sensitive data. Specify 'Include Error
    at Npgsql.EntityFrameworkCore.PostgreSQL.Storage.Internal.NpgsqlExecutionStrategy.ExecuteAsync[TState,TResult](TState state, Func`4 operation, Func`4 verifySucceeded, CancellationToken cancellationToken)
    at Microsoft.EntityFrameworkCore.DbContext.SaveChangesAsync(Boolean acceptAllChangesOnSuccess, CancellationToken cancellationToken)
 2025-03-27 15:56:21.106 +02:00 [ERR] EXCEPTION - MoveNext: An error occurred while saving the entity changes. See the inner exception for details. (Method: Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch+<ExecuteAsync>d__50.MoveNext)
+2025-03-27 16:41:36.843 +02:00 [ERR] EXCEPTION - lambda_method67: Error mapping types.
+
+Mapping types:
+List`1 -> IEnumerable`1
+System.Collections.Generic.List`1[[StoronnimV.Domain.Projections.Video.VideoShortProjection, StoronnimV.Domain, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]] -> System.Collections.Generic.IEnumerable`1[[StoronnimV.Application.DTO.Responses.Video.VideoPageResponse, StoronnimV.Application, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]] (Method: UnknownClass.lambda_method67)
+2025-03-27 16:41:37.352 +02:00 [ERR] EXCEPTION - lambda_method67: Error mapping types.
+
+Mapping types:
+List`1 -> IEnumerable`1
+System.Collections.Generic.List`1[[StoronnimV.Domain.Projections.Video.VideoShortProjection, StoronnimV.Domain, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]] -> System.Collections.Generic.IEnumerable`1[[StoronnimV.Application.DTO.Responses.Video.VideoPageResponse, StoronnimV.Application, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]] (Method: UnknownClass.lambda_method67)
+2025-03-27 16:44:15.225 +02:00 [ERR] EXCEPTION - lambda_method119: Missing type map configuration or unsupported mapping.
+
+Mapping types:
+VideoShortProjection -> VideoPageResponse
+StoronnimV.Domain.Projections.Video.VideoShortProjection -> StoronnimV.Application.DTO.Responses.Video.VideoPageResponse (Method: UnknownClass.lambda_method119)
+2025-03-27 16:44:15.752 +02:00 [ERR] EXCEPTION - lambda_method119: Missing type map configuration or unsupported mapping.
+
+Mapping types:
+VideoShortProjection -> VideoPageResponse
+StoronnimV.Domain.Projections.Video.VideoShortProjection -> StoronnimV.Application.DTO.Responses.Video.VideoPageResponse (Method: UnknownClass.lambda_method119)
+2025-03-27 16:45:35.476 +02:00 [ERR] EXCEPTION - lambda_method119: Missing type map configuration or unsupported mapping.
+
+Mapping types:
+VideoShortProjection -> VideoPageResponse
+StoronnimV.Domain.Projections.Video.VideoShortProjection -> StoronnimV.Application.DTO.Responses.Video.VideoPageResponse (Method: UnknownClass.lambda_method119)
+2025-03-27 18:34:55.625 +02:00 [ERR] Execution RecurringJobScheduler is in the Failed state now due to an exception, execution will be retried in no more than 00:00:04
+Hangfire.PostgreSql.PostgreSqlDistributedLockException: Could not place a lock on the resource 'hangfire:recurring-jobs:lock': Lock timeout.
+   at Hangfire.PostgreSql.PostgreSqlDistributedLock.LockHandler.Lock(String resource, TimeSpan timeout, IDbConnection connection, PostgreSqlStorageOptions options)
+   at Hangfire.PostgreSql.PostgreSqlDistributedLock.Acquire(IDbConnection connection, String resource, TimeSpan timeout, PostgreSqlStorageOptions options)
+   at Hangfire.PostgreSql.PostgreSqlConnection.AcquireLock(String resource, TimeSpan timeout)
+   at Hangfire.PostgreSql.PostgreSqlConnection.AcquireDistributedLock(String resource, TimeSpan timeout)
+   at Hangfire.Server.RecurringJobScheduler.UseConnectionDistributedLock[T](JobStorage storage, Func`2 action) in C:\projects\hangfire-525\src\Hangfire.Core\Server\RecurringJobScheduler.cs:line 423
+   at Hangfire.Server.RecurringJobScheduler.EnqueueNextRecurringJobs(BackgroundProcessContext context) in C:\projects\hangfire-525\src\Hangfire.Core\Server\RecurringJobScheduler.cs:line 203
+   at Hangfire.Server.RecurringJobScheduler.Execute(BackgroundProcessContext context) in C:\projects\hangfire-525\src\Hangfire.Core\Server\RecurringJobScheduler.cs:line 176
+   at Hangfire.Server.BackgroundProcessDispatcherBuilder.ExecuteProcess(Guid executionId, Object state) in C:\projects\hangfire-525\src\Hangfire.Core\Server\BackgroundProcessDispatcherBuilder.cs:line 82
+   at Hangfire.Processing.BackgroundExecution.Run(Action`2 callback, Object state) in C:\projects\hangfire-525\src\Hangfire.Core\Processing\BackgroundExecution.cs:line 118
+2025-03-27 19:03:30.528 +02:00 [ERR] EXCEPTION - TryParseByName: Requested value 'Performan' was not found. (Method: System.Enum.TryParseByName)
+2025-03-27 19:03:31.100 +02:00 [ERR] EXCEPTION - TryParseByName: Requested value 'Performan' was not found. (Method: System.Enum.TryParseByName)
+2025-03-27 19:18:50.594 +02:00 [ERR] EXCEPTION - TryParseByName: Requested value 'Performanc' was not found. (Method: System.Enum.TryParseByName)
+2025-03-27 19:18:51.013 +02:00 [ERR] EXCEPTION - TryParseByName: Requested value 'Performanc' was not found. (Method: System.Enum.TryParseByName)
+2025-03-27 19:28:20.140 +02:00 [ERR] EXCEPTION - TryParseByName: Requested value 'Performanc' was not found. (Method: System.Enum.TryParseByName)
+2025-03-27 19:28:20.583 +02:00 [ERR] EXCEPTION - TryParseByName: Requested value 'Performanc' was not found. (Method: System.Enum.TryParseByName)
+2025-03-27 19:39:54.189 +02:00 [ERR] Execution Worker is in the Failed state now due to an exception, execution will be retried in no more than 00:01:21
+Npgsql.NpgsqlException (0x80004005): Exception while writing to stream
+ ---> System.IO.IOException: Unable to write data to the transport connection: Удаленный хост принудительно разорвал существующее подключение..
+ ---> System.Net.Sockets.SocketException (10054): Удаленный хост принудительно разорвал существующее подключение.
+   at System.Net.Sockets.NetworkStream.Write(ReadOnlySpan`1 buffer)
+   --- End of inner exception stack trace ---
+   at System.Net.Sockets.NetworkStream.Write(ReadOnlySpan`1 buffer)
+   at System.Net.Security.SyncReadWriteAdapter.WriteAsync(Stream stream, ReadOnlyMemory`1 buffer, CancellationToken cancellationToken)
+   at System.Net.Security.SslStream.WriteSingleChunk[TIOAdapter](ReadOnlyMemory`1 buffer, CancellationToken cancellationToken)
+   at System.Net.Security.SslStream.WriteAsyncInternal[TIOAdapter](ReadOnlyMemory`1 buffer, CancellationToken cancellationToken)
+   at System.Net.Security.SslStream.Write(Byte[] buffer, Int32 offset, Int32 count)
+   at Npgsql.Internal.NpgsqlWriteBuffer.Flush(Boolean async, CancellationToken cancellationToken)
+   at Npgsql.Internal.NpgsqlWriteBuffer.Flush(Boolean async, CancellationToken cancellationToken)
+   at Npgsql.NpgsqlCommand.<Write>g__WriteExecute|101_0(NpgsqlConnector connector, Boolean async, Boolean flush, CancellationToken cancellationToken)
+   at Npgsql.NpgsqlCommand.ExecuteReader(Boolean async, CommandBehavior behavior, CancellationToken cancellationToken)
+   at Npgsql.NpgsqlCommand.ExecuteReader(Boolean async, CommandBehavior behavior, CancellationToken cancellationToken)
+   at Npgsql.NpgsqlCommand.ExecuteReader(CommandBehavior behavior)
+   at Npgsql.NpgsqlCommand.ExecuteDbDataReader(CommandBehavior behavior)
+   at Dapper.SqlMapper.ExecuteReaderWithFlagsFallback(IDbCommand cmd, Boolean wasClosed, CommandBehavior behavior) in /_/Dapper/SqlMapper.cs:line 1066
+   at Dapper.SqlMapper.QueryImpl[T](IDbConnection cnn, CommandDefinition command, Type effectiveType)+MoveNext() in /_/Dapper/SqlMapper.cs:line 1094
+   at System.Collections.Generic.List`1..ctor(IEnumerable`1 collection)
+   at System.Linq.Enumerable.ToList[TSource](IEnumerable`1 source)
+   at Dapper.SqlMapper.Query[T](IDbConnection cnn, String sql, Object param, IDbTransaction transaction, Boolean buffered, Nullable`1 commandTimeout, Nullable`1 commandType) in /_/Dapper/SqlMapper.cs:line 734
+   at Hangfire.PostgreSql.PostgreSqlJobQueue.<>c__DisplayClass13_0.<Dequeue_Transaction>b__0()
+   at Hangfire.PostgreSql.Utils.Utils.TryExecute[T](Func`1 func, T& result, Func`2 swallowException, Nullable`1 tryCount)
+   at Hangfire.PostgreSql.PostgreSqlJobQueue.Dequeue_Transaction(String[] queues, CancellationToken cancellationToken)
+   at Hangfire.PostgreSql.PostgreSqlJobQueue.Dequeue(String[] queues, CancellationToken cancellationToken)
+   at Hangfire.PostgreSql.PostgreSqlConnection.FetchNextJob(String[] queues, CancellationToken cancellationToken)
+   at Hangfire.Server.Worker.Execute(BackgroundProcessContext context) in C:\projects\hangfire-525\src\Hangfire.Core\Server\Worker.cs:line 107
+   at Hangfire.Server.BackgroundProcessDispatcherBuilder.ExecuteProcess(Guid executionId, Object state) in C:\projects\hangfire-525\src\Hangfire.Core\Server\BackgroundProcessDispatcherBuilder.cs:line 82
+   at Hangfire.Processing.BackgroundExecution.Run(Action`2 callback, Object state) in C:\projects\hangfire-525\src\Hangfire.Core\Processing\BackgroundExecution.cs:line 118
+2025-03-27 19:58:08.163 +02:00 [ERR] EXCEPTION - TryParseByName: Requested value 'Performanc' was not found. (Method: System.Enum.TryParseByName)
+2025-03-27 19:58:08.499 +02:00 [ERR] EXCEPTION - TryParseByName: Requested value 'Performanc' was not found. (Method: System.Enum.TryParseByName)
+2025-03-27 19:58:15.295 +02:00 [ERR] EXCEPTION - TryParseByName: Requested value 'Performanc' was not found. (Method: System.Enum.TryParseByName)
+2025-03-27 19:58:15.600 +02:00 [ERR] EXCEPTION - TryParseByName: Requested value 'Performanc' was not found. (Method: System.Enum.TryParseByName)
+2025-03-27 20:07:32.377 +02:00 [ERR] EXCEPTION - MoveNext: invalid page number (Method: StoronnimV.Application.Services.Entities.VideoService+<GetForPageAsync>d__4.MoveNext)
+2025-03-27 20:07:48.798 +02:00 [ERR] EXCEPTION - TryParseByName: Requested value 'Performancw' was not found. (Method: System.Enum.TryParseByName)
+2025-03-27 20:07:49.248 +02:00 [ERR] EXCEPTION - TryParseByName: Requested value 'Performancw' was not found. (Method: System.Enum.TryParseByName)
+2025-03-27 20:13:25.680 +02:00 [ERR] EXCEPTION - TryParseByName: Requested value 'Performanc' was not found. (Method: System.Enum.TryParseByName)
+2025-03-27 20:13:26.046 +02:00 [ERR] EXCEPTION - TryParseByName: Requested value 'Performanc' was not found. (Method: System.Enum.TryParseByName)

@@ -22,15 +22,15 @@ namespace StoronnimV.Api.Controllers
         : ControllerBase
     {
         [HttpGet("{id:long}")]
-        public async Task<ActionResult<VideoPageShortResponse>> GetVideo([FromRoute] long id, CancellationToken ct)
+        public async Task<ActionResult<VideoPageResponse>> GetVideo([FromRoute] long id, CancellationToken ct)
         {
-            VideoPageShortResponse video = await videoControllerService.GetItemByIdAsync(id, ct);
+            VideoPageResponse video = await videoControllerService.GetItemByIdAsync(id, ct);
 
             return Ok(video);
         }
         
         [HttpGet("page/{type}/{page:int}")]
-        public async Task<ActionResult<PaginationResponse<VideoPageShortResponse>>> GetVideosForPage
+        public async Task<ActionResult<PaginationResponse<VideoPageResponse>>> GetVideosForPage
             ([FromRoute] int page, [FromRoute] string type, CancellationToken ct, [FromQuery] int pageSize = 5)
         {
             var videosPaginationResponse = await videoControllerService.GetForPageAsync(page, pageSize, ct, type);

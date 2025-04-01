@@ -32,9 +32,9 @@ public class HomeService(
         return schedule;
     }
 
-    public async Task<VideoShortProjection?> GetPromotionVideoForHomePageAsync(CancellationToken ct)
+    public async Task<VideoFullProjection?> GetPromotionVideoForHomePageAsync(CancellationToken ct)
     {
-        VideoShortProjection? promotionVideo = await videoRepository.GetPromotionVideoForHomePageAsync(ct);
+        VideoFullProjection? promotionVideo = await videoRepository.GetPromotionVideoForHomePageAsync(ct);
         
         return promotionVideo;
     }

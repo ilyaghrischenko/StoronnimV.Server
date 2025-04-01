@@ -5,8 +5,8 @@ using StoronnimV.Domain.Projections.Video;
 namespace StoronnimV.Domain.Contracts.Database;
 
 public interface IVideoRepository 
-    : IRepository<Video>, IGetByIdRepository<VideoShortProjection>,
-        IPaginationRepository<VideoShortProjection>
+    : IRepository<Video>, IGetByIdRepository<VideoFullProjection>,
+        IPaginationRepository<VideoFullProjection>
 {
-    public Task<VideoShortProjection?> GetPromotionVideoForHomePageAsync(CancellationToken ct);
+    public Task<VideoFullProjection?> GetPromotionVideoForHomePageAsync(CancellationToken ct);
 }
