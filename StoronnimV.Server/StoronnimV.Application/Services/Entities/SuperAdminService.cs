@@ -30,14 +30,14 @@ public class SuperAdminService(
         await adminRepository.DeleteAsync(basicAdmin, ct);
     }
 
-    public async Task AddBasicAdminAsync(string login, string unhashedPassword, CancellationToken ct)
+    public async Task<BasicAdminProjection> AddBasicAdminAsync(string login, string unhashedPassword, CancellationToken ct)
     {
         var allBasicAdmins = (await adminRepository.GetAllBasicAdminsAsync(ct))
             ?.ToList();
 
         ThrowExceptionIfLoginAlreadyExists(login, allBasicAdmins);
         
-        string hashedPassword = passwordHasher.HashPassword(null! ,unhashedPassword);
+        string hashedPassword = passwordHasher.HashPassword(null!, unhashedPassword);
 
         Admin newBasicAdmin = new()
         {
@@ -46,9 +46,15 @@ public class SuperAdminService(
         };
         
         await adminRepository.AddAsync(newBasicAdmin, ct);
+
+        return new BasicAdminProjection
+        {
+            Id = newBasicAdmin.Id,
+            Login = newBasicAdmin.Login,
+        };
     }
 
-    public async Task EditBasicAdminLoginAsync(long id, string newLogin, CancellationToken ct)
+    public async Task<BasicAdminProjection> EditBasicAdminLoginAsync(long id, string newLogin, CancellationToken ct)
     {
         Admin? adminToChange = await adminRepository.GetByIdAsync(id, ct);
         
@@ -66,6 +72,12 @@ public class SuperAdminService(
         {
             adminToChange.Login = newLogin;
         }, ct);
+
+        return new BasicAdminProjection
+        {
+            Id = adminToChange.Id,
+            Login = adminToChange.Login
+        };
     }
 
     private void ThrowExceptionIfLoginAlreadyExists(string login, List<BasicAdminProjection>? basicAdmins)
@@ -79,7 +91,8 @@ public class SuperAdminService(
         }
     }
 
-    public async Task EditBasicAdminPasswordAsync(long id, string oldPassword, string newUnhashedPassword, CancellationToken ct)
+    public async Task EditBasicAdminPasswordAsync(long id, string oldPassword, string newUnhashedPassword,
+        CancellationToken ct)
     {
         Admin? adminToChange = await adminRepository.GetByIdAsync(id, ct);
         

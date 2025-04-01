@@ -3,20 +3,19 @@ using Microsoft.AspNetCore.RateLimiting;
 using StoronnimV.Application.Contracts.Controllers;
 using StoronnimV.Application.DTO.Requests.Account;
 
-namespace StoronnimV.Api.Controllers
+namespace StoronnimV.Api.Controllers;
+
+[EnableRateLimiting("AdminLimit")]
+[Route("api/account")]
+[ApiController]
+public class AccountController(
+    IAccountControllerService accountControllerService) : ControllerBase
 {
-    [EnableRateLimiting("AdminLimit")]
-    [Route("api/account")]
-    [ApiController]
-    public class AccountController(
-        IAccountControllerService accountControllerService) : ControllerBase
+    [HttpPost("login")]
+    public async Task<IActionResult> LogIn([FromBody] LogInRequest request, CancellationToken ct)
     {
-        [HttpPost("login")]
-        public async Task<IActionResult> LogIn([FromBody] LogInRequest request, CancellationToken ct)
-        {
-            string adminRole = await accountControllerService.LogInAsync(Response, request, ct);
+        string adminRole = await accountControllerService.LogInAsync(Response, request, ct);
             
-            return Ok(adminRole);
-        }
+        return Ok(adminRole);
     }
 }

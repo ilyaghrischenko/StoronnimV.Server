@@ -4,27 +4,26 @@ using Microsoft.AspNetCore.RateLimiting;
 using StoronnimV.Application.Contracts.Controllers;
 using StoronnimV.Application.DTO.Responses.MusicPage;
 
-namespace StoronnimV.Api.Controllers
+namespace StoronnimV.Api.Controllers;
+
+[EnableRateLimiting("UserLimit")]
+[Route("api/music")]
+[ApiController]
+public class MusicController(IMusicControllerService musicControllerService) : ControllerBase
 {
-    [EnableRateLimiting("UserLimit")]
-    [Route("api/music")]
-    [ApiController]
-    public class MusicController(IMusicControllerService musicControllerService) : ControllerBase
+    [HttpGet("{id:long}")]
+    public async Task<ActionResult<MusicResponse>> GetMusicPlatform([FromRoute] long id, CancellationToken ct)
     {
-        [HttpGet("{id:long}")]
-        public async Task<ActionResult<MusicResponse>> GetMusicPlatform([FromRoute] long id, CancellationToken ct)
-        {
-            MusicResponse musicPlatform = await musicControllerService.GetItemByIdAsync(id, ct);
+        MusicResponse musicPlatform = await musicControllerService.GetItemByIdAsync(id, ct);
 
-            return Ok(musicPlatform);
-        }
+        return Ok(musicPlatform);
+    }
 
-        [HttpGet]
-        public async Task<ActionResult<IEnumerable<MusicResponse>>> GetMusicPlatforms(CancellationToken ct)
-        {
-            var musicPlatforms = await musicControllerService.GetAllAsync(ct);
+    [HttpGet]
+    public async Task<ActionResult<IEnumerable<MusicResponse>>> GetMusicPlatforms(CancellationToken ct)
+    {
+        var musicPlatforms = await musicControllerService.GetAllAsync(ct);
             
-            return Ok(musicPlatforms);
-        }
+        return Ok(musicPlatforms);
     }
 }
