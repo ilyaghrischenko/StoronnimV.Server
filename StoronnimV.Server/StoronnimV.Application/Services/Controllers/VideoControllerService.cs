@@ -14,24 +14,24 @@ public class VideoControllerService(
     IMapper mapper)
     : IVideoControllerService
 {
-    public async Task<VideoPageShortResponse> GetItemByIdAsync(long id, CancellationToken ct)
+    public async Task<VideoPageResponse> GetItemByIdAsync(long id, CancellationToken ct)
     {
-        VideoShortProjection video = await videoService.GetItemByIdAsync(id, ct);
+        VideoFullProjection video = await videoService.GetItemByIdAsync(id, ct);
         
-        var videoDto = mapper.Map<VideoPageShortResponse>(video);
+        var videoDto = mapper.Map<VideoPageResponse>(video);
         
         return videoDto;
     }
     
-    public async Task<PaginationResponse<VideoPageShortResponse>> GetForPageAsync(int page, int pageSize, CancellationToken ct, params object[] args)
+    public async Task<PaginationResponse<VideoPageResponse>> GetForPageAsync(int page, int pageSize, CancellationToken ct, params object[] args)
     {
         string type = (string)args[0];
         
-        PaginationResult<VideoShortProjection> paginationResult = await videoService.GetForPageAsync(page, pageSize, ct, type);
+        PaginationResult<VideoFullProjection> paginationResult = await videoService.GetForPageAsync(page, pageSize, ct, type);
         
-        var videosDto = mapper.Map<IEnumerable<VideoPageShortResponse>>(paginationResult.Items);
+        var videosDto = mapper.Map<IEnumerable<VideoPageResponse>>(paginationResult.Items);
         
-        var paginationResponse = new PaginationResponse<VideoPageShortResponse>
+        var paginationResponse = new PaginationResponse<VideoPageResponse>
         {
             CurrentPage = paginationResult.CurrentPage,
             TotalPages = paginationResult.TotalPages,

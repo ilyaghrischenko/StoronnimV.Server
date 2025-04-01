@@ -31,11 +31,11 @@ public class HomeControllerService(
         return scheduleDto;
     }
 
-    public async Task<VideoPageShortResponse> GetPromotionVideoAsync(CancellationToken ct)
+    public async Task<VideoPageResponse> GetPromotionVideoAsync(CancellationToken ct)
     {
-        VideoShortProjection? promotionVideo = await homeService.GetPromotionVideoForHomePageAsync(ct);
+        VideoFullProjection? promotionVideo = await homeService.GetPromotionVideoForHomePageAsync(ct);
         
-        var promotionVideoDto = mapper.Map<VideoPageShortResponse>(promotionVideo);
+        var promotionVideoDto = mapper.Map<VideoPageResponse>(promotionVideo);
         
         return promotionVideoDto;
     }

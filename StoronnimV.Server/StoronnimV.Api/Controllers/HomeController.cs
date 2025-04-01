@@ -18,22 +18,23 @@ public class HomeController(
     {
         var newsDto = await homeControllerService.GetMainNewsAsync(count, ct);
 
-        return Ok(newsDto);
+            return Ok(newsDto);
+        }
+
+        [HttpGet("schedule")]
+        public async Task<ActionResult<ScheduleHomeResponse>> GetNearestSchedule(CancellationToken ct)
+        {
+            ScheduleHomeResponse scheduleDto = await homeControllerService.GetNearestScheduleAsync(ct);
+
+            return Ok(scheduleDto);
+        }
+
+        [HttpGet("video")]
+        public async Task<ActionResult<VideoPageResponse>> GetPromotionVideo(CancellationToken ct)
+        {
+            VideoPageResponse videoDto = await homeControllerService.GetPromotionVideoAsync(ct);
+
+            return Ok(videoDto);
+        }
     }
 
-    [HttpGet("schedule")]
-    public async Task<ActionResult<ScheduleHomeResponse>> GetNearestSchedule(CancellationToken ct)
-    {
-        ScheduleHomeResponse scheduleDto = await homeControllerService.GetNearestScheduleAsync(ct);
-
-        return Ok(scheduleDto);
-    }
-
-    [HttpGet("video")]
-    public async Task<ActionResult<VideoPageShortResponse>> GetPromotionVideo(CancellationToken ct)
-    {
-        VideoPageShortResponse videoDto = await homeControllerService.GetPromotionVideoAsync(ct);
-
-        return Ok(videoDto);
-    }
-}

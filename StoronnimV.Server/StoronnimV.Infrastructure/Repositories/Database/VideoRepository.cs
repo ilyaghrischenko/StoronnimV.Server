@@ -19,18 +19,19 @@ public class VideoRepository(IDbContextFactory<StoronnimVContext> contextFactory
 {
     private readonly IDbContextFactory<StoronnimVContext> _contextFactory = contextFactory;
 
-    public async Task<VideoShortProjection?> GetByIdAsNoTrackingAsync(long id, CancellationToken ct)
+    public async Task<VideoFullProjection?> GetByIdAsNoTrackingAsync(long id, CancellationToken ct)
     {
         ct.ThrowIfCancellationRequested();
 
         await using StoronnimVContext context = await _contextFactory.CreateDbContextAsync(ct);
 
-        VideoShortProjection? video = await context.Videos
+        VideoFullProjection? video = await context.Videos
             .AsNoTracking()
-            .Select(v => new VideoShortProjection
+            .Select(v => new VideoFullProjection
             {
                 Id = v.Id,
                 Title = v.Title,
+                Type = v.Type,
                 Url = v.Url
             })
             .FirstOrDefaultAsync(x => x.Id == id, ct);
@@ -38,19 +39,20 @@ public class VideoRepository(IDbContextFactory<StoronnimVContext> contextFactory
         return video;
     }
 
-    public async Task<VideoShortProjection?> GetPromotionVideoForHomePageAsync(CancellationToken ct)
+    public async Task<VideoFullProjection?> GetPromotionVideoForHomePageAsync(CancellationToken ct)
     {
         ct.ThrowIfCancellationRequested();
 
         await using StoronnimVContext context = await _contextFactory.CreateDbContextAsync(ct);
 
-        VideoShortProjection? promotionVideo = await context.Videos
+        VideoFullProjection? promotionVideo = await context.Videos
             .AsNoTracking()
             .Where(video => video.Type == VideoType.Promotion)
-            .Select(video => new VideoShortProjection
+            .Select(video => new VideoFullProjection
             {
                 Id = video.Id,
                 Title = video.Title,
+                Type = video.Type,
                 Url = video.Url
             })
             .FirstOrDefaultAsync(ct);
@@ -59,7 +61,7 @@ public class VideoRepository(IDbContextFactory<StoronnimVContext> contextFactory
     }
 
 
-    public async Task<IEnumerable<VideoShortProjection>?> GetForPageAsync(int page, CancellationToken ct, int pageSize = 10, params object[] args)
+    public async Task<IEnumerable<VideoFullProjection>?> GetForPageAsync(int page, CancellationToken ct, int pageSize = 10, params object[] args)
     {
         ct.ThrowIfCancellationRequested();
 
@@ -73,10 +75,11 @@ public class VideoRepository(IDbContextFactory<StoronnimVContext> contextFactory
             .Where(video => video.Type == typeEnum)
             .Skip((page - 1) * pageSize)
             .Take(pageSize)
-            .Select(v => new VideoShortProjection
+            .Select(v => new VideoFullProjection
             {
                 Id = v.Id,
                 Title = v.Title,
+                Type = v.Type,
                 Url = v.Url
             })
             .ToListAsync(ct);

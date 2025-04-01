@@ -379,4 +379,3 @@ DETAIL: Detail redacted as it may contain sensitive data. Specify 'Include Error
    at Npgsql.EntityFrameworkCore.PostgreSQL.Storage.Internal.NpgsqlExecutionStrategy.ExecuteAsync[TState,TResult](TState state, Func`4 operation, Func`4 verifySucceeded, CancellationToken cancellationToken)
    at Microsoft.EntityFrameworkCore.DbContext.SaveChangesAsync(Boolean acceptAllChangesOnSuccess, CancellationToken cancellationToken)
 2025-03-27 15:56:21.106 +02:00 [ERR] EXCEPTION - MoveNext: An error occurred while saving the entity changes. See the inner exception for details. (Method: Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch+<ExecuteAsync>d__50.MoveNext)
-2025-03-27 20:36:09.005 +02:00 [ERR] EXCEPTION - ThrowOperationCanceledException: The operation was canceled. (Method: System.Threading.CancellationToken.ThrowOperationCanceledException)

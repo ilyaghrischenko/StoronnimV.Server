@@ -17,15 +17,15 @@ public class VideoService(
     IVideoRepository videoRepository,
     IBlobRepository blobRepository) : IVideoService
 {
-    public async Task<VideoShortProjection> GetItemByIdAsync(long id, CancellationToken ct)
+    public async Task<VideoFullProjection> GetItemByIdAsync(long id, CancellationToken ct)
     {
-        VideoShortProjection video = await videoRepository.GetByIdAsNoTrackingAsync(id, ct)
-                                     ?? throw new EntityNotFoundException($"Video with {nameof(id)}: {id} was not found");
+        VideoFullProjection video = await videoRepository.GetByIdAsNoTrackingAsync(id, ct)
+                                    ?? throw new EntityNotFoundException($"Video with {nameof(id)}: {id} was not found");
 
         return video;
     }
 
-    public async Task<PaginationResult<VideoShortProjection>> GetForPageAsync(int page, int pageSize, CancellationToken ct, params object[] args)
+    public async Task<PaginationResult<VideoFullProjection>> GetForPageAsync(int page, int pageSize, CancellationToken ct, params object[] args)
     {
         string type = (string)args[0];
         
@@ -53,7 +53,7 @@ public class VideoService(
 
             var sortedItems = items.ToList();
 
-            PaginationResult<VideoShortProjection> paginationResult = new()
+            PaginationResult<VideoFullProjection> paginationResult = new()
             {
                 CurrentPage = page,
                 TotalPages = totalPages,
@@ -65,7 +65,7 @@ public class VideoService(
         }
         catch (PaginationException)
         {
-            return new PaginationResult<VideoShortProjection>
+            return new PaginationResult<VideoFullProjection>
             {
                 CurrentPage = page,
                 TotalPages = 0,
