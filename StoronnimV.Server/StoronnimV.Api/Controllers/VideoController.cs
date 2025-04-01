@@ -26,15 +26,15 @@ public class VideoController(
     {
         VideoPageResponse video = await videoControllerService.GetItemByIdAsync(id, ct);
 
-            return Ok(video);
-        }
-        
-        [HttpGet("page/{type}/{page:int}")]
-        public async Task<ActionResult<PaginationResponse<VideoPageResponse>>> GetVideosForPage
-            ([FromRoute] int page, [FromRoute] string type, CancellationToken ct, [FromQuery] int pageSize = 5)
-        {
-            var videosPaginationResponse = await videoControllerService.GetForPageAsync(page, pageSize, ct, type);
-            
-            return Ok(videosPaginationResponse);
-        } 
+        return Ok(video);
+    }
+
+    [HttpGet("page/{type}/{page:int}")]
+    public async Task<ActionResult<PaginationResponse<VideoPageResponse>>> GetVideosForPage
+        ([FromRoute] int page, [FromRoute] string type, CancellationToken ct, [FromQuery] int pageSize = 5)
+    {
+        var videosPaginationResponse = await videoControllerService.GetForPageAsync(page, pageSize, ct, type);
+
+        return Ok(videosPaginationResponse);
+    }
 }

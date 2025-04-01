@@ -32,18 +32,20 @@ public class SuperAdminController(ISuperAdminControllerService superAdminControl
     }
 
     [HttpPost]
-    public async Task<ActionResult<BasicAdminResponse>> CreateBasicAdmin([FromBody] CreateBasicAdminRequest request, CancellationToken ct)
+    public async Task<ActionResult<BasicAdminResponse>> CreateBasicAdmin([FromBody] CreateBasicAdminRequest request,
+        CancellationToken ct)
     {
         BasicAdminResponse createdAdmin = await superAdminControllerService.AddBasicAdminAsync(request, ct);
 
         return Ok(createdAdmin);
     }
-        
+
     [HttpPatch("{id:long}/login")]
     public async Task<ActionResult<BasicAdminResponse>> EditBasicAdminLogin([FromRoute] long id,
         [FromBody] EditBasicAdminLoginRequest loginRequest, CancellationToken ct)
     {
-        BasicAdminResponse changedAdmin = await superAdminControllerService.EditBasicAdminLoginAsync(id, loginRequest, ct);
+        BasicAdminResponse changedAdmin =
+            await superAdminControllerService.EditBasicAdminLoginAsync(id, loginRequest, ct);
 
         return Ok(changedAdmin);
     }

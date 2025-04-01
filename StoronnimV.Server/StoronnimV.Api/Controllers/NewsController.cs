@@ -19,15 +19,16 @@ public class NewsController(INewsControllerService newsControllerService) : Cont
     public async Task<ActionResult<NewsResponse>> GetNewsItem([FromRoute] long id, CancellationToken ct)
     {
         NewsResponse newsItem = await newsControllerService.GetItemByIdAsync(id, ct);
-            
+
         return Ok(newsItem);
     }
-        
+
     [HttpGet("page/{page:int}")]
-    public async Task<ActionResult<PaginationResponse<NewsShortResponse>>> GetNewsForPage([FromRoute] int page, CancellationToken ct, [FromQuery] int pageSize = 9)
+    public async Task<ActionResult<PaginationResponse<NewsShortResponse>>> GetNewsForPage([FromRoute] int page,
+        CancellationToken ct, [FromQuery] int pageSize = 9)
     {
         var newsPaginationResponse = await newsControllerService.GetForPageAsync(page, pageSize, ct);
-            
+
         return Ok(newsPaginationResponse);
     }
 }

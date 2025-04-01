@@ -23,7 +23,7 @@ public class MusicController(IMusicControllerService musicControllerService) : C
     public async Task<ActionResult<IEnumerable<MusicResponse>>> GetMusicPlatforms(CancellationToken ct)
     {
         var musicPlatforms = await musicControllerService.GetAllAsync(ct);
-            
+
         return Ok(musicPlatforms);
     }
 }

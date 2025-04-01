@@ -15,7 +15,7 @@ public class AccountController(
     public async Task<IActionResult> LogIn([FromBody] LogInRequest request, CancellationToken ct)
     {
         string adminRole = await accountControllerService.LogInAsync(Response, request, ct);
-            
+
         return Ok(adminRole);
     }
 }

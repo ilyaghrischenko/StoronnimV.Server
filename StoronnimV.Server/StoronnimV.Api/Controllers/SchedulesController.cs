@@ -21,7 +21,7 @@ public class SchedulesController(ISchedulesControllerService schedulesController
     public async Task<ActionResult<ScheduleResponse>> GetSchedule([FromRoute] long id, CancellationToken ct)
     {
         ScheduleResponse schedule = await schedulesControllerService.GetItemByIdAsync(id, ct);
-            
+
         return Ok(schedule);
     }
 

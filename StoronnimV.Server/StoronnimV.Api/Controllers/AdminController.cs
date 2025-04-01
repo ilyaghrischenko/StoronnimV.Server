@@ -23,8 +23,9 @@ public class AdminController(IAdminControllerService adminControllerService) : C
     {
         return Ok(true);
     }
-        
+
     #region DELETE Methods
+
     [HttpDelete("news/{id:long}")]
     public async Task<IActionResult> DeleteNewsItem([FromRoute] long id, CancellationToken ct)
     {
@@ -37,7 +38,7 @@ public class AdminController(IAdminControllerService adminControllerService) : C
     public async Task<IActionResult> DeleteSchedule([FromRoute] long id, CancellationToken ct)
     {
         await adminControllerService.DeleteScheduleAsync(id, ct);
-            
+
         return NoContent();
     }
 
@@ -45,7 +46,7 @@ public class AdminController(IAdminControllerService adminControllerService) : C
     public async Task<IActionResult> DeleteVideo([FromRoute] long id, CancellationToken ct)
     {
         await adminControllerService.DeleteVideoAsync(id, ct);
-            
+
         return NoContent();
     }
 
@@ -53,7 +54,7 @@ public class AdminController(IAdminControllerService adminControllerService) : C
     public async Task<IActionResult> DeleteGroup([FromRoute] long id, CancellationToken ct)
     {
         await adminControllerService.DeleteGroupPageAsync(id, ct);
-            
+
         return NoContent();
     }
 
@@ -61,7 +62,7 @@ public class AdminController(IAdminControllerService adminControllerService) : C
     public async Task<IActionResult> DeleteMember([FromRoute] long id, CancellationToken ct)
     {
         await adminControllerService.DeleteMemberAsync(id, ct);
-            
+
         return NoContent();
     }
 
@@ -69,7 +70,7 @@ public class AdminController(IAdminControllerService adminControllerService) : C
     public async Task<IActionResult> DeleteMusicPlatform([FromRoute] long id, CancellationToken ct)
     {
         await adminControllerService.DeleteMusicPlatformAsync(id, ct);
-            
+
         return NoContent();
     }
 
@@ -77,25 +78,27 @@ public class AdminController(IAdminControllerService adminControllerService) : C
     public async Task<IActionResult> DeleteSocial([FromRoute] long id, CancellationToken ct)
     {
         await adminControllerService.DeleteSocialAsync(id, ct);
-            
+
         return NoContent();
     }
+
     #endregion
-        
+
     #region ADD methods
+
     [HttpPost("news")]
     public async Task<IActionResult> AddNewsItem([FromForm] NewsItemAdditionRequest request, CancellationToken ct)
     {
         await adminControllerService.AddNewsItemAsync(request, ct);
-            
+
         return Created();
     }
-        
+
     [HttpPost("schedules")]
     public async Task<IActionResult> AddSchedule([FromForm] ScheduleAdditionRequest request, CancellationToken ct)
     {
         await adminControllerService.AddScheduleAsync(request, ct);
-            
+
         return Created();
     }
 
@@ -103,7 +106,7 @@ public class AdminController(IAdminControllerService adminControllerService) : C
     public async Task<IActionResult> AddVideo([FromForm] VideoAdditionRequest request, CancellationToken ct)
     {
         await adminControllerService.AddVideoAsync(request, ct);
-            
+
         return Created();
     }
 
@@ -111,7 +114,7 @@ public class AdminController(IAdminControllerService adminControllerService) : C
     public async Task<IActionResult> AddGroup([FromForm] GroupPageAdditionRequest request, CancellationToken ct)
     {
         await adminControllerService.AddGroupPageAsync(request, ct);
-            
+
         return Created();
     }
 
@@ -119,15 +122,16 @@ public class AdminController(IAdminControllerService adminControllerService) : C
     public async Task<IActionResult> AddMember([FromForm] MemberAdditionRequest request, CancellationToken ct)
     {
         await adminControllerService.AddMemberAsync(request, ct);
-            
+
         return Created();
     }
 
     [HttpPost("music")]
-    public async Task<IActionResult> AddMusicPlatform([FromForm] MusicPlatformAdditionRequest request, CancellationToken ct)
+    public async Task<IActionResult> AddMusicPlatform([FromForm] MusicPlatformAdditionRequest request,
+        CancellationToken ct)
     {
         await adminControllerService.AddMusicPlatformAsync(request, ct);
-            
+
         return Created();
     }
 
@@ -135,17 +139,19 @@ public class AdminController(IAdminControllerService adminControllerService) : C
     public async Task<IActionResult> AddSocial([FromBody] SocialAdditionRequest request, CancellationToken ct)
     {
         await adminControllerService.AddSocialAsync(request, ct);
-            
+
         return Created();
     }
+
     #endregion
-        
+
     #region UPDATE methods
+
     [HttpPatch("news")]
     public async Task<IActionResult> UpdateNewsItem([FromBody] NewsItemEditRequest request, CancellationToken ct)
     {
         await adminControllerService.UpdateNewsItemAsync(request, ct);
-            
+
         return NoContent();
     }
 
@@ -153,7 +159,7 @@ public class AdminController(IAdminControllerService adminControllerService) : C
     public async Task<IActionResult> UpdateSchedule([FromBody] ScheduleEditRequest request, CancellationToken ct)
     {
         await adminControllerService.UpdateScheduleAsync(request, ct);
-            
+
         return NoContent();
     }
 
@@ -161,7 +167,7 @@ public class AdminController(IAdminControllerService adminControllerService) : C
     public async Task<IActionResult> UpdateVideo([FromBody] VideoEditRequest request, CancellationToken ct)
     {
         await adminControllerService.UpdateVideoAsync(request, ct);
-            
+
         return NoContent();
     }
 
@@ -169,23 +175,24 @@ public class AdminController(IAdminControllerService adminControllerService) : C
     public async Task<IActionResult> UpdateGroupPage([FromBody] GroupPageEditRequest request, CancellationToken ct)
     {
         await adminControllerService.UpdateGroupPageAsync(request, ct);
-            
+
         return NoContent();
     }
-        
+
     [HttpPatch("group-pages/members")]
     public async Task<IActionResult> UpdateMember([FromBody] MemberEditRequest request, CancellationToken ct)
     {
         await adminControllerService.UpdateMemberAsync(request, ct);
-            
+
         return NoContent();
     }
 
     [HttpPatch("music-platforms")]
-    public async Task<IActionResult> UpdateMusicPlatform([FromBody] MusicPlatformEditRequest request, CancellationToken ct)
+    public async Task<IActionResult> UpdateMusicPlatform([FromBody] MusicPlatformEditRequest request,
+        CancellationToken ct)
     {
         await adminControllerService.UpdateMusicPlatformAsync(request, ct);
-            
+
         return NoContent();
     }
 
@@ -193,17 +200,19 @@ public class AdminController(IAdminControllerService adminControllerService) : C
     public async Task<IActionResult> UpdateSocial([FromBody] SocialEditRequest request, CancellationToken ct)
     {
         await adminControllerService.UpdateSocialAsync(request, ct);
-            
+
         return NoContent();
     }
+
     #endregion
-        
+
     #region UPDATE PHOTO methods
+
     [HttpPatch("news/photo")]
     public async Task<IActionResult> UpdateNewsItemPhoto([FromBody] PhotoEditRequest request, CancellationToken ct)
     {
         await adminControllerService.UpdateNewsItemPhotoAsync(request, ct);
-            
+
         return NoContent();
     }
 
@@ -211,15 +220,15 @@ public class AdminController(IAdminControllerService adminControllerService) : C
     public async Task<IActionResult> UpdateSchedulePhoto([FromBody] PhotoEditRequest request, CancellationToken ct)
     {
         await adminControllerService.UpdateSchedulePhotoAsync(request, ct);
-            
+
         return NoContent();
     }
-        
+
     [HttpPatch("group-page/members/photo")]
     public async Task<IActionResult> UpdateMemberPhoto([FromBody] PhotoEditRequest request, CancellationToken ct)
     {
         await adminControllerService.UpdateMemberPhotoAsync(request, ct);
-            
+
         return NoContent();
     }
 
@@ -227,18 +236,22 @@ public class AdminController(IAdminControllerService adminControllerService) : C
     public async Task<IActionResult> UpdateMusicPlatformPhoto([FromBody] PhotoEditRequest request, CancellationToken ct)
     {
         await adminControllerService.UpdateMusicPlatformPhotoAsync(request, ct);
-            
+
         return NoContent();
     }
+
     #endregion
-        
+
     #region UPDATE VIDEO methods
+
     [HttpPatch("news/video")]
-    public async Task<IActionResult> UpdateNewsItemVideo([FromBody] EntityVideoEditRequest request, CancellationToken ct)
+    public async Task<IActionResult> UpdateNewsItemVideo([FromBody] EntityVideoEditRequest request,
+        CancellationToken ct)
     {
         await adminControllerService.UpdateNewsItemVideoAsync(request, ct);
-            
+
         return NoContent();
     }
+
     #endregion
 }
