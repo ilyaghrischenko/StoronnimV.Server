@@ -207,9 +207,8 @@ public class AdminController(IAdminControllerService adminControllerService) : C
     #endregion
 
     #region UPDATE PHOTO methods
-
     [HttpPatch("news/photo")]
-    public async Task<IActionResult> UpdateNewsItemPhoto([FromBody] PhotoEditRequest request, CancellationToken ct)
+    public async Task<IActionResult> UpdateNewsItemPhoto([FromForm] PhotoEditRequest request, CancellationToken ct)
     {
         await adminControllerService.UpdateNewsItemPhotoAsync(request, ct);
 
@@ -217,15 +216,23 @@ public class AdminController(IAdminControllerService adminControllerService) : C
     }
 
     [HttpPatch("schedules/photo")]
-    public async Task<IActionResult> UpdateSchedulePhoto([FromBody] PhotoEditRequest request, CancellationToken ct)
+    public async Task<IActionResult> UpdateSchedulePhoto([FromForm] PhotoEditRequest request, CancellationToken ct)
     {
         await adminControllerService.UpdateSchedulePhotoAsync(request, ct);
 
         return NoContent();
     }
 
+    [HttpPatch("group-page/photo")]
+    public async Task<IActionResult> UpdateGroupPhoto([FromForm] PhotoEditRequest request, CancellationToken ct)
+    {
+        await adminControllerService.UpdateGroupPagePhotoAsync(request, ct);
+
+        return NoContent();
+    }
+    
     [HttpPatch("group-page/members/photo")]
-    public async Task<IActionResult> UpdateMemberPhoto([FromBody] PhotoEditRequest request, CancellationToken ct)
+    public async Task<IActionResult> UpdateMemberPhoto([FromForm] PhotoEditRequest request, CancellationToken ct)
     {
         await adminControllerService.UpdateMemberPhotoAsync(request, ct);
 
@@ -233,25 +240,22 @@ public class AdminController(IAdminControllerService adminControllerService) : C
     }
 
     [HttpPatch("music-platforms/photo")]
-    public async Task<IActionResult> UpdateMusicPlatformPhoto([FromBody] PhotoEditRequest request, CancellationToken ct)
+    public async Task<IActionResult> UpdateMusicPlatformPhoto([FromForm] PhotoEditRequest request, CancellationToken ct)
     {
         await adminControllerService.UpdateMusicPlatformPhotoAsync(request, ct);
 
         return NoContent();
     }
-
     #endregion
 
     #region UPDATE VIDEO methods
-
     [HttpPatch("news/video")]
-    public async Task<IActionResult> UpdateNewsItemVideo([FromBody] EntityVideoEditRequest request,
+    public async Task<IActionResult> UpdateNewsItemVideo([FromForm] EntityVideoEditRequest request,
         CancellationToken ct)
     {
         await adminControllerService.UpdateNewsItemVideoAsync(request, ct);
 
         return NoContent();
     }
-
     #endregion
 }
