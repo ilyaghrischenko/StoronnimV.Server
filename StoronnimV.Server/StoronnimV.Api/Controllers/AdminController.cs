@@ -214,6 +214,14 @@ public class AdminController(IAdminControllerService adminControllerService) : C
 
         return NoContent();
     }
+    
+    [HttpPatch("news/delete-photo")]
+    public async Task<IActionResult> DeleteNewsItemPhoto([FromBody] long id, CancellationToken ct)
+    {
+        await adminControllerService.DeleteNewsItemPhotoAsync(id, ct);
+        
+        return NoContent();
+    }
 
     [HttpPatch("schedules/photo")]
     public async Task<IActionResult> UpdateSchedulePhoto([FromForm] PhotoEditRequest request, CancellationToken ct)
@@ -255,6 +263,14 @@ public class AdminController(IAdminControllerService adminControllerService) : C
     {
         await adminControllerService.UpdateNewsItemVideoAsync(request, ct);
 
+        return NoContent();
+    }
+    
+    [HttpPatch("news/delete-video")]
+    public async Task<IActionResult> DeleteNewsItemVideo([FromBody] long id, CancellationToken ct)
+    {
+        await adminControllerService.DeleteNewsItemVideoAsync(id, ct);
+        
         return NoContent();
     }
     #endregion

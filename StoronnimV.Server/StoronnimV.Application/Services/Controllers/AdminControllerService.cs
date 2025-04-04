@@ -145,12 +145,17 @@ public class AdminControllerService(
     {
         await newsService.EditNewsItemPhotoAsync(request, ct);
     }
+    
+    public async Task DeleteNewsItemPhotoAsync(long id, CancellationToken ct)
+    {
+        await newsService.DeleteNewsItemPhotoAsync(id, ct);
+    }
 
     public async Task UpdateSchedulePhotoAsync(PhotoEditRequest request, CancellationToken ct)
     {
         await scheduleService.UpdateSchedulePhotoAsync(request, ct);
     }
-
+    
     public async Task UpdateGroupPagePhotoAsync(PhotoEditRequest request, CancellationToken ct)
     {
         await groupPageService.UpdateGroupPagePhotoAsync(request, ct);
@@ -170,5 +175,10 @@ public class AdminControllerService(
     public async Task UpdateNewsItemVideoAsync(EntityVideoEditRequest request, CancellationToken ct)
     {
         await newsService.EditNewsItemVideoAsync(request, ct);
+    }
+    
+    public async Task DeleteNewsItemVideoAsync(long id, CancellationToken ct)
+    {
+        await newsService.DeleteNewsItemVideoAsync(id, ct);
     }
 }

@@ -110,7 +110,8 @@ public class NewsService(
 
         if (request.Photo != null)
         {
-            string photoUrl = await blobRepository.AddFileAndGetUrlAsync("storonnimv-photo", $"news-{newsItem.Id}",
+            string extension = Path.GetExtension(request.Photo.FileName);
+            string photoUrl = await blobRepository.AddFileAndGetUrlAsync("storonnimv-photo", $"news-{newsItem.Id}{extension}",
                 request.Photo.OpenReadStream(), ct);
             await newsRepository.UpdateAsync(newsItem, () => newsItem.Photo = photoUrl, ct);
         }          
@@ -139,7 +140,6 @@ public class NewsService(
         }
     }
     
-    //todo: update news item
     public async Task EditNewsItemAsync(NewsItemEditRequest request, CancellationToken ct)
     {
         News? newsItem = await newsRepository.GetByIdAsync(request.Id, ct);
@@ -154,7 +154,10 @@ public class NewsService(
             newsItem.Title = request.Title;
             newsItem.Description = request.Description;
             newsItem.Priority = Enum.Parse<NewsPriority>(request.Priority);
-            newsItem.Date = DateOnly.ParseExact(request.Date, "dd.MM.yyyy", CultureInfo.InvariantCulture);
+            newsItem.Date = DateOnly.TryParseExact(request.Date, "dd.MM.yyyy", CultureInfo.InvariantCulture,
+                DateTimeStyles.None, out DateOnly date)
+                ? date
+                : DateOnly.FromDateTime(DateTime.UtcNow);
         }, ct);
     }
 
@@ -169,7 +172,8 @@ public class NewsService(
 
         await blobRepository.DeleteAllFilesByNameAsync("storonnimv-photo", $"news-{photoEditRequest.Id}", ct);
         
-        string photoUrl = await blobRepository.AddFileAndGetUrlAsync("storonnimv-photo", $"news-{newsItem.Id}",
+        string extension = Path.GetExtension(photoEditRequest.Photo.FileName);
+        string photoUrl = await blobRepository.AddFileAndGetUrlAsync("storonnimv-photo", $"news-{newsItem.Id}{extension}",
             photoEditRequest.Photo.OpenReadStream(), ct);
         await newsRepository.UpdateAsync(newsItem, () => newsItem.Photo = photoUrl, ct);
     }

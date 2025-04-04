@@ -42,6 +42,7 @@ public interface IAdminControllerService
     
     //Update photo methods
     Task UpdateNewsItemPhotoAsync(PhotoEditRequest request, CancellationToken ct);
+    Task DeleteNewsItemPhotoAsync(long id, CancellationToken ct);
     Task UpdateSchedulePhotoAsync(PhotoEditRequest request, CancellationToken ct);
     Task UpdateGroupPagePhotoAsync(PhotoEditRequest request, CancellationToken ct);
     Task UpdateMemberPhotoAsync(PhotoEditRequest request, CancellationToken ct);
@@ -49,4 +50,5 @@ public interface IAdminControllerService
     
     //Update video methods
     Task UpdateNewsItemVideoAsync(EntityVideoEditRequest request, CancellationToken ct);
+    Task DeleteNewsItemVideoAsync(long id, CancellationToken ct);
 }
