@@ -250,7 +250,7 @@ public class AdminController(IAdminControllerService adminControllerService) : C
 
     #region UPDATE VIDEO methods
     [HttpPatch("news/video")]
-    public async Task<IActionResult> UpdateNewsItemVideo([FromForm] EntityVideoEditRequest request,
+    public async Task<IActionResult> UpdateNewsItemVideo([FromBody] EntityVideoEditRequest request,
         CancellationToken ct)
     {
         await adminControllerService.UpdateNewsItemVideoAsync(request, ct);
