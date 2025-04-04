@@ -48,12 +48,14 @@ public class ScheduleService(
             .Where(schedule => schedule.Status == ScheduleStatus.Active
                                && schedule.PerformanceDateTime < today)
             .ToList();
-
-        var updateTasks = schedulesToChange.Select(schedule =>
-            scheduleRepository.UpdateAsync(schedule, () => { schedule.Status = ScheduleStatus.Passed; }, ct)
-        );
-
-        await Task.WhenAll(updateTasks);
+        
+        schedulesToChange.ForEach(async schedule =>
+        {
+            await scheduleRepository.UpdateAsync(schedule, () =>
+            {
+                schedule.Status = ScheduleStatus.Passed;
+            }, ct);
+        });
     }
 
     public async Task<PaginationResult<ScheduleShortProjection>> GetForPageAsync(int page, int pageSize,

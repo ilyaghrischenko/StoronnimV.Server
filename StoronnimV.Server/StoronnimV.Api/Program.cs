@@ -27,7 +27,7 @@ builder
     .AddAutoMapper()
     .AddCors()
     .AddHangfire()
-    .AddPooledDbContextFactory()
+    .AddDbContext()
     .AddJwtBearer()
     .AddResponseCompression()
     .AddRateLimiter()

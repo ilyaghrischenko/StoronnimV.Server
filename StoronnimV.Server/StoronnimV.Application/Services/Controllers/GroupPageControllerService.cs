@@ -27,13 +27,8 @@ public class GroupPageControllerService(
 
     public async Task<GroupPageFullInfoResponse> GetGroupPageInfoAsync(CancellationToken ct)
     {
-        var groupPageTask = groupPageService.GetFirstGroupPageAsync(ct);
-        var membersTask = memberService.GetAllAsync(ct);
-        
-        await Task.WhenAll(groupPageTask, membersTask);
-        
-        GroupPageProjection groupPage = await groupPageTask;
-        var members = await membersTask;
+        GroupPageProjection groupPage = await groupPageService.GetFirstGroupPageAsync(ct);
+        var members = await memberService.GetAllAsync(ct);
         
         var groupPageDto = mapper.Map<GroupPageResponse>(groupPage);
         var membersShort = mapper.Map<IEnumerable<MemberShortResponse>>(members);

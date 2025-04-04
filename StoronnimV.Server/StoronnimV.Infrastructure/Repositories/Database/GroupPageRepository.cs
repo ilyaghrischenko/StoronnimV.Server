@@ -11,18 +11,17 @@ namespace StoronnimV.Infrastructure.Repositories.Database;
 /// <summary>
 /// Репозиторий для получения данных напрямую с бд
 /// </summary>
-/// <param name="contextFactory"></param>
-public class GroupPageRepository(IDbContextFactory<StoronnimVContext> contextFactory) : 
-    Repository<GroupPage>(contextFactory), IGroupPageRepository
+/// <param name="context"></param>
+public class GroupPageRepository(StoronnimVContext context) : 
+    Repository<GroupPage>(context), IGroupPageRepository
 {
-    private readonly IDbContextFactory<StoronnimVContext> _contextFactory = contextFactory;
+    private readonly StoronnimVContext _context = context;
 
     public async Task<GroupPageProjection?> GetByIdAsNoTrackingAsync(long id, CancellationToken ct)
     {
         ct.ThrowIfCancellationRequested();
 
-        await using StoronnimVContext context = await _contextFactory.CreateDbContextAsync(ct);
-        var dbSet = context.GroupPages;
+        var dbSet = _context.GroupPages;
         var query = ApplyIncludes(dbSet);
 
         GroupPageProjection? result = await query
@@ -42,8 +41,7 @@ public class GroupPageRepository(IDbContextFactory<StoronnimVContext> contextFac
     {
         ct.ThrowIfCancellationRequested();
 
-        await using StoronnimVContext context = await _contextFactory.CreateDbContextAsync(ct);
-        var dbSet = context.GroupPages;
+        var dbSet = _context.GroupPages;
         var query = ApplyIncludes(dbSet);
         
         var result = await query
@@ -63,8 +61,7 @@ public class GroupPageRepository(IDbContextFactory<StoronnimVContext> contextFac
     {
         ct.ThrowIfCancellationRequested();
 
-        await using StoronnimVContext context = await _contextFactory.CreateDbContextAsync(ct);
-        var dbSet = context.GroupPages;
+        var dbSet = _context.GroupPages;
         var query = ApplyIncludes(dbSet);
         
         GroupPageProjection? result = await query

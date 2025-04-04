@@ -11,17 +11,16 @@ using StoronnimV.Infrastructure.Repositories.Database.Shared;
 namespace StoronnimV.Infrastructure.Repositories.Database;
 
 public class AdminRepository(
-    IDbContextFactory<StoronnimVContext> contextFactory)
-    : Repository<Admin>(contextFactory), IAdminRepository
+    StoronnimVContext context)
+    : Repository<Admin>(context), IAdminRepository
 {
-    private readonly IDbContextFactory<StoronnimVContext> _contextFactory = contextFactory;
-    
+    private readonly StoronnimVContext _context = context;
+
     public async Task<AdminProjection?> GetByIdAsNoTrackingAsync(long id, CancellationToken ct)
     {
         ct.ThrowIfCancellationRequested();
         
-        await using StoronnimVContext context = await _contextFactory.CreateDbContextAsync(ct);
-        var dbSet = context.Admins;
+        var dbSet = _context.Admins;
         var query = ApplyIncludes(dbSet);
 
         AdminProjection? result = await query
@@ -41,8 +40,7 @@ public class AdminRepository(
     {
         ct.ThrowIfCancellationRequested();
 
-        await using StoronnimVContext context = await _contextFactory.CreateDbContextAsync(ct);
-        var dbSet = context.Admins;
+        var dbSet = _context.Admins;
         var query = ApplyIncludes(dbSet);
 
         Admin? result = await query
@@ -56,8 +54,7 @@ public class AdminRepository(
     {
         ct.ThrowIfCancellationRequested();
 
-        await using StoronnimVContext context = await _contextFactory.CreateDbContextAsync(ct);
-        var dbSet = context.Admins;
+        var dbSet = _context.Admins;
         var query = ApplyIncludes(dbSet);
 
         var result = await query

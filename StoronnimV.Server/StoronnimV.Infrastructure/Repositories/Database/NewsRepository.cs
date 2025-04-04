@@ -12,11 +12,11 @@ namespace StoronnimV.Infrastructure.Repositories.Database;
 /// <summary>
 /// Репозиторий для конкретной сущности, нужен для описания метода с инклудами, а так же для специальных селект методов
 /// </summary>
-/// <param name="contextFactory"></param>
-public class NewsRepository(IDbContextFactory<StoronnimVContext> contextFactory)
-    : Repository<News>(contextFactory), INewsRepository
+/// <param name="context"></param>
+public class NewsRepository(StoronnimVContext context)
+    : Repository<News>(context), INewsRepository
 {
-    private readonly IDbContextFactory<StoronnimVContext> _contextFactory = contextFactory;
+    private readonly StoronnimVContext _context = context;
 
     protected override IQueryable<News> ApplyIncludes(IQueryable<News> dbSet)
     {
@@ -27,8 +27,7 @@ public class NewsRepository(IDbContextFactory<StoronnimVContext> contextFactory)
     {
         ct.ThrowIfCancellationRequested();
 
-        await using StoronnimVContext context = await _contextFactory.CreateDbContextAsync(ct);
-        var dbSet = context.NewsItems;
+        var dbSet = _context.NewsItems;
         var query = ApplyIncludes(dbSet);
 
         NewsFullProjection? result = await query
@@ -52,8 +51,7 @@ public class NewsRepository(IDbContextFactory<StoronnimVContext> contextFactory)
     {
         ct.ThrowIfCancellationRequested();
 
-        await using StoronnimVContext context = await _contextFactory.CreateDbContextAsync(ct);
-        var dbSet = context.NewsItems;
+        var dbSet = _context.NewsItems;
         var query = ApplyIncludes(dbSet);
         
         var result = await query
@@ -78,9 +76,7 @@ public class NewsRepository(IDbContextFactory<StoronnimVContext> contextFactory)
     {
         ct.ThrowIfCancellationRequested();
 
-        await using StoronnimVContext context = await _contextFactory.CreateDbContextAsync(ct);
-        
-        int result = await context.NewsItems.CountAsync(ct);
+        int result = await _context.NewsItems.CountAsync(ct);
         
         return result;
     }
@@ -89,8 +85,7 @@ public class NewsRepository(IDbContextFactory<StoronnimVContext> contextFactory)
     {
         ct.ThrowIfCancellationRequested();
 
-        await using StoronnimVContext context = await _contextFactory.CreateDbContextAsync(ct);
-        var dbSet = context.NewsItems;
+        var dbSet = _context.NewsItems;
         var query = ApplyIncludes(dbSet);
         
         var result = await query

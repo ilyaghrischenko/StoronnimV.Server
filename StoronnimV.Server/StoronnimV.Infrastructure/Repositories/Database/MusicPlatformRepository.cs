@@ -8,17 +8,16 @@ using StoronnimV.Infrastructure.Repositories.Database.Shared;
 
 namespace StoronnimV.Infrastructure.Repositories.Database;
 
-public class MusicPlatformRepository(IDbContextFactory<StoronnimVContext> contextFactory)
-    : Repository<MusicPlatform>(contextFactory), IMusicPlatformRepository
+public class MusicPlatformRepository(StoronnimVContext context)
+    : Repository<MusicPlatform>(context), IMusicPlatformRepository
 {
-    private readonly IDbContextFactory<StoronnimVContext> _contextFactory = contextFactory;
-    
+    private readonly StoronnimVContext _context = context;
+
     public async Task<MusicPlatformProjection?> GetByIdAsNoTrackingAsync(long id, CancellationToken ct)
     {
         ct.ThrowIfCancellationRequested();
 
-        await using StoronnimVContext context = await _contextFactory.CreateDbContextAsync(ct);
-        var dbSet = context.MusicPlatforms;
+        var dbSet = _context.MusicPlatforms;
         var query = ApplyIncludes(dbSet);
         
         MusicPlatformProjection? result = await query
@@ -38,8 +37,7 @@ public class MusicPlatformRepository(IDbContextFactory<StoronnimVContext> contex
     {
         ct.ThrowIfCancellationRequested();
 
-        await using StoronnimVContext context = await _contextFactory.CreateDbContextAsync(ct);
-        var dbSet = context.MusicPlatforms;
+        var dbSet = _context.MusicPlatforms;
         var query = ApplyIncludes(dbSet);
         
         var result = await query

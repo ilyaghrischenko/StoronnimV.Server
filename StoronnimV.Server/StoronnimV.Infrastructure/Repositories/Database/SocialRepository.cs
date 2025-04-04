@@ -11,11 +11,11 @@ namespace StoronnimV.Infrastructure.Repositories.Database;
 /// <summary>
 /// Репозиторий для получения данных напрямую с бд
 /// </summary>
-/// <param name="contextFactory"></param>
-public class SocialRepository(IDbContextFactory<StoronnimVContext> contextFactory)
-    : Repository<Social>(contextFactory), ISocialRepository
+/// <param name="context"></param>
+public class SocialRepository(StoronnimVContext context)
+    : Repository<Social>(context), ISocialRepository
 {
-    private readonly IDbContextFactory<StoronnimVContext> _contextFactory = contextFactory;
+    private readonly StoronnimVContext _context = context;
 
     protected override IQueryable<Social> ApplyIncludes(IQueryable<Social> dbSet)
     {
@@ -26,8 +26,7 @@ public class SocialRepository(IDbContextFactory<StoronnimVContext> contextFactor
     {
         ct.ThrowIfCancellationRequested();
 
-        await using StoronnimVContext context = await _contextFactory.CreateDbContextAsync(ct);
-        var dbSet = context.Socials;
+        var dbSet = _context.Socials;
         var query = ApplyIncludes(dbSet);
 
         SocialProjection? result = await query

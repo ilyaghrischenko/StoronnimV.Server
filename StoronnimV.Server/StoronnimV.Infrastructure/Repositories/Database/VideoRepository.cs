@@ -12,20 +12,17 @@ namespace StoronnimV.Infrastructure.Repositories.Database;
 /// <summary>
 /// Репозиторий для получения данных напрямую с бд
 /// </summary>
-/// <param name="contextFactory"></param>
-/// <param name="logger"></param>
-public class VideoRepository(IDbContextFactory<StoronnimVContext> contextFactory)
-    : Repository<Video>(contextFactory), IVideoRepository
+/// <param name="context"></param>
+public class VideoRepository(StoronnimVContext context)
+    : Repository<Video>(context), IVideoRepository
 {
-    private readonly IDbContextFactory<StoronnimVContext> _contextFactory = contextFactory;
+    private readonly StoronnimVContext _context = context;
 
     public async Task<VideoFullProjection?> GetByIdAsNoTrackingAsync(long id, CancellationToken ct)
     {
         ct.ThrowIfCancellationRequested();
 
-        await using StoronnimVContext context = await _contextFactory.CreateDbContextAsync(ct);
-
-        VideoFullProjection? video = await context.Videos
+        VideoFullProjection? video = await _context.Videos
             .AsNoTracking()
             .Select(v => new VideoFullProjection
             {
@@ -43,9 +40,7 @@ public class VideoRepository(IDbContextFactory<StoronnimVContext> contextFactory
     {
         ct.ThrowIfCancellationRequested();
 
-        await using StoronnimVContext context = await _contextFactory.CreateDbContextAsync(ct);
-
-        VideoFullProjection? promotionVideo = await context.Videos
+        VideoFullProjection? promotionVideo = await _context.Videos
             .AsNoTracking()
             .Where(video => video.Type == VideoType.Promotion)
             .Select(video => new VideoFullProjection
@@ -68,9 +63,7 @@ public class VideoRepository(IDbContextFactory<StoronnimVContext> contextFactory
         string type = (string)args[0];
         var typeEnum = Enum.Parse<VideoType>(type);
         
-        await using StoronnimVContext context = await _contextFactory.CreateDbContextAsync(ct);
-
-        var videos = await context.Videos
+        var videos = await _context.Videos
             .AsNoTracking()
             .Where(video => video.Type == typeEnum)
             .Skip((page - 1) * pageSize)
@@ -94,9 +87,7 @@ public class VideoRepository(IDbContextFactory<StoronnimVContext> contextFactory
         string type = (string)args[0];
         var typeEnum = Enum.Parse<VideoType>(type);
         
-        await using StoronnimVContext context = await _contextFactory.CreateDbContextAsync(ct);
-
-        int count = await context.Videos
+        int count = await _context.Videos
             .AsNoTracking()
             .Where(video => video.Type == typeEnum)
             .CountAsync(ct);

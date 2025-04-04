@@ -7,9 +7,9 @@ namespace StoronnimV.Infrastructure.Repositories.Database.Shared;
 /// <summary>
 /// Общий репозиторий (Generic), нужен для круд запросов для каждой из сущностей
 /// </summary>
-/// <param name="contextFactory"></param>
+/// <param name="context"></param>
 /// <typeparam name="T">Entity</typeparam>
-public class Repository<T>(IDbContextFactory<StoronnimVContext> contextFactory)
+public class Repository<T>(StoronnimVContext context)
     : IRepository<T> where T : BaseEntity
 {
     protected virtual IQueryable<T> ApplyIncludes(IQueryable<T> dbSet)
@@ -21,7 +21,6 @@ public class Repository<T>(IDbContextFactory<StoronnimVContext> contextFactory)
     {
         ct.ThrowIfCancellationRequested();
 
-        await using StoronnimVContext context = await contextFactory.CreateDbContextAsync(ct);
         var dbSet = context.Set<T>();
         var query = ApplyIncludes(dbSet);
 
@@ -33,7 +32,6 @@ public class Repository<T>(IDbContextFactory<StoronnimVContext> contextFactory)
     {
         ct.ThrowIfCancellationRequested();
 
-        await using StoronnimVContext context = await contextFactory.CreateDbContextAsync(ct);
         var dbSet = context.Set<T>();
         
         await dbSet.AddAsync(entity, ct);
@@ -44,7 +42,6 @@ public class Repository<T>(IDbContextFactory<StoronnimVContext> contextFactory)
     {
         ct.ThrowIfCancellationRequested();
 
-        await using StoronnimVContext context = await contextFactory.CreateDbContextAsync(ct);
         var dbSet = context.Set<T>();
 
         dbSet.Update(entity);
@@ -57,7 +54,6 @@ public class Repository<T>(IDbContextFactory<StoronnimVContext> contextFactory)
     {
         ct.ThrowIfCancellationRequested();
 
-        await using StoronnimVContext context = await contextFactory.CreateDbContextAsync(ct);
         var dbSet = context.Set<T>();
         
         dbSet.Remove(entity);

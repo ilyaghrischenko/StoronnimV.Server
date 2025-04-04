@@ -1,0 +1,7 @@
+2025-04-04 15:11:52.366 +03:00 [ERR] EXCEPTION - MoveNext: News with id: 2 was not found (Method: StoronnimV.Application.Services.Entities.NewsService+<GetItemByIdAsync>d__4.MoveNext)
+2025-04-04 15:11:57.437 +03:00 [ERR] EXCEPTION - MoveNext: News with id: 10 was not found (Method: StoronnimV.Application.Services.Entities.NewsService+<GetItemByIdAsync>d__4.MoveNext)
+2025-04-04 15:12:00.916 +03:00 [ERR] EXCEPTION - MoveNext: News with id: 15 was not found (Method: StoronnimV.Application.Services.Entities.NewsService+<GetItemByIdAsync>d__4.MoveNext)
+2025-04-04 15:12:03.861 +03:00 [ERR] EXCEPTION - MoveNext: News with id: 25 was not found (Method: StoronnimV.Application.Services.Entities.NewsService+<GetItemByIdAsync>d__4.MoveNext)
+2025-04-04 15:12:07.289 +03:00 [ERR] EXCEPTION - MoveNext: News with id: 34 was not found (Method: StoronnimV.Application.Services.Entities.NewsService+<GetItemByIdAsync>d__4.MoveNext)
+2025-04-04 15:12:09.948 +03:00 [ERR] EXCEPTION - MoveNext: News with id: 1 was not found (Method: StoronnimV.Application.Services.Entities.NewsService+<GetItemByIdAsync>d__4.MoveNext)
+2025-04-04 15:12:54.220 +03:00 [ERR] EXCEPTION - MoveNext: Schedule with id: 1 was not found (Method: StoronnimV.Application.Services.Entities.ScheduleService+<GetItemByIdAsync>d__3.MoveNext)

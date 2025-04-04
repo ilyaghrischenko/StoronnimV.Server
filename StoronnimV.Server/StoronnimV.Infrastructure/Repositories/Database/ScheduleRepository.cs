@@ -12,18 +12,17 @@ namespace StoronnimV.Infrastructure.Repositories.Database;
 /// <summary>
 /// Репозиторий для получения данных напрямую с бд
 /// </summary>
-/// <param name="contextFactory"></param>
-public class ScheduleRepository(IDbContextFactory<StoronnimVContext> contextFactory)
-    : Repository<Schedule>(contextFactory), IScheduleRepository
+/// <param name="context"></param>
+public class ScheduleRepository(StoronnimVContext context)
+    : Repository<Schedule>(context), IScheduleRepository
 {
-    private readonly IDbContextFactory<StoronnimVContext> _contextFactory = contextFactory;
+    private readonly StoronnimVContext _context = context;
 
     public async Task<ScheduleFullProjection?> GetByIdAsNoTrackingAsync(long id, CancellationToken ct)
     {
         ct.ThrowIfCancellationRequested();
 
-        await using StoronnimVContext context = await _contextFactory.CreateDbContextAsync(ct);
-        var dbSet = context.Schedules;
+        var dbSet = _context.Schedules;
         var query = ApplyIncludes(dbSet);
 
         ScheduleFullProjection? result = await query
@@ -47,8 +46,7 @@ public class ScheduleRepository(IDbContextFactory<StoronnimVContext> contextFact
     {
         ct.ThrowIfCancellationRequested();
 
-        await using StoronnimVContext context = await _contextFactory.CreateDbContextAsync(ct);
-        var dbSet = context.Schedules;
+        var dbSet = _context.Schedules;
         var query = ApplyIncludes(dbSet);
 
         var result = await dbSet.ToListAsync(ct);
@@ -60,8 +58,7 @@ public class ScheduleRepository(IDbContextFactory<StoronnimVContext> contextFact
     {
         ct.ThrowIfCancellationRequested();
 
-        await using StoronnimVContext context = await _contextFactory.CreateDbContextAsync(ct);
-        var dbSet = context.Schedules;
+        var dbSet = _context.Schedules;
         var query = ApplyIncludes(dbSet);
 
         ScheduleShortProjection? result = await query
@@ -85,8 +82,7 @@ public class ScheduleRepository(IDbContextFactory<StoronnimVContext> contextFact
     {
         ct.ThrowIfCancellationRequested();
 
-        await using StoronnimVContext context = await _contextFactory.CreateDbContextAsync(ct);
-        var dbSet = context.Schedules;
+        var dbSet = _context.Schedules;
         var query = ApplyIncludes(dbSet);
 
         var result = await query
@@ -112,9 +108,7 @@ public class ScheduleRepository(IDbContextFactory<StoronnimVContext> contextFact
     {
         ct.ThrowIfCancellationRequested();
 
-        await using StoronnimVContext context = await _contextFactory.CreateDbContextAsync(ct);
-
-        int count = await context.Schedules
+        int count = await _context.Schedules
             .Where(schedule => schedule.Status == ScheduleStatus.Active)
             .CountAsync(ct);
 

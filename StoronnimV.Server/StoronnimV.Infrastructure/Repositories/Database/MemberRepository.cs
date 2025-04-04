@@ -12,11 +12,11 @@ namespace StoronnimV.Infrastructure.Repositories.Database;
 /// <summary>
 /// Репозиторий для получения данных напрямую с бд
 /// </summary>
-/// <param name="contextFactory"></param>
-public class MemberRepository(IDbContextFactory<StoronnimVContext> contextFactory)
-    : Repository<Member>(contextFactory), IMemberRepository
+/// <param name="context"></param>
+public class MemberRepository(StoronnimVContext context)
+    : Repository<Member>(context), IMemberRepository
 {
-    private readonly IDbContextFactory<StoronnimVContext> _contextFactory = contextFactory;
+    private readonly StoronnimVContext _context = context;
 
     protected override IQueryable<Member> ApplyIncludes(IQueryable<Member> dbSet)
     {
@@ -27,8 +27,7 @@ public class MemberRepository(IDbContextFactory<StoronnimVContext> contextFactor
     {
         ct.ThrowIfCancellationRequested();
 
-        await using StoronnimVContext context = await _contextFactory.CreateDbContextAsync(ct);
-        var dbSet = context.Members;
+        var dbSet = _context.Members;
         var query = ApplyIncludes(dbSet);
 
         MemberFullProjection? result = await query
@@ -56,9 +55,7 @@ public class MemberRepository(IDbContextFactory<StoronnimVContext> contextFactor
     {
         ct.ThrowIfCancellationRequested();
 
-        await using StoronnimVContext context = await _contextFactory.CreateDbContextAsync(ct);
-        
-        var result = await context.Members
+        var result = await _context.Members
             .AsNoTracking()
             .Select(member => new MemberShortProjection
             {

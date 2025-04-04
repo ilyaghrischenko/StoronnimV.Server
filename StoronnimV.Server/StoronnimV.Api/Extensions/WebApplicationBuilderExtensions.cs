@@ -113,11 +113,11 @@ public static class WebApplicationBuilderExtensions
         return builder;
     }
 
-    public static WebApplicationBuilder AddPooledDbContextFactory(this WebApplicationBuilder builder)
+    public static WebApplicationBuilder AddDbContext(this WebApplicationBuilder builder)
     {
         string? connectionString = builder.Configuration.GetConnectionString("CloudConnection");
 
-        builder.Services.AddPooledDbContextFactory<StoronnimVContext>(options =>
+        builder.Services.AddDbContext<StoronnimVContext>(options =>
             options.UseNpgsql(connectionString));
 
         return builder;
