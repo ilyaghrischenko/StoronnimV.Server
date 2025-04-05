@@ -169,8 +169,9 @@ public class ScheduleService(
         await scheduleRepository.UpdateAsync(schedule, () =>
         {
             schedule.Title = request.Title;
-            schedule.PerformanceDateTime = DateTime.ParseExact(request.PerformanceDateTime, "dd.MM.yyyy HH.mm",
-                CultureInfo.InvariantCulture);
+            schedule.PerformanceDateTime = DateTime.SpecifyKind(DateTime.ParseExact(request.PerformanceDateTime, "dd.MM.yyyy HH.mm",
+                CultureInfo.InvariantCulture),
+                DateTimeKind.Utc);
             schedule.Description = request.Description;
             schedule.Location = request.Location;
         }, ct);
