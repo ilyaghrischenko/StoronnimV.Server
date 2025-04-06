@@ -1,9 +1,7 @@
 using AutoMapper;
-using Microsoft.Extensions.Logging;
 using StoronnimV.Application.Contracts.Controllers;
 using StoronnimV.Application.Contracts.Entities;
 using StoronnimV.Application.DTO.Responses.MusicPage;
-using StoronnimV.Application.DTO.Responses.SchedulePage;
 using StoronnimV.Domain.Projections;
 
 namespace StoronnimV.Application.Services.Controllers;

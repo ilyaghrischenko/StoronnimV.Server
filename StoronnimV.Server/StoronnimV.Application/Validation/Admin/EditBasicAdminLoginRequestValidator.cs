@@ -10,7 +10,7 @@ public class EditBasicAdminLoginRequestValidator : AbstractValidator<EditBasicAd
         RuleFor(x => x.NewLogin)
             .NotEmpty().WithMessage("Login is required")
             .MinimumLength(4).WithMessage("Login must be at least 4 characters long")
-            .Matches(@"[A-Za-z]").WithMessage("Login must contain at least one letter")
-            .Matches(@"[0-9]").WithMessage("Login must contain at least one number");
+            .Matches("[A-Za-z]").WithMessage("Login must contain at least one letter")
+            .Matches("[0-9]").WithMessage("Login must contain at least one number");
     }
 }

@@ -1,5 +1,4 @@
 using System.Security.Claims;
-using Microsoft.AspNetCore.Http;
 using StoronnimV.Domain.Entities;
 
 namespace StoronnimV.Application.Contracts.Identity;

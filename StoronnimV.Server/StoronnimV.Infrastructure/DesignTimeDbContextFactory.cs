@@ -12,7 +12,7 @@ public class DesignTimeDbContextFactory : IDesignTimeDbContextFactory<StoronnimV
     public StoronnimVContext CreateDbContext(string[] args)
     {
         string currentDirectory = Directory.GetCurrentDirectory();
-        string relativePath = "../StoronnimV.Api";
+        const string relativePath = "../StoronnimV.Api";
         
         IConfigurationRoot configuration = new ConfigurationBuilder()
             .SetBasePath(Path.Combine(currentDirectory, relativePath))

@@ -1,12 +1,6 @@
-using StoronnimV.Application.DTO.Requests.Entities.Admin;
 using StoronnimV.Application.DTO.Requests.Entities.Pages.Addition;
 using StoronnimV.Application.DTO.Requests.Entities.Pages.Editing;
 using StoronnimV.Application.DTO.Requests.Entities.Pages.Editing.Media;
-using StoronnimV.Application.DTO.Responses.Admin;
-using StoronnimV.Application.DTO.Responses.GroupPage;
-using StoronnimV.Application.DTO.Responses.NewsPage;
-using StoronnimV.Application.DTO.Responses.Shared;
-using StoronnimV.Application.DTO.Responses.Video;
 
 namespace StoronnimV.Application.Contracts.Controllers;
 

@@ -1,10 +1,7 @@
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Logging;
-using StoronnimV.Domain.Contracts;
 using StoronnimV.Domain.Contracts.Database;
 using StoronnimV.Domain.Entities;
 using StoronnimV.Domain.Enums;
-using StoronnimV.Domain.Projections;
 using StoronnimV.Domain.Projections.Admin;
 using StoronnimV.Infrastructure.Repositories.Database.Shared;
 

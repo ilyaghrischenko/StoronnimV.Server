@@ -1,5 +1,4 @@
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
 using StoronnimV.Domain.Entities;
 
 namespace StoronnimV.Infrastructure;

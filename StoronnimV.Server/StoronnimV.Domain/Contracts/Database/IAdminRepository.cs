@@ -1,6 +1,5 @@
 using StoronnimV.Domain.Contracts.Database.Shared;
 using StoronnimV.Domain.Entities;
-using StoronnimV.Domain.Projections;
 using StoronnimV.Domain.Projections.Admin;
 
 namespace StoronnimV.Domain.Contracts.Database;

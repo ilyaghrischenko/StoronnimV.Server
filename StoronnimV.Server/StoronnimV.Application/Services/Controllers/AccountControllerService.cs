@@ -1,9 +1,7 @@
 using System.Security.Claims;
 using Microsoft.AspNetCore.Http;
-using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using StoronnimV.Application.Contracts.Controllers;
-using StoronnimV.Application.Contracts.Entities;
 using StoronnimV.Application.Contracts.Identity;
 using StoronnimV.Application.DTO.Requests.Account;
 using StoronnimV.Application.Options;

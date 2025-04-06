@@ -1,5 +1,4 @@
 using AutoMapper;
-using FluentValidation.AspNetCore;
 using Hangfire;
 using HealthChecks.UI.Client;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
@@ -12,7 +11,6 @@ using StoronnimV.Application.Mapping.Home;
 using StoronnimV.Application.Mapping.News;
 using StoronnimV.Application.Mapping.Schedule;
 using StoronnimV.Application.Services.Background;
-using StoronnimV.Application.Validation.Admin;
 using StoronnimV.Infrastructure;
 
 WebApplicationBuilder builder = WebApplication.CreateBuilder(args);

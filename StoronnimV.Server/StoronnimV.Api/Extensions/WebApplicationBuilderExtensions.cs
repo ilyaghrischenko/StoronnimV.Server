@@ -1,4 +1,3 @@
-using System.Net;
 using System.Threading.RateLimiting;
 using FluentValidation;
 using FluentValidation.AspNetCore;
@@ -6,12 +5,10 @@ using Hangfire;
 using Hangfire.PostgreSql;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.RateLimiting;
 using Microsoft.AspNetCore.ResponseCompression;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
-using Microsoft.Extensions.Options;
 using Microsoft.OpenApi.Models;
 using Serilog;
 using StoronnimV.Application.Contracts.Controllers;
@@ -310,7 +307,7 @@ public static class WebApplicationBuilderExtensions
 
     private static void AddLimiterPolicy(RateLimiterOptions options, string policyName, int limit, TimeSpan expiration)
     {
-        options.AddPolicy(policyName, httpContext =>
+        options.AddPolicy(policyName, _ =>
             RateLimitPartition.GetFixedWindowLimiter(policyName, _ => new FixedWindowRateLimiterOptions
             {
                 PermitLimit = limit,

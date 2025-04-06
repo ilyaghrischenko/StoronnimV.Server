@@ -1,6 +1,5 @@
 using AutoMapper;
 using StoronnimV.Application.DTO.Responses.Admin;
-using StoronnimV.Domain.Projections;
 using StoronnimV.Domain.Projections.Admin;
 
 namespace StoronnimV.Application.Mapping.Admin;
