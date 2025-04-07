@@ -21,23 +21,24 @@ public class GroupPageService(
     public async Task<GroupPageProjection> GetItemByIdAsync(long id, CancellationToken ct)
     {
         GroupPageProjection groupPage = await groupPageRepository.GetByIdAsNoTrackingAsync(id, ct)
-                                        ?? throw new EntityNotFoundException($"GroupPage with {nameof(id)}: {id} was not found");
-        
+                                        ?? throw new EntityNotFoundException(
+                                            $"GroupPage with {nameof(id)}: {id} was not found");
+
         return groupPage;
     }
 
     public async Task<IEnumerable<GroupPageProjection>> GetAllAsync(CancellationToken ct)
     {
         var groupPages = await groupPageRepository.GetAllAsNoTrackingAsync(ct);
-        
+
         return groupPages ?? new List<GroupPageProjection>();
     }
-    
+
     public async Task<GroupPageProjection> GetFirstGroupPageAsync(CancellationToken ct)
     {
         GroupPageProjection groupPage = await groupPageRepository.GetFirstGroupPageAsync(ct)
                                         ?? throw new EntityNotFoundException($"GroupPage was not found");
-        
+
         return groupPage;
     }
 
@@ -53,12 +54,16 @@ public class GroupPageService(
             PhotoUrl = "default",
             Description = request.Description,
         };
-        
+
         await groupPageRepository.AddAsync(groupPage, ct);
-        
+
         string groupPageBlobName = $"group-page-{groupPage.Id}";
-        string groupPagePhotoUrl = await blobRepository.AddFileAndGetUrlAsync("storonnimv-photo", groupPageBlobName, request.PhotoUrl.OpenReadStream(), ct);
-        
+
+        string extension = Path.GetExtension(request.PhotoUrl.FileName);
+        string groupPagePhotoUrl = await blobRepository.AddFileAndGetUrlAsync("storonnimv-photo",
+            $"{groupPageBlobName}{extension}",
+            request.PhotoUrl.OpenReadStream(), ct);
+
         await groupPageRepository.UpdateAsync(groupPage, () => groupPage.PhotoUrl = groupPagePhotoUrl, ct);
     }
 
@@ -85,38 +90,43 @@ public class GroupPageService(
     public async Task UpdateGroupPageAsync(GroupPageEditRequest request, CancellationToken ct)
     {
         GroupPage? groupPage = await groupPageRepository.GetByIdAsync(request.Id, ct);
-        
+
         if (groupPage is null)
         {
             throw new EntityNotFoundException($"GroupPage with {nameof(request.Id)}: {request.Id} was not found");
         }
-        
+
         if (string.IsNullOrEmpty(request.Description))
         {
             throw new ArgumentException("Description is required");
         }
-        
+
         await groupPageRepository.UpdateAsync(groupPage, () => groupPage.Description = request.Description, ct);
     }
 
     public async Task UpdateGroupPagePhotoAsync(PhotoEditRequest request, CancellationToken ct)
     {
         GroupPage? groupPage = await groupPageRepository.GetByIdAsync(request.Id, ct);
-        
+
         if (groupPage is null)
         {
             throw new EntityNotFoundException($"GroupPage with {nameof(request.Id)}: {request.Id} was not found");
         }
-        
+
         if (request.Photo is null)
         {
             throw new ArgumentException("Photo is required");
         }
-        
+
         string groupPageBlobName = $"group-page-{groupPage.Id}";
+
         await blobRepository.DeleteAllFilesByNameAsync("storonnimv-photo", groupPageBlobName, ct);
-        string groupPagePhotoUrl = await blobRepository.AddFileAndGetUrlAsync("storonnimv-photo", groupPageBlobName, request.Photo.OpenReadStream(), ct);
-        
+
+
+        string extension = Path.GetExtension(request.Photo.FileName);
+        string groupPagePhotoUrl = await blobRepository.AddFileAndGetUrlAsync("storonnimv-photo",
+            $"{groupPageBlobName}{extension}", request.Photo.OpenReadStream(), ct);
+
         await groupPageRepository.UpdateAsync(groupPage, () => groupPage.PhotoUrl = groupPagePhotoUrl, ct);
     }
 }

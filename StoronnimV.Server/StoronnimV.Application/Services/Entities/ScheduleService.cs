@@ -126,7 +126,8 @@ public class ScheduleService(
 
         if (request.Photo != null)
         {
-            string photoUrl = await blobRepository.AddFileAndGetUrlAsync("storonnimv-photo", $"schedule-{schedule.Id}",
+            string extension = Path.GetExtension(request.Photo.FileName);
+            string photoUrl = await blobRepository.AddFileAndGetUrlAsync("storonnimv-photo", $"schedule-{schedule.Id}{extension}",
                 request.Photo.OpenReadStream(), ct);
             await scheduleRepository.UpdateAsync(schedule, () => schedule.Photo = photoUrl, ct);
         }
@@ -188,8 +189,10 @@ public class ScheduleService(
 
         await blobRepository.DeleteAllFilesByNameAsync("storonnimv-photo", scheduleBlobName, ct);
 
+    
+        string extension = Path.GetExtension(request.Photo.FileName);
         string schedulePhotoUrl = await blobRepository.AddFileAndGetUrlAsync
-            ("storonnimv-photo", scheduleBlobName, request.Photo.OpenReadStream(), ct);
+            ("storonnimv-photo", $"{scheduleBlobName}{extension}", request.Photo.OpenReadStream(), ct);
 
         await scheduleRepository.UpdateAsync(schedule, () => schedule.Photo = schedulePhotoUrl, ct);
     }

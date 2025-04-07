@@ -17,8 +17,9 @@ public class MusicPlatformService(
     public async Task<MusicPlatformProjection> GetItemByIdAsync(long id, CancellationToken ct)
     {
         MusicPlatformProjection musicPlatform = await musicPlatformRepository.GetByIdAsNoTrackingAsync(id, ct)
-                                                ?? throw new EntityNotFoundException($"Music Platform with {nameof(id)}: {id} was not found");
-        
+                                                ?? throw new EntityNotFoundException(
+                                                    $"Music Platform with {nameof(id)}: {id} was not found");
+
         return musicPlatform;
     }
 
@@ -29,7 +30,7 @@ public class MusicPlatformService(
         {
             return new List<MusicPlatformProjection>();
         }
-        
+
         return allMusicPlatforms
             .ToList();
     }
@@ -46,16 +47,20 @@ public class MusicPlatformService(
             BgImageUrl = "default",
             PlatformUrl = request.PlatformUrl
         };
-        
+
         await musicPlatformRepository.AddAsync(musicPlatform, ct);
-        
+
         string musicPlatformBlobName = $"music-platform-{musicPlatform.Id}";
+
+        string extension = Path.GetExtension(request.BgImageUrl.FileName);
         string musicPlatformPhotoUrl = await blobRepository
-            .AddFileAndGetUrlAsync("storonnimv-photo", musicPlatformBlobName, request.BgImageUrl.OpenReadStream(), ct);
-        
-        await musicPlatformRepository.UpdateAsync(musicPlatform, () => musicPlatform.BgImageUrl = musicPlatformPhotoUrl, ct);
+            .AddFileAndGetUrlAsync("storonnimv-photo", $"{musicPlatformBlobName}{extension}",
+                request.BgImageUrl.OpenReadStream(), ct);
+
+        await musicPlatformRepository.UpdateAsync(musicPlatform, () => musicPlatform.BgImageUrl = musicPlatformPhotoUrl,
+            ct);
     }
-    
+
     /// <summary>
     /// Music platform deletion from database
     /// </summary>
@@ -79,31 +84,34 @@ public class MusicPlatformService(
     public async Task UpdateMusicPlatformAsync(MusicPlatformEditRequest request, CancellationToken ct)
     {
         MusicPlatform? musicPlatform = await musicPlatformRepository.GetByIdAsync(request.Id, ct);
-        
+
         if (musicPlatform is null)
         {
             throw new EntityNotFoundException($"Music Platform with {nameof(request.Id)}: {request.Id} was not found");
         }
-        
-        await musicPlatformRepository.UpdateAsync(musicPlatform, () => musicPlatform.PlatformUrl = request.PlatformUrl, ct);
+
+        await musicPlatformRepository.UpdateAsync(musicPlatform, () => musicPlatform.PlatformUrl = request.PlatformUrl,
+            ct);
     }
 
     public async Task UpdateMusicPlatformPhotoAsync(PhotoEditRequest request, CancellationToken ct)
     {
         MusicPlatform? musicPlatform = await musicPlatformRepository.GetByIdAsync(request.Id, ct);
-        
+
         if (musicPlatform is null)
         {
             throw new EntityNotFoundException($"Music Platform with {nameof(request.Id)}: {request.Id} was not found");
         }
-        
+
         string musicPlatformBlobName = $"music-platform-{musicPlatform.Id}";
-        
         await blobRepository.DeleteAllFilesByNameAsync("storonnimv-photo", musicPlatformBlobName, ct);
-        
+
+        string extension = Path.GetExtension(request.Photo.FileName);
+
         string musicPlatformPhotoUrl = await blobRepository.AddFileAndGetUrlAsync
-            ("storonnimv-photo", musicPlatformBlobName, request.Photo.OpenReadStream(), ct);
-        
-        await musicPlatformRepository.UpdateAsync(musicPlatform, () => musicPlatform.BgImageUrl = musicPlatformPhotoUrl, ct);
+            ("storonnimv-photo", $"{musicPlatformBlobName}{extension}", request.Photo.OpenReadStream(), ct);
+
+        await musicPlatformRepository.UpdateAsync(musicPlatform, () => musicPlatform.BgImageUrl = musicPlatformPhotoUrl,
+            ct);
     }
 }

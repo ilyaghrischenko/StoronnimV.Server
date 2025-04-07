@@ -52,8 +52,10 @@ public class MemberService(
         await memberRepository.AddAsync(member, ct);
 
         string memberPhotoBlobName = $"member-{member.Id}";
+        string extension = Path.GetExtension(request.PhotoUrl.FileName);
         string memberPhotoUrl = await blobRepository
-            .AddFileAndGetUrlAsync("storonnimv-photo", memberPhotoBlobName, request.PhotoUrl.OpenReadStream(), ct);
+            .AddFileAndGetUrlAsync("storonnimv-photo", $"{memberPhotoBlobName}{extension}",
+                request.PhotoUrl.OpenReadStream(), ct);
 
         await memberRepository.UpdateAsync(member, () => member.PhotoUrl = memberPhotoUrl, ct);
     }
@@ -109,8 +111,9 @@ public class MemberService(
 
         await blobRepository.DeleteAllFilesByNameAsync("storonnimv-photo", memberPhotoBlobName, ct);
 
+        string extension = Path.GetExtension(request.Photo.FileName);
         string memberPhotoUrl = await blobRepository.AddFileAndGetUrlAsync
-            ("storonnimv-photo", memberPhotoBlobName, request.Photo.OpenReadStream(), ct);
+            ("storonnimv-photo", $"{memberPhotoBlobName}{extension}", request.Photo.OpenReadStream(), ct);
 
         await memberRepository.UpdateAsync(member, () => member.PhotoUrl = memberPhotoUrl, ct);
     }
