@@ -126,6 +126,7 @@ public static class WebApplicationBuilderExtensions
         builder.Services.AddValidatorsFromAssemblyContaining<LogInRequestValidator>();
         builder.Services.AddValidatorsFromAssemblyContaining<EditBasicAdminLoginRequestValidator>();
         builder.Services.AddValidatorsFromAssemblyContaining<EditBasicAdminPasswordRequestValidator>();
+        builder.Services.AddValidatorsFromAssemblyContaining<AddBasicAdminRequestValidator>();
 
         return builder;
     }
