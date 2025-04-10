@@ -28,59 +28,45 @@ public class ExceptionMiddleware : IExceptionMiddleware
         catch (OperationCanceledException ex)
         {
             await HandleExceptionAsync(context,
-                499,
+                StatusCodes.Status499ClientClosedRequest,
                 ex);
         }
         catch (ArgumentException ex)
         {
             await HandleExceptionAsync(context,
-                HttpStatusCode.BadRequest,
+                StatusCodes.Status400BadRequest,
                 ex);
         }
         catch (EntityNotFoundException ex)
         {
             await HandleExceptionAsync(context,
-                HttpStatusCode.NotFound,
+                StatusCodes.Status404NotFound,
                 ex);
         }
         catch (PaginationException ex)
         {
             await HandleExceptionAsync(context,
-                HttpStatusCode.BadRequest,
+                StatusCodes.Status400BadRequest,
                 ex);
         }
         catch (LogInException ex)
         {
             await HandleExceptionAsync(context,
-                HttpStatusCode.Unauthorized,
+                StatusCodes.Status401Unauthorized,
                 ex);
         }
         catch (PhotoResizingException ex)
         {
             await HandleExceptionAsync(context,
-                HttpStatusCode.UnsupportedMediaType,
+                StatusCodes.Status415UnsupportedMediaType,
                 ex);
         }
         catch (Exception ex)
         {
             await HandleExceptionAsync(context,
-                HttpStatusCode.InternalServerError,
+                StatusCodes.Status500InternalServerError,
                 ex);
         }
-    }
-
-    public async Task HandleExceptionAsync(HttpContext context, HttpStatusCode statusCode, Exception ex)
-    {
-        string methodName = ex.TargetSite?.Name ?? "UnknownMethod";
-        string className = ex.TargetSite?.DeclaringType?.FullName ?? "UnknownClass";
-        
-        string logMessage = $"EXCEPTION - {methodName}: {ex.Message} (Method: {className}.{methodName})";
-        _logger.LogError(logMessage);
-        
-        context.Response.StatusCode = (int)statusCode;
-        context.Response.ContentType = "text/plain";
-        
-        await context.Response.WriteAsync(ex.Message);
     }
 
     public async Task HandleExceptionAsync(HttpContext context, int statusCode, Exception ex)
