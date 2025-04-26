@@ -24,6 +24,13 @@ public class AdminController(IAdminControllerService adminControllerService) : C
         return Ok(true);
     }
 
+    [HttpPost("logout")]
+    public IActionResult LogOut(CancellationToken ct)
+    {
+        Response.Cookies.Delete("Token");
+        return Ok();
+    }
+
     #region DELETE Methods
 
     [HttpDelete("news/{id:long}")]

@@ -6,7 +6,6 @@ using StoronnimV.Domain.Entities;
 
 namespace StoronnimV.Application.Services.Identity;
 
-//TODO: придумать, по возможности, как сделать сервис универсальным (не подвязанным чисто к админу) GENERIC
 public class AccountService(
     IAdminRepository adminRepository,
     IPasswordHasher<Admin> passwordHasher) : IAccountService
