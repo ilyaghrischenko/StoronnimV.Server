@@ -231,8 +231,6 @@ public static class WebApplicationBuilderExtensions
                             context.Token = token;
                         }
 
-                        context.Token = "none";
-
                         return Task.CompletedTask;
                     }
                 };
