@@ -80,11 +80,13 @@ public class VideoService(
     /// <param name="ct">CancellationToken</param>
     public async Task AddVideoAsync(VideoAdditionRequest request, CancellationToken ct)
     {
+        if (!Enum.TryParse(request.Type, out VideoType type))
+            throw new ArgumentException("Invalid video type");
+        
+        await DeleteIfVideoToAddIsPromotion(type, ct);
+
         string videoBlobName = $"video-{Guid.NewGuid()}.mp4";
         string videoUrl = await blobRepository.AddFileAndGetUrlAsync("storonnimv-video", videoBlobName, request.Url.OpenReadStream(), ct);
-        
-        if(!Enum.TryParse<VideoType>(request.Type, out VideoType type))
-            throw new ArgumentException("Invalid video type");
         
         Video video = new()
         {
@@ -95,6 +97,22 @@ public class VideoService(
         };
         
         await videoRepository.AddAsync(video, ct);
+    }
+
+    private async Task DeleteIfVideoToAddIsPromotion(VideoType type, CancellationToken ct)
+    {
+        if (type != VideoType.Promotion)
+        {
+            return;
+        }
+
+        var promotionVideo = await videoRepository.GetPromotionVideoAsync(ct);
+        if (promotionVideo is null)
+        {
+            return;
+        }
+        
+        await DeleteVideoAsync(promotionVideo.Id, ct);
     }
     
     
@@ -115,7 +133,7 @@ public class VideoService(
 
         await videoRepository.DeleteAsync(video, ct);
 
-        await blobRepository.DeleteFileAsync("storonnimv-video", $"video-{id}", ct);
+        await blobRepository.DeleteFileAsync("storonnimv-video", video.BlobName, ct);
     }
 
     public async Task UpdateVideoAsync(VideoEditRequest request, CancellationToken ct)

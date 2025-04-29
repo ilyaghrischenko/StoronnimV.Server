@@ -9,4 +9,5 @@ public interface IVideoRepository
         IPaginationRepository<VideoFullProjection>
 {
     public Task<VideoFullProjection?> GetPromotionVideoForHomePageAsync(CancellationToken ct);
+    public Task<Video?> GetPromotionVideoAsync(CancellationToken ct);
 }

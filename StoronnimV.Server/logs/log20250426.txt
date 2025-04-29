@@ -875,3 +875,43 @@ System.IO.IOException: The encryption operation failed, see inner exception.
    at Microsoft.AspNetCore.Server.Kestrel.Https.Internal.HttpsConnectionMiddleware.OnConnectionAsync(ConnectionContext context)
    at Microsoft.AspNetCore.Server.Kestrel.Https.Internal.HttpsConnectionMiddleware.OnConnectionAsync(ConnectionContext context)
    at Microsoft.AspNetCore.Server.Kestrel.Core.Internal.Infrastructure.KestrelConnection`1.ExecuteAsync()
+2025-04-26 18:03:27.399 +03:00 [ERR] Execution Worker is in the Failed state now due to an exception, execution will be retried in no more than 00:01:21
+Npgsql.NpgsqlException (0x80004005): Exception while reading from stream
+ ---> System.IO.IOException: Unable to read data from the transport connection: Connection reset by peer.
+ ---> System.Net.Sockets.SocketException (54): Connection reset by peer
+   at System.Net.Sockets.NetworkStream.Read(Span`1 buffer)
+   --- End of inner exception stack trace ---
+   at System.Net.Sockets.NetworkStream.Read(Span`1 buffer)
+   at System.Net.Security.SyncReadWriteAdapter.ReadAsync(Stream stream, Memory`1 buffer, CancellationToken cancellationToken)
+   at System.Net.Security.SslStream.EnsureFullTlsFrameAsync[TIOAdapter](CancellationToken cancellationToken, Int32 estimatedSize)
+   at System.Runtime.CompilerServices.PoolingAsyncValueTaskMethodBuilder`1.StateMachineBox`1.System.Threading.Tasks.Sources.IValueTaskSource<TResult>.GetResult(Int16 token)
+   at System.Net.Security.SslStream.ReadAsyncInternal[TIOAdapter](Memory`1 buffer, CancellationToken cancellationToken)
+   at System.Runtime.CompilerServices.PoolingAsyncValueTaskMethodBuilder`1.StateMachineBox`1.System.Threading.Tasks.Sources.IValueTaskSource<TResult>.GetResult(Int16 token)
+   at System.Net.Security.SslStream.Read(Byte[] buffer, Int32 offset, Int32 count)
+   at Npgsql.Internal.NpgsqlReadBuffer.<Ensure>g__EnsureLong|55_0(NpgsqlReadBuffer buffer, Int32 count, Boolean async, Boolean readingNotifications)
+   at Npgsql.Internal.NpgsqlReadBuffer.<Ensure>g__EnsureLong|55_0(NpgsqlReadBuffer buffer, Int32 count, Boolean async, Boolean readingNotifications)
+   at System.Runtime.CompilerServices.PoolingAsyncValueTaskMethodBuilder`1.StateMachineBox`1.System.Threading.Tasks.Sources.IValueTaskSource.GetResult(Int16 token)
+   at Npgsql.Internal.NpgsqlConnector.ReadMessageLong(Boolean async, DataRowLoadingMode dataRowLoadingMode, Boolean readingNotifications, Boolean isReadingPrependedMessage)
+   at System.Runtime.CompilerServices.PoolingAsyncValueTaskMethodBuilder`1.StateMachineBox`1.System.Threading.Tasks.Sources.IValueTaskSource<TResult>.GetResult(Int16 token)
+   at Npgsql.Internal.NpgsqlConnector.ReadMessageLong(Boolean async, DataRowLoadingMode dataRowLoadingMode, Boolean readingNotifications, Boolean isReadingPrependedMessage)
+   at System.Runtime.CompilerServices.PoolingAsyncValueTaskMethodBuilder`1.StateMachineBox`1.System.Threading.Tasks.Sources.IValueTaskSource<TResult>.GetResult(Int16 token)
+   at Npgsql.NpgsqlDataReader.NextResult(Boolean async, Boolean isConsuming, CancellationToken cancellationToken)
+   at Npgsql.NpgsqlDataReader.NextResult(Boolean async, Boolean isConsuming, CancellationToken cancellationToken)
+   at Npgsql.NpgsqlDataReader.NextResult()
+   at Npgsql.NpgsqlCommand.ExecuteReader(Boolean async, CommandBehavior behavior, CancellationToken cancellationToken)
+   at Npgsql.NpgsqlCommand.ExecuteReader(Boolean async, CommandBehavior behavior, CancellationToken cancellationToken)
+   at Npgsql.NpgsqlCommand.ExecuteReader(CommandBehavior behavior)
+   at Npgsql.NpgsqlCommand.ExecuteDbDataReader(CommandBehavior behavior)
+   at Dapper.SqlMapper.ExecuteReaderWithFlagsFallback(IDbCommand cmd, Boolean wasClosed, CommandBehavior behavior) in /_/Dapper/SqlMapper.cs:line 1066
+   at Dapper.SqlMapper.QueryImpl[T](IDbConnection cnn, CommandDefinition command, Type effectiveType)+MoveNext() in /_/Dapper/SqlMapper.cs:line 1094
+   at System.Collections.Generic.List`1..ctor(IEnumerable`1 collection)
+   at System.Linq.Enumerable.ToList[TSource](IEnumerable`1 source)
+   at Dapper.SqlMapper.Query[T](IDbConnection cnn, String sql, Object param, IDbTransaction transaction, Boolean buffered, Nullable`1 commandTimeout, Nullable`1 commandType) in /_/Dapper/SqlMapper.cs:line 734
+   at Hangfire.PostgreSql.PostgreSqlJobQueue.<>c__DisplayClass13_0.<Dequeue_Transaction>b__0()
+   at Hangfire.PostgreSql.Utils.Utils.TryExecute[T](Func`1 func, T& result, Func`2 swallowException, Nullable`1 tryCount)
+   at Hangfire.PostgreSql.PostgreSqlJobQueue.Dequeue_Transaction(String[] queues, CancellationToken cancellationToken)
+   at Hangfire.PostgreSql.PostgreSqlJobQueue.Dequeue(String[] queues, CancellationToken cancellationToken)
+   at Hangfire.PostgreSql.PostgreSqlConnection.FetchNextJob(String[] queues, CancellationToken cancellationToken)
+   at Hangfire.Server.Worker.Execute(BackgroundProcessContext context) in C:\projects\hangfire-525\src\Hangfire.Core\Server\Worker.cs:line 107
+   at Hangfire.Server.BackgroundProcessDispatcherBuilder.ExecuteProcess(Guid executionId, Object state) in C:\projects\hangfire-525\src\Hangfire.Core\Server\BackgroundProcessDispatcherBuilder.cs:line 82
+   at Hangfire.Processing.BackgroundExecution.Run(Action`2 callback, Object state) in C:\projects\hangfire-525\src\Hangfire.Core\Processing\BackgroundExecution.cs:line 118

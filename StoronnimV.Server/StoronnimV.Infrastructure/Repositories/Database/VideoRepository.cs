@@ -53,6 +53,17 @@ public class VideoRepository(StoronnimVContext context)
         return promotionVideo;
     }
 
+    public async Task<Video?> GetPromotionVideoAsync(CancellationToken ct)
+    {
+        ct.ThrowIfCancellationRequested();
+        
+        var promotionVideo = await _context.Videos
+            .Where(video => video.Type == VideoType.Promotion)
+            .FirstOrDefaultAsync(ct);
+        
+        return promotionVideo;
+    }
+
 
     public async Task<IEnumerable<VideoFullProjection>?> GetForPageAsync(int page, CancellationToken ct, int pageSize = 10, params object[] args)
     {
