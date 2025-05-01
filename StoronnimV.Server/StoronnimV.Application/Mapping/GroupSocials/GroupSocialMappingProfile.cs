@@ -11,7 +11,7 @@ public class GroupSocialMappingProfile : Profile
         CreateMap<GroupSocialProjection, GroupSocialResponse>()
             .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.Id))
             .ForMember(dest => dest.PhotoUrl, opt => opt.MapFrom(src => src.PhotoUrl))
-            .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.Name))
+            .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.Name.ToString()))
             .ForMember(dest => dest.LinkUrl, opt => opt.MapFrom(src => src.LinkUrl));
     }
 }

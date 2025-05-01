@@ -227,7 +227,7 @@ public class AdminController(IAdminControllerService adminControllerService) : C
         return NoContent();
     }
 
-    [HttpPatch("group-social")]
+    [HttpPatch("group-socials")]
     public async Task<IActionResult> UpdateGroupSocial([FromBody] GroupSocialEditRequest request, CancellationToken ct)
     {
         await adminControllerService.UpdateGroupSocialAsync(request, ct);

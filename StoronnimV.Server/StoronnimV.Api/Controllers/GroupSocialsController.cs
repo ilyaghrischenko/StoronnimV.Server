@@ -20,7 +20,7 @@ public class GroupSocialsController(IGroupSocialsControllerService groupSocialsC
     }
     
     [HttpGet]
-    public async Task<ActionResult<IEnumerable<GroupSocialResponse>>> GetGroupSocials(CancellationToken ct)
+    public async Task<ActionResult<IEnumerable<GroupSocialResponse>>> GetAllGroupSocials(CancellationToken ct)
     {
         var groupSocials = await groupSocialsControllerService.GetAllAsync(ct);
         
