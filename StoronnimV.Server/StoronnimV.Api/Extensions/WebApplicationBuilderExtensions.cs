@@ -46,6 +46,7 @@ public static class WebApplicationBuilderExtensions
         builder.Services.AddScoped<INewsService, NewsService>();
         builder.Services.AddScoped<IScheduleService, ScheduleService>();
         builder.Services.AddScoped<ISocialService, SocialService>();
+        builder.Services.AddScoped<IGroupSocialService, GroupSocialService>();
         builder.Services.AddScoped<IMemberService, MemberService>();
         builder.Services.AddScoped<IGroupPageService, GroupPageService>();
         builder.Services.AddScoped<IMusicPlatformService, MusicPlatformService>();
@@ -56,6 +57,7 @@ public static class WebApplicationBuilderExtensions
         builder.Services.AddScoped<INewsControllerService, NewsControllerService>();
         builder.Services.AddScoped<ISchedulesControllerService, SchedulesControllerService>();
         builder.Services.AddScoped<IGroupPageControllerService, GroupPageControllerService>();
+        builder.Services.AddScoped<IGroupSocialsControllerService, GroupSocialsControllerService>();
         builder.Services.AddScoped<IMusicControllerService, MusicControllerService>();
         builder.Services.AddScoped<IVideoControllerService, VideoControllerService>();
         builder.Services.AddScoped<IHomeControllerService, HomeControllerService>();
@@ -84,6 +86,7 @@ public static class WebApplicationBuilderExtensions
         builder.Services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
         builder.Services.AddScoped<INewsRepository, NewsRepository>();
         builder.Services.AddScoped<ISocialRepository, SocialRepository>();
+        builder.Services.AddScoped<IGroupSocialRepository, GroupSocialRepository>();
         builder.Services.AddScoped<IMemberRepository, MemberRepository>();
         builder.Services.AddScoped<IGroupPageRepository, GroupPageRepository>();
         builder.Services.AddScoped<IScheduleRepository, ScheduleRepository>();

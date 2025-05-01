@@ -4,8 +4,8 @@ using StoronnimV.Domain.Projections;
 
 namespace StoronnimV.Domain.Contracts.Database;
 
-public interface ISocialRepository
-    : IRepository<Social>, IGetByIdRepository<SocialProjection>
+public interface IGroupSocialRepository
+    :IRepository<GroupSocial>, IGetByIdRepository<GroupSocialProjection>, IGetAllRepository<GroupSocialProjection>
 {
     
 }

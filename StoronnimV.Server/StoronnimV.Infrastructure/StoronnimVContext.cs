@@ -17,6 +17,7 @@ public class StoronnimVContext : DbContext
     public DbSet<GroupPage> GroupPages { get; set; }
     public DbSet<Member> Members { get; set; }
     public DbSet<Social> Socials { get; set; }
+    public DbSet<GroupSocial> GroupSocials { get; set; }
     public DbSet<Schedule> Schedules { get; set; }
     public DbSet<MusicPlatform> MusicPlatforms { get; set; }
     public DbSet<Video> Videos { get; set; }
