@@ -15,6 +15,7 @@ public interface IAdminControllerService
     Task DeleteMemberAsync(long id, CancellationToken ct);
     Task DeleteMusicPlatformAsync(long id, CancellationToken ct);
     Task DeleteSocialAsync(long id, CancellationToken ct);
+    Task DeleteGroupSocialAsync(long id, CancellationToken ct);
     
     //Add methods
     Task AddNewsItemAsync(NewsItemAdditionRequest request, CancellationToken ct);
@@ -24,6 +25,7 @@ public interface IAdminControllerService
     Task AddMemberAsync(MemberAdditionRequest request, CancellationToken ct);
     Task AddMusicPlatformAsync(MusicPlatformAdditionRequest request, CancellationToken ct);
     Task AddSocialAsync(SocialAdditionRequest request, CancellationToken ct);
+    Task AddGroupSocialAsync(GroupSocialAdditionRequest request, CancellationToken ct);
     
     //Update methods
     Task UpdateNewsItemAsync(NewsItemEditRequest request, CancellationToken ct);
@@ -33,6 +35,7 @@ public interface IAdminControllerService
     Task UpdateMemberAsync(MemberEditRequest request, CancellationToken ct);
     Task UpdateMusicPlatformAsync(MusicPlatformEditRequest request, CancellationToken ct);
     Task UpdateSocialAsync(SocialEditRequest request, CancellationToken ct);
+    Task UpdateGroupSocialAsync(GroupSocialEditRequest request, CancellationToken ct);
     
     //Update photo methods
     Task UpdateNewsItemPhotoAsync(PhotoEditRequest request, CancellationToken ct);

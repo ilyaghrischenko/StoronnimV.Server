@@ -89,6 +89,14 @@ public class AdminController(IAdminControllerService adminControllerService) : C
         return NoContent();
     }
 
+    [HttpDelete("group-socials/{id:long}")]
+    public async Task<IActionResult> DeleteGroupSocial([FromRoute] long id, CancellationToken ct)
+    {
+        await adminControllerService.DeleteGroupSocialAsync(id, ct);
+        
+        return NoContent();
+    }
+
     #endregion
 
     #region ADD methods
@@ -150,6 +158,14 @@ public class AdminController(IAdminControllerService adminControllerService) : C
         return Created();
     }
 
+    [HttpPost("group-socials")]
+    public async Task<IActionResult> AddGroupSocial([FromForm] GroupSocialAdditionRequest request, CancellationToken ct)
+    {
+        await adminControllerService.AddGroupSocialAsync(request, ct);
+        
+        return Created();
+    }
+
     #endregion
 
     #region UPDATE methods
@@ -208,6 +224,14 @@ public class AdminController(IAdminControllerService adminControllerService) : C
     {
         await adminControllerService.UpdateSocialAsync(request, ct);
 
+        return NoContent();
+    }
+
+    [HttpPatch("group-social")]
+    public async Task<IActionResult> UpdateGroupSocial([FromBody] GroupSocialEditRequest request, CancellationToken ct)
+    {
+        await adminControllerService.UpdateGroupSocialAsync(request, ct);
+        
         return NoContent();
     }
 

@@ -14,6 +14,7 @@ public class AdminControllerService(
     IMemberService memberService,
     IMusicPlatformService musicPlatformService,
     ISocialService socialService,
+    IGroupSocialService groupSocialService,
     IScheduleService scheduleService
 ) : IAdminControllerService
 {
@@ -55,6 +56,11 @@ public class AdminControllerService(
         await socialService.DeleteSocialAsync(id, ct);
     }
 
+    public async Task DeleteGroupSocialAsync(long id, CancellationToken ct)
+    {
+        await groupSocialService.DeleteGroupSocialAsync(id, ct);
+    }
+
     //Add methods
     public async Task AddNewsItemAsync(NewsItemAdditionRequest request, CancellationToken ct)
     {
@@ -90,7 +96,12 @@ public class AdminControllerService(
     {
         await socialService.AddSocialAsync(request, ct);
     }
-    
+
+    public async Task AddGroupSocialAsync(GroupSocialAdditionRequest request, CancellationToken ct)
+    {
+        await groupSocialService.AddGroupSocialAsync(request, ct);
+    }
+
     //Update methods
     public async Task UpdateNewsItemAsync(NewsItemEditRequest request, CancellationToken ct)
     {
@@ -126,7 +137,12 @@ public class AdminControllerService(
     {
         await socialService.UpdateSocialAsync(request, ct);
     }
-    
+
+    public async Task UpdateGroupSocialAsync(GroupSocialEditRequest request, CancellationToken ct)
+    {
+        await groupSocialService.UpdateGroupSocialAsync(request, ct);
+    }
+
     //Update photo methods
     public async Task UpdateNewsItemPhotoAsync(PhotoEditRequest request, CancellationToken ct)
     {
