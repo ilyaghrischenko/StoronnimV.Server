@@ -176,7 +176,7 @@ public static class WebApplicationBuilderExtensions
                 policy =>
                 {
                     policy.WithOrigins(
-                        "http://144.24.254.25:8080",
+                        "http://144.24.254.25:80",
                         "http://storonnimv.duckdns.org"
                     )
                     .AllowCredentials()

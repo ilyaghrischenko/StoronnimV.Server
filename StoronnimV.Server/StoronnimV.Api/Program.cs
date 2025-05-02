@@ -101,22 +101,22 @@ app.UseHealthChecks("/health", new HealthCheckOptions
     ResponseWriter = UIResponseWriter.WriteHealthCheckUIResponse
 });
 
-#region DatabaseInitializer
-using (var scope = app.Services.CreateScope())
-{
-    var services = scope.ServiceProvider;
-    try
-    {
-        var dbContextFactory = services.GetRequiredService<IDbContextFactory<StoronnimVContext>>();
-        await using StoronnimVContext context = dbContextFactory.CreateDbContext();
-        DatabaseInitializer.Initialize(context);
-    }
-    catch (Exception ex)
-    {
-        Console.WriteLine($"An error occurred while initializing the database: {ex.Message}");
-    }
-}
-#endregion
+// #region DatabaseInitializer
+// using (var scope = app.Services.CreateScope())
+// {
+//     var services = scope.ServiceProvider;
+//     try
+//     {
+//         var dbContextFactory = services.GetRequiredService<IDbContextFactory<StoronnimVContext>>();
+//         await using StoronnimVContext context = dbContextFactory.CreateDbContext();
+//         DatabaseInitializer.Initialize(context);
+//     }
+//     catch (Exception ex)
+//     {
+//         Console.WriteLine($"An error occurred while initializing the database: {ex.Message}");
+//     }
+// }
+// #endregion
 
 #region StatusUpdaterSettings
 RecurringJob.AddOrUpdate<ScheduleStatusUpdaterService>(
