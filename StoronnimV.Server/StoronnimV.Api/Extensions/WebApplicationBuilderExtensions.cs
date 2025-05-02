@@ -175,10 +175,13 @@ public static class WebApplicationBuilderExtensions
             options.AddPolicy("AllowReactApp",
                 policy =>
                 {
-                    policy.WithOrigins("http://localhost:5173")
-                        .AllowCredentials()
-                        .AllowAnyHeader()
-                        .AllowAnyMethod();
+                    policy.WithOrigins(
+                        "http://144.24.254.25:8080",
+                        "http://storonnimv.duckdns.org"
+                    )
+                    .AllowCredentials()
+                    .AllowAnyHeader()
+                    .AllowAnyMethod();
                 });
         });
 
