@@ -11,5 +11,13 @@ build_property.RootNamespace = StoronnimV.Contracts
 build_property.ProjectDir = C:\github\StoronnimV\StoronnimV\StoronnimV.Contracts\
 build_property.EnableComHosting = 
 build_property.EnableGeneratedComInterfaceComImportInterop = 
+<<<<<<<< HEAD:StoronnimV/StoronnimV.Contracts/obj/Debug/net8.0/StoronnimV.Contracts.GeneratedMSBuildEditorConfig.editorconfig
 build_property.EffectiveAnalysisLevelStyle = 8.0
+========
+<<<<<<< HEAD:StoronnimV.Server/StoronnimV.Tests/obj/Debug/net9.0/StoronnimV.Tests.GeneratedMSBuildEditorConfig.editorconfig
+build_property.EffectiveAnalysisLevelStyle = 9.0
+=======
+build_property.EffectiveAnalysisLevelStyle = 8.0
+>>>>>>> 97002c8 (commit):StoronnimV/StoronnimV.Data/obj/Debug/net8.0/StoronnimV.Data.GeneratedMSBuildEditorConfig.editorconfig
+>>>>>>>> 15c57856ea46185efa1d6e5ddabbf4012ae23157:StoronnimV.Server/StoronnimV.Tests/obj/Debug/net9.0/StoronnimV.Tests.GeneratedMSBuildEditorConfig.editorconfig
 build_property.EnableCodeStyleSeverity = 

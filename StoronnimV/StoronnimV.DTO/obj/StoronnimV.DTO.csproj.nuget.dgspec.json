@@ -44,8 +44,19 @@
         "restoreAuditProperties": {
           "enableAudit": "true",
           "auditLevel": "low",
+<<<<<<<< HEAD:StoronnimV/StoronnimV.DTO/obj/StoronnimV.DTO.csproj.nuget.dgspec.json
           "auditMode": "all"
         }
+========
+<<<<<<< HEAD:StoronnimV.Server/StoronnimV.Domain/obj/StoronnimV.Domain.csproj.nuget.dgspec.json
+          "auditMode": "direct"
+        },
+        "SdkAnalysisLevel": "9.0.100"
+=======
+          "auditMode": "all"
+        }
+>>>>>>> 97002c8 (commit):StoronnimV/StoronnimV.Domain/obj/StoronnimV.Domain.csproj.nuget.dgspec.json
+>>>>>>>> 15c57856ea46185efa1d6e5ddabbf4012ae23157:StoronnimV.Server/StoronnimV.Domain/obj/StoronnimV.Domain.csproj.nuget.dgspec.json
       },
       "frameworks": {
         "net8.0": {
@@ -72,7 +83,15 @@
               "privateAssets": "all"
             }
           },
+<<<<<<<< HEAD:StoronnimV/StoronnimV.DTO/obj/StoronnimV.DTO.csproj.nuget.dgspec.json
           "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.100/PortableRuntimeIdentifierGraph.json"
+========
+<<<<<<< HEAD:StoronnimV.Server/StoronnimV.Domain/obj/StoronnimV.Domain.csproj.nuget.dgspec.json
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.101/PortableRuntimeIdentifierGraph.json"
+=======
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.100/PortableRuntimeIdentifierGraph.json"
+>>>>>>> 97002c8 (commit):StoronnimV/StoronnimV.Domain/obj/StoronnimV.Domain.csproj.nuget.dgspec.json
+>>>>>>>> 15c57856ea46185efa1d6e5ddabbf4012ae23157:StoronnimV.Server/StoronnimV.Domain/obj/StoronnimV.Domain.csproj.nuget.dgspec.json
         }
       }
     }
