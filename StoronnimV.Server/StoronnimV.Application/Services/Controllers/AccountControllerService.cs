@@ -31,7 +31,7 @@ public class AccountControllerService(
             // Expires = DateTime.UtcNow.AddHours(_cookieSettings.ExpiresInHours)
             HttpOnly = true,
             Secure = true,
-            SameSite = SameSiteMode.None,
+            SameSite = SameSiteMode.Lax,
             Expires = DateTime.UtcNow.AddHours(3)
         };
         
