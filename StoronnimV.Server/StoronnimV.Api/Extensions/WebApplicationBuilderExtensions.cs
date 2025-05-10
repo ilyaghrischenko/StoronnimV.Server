@@ -175,10 +175,7 @@ public static class WebApplicationBuilderExtensions
             options.AddPolicy("AllowReactApp",
                 policy =>
                 {
-                    policy.WithOrigins(
-                        "http://144.24.254.25:80",
-                        "http://storonnimv.duckdns.org"
-                    )
+                    policy.WithOrigins("https://proud-ocean-093d5d203.6.azurestaticapps.net")
                     .AllowCredentials()
                     .AllowAnyHeader()
                     .AllowAnyMethod();
