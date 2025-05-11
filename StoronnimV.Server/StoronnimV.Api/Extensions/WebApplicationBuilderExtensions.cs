@@ -109,7 +109,7 @@ public static class WebApplicationBuilderExtensions
             .Bind(builder.Configuration.GetSection("CookieOptions"))
             .ValidateDataAnnotations()
             .ValidateOnStart();
-        
+
         return builder;
     }
 
@@ -172,14 +172,13 @@ public static class WebApplicationBuilderExtensions
     {
         builder.Services.AddCors(options =>
         {
-            options.AddPolicy("AllowReactApp",
-                policy =>
-                {
-                    policy.WithOrigins("https://proud-ocean-093d5d203.6.azurestaticapps.net")
+            options.AddPolicy("AllowReactApp", policy =>
+            {
+                policy.WithOrigins("https://proud-ocean-093d5d203.6.azurestaticapps.net")
                     .AllowCredentials()
                     .AllowAnyHeader()
                     .AllowAnyMethod();
-                });
+            });
         });
 
         return builder;
@@ -295,14 +294,14 @@ public static class WebApplicationBuilderExtensions
         {
             throw new KeyNotFoundException("RateLimiterOptions are not configured correctly.");
         }
-        
+
         builder.Services.AddRateLimiter(options =>
         {
             rateLimiterOptions.Policies.ForEach(policy =>
             {
                 AddLimiterPolicy(options, policy.PolicyName, policy.Limit, policy.Expiration);
             });
-            
+
             options.RejectionStatusCode = rateLimiterOptions.StatusCode;
         });
 
@@ -323,13 +322,13 @@ public static class WebApplicationBuilderExtensions
     public static WebApplicationBuilder AddHealthChecks(this WebApplicationBuilder builder)
     {
         string connectionString = builder.Configuration.GetConnectionString("CloudConnection")!;
-        
+
         builder.Services.AddHealthChecks()
             .AddCheck("API",
                 () => HealthCheckResult.Healthy("API is alive"),
                 tags: ["api"])
             .AddNpgSql(connectionString, name: "PostgresSQL", tags: ["database"]);
-        
+
         return builder;
     }
 }

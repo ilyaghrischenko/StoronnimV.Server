@@ -80,13 +80,13 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-app.MapControllers();
-app.UseHttpsRedirection();
 app.UseRouting();
-app.UseAuthorization();
-app.UseStaticFiles();
-
 app.UseCors("AllowReactApp");
+app.UseAuthorization();
+app.MapControllers();
+
+app.UseHttpsRedirection();
+app.UseStaticFiles();
 
 app.UseMiddleware<ExceptionMiddleware>();
 app.UseMiddleware<LoggingMiddleware>();
