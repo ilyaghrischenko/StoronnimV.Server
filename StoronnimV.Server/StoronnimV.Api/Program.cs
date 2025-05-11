@@ -125,4 +125,10 @@ RecurringJob.AddOrUpdate<ScheduleStatusUpdaterService>(
     Cron.Daily);
 #endregion
 
+app.MapGet("/", context =>
+{
+    context.Response.Redirect("/index.html");
+    return Task.CompletedTask;
+});
+
 app.Run();
