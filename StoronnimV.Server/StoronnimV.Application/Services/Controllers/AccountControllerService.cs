@@ -30,7 +30,7 @@ public class AccountControllerService(
             // Secure = _cookieSettings.Secure,
             // SameSite = Enum.Parse<SameSiteMode>(_cookieSettings.SameSite),
             // Expires = DateTime.UtcNow.AddHours(_cookieSettings.ExpiresInHours)
-            HttpOnly = false,
+            HttpOnly = true,
             Secure = true,
             SameSite = SameSiteMode.None,
             Expires = DateTime.UtcNow.AddHours(3)
