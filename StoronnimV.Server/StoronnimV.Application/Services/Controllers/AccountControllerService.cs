@@ -25,15 +25,11 @@ public class AccountControllerService(
 
         var cookieOptions = new CookieOptions
         {
-            //TODO
-            // HttpOnly = _cookieSettings.HttpOnly,
-            // Secure = _cookieSettings.Secure,
-            // SameSite = Enum.Parse<SameSiteMode>(_cookieSettings.SameSite),
-            // Expires = DateTime.UtcNow.AddHours(_cookieSettings.ExpiresInHours)
-            HttpOnly = true,
-            Secure = true,
-            SameSite = SameSiteMode.None,
-            Expires = DateTime.UtcNow.AddHours(3)
+            HttpOnly = _cookieSettings.HttpOnly,
+            Secure = _cookieSettings.Secure,
+            SameSite = Enum.Parse<SameSiteMode>(_cookieSettings.SameSite),
+            Expires = DateTime.UtcNow.AddHours(_cookieSettings.ExpiresInHours),
+            Domain = _cookieSettings.Domain
         };
         
         response.Cookies.Append("Token", token, cookieOptions);

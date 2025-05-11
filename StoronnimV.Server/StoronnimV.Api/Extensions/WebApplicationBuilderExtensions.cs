@@ -174,7 +174,7 @@ public static class WebApplicationBuilderExtensions
         {
             options.AddPolicy("AllowReactApp", policy =>
             {
-                policy.WithOrigins("https://proud-ocean-093d5d203.6.azurestaticapps.net")
+                policy.WithOrigins("https://storonnimv.com")
                     .AllowCredentials()
                     .AllowAnyHeader()
                     .AllowAnyMethod();
