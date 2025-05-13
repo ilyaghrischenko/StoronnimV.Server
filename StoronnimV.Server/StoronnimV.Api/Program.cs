@@ -20,6 +20,8 @@ if (File.Exists(".env"))
 
 WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 
+builder.Configuration.AddEnvironmentVariables();
+
 builder
     .AddRepositories()
     .AddApplicationServices()
