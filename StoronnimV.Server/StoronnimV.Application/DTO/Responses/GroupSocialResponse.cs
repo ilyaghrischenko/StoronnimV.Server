@@ -1,5 +1,4 @@
 using StoronnimV.Application.DTO.Responses.Shared;
-using StoronnimV.Domain.Enums;
 
 namespace StoronnimV.Application.DTO.Responses;
 

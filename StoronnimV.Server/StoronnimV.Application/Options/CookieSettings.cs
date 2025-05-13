@@ -11,11 +11,11 @@ public class CookieSettings
     public bool Secure { get; set; }
     
     [Required]
-    public string SameSite { get; set; }
+    public required string SameSite { get; set; }
     
     [Required]
     public int ExpiresInHours { get; set; }
     
     [Required]
-    public string Domain { get; set; }
+    public required string Domain { get; set; }
 }

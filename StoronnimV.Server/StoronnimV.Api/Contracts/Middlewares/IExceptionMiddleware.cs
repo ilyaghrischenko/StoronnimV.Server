@@ -1,5 +1,3 @@
-using System.Net;
-
 namespace StoronnimV.Api.Contracts.Middlewares;
 
 public interface IExceptionMiddleware

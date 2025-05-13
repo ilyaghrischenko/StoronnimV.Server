@@ -18,11 +18,8 @@ namespace StoronnimV.Application.Services.Controllers;
 public class GroupPageControllerService(
     IGroupPageService groupPageService,
     IMemberService memberService,
-    ISocialService socialService,
     IMapper mapper) : IGroupPageControllerService
 {
-    private readonly ISocialService _socialService = socialService;
-
     public async Task<GroupPageFullInfoResponse> GetGroupPageInfoAsync(CancellationToken ct)
     {
         GroupPageProjection groupPage = await groupPageService.GetFirstGroupPageAsync(ct);

@@ -7,7 +7,6 @@ using StoronnimV.Application.DTO.Requests.Entities.Pages.Editing.Media;
 namespace StoronnimV.Application.Services.Controllers;
 
 public class AdminControllerService(
-    IAdminService adminService,
     INewsService newsService,
     IVideoService videoService,
     IGroupPageService groupPageService,
@@ -18,8 +17,6 @@ public class AdminControllerService(
     IScheduleService scheduleService
 ) : IAdminControllerService
 {
-    private readonly IAdminService _adminService = adminService;
-
     //Delete methods
     public async Task DeleteNewsItemAsync(long id, CancellationToken ct)
     {

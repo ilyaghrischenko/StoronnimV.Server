@@ -8,5 +8,5 @@ public class NewsShortResponse : BaseResponseDto
     public required string Priority { get; init; }
     public required string Date { get; init; }
 
-    public string? Photo { get; init; } = null;
+    public string? Photo { get; init; }
 }

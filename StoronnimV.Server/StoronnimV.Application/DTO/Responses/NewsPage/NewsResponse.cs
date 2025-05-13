@@ -9,6 +9,6 @@ public class NewsResponse : BaseResponseDto
     public required string Priority { get; init; }
     public required string Date { get; init; }
 
-    public string? Photo { get; init; } = null;
-    public string? Video { get; init; } = null;
+    public string? Photo { get; init; }
+    public string? Video { get; init; }
 }

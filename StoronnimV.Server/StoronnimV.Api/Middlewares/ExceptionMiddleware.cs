@@ -1,4 +1,3 @@
-using System.Net;
 using StoronnimV.Api.Contracts.Middlewares;
 using StoronnimV.Application.Exceptions;
 

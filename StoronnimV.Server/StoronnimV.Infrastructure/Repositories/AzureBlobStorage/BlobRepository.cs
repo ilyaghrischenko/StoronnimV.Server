@@ -1,6 +1,5 @@
 using Azure.Storage.Blobs;
 using Azure.Storage.Blobs.Models;
-using Microsoft.Extensions.Configuration;
 using StoronnimV.Domain.Contracts.AzureBlobStorage;
 
 namespace StoronnimV.Infrastructure.Repositories.AzureBlobStorage;

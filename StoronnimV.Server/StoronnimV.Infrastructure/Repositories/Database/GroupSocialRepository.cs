@@ -9,11 +9,13 @@ namespace StoronnimV.Infrastructure.Repositories.Database;
 public class GroupSocialRepository(StoronnimVContext context)
     : Repository<GroupSocial>(context), IGroupSocialRepository
 {
+    private readonly StoronnimVContext _context = context;
+
     public async Task<GroupSocialProjection?> GetByIdAsNoTrackingAsync(long id, CancellationToken ct)
     {
         ct.ThrowIfCancellationRequested();
 
-        GroupSocialProjection? result = await context.GroupSocials
+        GroupSocialProjection? result = await _context.GroupSocials
             .AsNoTracking()
             .Select(groupSocial => new GroupSocialProjection
             {
@@ -31,7 +33,7 @@ public class GroupSocialRepository(StoronnimVContext context)
     {
         ct.ThrowIfCancellationRequested();
 
-        var result = await context.GroupSocials
+        var result = await _context.GroupSocials
             .AsNoTracking()
             .Select(groupSocial => new GroupSocialProjection
             {

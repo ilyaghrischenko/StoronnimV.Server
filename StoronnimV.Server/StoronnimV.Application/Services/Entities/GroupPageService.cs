@@ -37,7 +37,7 @@ public class GroupPageService(
     public async Task<GroupPageProjection> GetFirstGroupPageAsync(CancellationToken ct)
     {
         GroupPageProjection groupPage = await groupPageRepository.GetFirstGroupPageAsync(ct)
-                                        ?? throw new EntityNotFoundException($"GroupPage was not found");
+                                        ?? throw new EntityNotFoundException("GroupPage was not found");
 
         return groupPage;
     }

@@ -45,7 +45,6 @@ public class ScheduleRepository(StoronnimVContext context)
         ct.ThrowIfCancellationRequested();
 
         var dbSet = _context.Schedules;
-        var query = ApplyIncludes(dbSet);
 
         var result = await dbSet.ToListAsync(ct);
 
