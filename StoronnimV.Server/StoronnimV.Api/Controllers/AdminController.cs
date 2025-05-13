@@ -2,10 +2,12 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.RateLimiting;
+using Microsoft.Extensions.Options;
 using StoronnimV.Application.Contracts.Controllers;
 using StoronnimV.Application.DTO.Requests.Entities.Pages.Addition;
 using StoronnimV.Application.DTO.Requests.Entities.Pages.Editing;
 using StoronnimV.Application.DTO.Requests.Entities.Pages.Editing.Media;
+using StoronnimV.Application.Options;
 
 namespace StoronnimV.Api.Controllers;
 
@@ -25,9 +27,20 @@ public class AdminController(IAdminControllerService adminControllerService) : C
     }
 
     [HttpPost("logout")]
-    public IActionResult LogOut(CancellationToken ct)
+    public IActionResult LogOut([FromServices] IOptionsMonitor<CookieSettings> cookieSettings, CancellationToken ct)
     {
-        Response.Cookies.Delete("Token");
+        CookieSettings currentCookieSettings = cookieSettings.CurrentValue;
+        
+        var cookieOptions = new CookieOptions
+        {
+            HttpOnly = currentCookieSettings.HttpOnly,
+            Secure = currentCookieSettings.Secure,
+            SameSite = Enum.Parse<SameSiteMode>(currentCookieSettings.SameSite),
+            Expires = DateTime.UtcNow.AddHours(currentCookieSettings.ExpiresInHours),
+            Domain = currentCookieSettings.Domain
+        };
+        
+        Response.Cookies.Delete("Token", cookieOptions);
         return Ok();
     }
 
