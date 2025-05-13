@@ -15,7 +15,7 @@ namespace StoronnimV.Api.Controllers;
 /// Контроллер для админа, он позволяет управлять данными, которые отображаются на страницых (Удалять, изменять)
 /// </summary>
 [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
-[EnableRateLimiting("AdminLimit")]
+[EnableRateLimiting("AdminLimitPerMinute")]
 [Route("api/admin")]
 [ApiController]
 public class AdminController(IAdminControllerService adminControllerService) : ControllerBase

@@ -10,7 +10,7 @@ namespace StoronnimV.Api.Controllers;
 /// Контроллер для страницы 'Новости', он позволяет доставать нужные данные для отображения
 /// </summary>
 /// <param name="newsControllerService"></param>
-[EnableRateLimiting("UserLimit")]
+[EnableRateLimiting("UserLimitPerMinute")]
 [Route("api/news")]
 [ApiController]
 public class NewsController(INewsControllerService newsControllerService) : ControllerBase

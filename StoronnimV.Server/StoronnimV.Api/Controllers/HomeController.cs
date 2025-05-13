@@ -6,7 +6,7 @@ using StoronnimV.Application.DTO.Responses.Video;
 
 namespace StoronnimV.Api.Controllers;
 
-[EnableRateLimiting("UserLimit")]
+[EnableRateLimiting("UserLimitPerMinute")]
 [Route("api/home")]
 [ApiController]
 public class HomeController(

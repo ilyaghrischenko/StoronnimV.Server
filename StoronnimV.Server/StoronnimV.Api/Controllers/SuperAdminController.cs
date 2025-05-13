@@ -8,7 +8,7 @@ using StoronnimV.Application.DTO.Responses.Admin;
 namespace StoronnimV.Api.Controllers;
 
 [Authorize(Policy = "SuperAdminOnly")]
-[EnableRateLimiting("AdminLimit")]
+[EnableRateLimiting("AdminLimitPerMinute")]
 [Route("api/super-admin/basic-admins")]
 [ApiController]
 public class SuperAdminController(ISuperAdminControllerService superAdminControllerService)

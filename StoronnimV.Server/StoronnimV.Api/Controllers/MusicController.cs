@@ -5,7 +5,7 @@ using StoronnimV.Application.DTO.Responses.MusicPage;
 
 namespace StoronnimV.Api.Controllers;
 
-[EnableRateLimiting("UserLimit")]
+[EnableRateLimiting("UserLimitPerMinute")]
 [Route("api/music")]
 [ApiController]
 public class MusicController(IMusicControllerService musicControllerService) : ControllerBase

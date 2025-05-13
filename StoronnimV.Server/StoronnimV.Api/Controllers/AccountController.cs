@@ -5,7 +5,7 @@ using StoronnimV.Application.DTO.Requests.Account;
 
 namespace StoronnimV.Api.Controllers;
 
-[EnableRateLimiting("AdminLimit")]
+[EnableRateLimiting("AdminLimitPerMinute")]
 [Route("api/account")]
 [ApiController]
 public class AccountController(

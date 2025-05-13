@@ -10,7 +10,7 @@ namespace StoronnimV.Api.Controllers;
 /// Контроллер для страницы 'Афиша', он позволяет доставать нужные данные для отображения
 /// </summary>
 /// <param name="schedulesControllerService"></param>
-[EnableRateLimiting("UserLimit")]
+[EnableRateLimiting("UserLimitPerMinute")]
 [Route("api/schedules")]
 [ApiController]
 public class SchedulesController(ISchedulesControllerService schedulesControllerService) : ControllerBase

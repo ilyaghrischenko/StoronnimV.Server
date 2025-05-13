@@ -5,7 +5,7 @@ using StoronnimV.Application.DTO.Responses;
 
 namespace StoronnimV.Api.Controllers;
 
-[EnableRateLimiting("UserLimit")]
+[EnableRateLimiting("UserLimitPerMinute")]
 [Route("api/group-socials")]
 [ApiController]
 public class GroupSocialsController(IGroupSocialsControllerService groupSocialsControllerService) : ControllerBase

@@ -9,7 +9,7 @@ namespace StoronnimV.Api.Controllers;
 /// Контроллер для страницы 'Группа', он позволяет доставать нужные данные для отображения
 /// </summary>
 /// <param name="groupPageControllerService"></param>
-[EnableRateLimiting("UserLimit")]
+[EnableRateLimiting("UserLimitPerMinute")]
 [Route("api/group")]
 [ApiController]
 public class GroupPageController(IGroupPageControllerService groupPageControllerService) : ControllerBase

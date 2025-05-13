@@ -10,7 +10,7 @@ namespace StoronnimV.Api.Controllers;
 /// Контроллер для страницы 'Видео', он позволяет доставать нужные данные для отображения
 /// </summary>
 /// <param name="videoControllerService"></param>
-[EnableRateLimiting("UserLimit")]
+[EnableRateLimiting("UserLimitPerMinute")]
 [Route("api/videos")]
 [ApiController]
 public class VideoController(
