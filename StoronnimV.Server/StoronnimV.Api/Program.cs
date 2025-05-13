@@ -12,17 +12,10 @@ using StoronnimV.Application.Mapping.News;
 using StoronnimV.Application.Mapping.Schedule;
 using StoronnimV.Application.Services.Background;
 
-try
+if (File.Exists(".env"))
 {
-    if (File.Exists(".env"))
-    {
-        var loadOptions = new LoadOptions(onlyExactPath: true);
-        Env.Load(options: loadOptions);
-    }
-}
-catch (Exception ex)
-{
-    throw new OperationCanceledException();
+    var loadOptions = new LoadOptions(onlyExactPath: true);
+    Env.Load(options: loadOptions);
 }
 
 WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
@@ -42,38 +35,50 @@ builder
     .AddResponseCompression()
     .AddRateLimiter()
     .AddHealthChecks();
-    
+
 #region AutoMapper
+
 MapperConfiguration mapperConfig = new(cfg =>
 {
     #region Group
+
     cfg.AddProfile<GroupPageMappingProfile>();
     cfg.AddProfile<MemberShortMappingProfile>();
     cfg.AddProfile<MemberMappingProfile>();
     cfg.AddProfile<SocialMappingProfile>();
+
     #endregion
-    
+
     #region News
+
     cfg.AddProfile<NewsMappingProfile>();
     cfg.AddProfile<NewsShortMappingProfile>();
+
     #endregion
-    
+
     #region Schedule
+
     cfg.AddProfile<ScheduleMappingProfile>();
     cfg.AddProfile<ScheduleShortMappingProfile>();
+
     #endregion
-    
+
     #region Home
+
     cfg.AddProfile<HomeNewsMappingProfile>();
     cfg.AddProfile<HomeScheduleMappingProfile>();
+
     #endregion
-    
+
     #region Admin
+
     cfg.AddProfile<BasicAdminMappingProfile>();
+
     #endregion
 });
 
 mapperConfig.AssertConfigurationIsValid();
+
 #endregion
 
 // Add services to the container.
@@ -114,10 +119,12 @@ app.UseHealthChecks("/health", new HealthCheckOptions
 });
 
 #region StatusUpdaterSettings
+
 RecurringJob.AddOrUpdate<ScheduleStatusUpdaterService>(
     "update-schedule-statuses",
     service => service.UpdateScheduleStatusesAsync(CancellationToken.None),
     Cron.Daily);
+
 #endregion
 
 app.MapGet("/", context =>
