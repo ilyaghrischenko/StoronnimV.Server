@@ -9,9 +9,9 @@ public class BlobRepository : IBlobRepository
 {
     private readonly BlobServiceClient _blobServiceClient;
 
-    public BlobRepository(IConfiguration configuration)
+    public BlobRepository()
     {
-        string? connectionString = configuration.GetSection("BlobStorageConnectionString").Value;
+        string? connectionString = Environment.GetEnvironmentVariable("BLOB_STORAGE");
         _blobServiceClient = new BlobServiceClient(connectionString);
     }
     
