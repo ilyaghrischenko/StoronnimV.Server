@@ -12,10 +12,17 @@ using StoronnimV.Application.Mapping.News;
 using StoronnimV.Application.Mapping.Schedule;
 using StoronnimV.Application.Services.Background;
 
-if (File.Exists(".env"))
+try
 {
-    var loadOptions = new LoadOptions(onlyExactPath: true);
-    Env.Load(options: loadOptions);
+    if (File.Exists(".env"))
+    {
+        var loadOptions = new LoadOptions(onlyExactPath: true);
+        Env.Load(options: loadOptions);
+    }
+}
+catch (Exception ex)
+{
+    throw new OperationCanceledException();
 }
 
 WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
