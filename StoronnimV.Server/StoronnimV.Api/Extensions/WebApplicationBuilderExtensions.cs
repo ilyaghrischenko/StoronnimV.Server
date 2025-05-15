@@ -1,5 +1,4 @@
 using System.Threading.RateLimiting;
-using DotNetEnv;
 using FluentValidation;
 using FluentValidation.AspNetCore;
 using Hangfire;
