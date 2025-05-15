@@ -1,4 +1,5 @@
 using System.Threading.RateLimiting;
+using DotNetEnv;
 using FluentValidation;
 using FluentValidation.AspNetCore;
 using Hangfire;
@@ -115,7 +116,7 @@ public static class WebApplicationBuilderExtensions
 
     public static WebApplicationBuilder AddDbContext(this WebApplicationBuilder builder)
     {
-        string? connectionString = Environment.GetEnvironmentVariable("DB_CLOUD");
+        string connectionString = EnvironmentExtensions.GetEnvironmentVariableOrThrowException("DB_CLOUD");
 
         builder.Services.AddDbContext<StoronnimVContext>(options =>
             options.UseNpgsql(connectionString));
@@ -174,7 +175,9 @@ public static class WebApplicationBuilderExtensions
         {
             options.AddPolicy("AllowReactApp", policy =>
             {
-                policy.WithOrigins("https://storonnimv.com")
+                var clientUrl = EnvironmentExtensions.GetEnvironmentVariableOrThrowException("CLIENT_URL");
+                
+                policy.WithOrigins(clientUrl)
                     .AllowCredentials()
                     .AllowAnyHeader()
                     .AllowAnyMethod();
@@ -186,7 +189,7 @@ public static class WebApplicationBuilderExtensions
 
     public static WebApplicationBuilder AddHangfire(this WebApplicationBuilder builder)
     {
-        string? connectionString = Environment.GetEnvironmentVariable("DB_CLOUD");
+        string connectionString = EnvironmentExtensions.GetEnvironmentVariableOrThrowException("DB_CLOUD");
 
         builder.Services.AddHangfire(config => config
             .UsePostgreSqlStorage(options => { options.UseNpgsqlConnection(connectionString); }));
@@ -321,7 +324,7 @@ public static class WebApplicationBuilderExtensions
 
     public static WebApplicationBuilder AddHealthChecks(this WebApplicationBuilder builder)
     {
-        string connectionString = Environment.GetEnvironmentVariable("DB_CLOUD")!;
+        string connectionString = EnvironmentExtensions.GetEnvironmentVariableOrThrowException("DB_CLOUD");
 
         builder.Services.AddHealthChecks()
             .AddCheck("API",

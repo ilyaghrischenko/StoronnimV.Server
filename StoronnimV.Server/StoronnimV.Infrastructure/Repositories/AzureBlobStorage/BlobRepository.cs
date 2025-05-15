@@ -11,6 +11,7 @@ public class BlobRepository : IBlobRepository
     public BlobRepository()
     {
         string? connectionString = Environment.GetEnvironmentVariable("BLOB_STORAGE");
+        
         _blobServiceClient = new BlobServiceClient(connectionString);
     }
     
