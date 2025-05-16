@@ -29,7 +29,7 @@ public class AccountControllerService(
             Secure = _cookieSettings.Secure,
             SameSite = Enum.Parse<SameSiteMode>(_cookieSettings.SameSite),
             Expires = DateTime.UtcNow.AddHours(_cookieSettings.ExpiresInHours),
-            Domain = _cookieSettings.Domain
+            Domain = Environment.GetEnvironmentVariable("DOMAIN")
         };
         
         response.Cookies.Append("Token", token, cookieOptions);
