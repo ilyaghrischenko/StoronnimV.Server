@@ -7,16 +7,16 @@ namespace StoronnimV.Application.Options;
 public class JwtOptions
 {
     [Required]
-    public required string ISSUER {get; init;}
+    public required string ISSUER {get; set;}
     
     [Required]
-    public required string AUDIENCE {get; init;}
+    public required string AUDIENCE {get; set;}
     
     [Required]
-    public required string KEY {get; init;}
+    public required string KEY {get; set;}
     
     [Required]
-    public required int LIFETIME {get; init;}
+    public required int LIFETIME {get; set;}
 
     public SymmetricSecurityKey GetKey()
     {

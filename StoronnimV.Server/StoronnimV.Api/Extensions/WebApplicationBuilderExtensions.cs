@@ -100,10 +100,13 @@ public static class WebApplicationBuilderExtensions
 
     public static WebApplicationBuilder AddOptions(this WebApplicationBuilder builder)
     {
-        builder.Services.AddOptions<JwtOptions>()
-            .Bind(builder.Configuration.GetSection("JwtOptions"))
-            .ValidateDataAnnotations()
-            .ValidateOnStart();
+        builder.Services.Configure<JwtOptions>(options =>
+        {
+            options.ISSUER = EnvironmentExtensions.GetEnvironmentVariableOrThrowException("TOKEN_ISSUER");
+            options.AUDIENCE = EnvironmentExtensions.GetEnvironmentVariableOrThrowException("TOKEN_AUDIENCE");
+            options.KEY = EnvironmentExtensions.GetEnvironmentVariableOrThrowException("TOKEN_KEY");
+            options.LIFETIME = int.Parse(EnvironmentExtensions.GetEnvironmentVariableOrThrowException("TOKEN_LIFETIME"));
+        });
 
         builder.Services.AddOptions<CookieSettings>()
             .Bind(builder.Configuration.GetSection("CookieOptions"))
@@ -200,12 +203,13 @@ public static class WebApplicationBuilderExtensions
 
     public static WebApplicationBuilder AddJwtBearer(this WebApplicationBuilder builder)
     {
-        JwtOptions? jwtOptions = builder.Configuration.GetSection("JwtOptions").Get<JwtOptions>();
-
-        if (jwtOptions == null)
+        var jwtOptions = new JwtOptions
         {
-            throw new KeyNotFoundException("JwtOptions are not configured correctly.");
-        }
+            ISSUER = EnvironmentExtensions.GetEnvironmentVariableOrThrowException("TOKEN_ISSUER"),
+            AUDIENCE = EnvironmentExtensions.GetEnvironmentVariableOrThrowException("TOKEN_AUDIENCE"),
+            KEY = EnvironmentExtensions.GetEnvironmentVariableOrThrowException("TOKEN_KEY"),
+            LIFETIME = int.Parse(EnvironmentExtensions.GetEnvironmentVariableOrThrowException("TOKEN_LIFETIME"))
+        };
 
         builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
             .AddJwtBearer(options =>

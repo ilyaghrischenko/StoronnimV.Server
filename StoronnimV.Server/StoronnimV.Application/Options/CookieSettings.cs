@@ -16,6 +16,5 @@ public class CookieSettings
     [Required]
     public int ExpiresInHours { get; set; }
     
-    [Required]
-    public required string Domain { get; set; }
+    public string? Domain { get; set; }
 }

@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.RateLimiting;
 using Microsoft.Extensions.Options;
+using StoronnimV.Api.Extensions;
 using StoronnimV.Application.Contracts.Controllers;
 using StoronnimV.Application.DTO.Requests.Entities.Pages.Addition;
 using StoronnimV.Application.DTO.Requests.Entities.Pages.Editing;
@@ -37,7 +38,7 @@ public class AdminController(IAdminControllerService adminControllerService) : C
             Secure = currentCookieSettings.Secure,
             SameSite = Enum.Parse<SameSiteMode>(currentCookieSettings.SameSite),
             Expires = DateTime.UtcNow.AddHours(currentCookieSettings.ExpiresInHours),
-            Domain = currentCookieSettings.Domain
+            Domain = EnvironmentExtensions.GetEnvironmentVariableOrThrowException("DOMAIN")
         };
         
         Response.Cookies.Delete("Token", cookieOptions);
