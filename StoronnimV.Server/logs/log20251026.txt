@@ -1,0 +1,68 @@
+2025-10-26 16:35:58.363 +02:00 [ERR] Execution Worker is in the Failed state now due to an exception, execution will be retried in no more than 00:01:21
+Npgsql.PostgresException (0x80004005): 57P01: terminating connection due to administrator command
+   at Npgsql.Internal.NpgsqlConnector.ReadMessageLong(Boolean async, DataRowLoadingMode dataRowLoadingMode, Boolean readingNotifications, Boolean isReadingPrependedMessage)
+   at System.Runtime.CompilerServices.PoolingAsyncValueTaskMethodBuilder`1.StateMachineBox`1.System.Threading.Tasks.Sources.IValueTaskSource<TResult>.GetResult(Int16 token)
+   at Npgsql.Internal.NpgsqlConnector.ReadMessageLong(Boolean async, DataRowLoadingMode dataRowLoadingMode, Boolean readingNotifications, Boolean isReadingPrependedMessage)
+   at System.Runtime.CompilerServices.PoolingAsyncValueTaskMethodBuilder`1.StateMachineBox`1.System.Threading.Tasks.Sources.IValueTaskSource<TResult>.GetResult(Int16 token)
+   at Npgsql.NpgsqlDataReader.NextResult(Boolean async, Boolean isConsuming, CancellationToken cancellationToken)
+   at Npgsql.NpgsqlDataReader.NextResult(Boolean async, Boolean isConsuming, CancellationToken cancellationToken)
+   at Npgsql.NpgsqlDataReader.NextResult()
+   at Npgsql.NpgsqlCommand.ExecuteReader(Boolean async, CommandBehavior behavior, CancellationToken cancellationToken)
+   at Npgsql.NpgsqlCommand.ExecuteReader(Boolean async, CommandBehavior behavior, CancellationToken cancellationToken)
+   at Npgsql.NpgsqlCommand.ExecuteReader(CommandBehavior behavior)
+   at Npgsql.NpgsqlCommand.ExecuteDbDataReader(CommandBehavior behavior)
+   at Dapper.SqlMapper.ExecuteReaderWithFlagsFallback(IDbCommand cmd, Boolean wasClosed, CommandBehavior behavior) in /_/Dapper/SqlMapper.cs:line 1066
+   at Dapper.SqlMapper.QueryImpl[T](IDbConnection cnn, CommandDefinition command, Type effectiveType)+MoveNext() in /_/Dapper/SqlMapper.cs:line 1094
+   at System.Collections.Generic.List`1..ctor(IEnumerable`1 collection)
+   at System.Linq.Enumerable.ToList[TSource](IEnumerable`1 source)
+   at Dapper.SqlMapper.Query[T](IDbConnection cnn, String sql, Object param, IDbTransaction transaction, Boolean buffered, Nullable`1 commandTimeout, Nullable`1 commandType) in /_/Dapper/SqlMapper.cs:line 734
+   at Hangfire.PostgreSql.PostgreSqlJobQueue.<>c__DisplayClass13_0.<Dequeue_Transaction>b__0()
+   at Hangfire.PostgreSql.Utils.Utils.TryExecute[T](Func`1 func, T& result, Func`2 swallowException, Nullable`1 tryCount)
+   at Hangfire.PostgreSql.PostgreSqlJobQueue.Dequeue_Transaction(String[] queues, CancellationToken cancellationToken)
+   at Hangfire.PostgreSql.PostgreSqlJobQueue.Dequeue(String[] queues, CancellationToken cancellationToken)
+   at Hangfire.PostgreSql.PostgreSqlConnection.FetchNextJob(String[] queues, CancellationToken cancellationToken)
+   at Hangfire.Server.Worker.Execute(BackgroundProcessContext context) in C:\projects\hangfire-525\src\Hangfire.Core\Server\Worker.cs:line 107
+   at Hangfire.Server.BackgroundProcessDispatcherBuilder.ExecuteProcess(Guid executionId, Object state) in C:\projects\hangfire-525\src\Hangfire.Core\Server\BackgroundProcessDispatcherBuilder.cs:line 82
+   at Hangfire.Processing.BackgroundExecution.Run(Action`2 callback, Object state) in C:\projects\hangfire-525\src\Hangfire.Core\Processing\BackgroundExecution.cs:line 118
+  Exception data:
+    Severity: FATAL
+    SqlState: 57P01
+    MessageText: terminating connection due to administrator command
+    File: postgres.c
+    Line: 3286
+    Routine: ProcessInterrupts
+2025-10-26 17:12:10.849 +02:00 [ERR] Execution Worker is in the Failed state now due to an exception, execution will be retried in no more than 00:02:24
+Npgsql.PostgresException (0x80004005): 53300: remaining connection slots are reserved for roles with the SUPERUSER attribute
+   at Npgsql.Internal.NpgsqlConnector.ReadMessageLong(Boolean async, DataRowLoadingMode dataRowLoadingMode, Boolean readingNotifications, Boolean isReadingPrependedMessage)
+   at System.Runtime.CompilerServices.PoolingAsyncValueTaskMethodBuilder`1.StateMachineBox`1.System.Threading.Tasks.Sources.IValueTaskSource<TResult>.GetResult(Int16 token)
+   at Npgsql.Internal.NpgsqlConnector.<Open>g__OpenCore|214_1(NpgsqlConnector conn, SslMode sslMode, NpgsqlTimeout timeout, Boolean async, CancellationToken cancellationToken)
+   at Npgsql.Internal.NpgsqlConnector.Open(NpgsqlTimeout timeout, Boolean async, CancellationToken cancellationToken)
+   at Npgsql.PoolingDataSource.OpenNewConnector(NpgsqlConnection conn, NpgsqlTimeout timeout, Boolean async, CancellationToken cancellationToken)
+   at Npgsql.PoolingDataSource.<Get>g__RentAsync|33_0(NpgsqlConnection conn, NpgsqlTimeout timeout, Boolean async, CancellationToken cancellationToken)
+   at Npgsql.NpgsqlConnection.<Open>g__OpenAsync|42_0(Boolean async, CancellationToken cancellationToken)
+   at Npgsql.NpgsqlConnection.Open()
+   at Hangfire.PostgreSql.PostgreSqlStorage.CreateAndOpenConnection()
+   at Hangfire.PostgreSql.PostgreSqlJobQueue.<>c__DisplayClass13_0.<Dequeue_Transaction>b__0()
+   at Hangfire.PostgreSql.Utils.Utils.TryExecute[T](Func`1 func, T& result, Func`2 swallowException, Nullable`1 tryCount)
+   at Hangfire.PostgreSql.PostgreSqlJobQueue.Dequeue_Transaction(String[] queues, CancellationToken cancellationToken)
+   at Hangfire.PostgreSql.PostgreSqlJobQueue.Dequeue(String[] queues, CancellationToken cancellationToken)
+   at Hangfire.PostgreSql.PostgreSqlConnection.FetchNextJob(String[] queues, CancellationToken cancellationToken)
+   at Hangfire.Server.Worker.Execute(BackgroundProcessContext context) in C:\projects\hangfire-525\src\Hangfire.Core\Server\Worker.cs:line 107
+   at Hangfire.Server.BackgroundProcessDispatcherBuilder.ExecuteProcess(Guid executionId, Object state) in C:\projects\hangfire-525\src\Hangfire.Core\Server\BackgroundProcessDispatcherBuilder.cs:line 82
+   at Hangfire.Processing.BackgroundExecution.Run(Action`2 callback, Object state) in C:\projects\hangfire-525\src\Hangfire.Core\Processing\BackgroundExecution.cs:line 118
+  Exception data:
+    Severity: FATAL
+    SqlState: 53300
+    MessageText: remaining connection slots are reserved for roles with the SUPERUSER attribute
+    File: postinit.c
+    Line: 949
+    Routine: InitPostgres
+2025-10-26 17:20:33.717 +02:00 [ERR] EXCEPTION - ThrowOperationCanceledException: The operation was canceled. (Method: System.Threading.CancellationToken.ThrowOperationCanceledException)
+2025-10-26 17:20:33.729 +02:00 [ERR] EXCEPTION - ThrowOperationCanceledException: The operation was canceled. (Method: System.Threading.CancellationToken.ThrowOperationCanceledException)
+2025-10-26 17:20:33.785 +02:00 [ERR] EXCEPTION - ThrowOperationCanceledException: The operation was canceled. (Method: System.Threading.CancellationToken.ThrowOperationCanceledException)
+2025-10-26 17:20:33.812 +02:00 [ERR] EXCEPTION - ThrowOperationCanceledException: The operation was canceled. (Method: System.Threading.CancellationToken.ThrowOperationCanceledException)
+2025-10-26 17:31:38.574 +02:00 [ERR] EXCEPTION - MoveNext: NewsItem with id: 78 was not found (Method: StoronnimV.Application.Services.Entities.NewsService+<DeleteNewsItemAsync>d__7.MoveNext)
+2025-10-26 17:31:41.446 +02:00 [ERR] EXCEPTION - MoveNext: NewsItem with id: 78 was not found (Method: StoronnimV.Application.Services.Entities.NewsService+<DeleteNewsItemAsync>d__7.MoveNext)
+2025-10-26 17:32:00.379 +02:00 [ERR] EXCEPTION - MoveNext: Retry failed after 6 tries. Retry settings can be adjusted in ClientOptions.Retry or by configuring a custom retry policy in ClientOptions.RetryPolicy. (nodename nor servname provided, or not known (storonnimv123.blob.core.windows.net:443)) (nodename nor servname provided, or not known (storonnimv123.blob.core.windows.net:443)) (nodename nor servname provided, or not known (storonnimv123.blob.core.windows.net:443)) (nodename nor servname provided, or not known (storonnimv123.blob.core.windows.net:443)) (nodename nor servname provided, or not known (storonnimv123.blob.core.windows.net:443)) (nodename nor servname provided, or not known (storonnimv123.blob.core.windows.net:443)) (Method: Azure.Core.Pipeline.RetryPolicy+<ProcessAsync>d__5.MoveNext)
+2025-10-26 17:32:49.636 +02:00 [ERR] EXCEPTION - MoveNext: Retry failed after 6 tries. Retry settings can be adjusted in ClientOptions.Retry or by configuring a custom retry policy in ClientOptions.RetryPolicy. (nodename nor servname provided, or not known (storonnimv123.blob.core.windows.net:443)) (nodename nor servname provided, or not known (storonnimv123.blob.core.windows.net:443)) (nodename nor servname provided, or not known (storonnimv123.blob.core.windows.net:443)) (nodename nor servname provided, or not known (storonnimv123.blob.core.windows.net:443)) (nodename nor servname provided, or not known (storonnimv123.blob.core.windows.net:443)) (nodename nor servname provided, or not known (storonnimv123.blob.core.windows.net:443)) (Method: Azure.Core.Pipeline.RetryPolicy+<ProcessAsync>d__5.MoveNext)
+2025-10-26 17:57:39.252 +02:00 [ERR] EXCEPTION - MoveNext: Member with id: 7 was not found (Method: StoronnimV.Application.Services.Entities.MemberService+<GetItemByIdAsync>d__4.MoveNext)

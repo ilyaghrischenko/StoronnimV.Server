@@ -174,7 +174,7 @@ public static class WebApplicationBuilderExtensions
         {
             options.AddPolicy("AllowReactApp", policy =>
             {
-                policy.WithOrigins("https://storonnimv.com")
+                policy.WithOrigins("http://localhost:5174")
                     .AllowCredentials()
                     .AllowAnyHeader()
                     .AllowAnyMethod();
